@@ -19,3 +19,6 @@ wicket-web-beans/
 wicket/
 bin/
 target/
+.classpath
+.project
+.settings/
