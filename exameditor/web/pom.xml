@@ -14,7 +14,7 @@
     JAR packaging for embedded server. For WAR deployment, change
     package and remove Jetty.
   -->
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <parent>
     <groupId>de.elateportal</groupId>
     <artifactId>exameditor</artifactId>
@@ -44,6 +44,7 @@
 
     </plugins>
     <resources>
+    <!-- make sure to copy all resources but java files  -->
       <resource>
         <directory>src/main/java</directory>
         <includes>
