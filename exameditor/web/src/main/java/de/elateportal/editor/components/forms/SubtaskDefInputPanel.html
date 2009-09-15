@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ein Formular</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+</head>
+<body>
+<wicket:panel>
+<form wicket:id="taskform">
+<div wicket:id="feedback"></div>
+  <fieldset>
+    <legend>Allgemein</legend> 
+    <ol>
+      <li>
+        <label for="title">Titel</label> 
+        <input id="title" wicket:id="id" type="text" /> 
+      </li>
+      <li>
+        <label for="problem">Aufgabenstellung</label> 
+        <textarea id="problem" wicket:id="problem"  cols="80" rows="5"></textarea> 
+      </li>
+      
+      <li>
+        <label for="hint">Hinweis</label> 
+        <input id="hint" wicket:id="hint" type="text"></input>
+      </li>
+      <li>
+        <label for="correctionHint">Korrekturhinweis</label> 
+        <textarea id="correctionHint" wicket:id="correctionHint" cols="50" rows="3"></textarea> 
+      </li>
+    </ol>
+  </fieldset>
+  <input wicket:id="saveButton" value="Add" type="submit" />
+</form>
+</wicket:panel>
+</body>
+</html>

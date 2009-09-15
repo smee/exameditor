@@ -15,15 +15,18 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.Model;
 
+import de.elateportal.editor.components.forms.SubtaskDefInputPanel;
 import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
+import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
 
 /**
  * @author sdienst
  */
 public class ShowStuffPage extends OverviewPage {
-    public class InputForm extends DataForm<ClozeSubTaskDef> {
-        public InputForm(final String id) {
-            super(id, ClozeSubTaskDef.class);
+
+    public class InputForm<T extends SubTaskDefType> extends DataForm<T> {
+        public InputForm(final String id, final Class<T> clazz) {
+            super(id, clazz);
 
             add(new TextField("problem"));
         }
@@ -36,13 +39,13 @@ public class ShowStuffPage extends OverviewPage {
     }
 
     public ShowStuffPage() {
-        add(new InputForm("input"));
+        add(new SubtaskDefInputPanel("input", ClozeSubTaskDef.class));
 
-        final IDataProvider<ClozeSubTaskDef> provider = new HibernateProvider<ClozeSubTaskDef>(ClozeSubTaskDef.class);
+        final IDataProvider<SubTaskDefType> provider = new HibernateProvider<SubTaskDefType>(SubTaskDefType.class);
 
-        final DataView<ClozeSubTaskDef> data = new DataView<ClozeSubTaskDef>("data", provider) {
+        final DataView<SubTaskDefType> data = new DataView<SubTaskDefType>("data", provider) {
             @Override
-            protected void populateItem(final Item<ClozeSubTaskDef> item) {
+            protected void populateItem(final Item<SubTaskDefType> item) {
                 item.add(new Label("problem"));
             }
         };

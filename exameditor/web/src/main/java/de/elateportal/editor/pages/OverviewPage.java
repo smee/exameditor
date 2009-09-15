@@ -26,7 +26,8 @@ public class OverviewPage extends WebPage {
      */
     private List<List<LinkVO>> getMenuList() {
         final List<List<LinkVO>> res = new LinkedList<List<LinkVO>>();
-        res.add(Arrays.asList(new LinkVO(ShowStuffPage.class, "Alle Aufgaben"), new LinkVO(StatisticPage.class, "Statistiken")));
+        res.add(Arrays.asList(new LinkVO(ShowStuffPage.class, "Alle Aufgaben")));
+        res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken")));
         return res;
     }
 }
