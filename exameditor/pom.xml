@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--
+    to run with embedded server logging to console, do mvn exec:java
+  -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.elateportal</groupId>
+  <artifactId>exameditor</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Basic editor</name>
+  <description>Online editor draft</description>
+  <packaging>pom</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+          <encoding>UTF8</encoding>
+        </configuration>
+        <inherited>true</inherited>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>databinder</id>
+      <name>Databinder repository</name>
+      <url>http://databinder.net/repo/</url>
+    </repository>
+    <!-- for snapshot releases -->
+    <repository>
+      <id>databinder-snapshots</id>
+      <name>Databinder snapshot repository</name>
+      <url>http://databinder.net/snapshot/</url>
+    </repository>
+  </repositories>
+  <modules>
+    <module>model</module>
+    <module>web</module>
+  </modules>
+</project>

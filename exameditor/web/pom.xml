@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--
+    to run with embedded server logging to console, do mvn exec:java
+  -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.elateportal</groupId>
+  <artifactId>exameditor-web</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Basic editor web frontend</name>
+  <description>Online editor draft</description>
+  <!--
+    JAR packaging for embedded server. For WAR deployment, change
+    package and remove Jetty.
+  -->
+  <packaging>jar</packaging>
+  <parent>
+    <groupId>de.elateportal</groupId>
+    <artifactId>exameditor</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>net.databinder.web.DataServer</mainClass>
+          <includePluginDependencies>true</includePluginDependencies>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <additionalProjectnatures>
+            <projectnature>wicketbench.wicketnature</projectnature>
+          </additionalProjectnatures>
+          <additionalBuildcommands>
+            <buildcommand>wicketbench.associatedMarkupAuditor</buildcommand>
+          </additionalBuildcommands>
+        </configuration>
+      </plugin>
+
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>de.elateportal</groupId>
+      <artifactId>exameditor-model</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>net.databinder</groupId>
+      <version>1.3.0-SNAPSHOT</version>
+      <artifactId>databinder-app-hib</artifactId>
+    </dependency>
+    <!--
+      uncomment for MySQL <dependency> <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.6</version> </dependency>
+    -->
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.7</version>
+    </dependency>
+    <!-- select jdk14 logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>[1.4,1.4.99]</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <version>[6.1,6.1.99]</version>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <id>databinder</id>
+      <name>Databinder repository</name>
+      <url>http://databinder.net/repo/</url>
+    </repository>
+    <!-- for snapshot releases -->
+    <repository>
+      <id>databinder-snapshots</id>
+      <name>Databinder snapshot repository</name>
+      <url>http://databinder.net/snapshot/</url>
+    </repository>
+  </repositories>
+</project>
