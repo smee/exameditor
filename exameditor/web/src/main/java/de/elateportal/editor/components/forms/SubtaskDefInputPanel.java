@@ -57,6 +57,9 @@ public class SubtaskDefInputPanel extends Panel {
             init();
         }
 
+        protected void delegateSubmit(final Button submittingButton) {
+        }
+
         private void init() {
             add(new FeedbackPanel("feedback"));
             add(new TextField<T>("id"));
@@ -64,14 +67,20 @@ public class SubtaskDefInputPanel extends Panel {
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
             add(new Button("saveButton"));
+            add(new Button("cancelButton") {
+                @Override
+                public void onSubmit() {
+                    clearPersistentObject();
+                }
+            }.setDefaultFormProcessing(false));
         }
 
         @Override
         protected void onSubmit() {
             super.onSubmit();
-            if (newTask) {
-                clearPersistentObject();
-            }
+            // if (newTask) {
+            clearPersistentObject();
+            // }
         }
     }
 
