@@ -107,7 +107,10 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
             link = new Link("menuLink") {
                 @Override
                 public void onClick() {
-                    setResponsePage(linkInfo.getResponsePage());
+                	if(linkInfo.getResponsePage()!=null)
+                		setResponsePage(linkInfo.getResponsePage());
+                	else
+                    setResponsePage(linkInfo.getResponsePageClass());
                 }
             };
         }

@@ -7,13 +7,13 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolb
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 import de.elateportal.editor.components.forms.SubtaskDefInputPanel;
-import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
 
 /**
@@ -21,28 +21,33 @@ import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
  */
 public class ShowStuffPage extends OverviewPage {
 
-    public ShowStuffPage() {
-        add(new SubtaskDefInputPanel("input", ClozeSubTaskDef.class));
+	public ShowStuffPage() {
+		this(SubTaskDefType.class);
+	}
 
-        final IDataProvider<SubTaskDefType> provider = new HibernateProvider<SubTaskDefType>(SubTaskDefType.class);
+	public ShowStuffPage(Class<? extends SubTaskDefType> clazz) {
+		if (clazz.equals(SubTaskDefType.class))
+			add(new EmptyPanel("input"));
+		else
+			add(new SubtaskDefInputPanel("input", clazz));
 
-        final IColumn[] columns = new IColumn[3];
+		final IDataProvider<SubTaskDefType> provider = new HibernateProvider<SubTaskDefType>(
+		    clazz);
 
-        columns[0] = new PropertyColumn(new Model<String>("ID"), "id");
-        columns[1] = new PropertyColumn(new Model<String>("Problem"),
-                "problem");
-        columns[2] = new PropertyColumn(new Model<String>("Aufgabentyp"),
-                "class.simpleName") {
-            @Override
-            protected IModel createLabelModel(final IModel rowModel) {
+		final IColumn[] columns = new IColumn[3];
 
-                return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
-            }
-        };
+		columns[0] = new PropertyColumn(new Model<String>("ID"), "id");
+		columns[1] = new PropertyColumn(new Model<String>("Problem"), "problem");
+		columns[2] = new PropertyColumn(new Model<String>("Aufgabentyp"), "class.simpleName") {
+			@Override
+			protected IModel createLabelModel(final IModel rowModel) {
+				return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+			}
+		};
 
-        final DataTable table = new DataTable("datatable", columns, provider, 10);
-        table.addBottomToolbar(new NavigationToolbar(table));
-        table.addTopToolbar(new HeadersToolbar(table, null));
-        add(table);
-    }
+		final DataTable table = new DataTable("datatable", columns, provider, 10);
+		table.addBottomToolbar(new NavigationToolbar(table));
+		table.addTopToolbar(new HeadersToolbar(table, null));
+		add(table);
+	}
 }
