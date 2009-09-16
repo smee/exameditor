@@ -18,66 +18,77 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor.components.panels.tasks;
 
-import java.io.Serializable;
-
 import net.databinder.components.hib.DataForm;
-import net.databinder.models.hib.HibernateObjectModel;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
+import de.thorstenberger.taskmodel.complex.complextaskdef.MappingSubTaskDef;
+import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
+import de.thorstenberger.taskmodel.complex.complextaskdef.PaintSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
+import de.thorstenberger.taskmodel.complex.complextaskdef.TextSubTaskDef;
 
 /**
  * @author Steffen Dienst
  * 
  */
 public class SubtaskDefInputPanel extends Panel {
+    /**
+     * @author Steffen Dienst
+     * 
+     * @param <T>
+     */
     public class SubtaskDefForm<T extends SubTaskDefType> extends DataForm<T> {
 
         public SubtaskDefForm(final String id, final Class<T> modelClass) {
             super(id, modelClass);
-            init();
+            init(modelClass);
         }
 
-        public SubtaskDefForm(final String id, final Class<T> modelClass, final Serializable persistentObjectId) {
-            super(id, modelClass, persistentObjectId);
-            init();
-        }
-
-        public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
-            super(id, model);
-            init();
-        }
-
+        /**
+         * @param submittingButton
+         */
         protected void delegateSubmit(final Button submittingButton) {
         }
 
         /**
-         * @param string
+         * @param id
+         * @param modelClass
          * @return
          */
-        protected Form<T> getNestedForm(final String string) {
-            return null;
+        private Component getTaskSpecificFormPanel(final String id, final Class<T> modelClass) {
+            if (modelClass.equals(McSubTaskDef.class)) {
+                return new McSubtaskDefInputPanel(id);
+            } else if (modelClass.equals(TextSubTaskDef.class)) {
+                return new TextSubtaskDefInputPanel(id);
+            } else if (modelClass.equals(MappingSubTaskDef.class)) {
+                return new MappingSubtaskDefInputPanel(id);
+            } else if (modelClass.equals(ClozeSubTaskDef.class)) {
+                return new ClozeSubtaskDefInputPanel(id);
+            } else if (modelClass.equals(PaintSubTaskDef.class)) {
+                return new PaintSubtaskDefInputPanel(id);
+            } else {
+                return new EmptyPanel(id);
+            }
         }
 
-        private void init() {
+        /**
+         * @param modelClass
+         * 
+         */
+        private void init(final Class<T> modelClass) {
             add(new FeedbackPanel("feedback"));
-            add(new TextField<T>("id"));
+            add(new TextField<T>("id").setRequired(true));
             add(new TextArea<T>("problem").setRequired(true));
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
-            final Form<T> nestedForm = getNestedForm("nestedForm");
-            if (nestedForm != null) {
-                add(nestedForm);
-            } else {
-                add(new EmptyPanel("nestedForm"));
-            }
             add(new Button("saveButton"));
             add(new Button("cancelButton") {
                 @Override
@@ -85,13 +96,14 @@ public class SubtaskDefInputPanel extends Panel {
                     clearPersistentObject();
                 }
             }.setDefaultFormProcessing(false));
+            add(getTaskSpecificFormPanel("specificelements", modelClass));
         }
 
-        @Override
-        public boolean isTransparentResolver() {
-            return true;
-        }
-
+        /*
+         * (non-Javadoc)
+         * 
+         * @see net.databinder.components.hib.DataForm#onSubmit()
+         */
         @Override
         protected void onSubmit() {
             super.onSubmit();
@@ -99,10 +111,17 @@ public class SubtaskDefInputPanel extends Panel {
         }
     }
 
+    /**
+     * @param id
+     */
     public SubtaskDefInputPanel(final String id) {
         super(id);
     }
 
+    /**
+     * @param id
+     * @param clazz
+     */
     public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz) {
         super(id);
         add(new SubtaskDefForm("taskform", clazz));

@@ -6,9 +6,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 import de.thorstenberger.taskmodel.complex.complextaskdef.TextSubTaskDef;
 
-public class TextSubtaskDefInputPanel extends Panel {
+public class ClozeSubtaskDefInputPanel extends Panel {
 
-    public TextSubtaskDefInputPanel(final String id) {
+    public ClozeSubtaskDefInputPanel(final String id) {
         super(id);
         add(new TextArea<TextSubTaskDef>("initialTextFieldValue"));
         add(new TextField<TextSubTaskDef>("textFieldHeight"));

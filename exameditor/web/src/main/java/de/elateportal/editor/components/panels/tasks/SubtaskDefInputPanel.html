@@ -14,10 +14,10 @@
 <form wicket:id="taskform">
 <div wicket:id="feedback"></div>
   <fieldset>
-    <legend>Allgemein</legend> 
+    <legend><span>Allgemein</span></legend> 
     <ol>
       <li>
-        <label for="title">Titel</label> 
+        <label for="title">Interner Name</label> 
         <input id="title" wicket:id="id" type="text" /> 
       </li>
       <li>
@@ -36,10 +36,9 @@
     </ol>
   </fieldset>
   <!--  may get extended by forms of concrete subtaskdefs -->
-  <div wicket:id="nestedForm"></div>
-  
+  <div wicket:id="specificelements"></div>
   <fieldset class="submit">
-    <input wicket:id="saveButton" value="Okay" type="submit" />
+    <input wicket:id="saveButton" value="Ok" type="submit" />
     <input wicket:id="cancelButton" value="Abbrechen" type="submit" />
   </fieldset>
 </form>

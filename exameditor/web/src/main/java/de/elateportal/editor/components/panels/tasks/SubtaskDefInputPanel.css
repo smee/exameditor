@@ -29,13 +29,15 @@ label {
 fieldset {
   float: left;
   clear: left;
-  width: 100%;
-  margin: 0 0 1.5em 0;
-  padding: 0;
-  border: 1px solid #BFBAB0;
+  width: 43em;
   background-color: #F2EFE9;
   background-image: url(formbackground.png);
-background-repeat: repeat-x;
+  background-repeat: repeat-x;
+  
+  margin: 0 0 -1em 1.5em;
+  padding: 0 0 1em 0;
+  border-style: none;
+  border-top: 1px solid #BFBAB0;
 }
 fieldset li {
   float: left;
@@ -56,6 +58,8 @@ fieldset.submit {
   border: 0 none #FFF;
   padding-left: 11em;
   border-style: none;
-  background-color: transparent;
+  background-color: #ffffff;
+  background-image: none;
+  padding-top: 1.5em;
 }
  /* labels left aligned */
