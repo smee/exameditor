@@ -4,18 +4,14 @@ import net.databinder.hib.DataApplication;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 
-
 import de.elateportal.editor.pages.OverviewPage;
 import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
 
 public class TaskEditorApplication extends DataApplication {
-
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * net.databinder.hib.DataApplication#configureHibernate(org.hibernate.cfg
-     * .AnnotationConfiguration)
+     * @see net.databinder.hib.DataApplication#configureHibernate(org.hibernate.cfg .AnnotationConfiguration)
      */
     @Override
     protected void configureHibernate(final AnnotationConfiguration config) {
@@ -106,6 +102,12 @@ public class TaskEditorApplication extends DataApplication {
     @Override
     public Class getHomePage() {
         return OverviewPage.class;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        getMarkupSettings().setStripWicketTags(true);
     }
 
 }
