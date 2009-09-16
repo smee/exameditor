@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package de.elateportal.editor.components.forms;
+package de.elateportal.editor.components.panels.tasks;
 
 import java.io.Serializable;
 
@@ -24,12 +24,13 @@ import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
-import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
 
 /**
@@ -39,11 +40,8 @@ import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
 public class SubtaskDefInputPanel extends Panel {
     public class SubtaskDefForm<T extends SubTaskDefType> extends DataForm<T> {
 
-        private boolean newTask = false;
-
         public SubtaskDefForm(final String id, final Class<T> modelClass) {
             super(id, modelClass);
-            this.newTask = true;
             init();
         }
 
@@ -60,12 +58,26 @@ public class SubtaskDefInputPanel extends Panel {
         protected void delegateSubmit(final Button submittingButton) {
         }
 
+        /**
+         * @param string
+         * @return
+         */
+        protected Form<T> getNestedForm(final String string) {
+            return null;
+        }
+
         private void init() {
             add(new FeedbackPanel("feedback"));
             add(new TextField<T>("id"));
             add(new TextArea<T>("problem").setRequired(true));
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
+            final Form<T> nestedForm = getNestedForm("nestedForm");
+            if (nestedForm != null) {
+                add(nestedForm);
+            } else {
+                add(new EmptyPanel("nestedForm"));
+            }
             add(new Button("saveButton"));
             add(new Button("cancelButton") {
                 @Override
@@ -76,16 +88,19 @@ public class SubtaskDefInputPanel extends Panel {
         }
 
         @Override
+        public boolean isTransparentResolver() {
+            return true;
+        }
+
+        @Override
         protected void onSubmit() {
             super.onSubmit();
-            // if (newTask) {
             clearPersistentObject();
-            // }
         }
     }
 
     public SubtaskDefInputPanel(final String id) {
-        this(id, McSubTaskDef.class);
+        super(id);
     }
 
     public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz) {

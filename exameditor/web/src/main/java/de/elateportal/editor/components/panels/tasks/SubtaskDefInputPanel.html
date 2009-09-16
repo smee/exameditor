@@ -1,11 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Ein Formular</title>
-<link rel="stylesheet" type="text/css" href="view.css" media="all">
-<script type="text/javascript" src="view.js"></script>
-
+<wicket:head>
+<wicket:link>
+  <link rel="stylesheet" type="text/css" href="SubtaskDefInputPanel.css" media="all">
+</wicket:link>
+</wicket:head>
 </head>
 <body>
 <wicket:panel>
@@ -20,7 +22,7 @@
       </li>
       <li>
         <label for="problem">Aufgabenstellung</label> 
-        <textarea id="problem" wicket:id="problem"  cols="80" rows="5"></textarea> 
+        <textarea id="problem" wicket:id="problem"  cols="60" rows="5"></textarea> 
       </li>
       
       <li>
@@ -33,6 +35,9 @@
       </li>
     </ol>
   </fieldset>
+  <!--  may get extended by forms of concrete subtaskdefs -->
+  <div wicket:id="nestedForm"></div>
+  
   <fieldset class="submit">
     <input wicket:id="saveButton" value="Okay" type="submit" />
     <input wicket:id="cancelButton" value="Abbrechen" type="submit" />
