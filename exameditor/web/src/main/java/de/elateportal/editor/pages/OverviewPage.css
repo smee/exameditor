@@ -22,10 +22,10 @@ body{
 }
 
 #mainContent{
-  width: 56.25em;
+  width: 46.25em;
   margin: 1.5em auto;
   background: #FEFEFE;
-  border: 0.063em solid #ccc;
+  /* border: 0.063em solid #ccc; */
   text-align: left;
 }
 
@@ -47,4 +47,8 @@ p img{
   height:7.5em;
   margin:0 1.5em 1.5em 0;
   float:left;
+}
+
+.feedbackPanelERROR {
+  color: #FF0000;
 }
