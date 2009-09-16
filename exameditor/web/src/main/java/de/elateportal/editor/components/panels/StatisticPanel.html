@@ -3,9 +3,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <body>
-  <wicket:extend>
-    <div wicket:id="stats"></div>
-  </wicket:extend>
+  <wicket:panel>
+    <dl wicket:id="statslist">
+    <dt wicket:id="statname">Anzahl MC-Aufgaben</dt><dd wicket:id="statvalue">55</dd>
+    </dl>
+  </wicket:panel>
   <DL>
   <DT>Dweeb</DT>
   <DD>young excitable person who may mature
