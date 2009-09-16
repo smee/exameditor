@@ -28,6 +28,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.MappingSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
@@ -47,9 +48,12 @@ public class SubtaskDefInputPanel extends Panel {
      */
     public class SubtaskDefForm<T extends SubTaskDefType> extends DataForm<T> {
 
+        private final Class<? extends SubTaskDefType> modelClass;
+
         public SubtaskDefForm(final String id, final Class<T> modelClass) {
             super(id, modelClass);
-            init(modelClass);
+            this.modelClass = modelClass;
+            init();
         }
 
         /**
@@ -60,10 +64,10 @@ public class SubtaskDefInputPanel extends Panel {
 
         /**
          * @param id
-         * @param modelClass
+         * @param modelClass2
          * @return
          */
-        private Component getTaskSpecificFormPanel(final String id, final Class<T> modelClass) {
+        private Component getTaskSpecificFormPanel(final String id) {
             if (modelClass.equals(McSubTaskDef.class)) {
                 return new McSubtaskDefInputPanel(id);
             } else if (modelClass.equals(TextSubTaskDef.class)) {
@@ -80,11 +84,11 @@ public class SubtaskDefInputPanel extends Panel {
         }
 
         /**
-         * @param modelClass
          * 
          */
-        private void init(final Class<T> modelClass) {
+        private void init() {
             add(new FeedbackPanel("feedback"));
+            // add common subtaskdeftype input fields
             add(new TextField<T>("id").setRequired(true));
             add(new TextArea<T>("problem").setRequired(true));
             add(new TextField<T>("hint"));
@@ -94,9 +98,11 @@ public class SubtaskDefInputPanel extends Panel {
                 @Override
                 public void onSubmit() {
                     clearPersistentObject();
+                    setResponsePage(new ShowSubtaskDefsPage(modelClass));
                 }
             }.setDefaultFormProcessing(false));
-            add(getTaskSpecificFormPanel("specificelements", modelClass));
+            // add subtask input elements
+            add(getTaskSpecificFormPanel("specificelements"));
         }
 
         /*
@@ -108,6 +114,7 @@ public class SubtaskDefInputPanel extends Panel {
         protected void onSubmit() {
             super.onSubmit();
             clearPersistentObject();
+            setResponsePage(new ShowSubtaskDefsPage(modelClass));
         }
     }
 

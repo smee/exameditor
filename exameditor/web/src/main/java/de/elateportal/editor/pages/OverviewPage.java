@@ -32,29 +32,29 @@ public class OverviewPage extends WebPage {
         // must not create the link result page now,
         // leads to StackoverflowError in case of resultpage extends OverviewPage
 
-        res.add(Arrays.asList(new LinkVO(ShowStuffPage.class, "Alle Aufgaben"), new LinkVO(new Create() {
+        res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben"), new LinkVO(new Create() {
                 public WebPage createPage() {
-                return new ShowStuffPage(McSubTaskDef.class);
+                return new ShowSubtaskDefsPage(McSubTaskDef.class);
                 }
                         }, "Alle MC-Aufgaben"), new LinkVO(new Create() {
 
             public WebPage createPage() {
-                return new ShowStuffPage(ClozeSubTaskDef.class);
+                return new ShowSubtaskDefsPage(ClozeSubTaskDef.class);
                 }
                         }, "Alle Lückentext-Aufgaben"), new LinkVO(new Create() {
 
             public WebPage createPage() {
-                return new ShowStuffPage(TextSubTaskDef.class);
+                return new ShowSubtaskDefsPage(TextSubTaskDef.class);
                 }
                         }, "Alle Text-Aufgaben"), new LinkVO(new Create() {
 
             public WebPage createPage() {
-                return new ShowStuffPage(PaintSubTaskDef.class);
+                return new ShowSubtaskDefsPage(PaintSubTaskDef.class);
                 }
                         }, "Alle Zeichen-Aufgaben"), new LinkVO(new Create() {
 
             public WebPage createPage() {
-                return new ShowStuffPage(MappingSubTaskDef.class);
+                return new ShowSubtaskDefsPage(MappingSubTaskDef.class);
                 }
                         }, "Alle Zuordnungs-Aufgaben")));
         res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken")));

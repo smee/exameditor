@@ -2,39 +2,37 @@ package de.elateportal.editor.pages;
 
 import net.databinder.models.hib.HibernateProvider;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.panel.EmptyPanel;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
-import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
 
 /**
  * @author sdienst
  */
-public class ShowStuffPage extends OverviewPage {
+public class ShowSubtaskDefsPage extends OverviewPage {
 
-    public ShowStuffPage() {
+    public ShowSubtaskDefsPage() {
         this(SubTaskDefType.class);
     }
 
-    public ShowStuffPage(final Class<? extends SubTaskDefType> clazz) {
-        if (clazz.equals(SubTaskDefType.class)) {
-            add(new Label("heading", "Alle Aufgaben"));
-            add(new EmptyPanel("input"));
-        } else {
-            add(new Label("heading", "Aufgabe bearbeiten"));
-            add(createInputPanelFor("input", clazz));
-        }
+    public ShowSubtaskDefsPage(final Class<? extends SubTaskDefType> clazz) {
+        add(new Label("heading", "Alle Aufgaben"));
+        add(new Link("newTaskdefLink") {
+            @Override
+            public void onClick() {
+                setResponsePage(new EditSubtaskPage(clazz));
+            }
+        });
 
         final IDataProvider<SubTaskDefType> provider = new HibernateProvider<SubTaskDefType>(
                 clazz);
@@ -56,8 +54,4 @@ public class ShowStuffPage extends OverviewPage {
         add(table);
     }
 
-    private Component createInputPanelFor(final String id, final Class<? extends SubTaskDefType> clazz) {
-
-        return new SubtaskDefInputPanel(id, clazz);
-    }
 }
