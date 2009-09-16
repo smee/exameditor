@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Swit" default="release" basedir=".">
+	<description>
+		Swit builder
+	</description>
+
+	<property name="packagename" value="swit" />
+	<property name="version" value="0.9.0" />
+
+	<property name="release.dir" value="swit-${version}" />
+	
+	<property name="lib.dir" value="${basedir}/libs" />
+	<property name="src" value="src/main/java" />
+	<property name="deploy.base" value="build" />
+	<property name="deploy.bin" value="${deploy.base}/WEB-INF/classes" />
+	<property name="deploy.libs" value="${deploy.base}/WEB-INF/lib" />
+
+	<path id="build.path">
+		<fileset dir="libs">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init" description="init">
+		<mkdir dir="${deploy.base}" />
+	</target>
+
+	<target name="compile" description="Compile src to bin" depends="init">
+		<mkdir dir="${deploy.bin}" />
+		<javac srcdir="${src}" destdir="${deploy.bin}" includes="**" debug="on"
+				debuglevel="lines,vars,source" source="1.5" target="1.5">
+			<classpath refid="build.path" />
+		</javac>
+	</target>
+
+	<target name="buildwar" depends="clean,compile" description="Package up the project as a jar">
+		<copy flatten="yes" todir="${deploy.libs}">
+			<fileset dir="libs">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${deploy.bin}">
+			<fileset dir="src/main/java">
+				<exclude name="**/*.class"/>
+			</fileset>
+		</copy>
+		<copy file="HISTORY" todir="${deploy.bin}" />
+		<copy file="SHORT-LICENSE" todir="${deploy.bin}" />
+
+		<copy file="src/main/webapp/WEB-INF/web.xml" todir="${deploy.base}/WEB-INF"/>
+
+		<war destfile="${packagename}.war" webxml="${deploy.base}/WEB-INF/web.xml">
+			<lib dir="${deploy.libs}" />
+			<classes dir="${deploy.bin}"/>
+		</war>
+
+	</target>
+
+	<target name="buildjar" depends="clean, compile">
+		<jar destfile="${packagename}.jar" basedir="${deploy.bin}" includes="*/**" excludes="net/kornr/swit/site/**/*.class">
+			<fileset dir="${src}" excludes="**/*.java" />
+		</jar>
+	</target>
+
+	<target name="release">
+		<delete dir="${release.dir}" />
+		<mkdir dir="${release.dir}"/>
+		
+		<antcall target="buildjar" />
+		<copy file="${packagename}.jar" todir="${release.dir}" />
+		
+		<!-- let's not distribute the war by now
+		<antcall target="buildwar" />
+		<copy file="${packagename}.war" todir="${release.dir}" />
+		-->
+		
+	 	<antcall target="javadocs"/>
+		
+		<copy file="LICENSE" todir="${release.dir}" />
+		<copy file="README" todir="${release.dir}" />
+		<copy file="HISTORY" todir="${release.dir}" />
+		
+	</target>
+	
+	<target name="javadocs" >
+		  <javadoc destdir="${release.dir}/docs/api"
+		           author="true"
+		           version="true"
+		           use="true"
+		           windowtitle="Swit API - http://swit.kornr.net"
+		  		source="${src}"
+		  	>
+
+		    <fileset dir="${src}" defaultexcludes="yes">
+		        <include name="**/*.java"/>
+		        <exclude name="**/kornr/swit/site/**"/>
+		    </fileset>
+
+		    <doctitle><![CDATA[<h1>Swit</h1>]]></doctitle>
+		    <bottom><![CDATA[<i>Copyright &#169; 2009 - Rodrigo Reyes</i>]]></bottom>
+		    <link offline="false" href="http://java.sun.com/j2se/1.6.0/docs/api/"/>
+		    <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+		  </javadoc>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${deploy.base}" />
+		<delete file="${packagename}.war" />
+		<delete file="${packagename}.jar" />
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete dir="${release.dir}" />
+		<delete dir="target" />
+		<delete file="build.xml~" />
+	</target>
+	
+</project>

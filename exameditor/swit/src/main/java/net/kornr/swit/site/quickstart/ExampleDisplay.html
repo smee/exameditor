@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<body>
+
+	<wicket:panel>
+		
+		<div style="width: 90%; margin: 0 auto; padding:16px;" wicket:id="border">
+			<div style="padding:16px;">
+				<div style="font-size:1.2em; font-style: italic;">Example <span style="font-weight:bold;" wicket:id="classname"></span></div>
+	
+				<ul style="margin-bottom: 0px; padding-bottom: 0px; padding-left:0px; padding-top:0.5em; margin-top: 0px;">
+		   			<li style="display: inline;"><a wicket:id="linkjava" href="#">Java Source</a></li>
+		   			<li style="display: inline;padding-left:1em;"><a wicket:id="linkhtml" href="#">HTML</a></li>
+		   			<li style="display: inline;padding-left:1em;"><a wicket:id="linkresult" href="#">See the result</a></li>
+		   		</ul>
+				
+				<div style="">
+					<div wicket:id="java" style="margin-top: 0px; ">
+						<iframe style="width:100%; height:250px;" wicket:id="source"></iframe>
+					</div>
+					<div wicket:id="html" style="margin-top: 0px;">
+						<iframe style="width: 100%; height:250px;" wicket:id="html"></iframe>
+					</div>
+					<div wicket:id="result" style="text-align:center; padding:1em;"><div wicket:id="instance"></div></div>
+				</div>
+				<div style="clear:both"></div>
+			</div>		
+		</div>
+	</wicket:panel>
+
+</body>
+</html>

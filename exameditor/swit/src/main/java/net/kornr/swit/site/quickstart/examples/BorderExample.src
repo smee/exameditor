@@ -1,0 +1,11 @@
+public class BorderExample extends Panel 
+{
+	static private Long s_border = RoundedBorderMaker.register(12, 6f, Color.black, Color.white);
+
+	public BorderExample(String id) 
+	{
+		super(id);
+		this.add(new TableImageBorder("border", s_border, Color.white));
+	}
+
+}

@@ -1,0 +1,10 @@
+public class ButtonExample extends Panel 
+{
+	static private ButtonTemplate s_buttonTemplate = new VistafarianButton();
+
+	public ButtonExample(String id) 
+	{
+		super(id);
+		this.add(ButtonResource.getImage("button", s_buttonTemplate, "Some Fine Text For My Button"));
+	}
+}

@@ -1,0 +1,103 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd" >
+<wicket:head>
+</wicket:head>
+<body>
+   	<wicket:extend>
+   	
+   		<h1>Welcome to Swit</h1>
+   	
+   		The Swit project aims at providing the finest sugar, not to say the switest, to java with a specific focus on Wicket. 
+   		There's three parts in Swit:
+
+   		<ul style="font-size: 1.1em;" class="tabs">
+   			<li><a href="#">A button generator</a></li>
+   			<li><a href="#">A border generator</a></li>
+   			<li><a href="#">Layout managers</a></li>
+   		</ul>
+   		
+   		<div class="panes">
+   			<div>
+				<h2>Button Generator</h2>
+				<div style="text-align:center;">   	
+		   			<img wicket:id="button1"/> <img wicket:id="button2"/> <img wicket:id="button3"/> <img wicket:id="button4"/> <img wicket:id="button5"/>
+		   		</div>
+		   		<div style="text-align:center; font-size:1.2em; padding:1em;">
+		   			For instance, this button is dynamically created every time you refresh the page:
+	   				<br/> <img wicket:id="timebutton"/>
+		   		</div>
+   			</div>
+   			
+   			<div> 
+		   		<h2>Needs borders?</h2>
+		   		<div style="margin:1em;" wicket:id="border1">
+		   			This is a border that has been automatically generated. 
+		   			It's a Wicket Border implemented as a table, which means it can strech as much as needed.
+		   			  
+		   			<div style="padding:2em;" wicket:id="border2">
+		   				<div style="padding:1em;">Of course, because it's a standard wicket border, you can embed borders in borders</div>
+		   				<table>
+		   					<tr>
+		   						<td>
+		   							<div wicket:id="border3" style="width: 10em;margin:1em;;">You can still use CSS borders, but hey, it's so ugly !</div>
+		   						</td>
+		   						<td>
+		   							<div wicket:id="border4">Of course, there's too many borders here, but it's just an example.
+		   								<div style="font-size:1em">Kids, don't do this at home!</div>
+		   							</div>
+		   						</td>
+		   					</tr>
+		   				</table>
+		   			</div>  
+		   		</div>
+   			</div>
+   			
+   			<div> 
+   			   		<h2>Layout Managers for Wicket</h2>
+			   		Well, not really, but if you're tired to create 2 or 3 columns CSS layouts, or 
+			   		even worse, to recursively embed n-columns layout, you know it's good to have a way
+			   		to do it automatically.
+			   		<div>
+			   			The details of the CSS technique at <a href="http://matthewjamestaylor.com/blog/perfect-multi-column-liquid-layouts">http://matthewjamestaylor.com/blog/perfect-multi-column-liquid-layouts</a>
+			   		</div>
+			   		
+			   		<div style="border: 3px solid black; width:60%; margin-left:20%; padding:1em; margin-top:1em;" >
+				   		<div wicket:id="layout1">
+				   			<div style="padding:5px; margin:3px; border:1px solid black; background-color: #DEDEDE;">
+					   			This is a 3-column layout with fixed 100-pixel columns on both sides.
+					   			The center streches out with the page size (try resizing this window).
+				   			</div> 
+				   			<div style="padding:5px; margin:3px; border:1px solid black; background-color: #DEDEDE;">
+				   				The good thing with having an automatic generator, is that you can recursively embed layouts in layouts, it 
+				   				takes care of generating css elements with different, unique names.
+				   				
+				   				<div style="border:1px solid blue;">
+				   				<div wicket:id="layout2">
+				   					<div style="padding:5px; margin:3px; border:1px solid black; background-color: #EFEFEF;">
+				   						This is a 2-column layout, specified with a percentage unit. The left column is 33% of the width, the remaining is for the central column.
+				   					</div>
+				   				</div>
+				   				<div style="clear:both"></div>
+				   				</div>
+				   			</div> 
+				   		</div> 
+				   		<div style="clear:both"></div>
+			   		</div>
+   			
+   			</div>
+   		</div>
+
+   		
+   		<div style="padding: 1em; text-align:center;">
+	   		Just so that you know, there's not a single image on this page that has not been automatically generated. 
+	   		<img wicket:id="graphics-disclaimer"/>
+		</div>
+	
+	<wicket:fragment wicket:id="column-element">
+		<div style="margin:5px; border:1px solid black; background-color: #AACCFF; padding:5px;" wicket:id="element"></div>
+	</wicket:fragment>
+		
+	</wicket:extend>
+	
+</body>
+</html>
+

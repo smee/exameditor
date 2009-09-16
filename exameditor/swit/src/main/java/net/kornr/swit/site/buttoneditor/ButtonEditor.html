@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>  
+  <title>Swit Button Editor</title>
+	<style media="screen" type="text/css">
+	 h2 { width:100; text-align:center; font-size: 24px; padding:0; margin:0;}
+	</style>
+</head>
+<body>
+   	<wicket:extend>
+
+		<div style="">
+	
+			<div style="text-align:center;"><img wicket:id="logo"/></div>
+	
+			<form wicket:id="form">
+				<div wicket:id="feedback"></div>
+
+				<div style="padding: 16px; text-align:center; min-height: 40px;" wicket:id="sampleborder">
+					<div style="text-align:right;" >Adjust background: <input style="width:6em;" wicket:id="samplebgcolor" /></div>
+					<div style="height: 80px; padding-top:20px;" class="colorpickersample" wicket:id="samplecontainer">
+						<img wicket:id="sample"/>
+					</div>
+					
+
+					<div style="text-align:center; z-index:10; ">
+						<input type="image" wicket:id="submit"/>
+					</div>
+
+						<div style="float:right;">
+							<a wicket:id="downloadbutton">Download this button</a> - <a wicket:id="showwindowcode">Show me the code!</a>
+						</div>
+					
+				</div>
+				
+				<div wicket:id="2col-layout">
+					<div style="text-align:center;" wicket:id="textborder">
+						<div>Text: <input style="min-width: 100px;" type="text" wicket:id="button-text" /></div>
+					</div>
+
+					<div wicket:id="propertiesborder">
+						<div wicket:id="property"><div wicket:id="container"><div wicket:id="lst"></div></div></div>
+					</div>
+
+					<div style="text-align:center; " wicket:id="buttonsborder">
+						<div style="text-align:center;"><div style="padding:5px;" wicket:id="types"><input type="image" wicket:id="sample"/></div></div>
+					</div>
+
+				</div>
+				<div style="clear:both"></div>
+					
+			</form>
+			
+			<div style="" wicket:id="code"></div>
+
+		</div>
+
+	<wicket:fragment wicket:id="logicalelement">
+		<div wicket:id="border">
+			<div wicket:id="element"></div>
+		</div>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="logicalelementlist">
+		<div wicket:id="border">
+			<div style="font-size:0.9em; text-align:center; text-decoration: underline;" wicket:id="title"></div>
+			<div wicket:id="list">
+				<div wicket:id="element"></div>
+			</div>
+		</div>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="codepanel">
+		<div style="padding:1em;">
+			<h2>Code</h2>
+			<div>To automatically generate this button in your java code, use the following code:</div>
+			
+			<hr/>
+			<div style="border: 1px solid black; margin: 1em; padding: 0; background-color: #E0E0E0;">
+			<pre style="font-family: monospace;  font-size: 0.9em; overflow: scroll; padding: 1em; " wicket:id="code">
+			</pre>
+			</div>
+		</div>
+	</wicket:fragment>
+
+   	</wicket:extend>
+
+</body>
+</html>
+

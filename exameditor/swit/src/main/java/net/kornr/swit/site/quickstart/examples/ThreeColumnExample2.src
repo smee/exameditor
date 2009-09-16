@@ -1,0 +1,20 @@
+public class ThreeColumnExample2 extends Panel 
+{
+	static private LayoutInfo s_layout = new LayoutInfo(LayoutInfo.UNIT_PERCENTAGE, 33, 0);
+	static {
+		ThreeColumnsLayoutResource.register(s_layout);
+		s_layout.setLeftColor(Color.yellow);
+		s_layout.setMiddleColor(Color.lightGray);
+	}
+	
+	public ThreeColumnExample2(String id) {
+		super(id);
+
+		ThreeColumnsLayout layoutmanager = new ThreeColumnsLayout("layout", s_layout);
+        this.add(layoutmanager);
+        
+        ColumnPanel leftcolumn = layoutmanager.getLeftColumn();
+        leftcolumn.addContent(new Label(leftcolumn.getContentId(), "This left side should be yellow and take 33% of the space"));
+	}
+
+}

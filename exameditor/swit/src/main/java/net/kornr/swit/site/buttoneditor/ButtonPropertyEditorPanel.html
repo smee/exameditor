@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<body>
+	<wicket:panel>
+		<div wicket:id="editor"></div>
+	</wicket:panel>
+	
+	<wicket:fragment wicket:id="textfield">
+		<table><tr><td>
+		<span wicket:id="name"></span>
+		</td><td> 
+		<span><input style="width:60px;" type="text" wicket:id="prop"/> <span style="width: 120px; height: 12px; border: 1px solid black;" class="colorpickersample">&nbsp;SAMPLE&nbsp;COLOR&nbsp;</span></span>
+		</td></tr></table>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="checkbox">
+		<input type="checkbox" wicket:id="prop"/> <span wicket:id="name"></span> 
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="select">
+		<span wicket:id="name"></span> <select wicket:id="prop"></select> 
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="div">
+		<table><tr><td>
+			<span wicket:id="name"></span>
+		</td><td> 
+			<div wicket:id="prop"></div> 
+		</td></tr></table>
+	</wicket:fragment>
+	
+</body>
+</html>

@@ -1,0 +1,22 @@
+
+body {
+	font-family: Arial;
+	font-size: 0.95em;
+}
+
+h1 {
+	font-size: 1.3em;
+}
+
+h2 {
+	font-size: 1.2em;
+	font-style: italic;	
+}
+
+a {
+	color: #6666DD;
+}
+
+img {
+	border: none;
+}
