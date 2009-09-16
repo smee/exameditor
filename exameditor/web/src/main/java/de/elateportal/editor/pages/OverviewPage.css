@@ -1,0 +1,50 @@
+@CHARSET "ISO-8859-1";
+/* 
+
+CSS from the article at: http://jontangerine.com/log/2007/09/the-incredible-em-and-elastic-layouts-with-css
+
+License: Attribution-Share Alike 2.0 UK: England & Wales
+http://creativecommons.org/licenses/by-sa/2.0/uk/
+ 
+*/
+html{
+  font-size: 100%; /* WinIE text resize correction */
+} 
+
+body{
+  font-size: 1em;
+  font-family: georgia, serif;
+  text-align: center;
+  color: #444;
+  background: #e6e6e6;
+  padding: 0;
+  margin: 0;
+}
+
+#mainContent{
+  width: 56.25em;
+  margin: 1.5em auto;
+  background: #FEFEFE;
+  border: 0.063em solid #ccc;
+  text-align: left;
+}
+
+h1{
+  font-size: 1.125em;
+  line-height: 1em;
+  margin: 1em;
+  font-weight: 300;
+}
+
+p{
+  font-size: 0.750em;
+  line-height: 1.5em;
+  margin: 1.5em;
+}
+
+p img{
+  width:7.5em;
+  height:7.5em;
+  margin:0 1.5em 1.5em 0;
+  float:left;
+}

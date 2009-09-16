@@ -1,7 +1,6 @@
 package de.elateportal.editor.components.menu;
 
 import java.io.Serializable;
-import java.util.concurrent.Callable;
 
 import org.apache.wicket.markup.html.WebPage;
 
@@ -11,6 +10,9 @@ import org.apache.wicket.markup.html.WebPage;
  * @author Steffen Dienst
  */
 public class LinkVO implements Serializable {
+    public interface Create extends Serializable {
+        WebPage createPage();
+    }
 
     /**
      * 
@@ -23,7 +25,7 @@ public class LinkVO implements Serializable {
 
     private String externalUrl;
 
-		private Callable<WebPage> pageCallback;
+    private Create pageCallback;
 
     /**
      */
@@ -31,11 +33,10 @@ public class LinkVO implements Serializable {
         this.responsePageClass = linkPageClass;
         this.linkText = linkText;
     }
-    /**
-     */
-    public LinkVO(final  WebPage linkPage, final String linkText) {
-    	this.responsePage = linkPage;
-    	this.linkText = linkText;
+
+    public LinkVO(final Create pageCallback, final String linkText) {
+        this.pageCallback = pageCallback;
+        this.linkText = linkText;
     }
 
     /**
@@ -45,10 +46,13 @@ public class LinkVO implements Serializable {
         this.externalUrl = externalLink;
     }
 
-    public LinkVO(final Callable<WebPage> pageCallback, final String linkText) {
-    	this.pageCallback = pageCallback;
-    	this.linkText = linkText;
+    /**
+     */
+    public LinkVO(final WebPage linkPage, final String linkText) {
+        this.responsePage = linkPage;
+        this.linkText = linkText;
     }
+
     /**
      * @return the externalUrl
      */
@@ -60,20 +64,21 @@ public class LinkVO implements Serializable {
         return linkText;
     }
 
+    public WebPage getResponsePage() {
+        if (pageCallback != null) {
+            try {
+                this.responsePage = pageCallback.createPage();
+                this.pageCallback = null;
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        return responsePage;
+    }
+
     public Class<? extends WebPage> getResponsePageClass() {
         return responsePageClass;
-    }
-    public WebPage getResponsePage() {
-    	if(pageCallback !=null) {
-    		try {
-	        this.responsePage=pageCallback.call();
-	        this.pageCallback = null;
-        } catch (Exception e) {
-	        e.printStackTrace();
-        }
-    		
-    	}
-    	return responsePage;
     }
 
     public void setLinkText(final String linkText) {
