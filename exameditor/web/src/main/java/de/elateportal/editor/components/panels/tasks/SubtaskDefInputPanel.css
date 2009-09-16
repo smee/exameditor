@@ -1,0 +1,61 @@
+@CHARSET "ISO-8859-1";
+legend {
+  margin-left: 1em;
+  color: #000000;
+  font-weight: bold;
+  padding: 0;
+}
+fieldset ol {
+  padding: 1em 1em 0 1em;
+  list-style: none;
+}
+/* labels on top *
+fieldset {
+  margin: 1.5em 0 0 0;
+  padding: 0;
+}
+fieldset li {
+  padding-bottom: 1em;
+}
+fieldset.submit {
+  border-style: none;
+}
+label {
+  display: block;
+}
+* labels on top end */
+
+/* labels left aligned start */
+fieldset {
+  float: left;
+  clear: left;
+  width: 100%;
+  margin: 0 0 1.5em 0;
+  padding: 0;
+  border: 1px solid #BFBAB0;
+  background-color: #F2EFE9;
+  background-image: url(formbackground.png);
+background-repeat: repeat-x;
+}
+fieldset li {
+  float: left;
+  clear: left;
+  width: 100%;
+  padding-bottom: 1em;
+}
+label {
+  float: left;
+  width: 9em;
+  margin-right: 1em;
+  /* remove text-align for making the labels left aligned*/
+  text-align: right;
+}
+fieldset.submit {
+  float: none;
+  width: auto;
+  border: 0 none #FFF;
+  padding-left: 11em;
+  border-style: none;
+  background-color: transparent;
+}
+ /* labels left aligned */
