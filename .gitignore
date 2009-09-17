@@ -16,7 +16,6 @@ onyx/
 taskmodel/
 wicket-menu-read-only/
 wicket-web-beans/
-wicket/
 bin/
 target/
 .classpath
