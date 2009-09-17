@@ -27,7 +27,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 
+import de.elateportal.editor.behaviours.TextFieldHintBehaviour;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
 import de.thorstenberger.taskmodel.complex.complextaskdef.MappingSubTaskDef;
@@ -89,7 +91,7 @@ public class SubtaskDefInputPanel extends Panel {
         private void init() {
             add(new FeedbackPanel("feedback"));
             // add common subtaskdeftype input fields
-            add(new TextField<T>("id").setRequired(true));
+            add(new TextField<T>("id").setRequired(true).add(new TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
             add(new TextArea<T>("problem").setRequired(true));
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
@@ -112,6 +114,7 @@ public class SubtaskDefInputPanel extends Panel {
          */
         @Override
         protected void onSubmit() {
+        	  //TODO clear input fields that have the hint text as content, set them to empty
             super.onSubmit();
             clearPersistentObject();
             setResponsePage(new ShowSubtaskDefsPage(modelClass));
