@@ -9,6 +9,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationTo
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -40,7 +41,13 @@ public class ShowSubtaskDefsPage extends OverviewPage {
         final IColumn[] columns = new IColumn[3];
 
         columns[0] = new PropertyColumn(new Model<String>("ID"), "id");
-        columns[1] = new PropertyColumn(new Model<String>("Problem"), "problem");
+        columns[1] = new PropertyColumn(new Model<String>("Problem"), "problem") {
+            @Override
+            public void populateItem(final Item item, final String componentId, final IModel rowModel) {
+                // add a label that renders it's html contents
+                item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
+            }
+        };
         columns[2] = new PropertyColumn(new Model<String>("Aufgabentyp"), "class.simpleName") {
             @Override
             protected IModel createLabelModel(final IModel rowModel) {
