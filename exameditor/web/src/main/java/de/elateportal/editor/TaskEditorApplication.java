@@ -107,6 +107,10 @@ public class TaskEditorApplication extends DataApplication {
     @Override
     protected void init() {
         super.init();
+        // System.out.println(AbstractLink.class.getProtectionDomain().getCodeSource());
+        // for (final Method m : AbstractLink.class.getDeclaredMethods()) {
+        // System.out.println(m);
+        // }
         getMarkupSettings().setStripWicketTags(true);
     }
 

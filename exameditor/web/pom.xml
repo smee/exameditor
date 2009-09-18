@@ -133,7 +133,7 @@
     	<version>1.5.8</version>
     	<type>jar</type>
     	<scope>compile</scope>
-    </dependency>
+    </dependency>  
   </dependencies>
   <repositories>
     <repository>
