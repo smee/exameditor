@@ -4,7 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
-import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
+import de.elateportal.model.SubTaskDefType;
 
 /**
  * @author sdienst

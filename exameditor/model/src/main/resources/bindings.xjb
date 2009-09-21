@@ -9,5 +9,8 @@
         <jxb:globalBindings>
             <xjc:serializable uid="-6026937020915831338"/>
         </jxb:globalBindings>
+        <jxb:schemaBindings>
+            <jxb:package name="de.elateportal.model"/>
+        </jxb:schemaBindings>
     </jxb:bindings>
 </jxb:bindings>

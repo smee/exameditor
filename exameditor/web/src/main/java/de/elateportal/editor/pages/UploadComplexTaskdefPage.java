@@ -17,7 +17,7 @@ import org.apache.wicket.util.lang.Bytes;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
-import de.thorstenberger.taskmodel.complex.complextaskdef.ComplexTaskDef;
+import de.elateportal.model.ComplexTaskDef;
 
 /**
  * @author sdienst

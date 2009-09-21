@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
-import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
+import de.elateportal.model.SubTaskDefType;
 
 /**
  * @author sdienst

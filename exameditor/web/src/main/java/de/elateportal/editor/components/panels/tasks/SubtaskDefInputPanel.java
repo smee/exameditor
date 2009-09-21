@@ -37,12 +37,12 @@ import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import de.elateportal.editor.behaviours.TextFieldHintBehaviour;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
-import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.MappingSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.PaintSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.SubTaskDefType;
-import de.thorstenberger.taskmodel.complex.complextaskdef.TextSubTaskDef;
+import de.elateportal.model.ClozeSubTaskDef;
+import de.elateportal.model.MappingSubTaskDef;
+import de.elateportal.model.McSubTaskDef;
+import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.SubTaskDefType;
+import de.elateportal.model.TextSubTaskDef;
 
 /**
  * @author Steffen Dienst

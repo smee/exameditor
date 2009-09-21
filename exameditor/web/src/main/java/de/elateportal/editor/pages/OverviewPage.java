@@ -9,11 +9,11 @@ import org.apache.wicket.markup.html.WebPage;
 import de.elateportal.editor.components.menu.ChromeMenu;
 import de.elateportal.editor.components.menu.LinkVO;
 import de.elateportal.editor.components.menu.LinkVO.Create;
-import de.thorstenberger.taskmodel.complex.complextaskdef.ClozeSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.MappingSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.McSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.PaintSubTaskDef;
-import de.thorstenberger.taskmodel.complex.complextaskdef.TextSubTaskDef;
+import de.elateportal.model.ClozeSubTaskDef;
+import de.elateportal.model.MappingSubTaskDef;
+import de.elateportal.model.McSubTaskDef;
+import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.TextSubTaskDef;
 
 public class OverviewPage extends WebPage {
 

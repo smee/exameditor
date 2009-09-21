@@ -5,7 +5,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
-import de.thorstenberger.taskmodel.complex.complextaskdef.TextSubTaskDef;
+import de.elateportal.model.McSubTaskDef;
+import de.elateportal.model.TextSubTaskDef;
 
 public class McSubtaskDefInputPanel extends Panel {
 
