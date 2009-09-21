@@ -52,3 +52,10 @@ p img{
 .feedbackPanelERROR {
   color: #FF0000;
 }
+
+table.dataview tr.even {
+  background-color: #f2efe9;
+}
+table.dataview tr.odd {
+  background-color: #ffffff;
+}
