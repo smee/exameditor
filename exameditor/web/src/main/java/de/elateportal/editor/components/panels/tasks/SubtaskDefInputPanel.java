@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elateportal.editor.components.panels.tasks;
 
 import net.databinder.components.hib.DataForm;
+import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -61,6 +62,12 @@ public class SubtaskDefInputPanel extends Panel {
         public SubtaskDefForm(final String id, final Class<T> modelClass) {
             super(id, modelClass);
             this.modelClass = modelClass;
+            init();
+        }
+
+        public SubtaskDefForm(final String id, final T object) {
+            super(id, new HibernateObjectModel<T>(object));
+            this.modelClass = object.getClass();
             init();
         }
 
@@ -138,9 +145,13 @@ public class SubtaskDefInputPanel extends Panel {
      * @param id
      * @param clazz
      */
-    public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz) {
+    public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz, final SubTaskDefType object) {
         super(id);
-        add(new SubtaskDefForm("taskform", clazz));
+        if (object != null) {
+            add(new SubtaskDefForm("taskform", object));
+        } else {
+            add(new SubtaskDefForm("taskform", clazz));
+        }
     }
 
     /**

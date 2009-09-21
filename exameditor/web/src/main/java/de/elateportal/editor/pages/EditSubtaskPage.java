@@ -9,15 +9,20 @@ import de.elateportal.model.SubTaskDefType;
 /**
  * @author sdienst
  */
-public class EditSubtaskPage extends OverviewPage {
+public class EditSubtaskPage<T extends SubTaskDefType> extends OverviewPage {
 
-    public EditSubtaskPage(final Class<? extends SubTaskDefType> clazz) {
-        add(new Label("heading", "Aufgabe bearbeiten"));
-        add(createInputPanelFor("input", clazz));
+    public EditSubtaskPage(final Class<T> clazz) {
+        this(clazz, null);
     }
 
-    private Component createInputPanelFor(final String id, final Class<? extends SubTaskDefType> clazz) {
+    public EditSubtaskPage(final Class<T> clazz, final T subTaskDefType) {
+        add(new Label("heading", "Aufgabe bearbeiten"));
+        add(createInputPanelFor("input", clazz, subTaskDefType));
 
-        return new SubtaskDefInputPanel(id, clazz);
+    }
+
+    private Component createInputPanelFor(final String id, final Class<T> clazz, final T subTaskDefType) {
+
+        return new SubtaskDefInputPanel(id, clazz, subTaskDefType);
     }
 }
