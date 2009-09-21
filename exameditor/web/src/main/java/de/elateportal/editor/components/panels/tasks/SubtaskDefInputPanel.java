@@ -21,7 +21,6 @@ package de.elateportal.editor.components.panels.tasks;
 import net.databinder.components.hib.DataForm;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -30,16 +29,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
-import wicket.contrib.tinymce.settings.ContextMenuPlugin;
-import wicket.contrib.tinymce.settings.DateTimePlugin;
-import wicket.contrib.tinymce.settings.DirectionalityPlugin;
-import wicket.contrib.tinymce.settings.EmotionsPlugin;
+import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.FullScreenPlugin;
-import wicket.contrib.tinymce.settings.MediaPlugin;
 import wicket.contrib.tinymce.settings.PastePlugin;
-import wicket.contrib.tinymce.settings.PreviewPlugin;
-import wicket.contrib.tinymce.settings.PrintPlugin;
-import wicket.contrib.tinymce.settings.SavePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
@@ -75,7 +67,7 @@ public class SubtaskDefInputPanel extends Panel {
         /**
          * @param submittingButton
          */
-        protected void delegateSubmit(final Button submittingButton) {
+        protected void delegateSubmit(final org.apache.wicket.markup.html.form.Button submittingButton) {
         }
 
         /**
@@ -109,8 +101,8 @@ public class SubtaskDefInputPanel extends Panel {
             add(new TextArea<T>("problem").setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
-            add(new Button("saveButton"));
-            add(new Button("cancelButton") {
+            add(new org.apache.wicket.markup.html.form.Button("saveButton"));
+            add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
                 @Override
                 public void onSubmit() {
                     clearPersistentObject();
@@ -159,78 +151,51 @@ public class SubtaskDefInputPanel extends Panel {
     public TinyMCESettings createFullFeatureset() {
         final TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
 
-        final ContextMenuPlugin contextMenuPlugin = new ContextMenuPlugin();
-        settings.register(contextMenuPlugin);
-
         // first toolbar
-        final SavePlugin savePlugin = new SavePlugin();
-        settings.add(savePlugin.getSaveButton(), TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.newdocument, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        settings.add(Button.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        settings.add(Button.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
 
         // second toolbar
         final PastePlugin pastePlugin = new PastePlugin();
         final SearchReplacePlugin searchReplacePlugin = new SearchReplacePlugin();
-        final DateTimePlugin dateTimePlugin = new DateTimePlugin();
-        dateTimePlugin.setDateFormat("Date: %m-%d-%Y");
-        dateTimePlugin.setTimeFormat("Time: %H:%M");
-        final PreviewPlugin previewPlugin = new PreviewPlugin();
-        settings.add(wicket.contrib.tinymce.settings.Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteTextButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(pastePlugin.getPasteWordButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
         settings.add(searchReplacePlugin.getSearchButton(), TinyMCESettings.Toolbar.second,
                 TinyMCESettings.Position.before);
         settings.add(searchReplacePlugin.getReplaceButton(), TinyMCESettings.Toolbar.second,
                 TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(dateTimePlugin.getDateButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(dateTimePlugin.getTimeButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(previewPlugin.getPreviewButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
 
         // third toolbar
         final TablePlugin tablePlugin = new TablePlugin();
-        final EmotionsPlugin emotionsPlugin = new EmotionsPlugin();
-        // final IESpellPlugin iespellPlugin = new IESpellPlugin();
-        final MediaPlugin mediaPlugin = new MediaPlugin();
-        final PrintPlugin printPlugin = new PrintPlugin();
         final FullScreenPlugin fullScreenPlugin = new FullScreenPlugin();
-        final DirectionalityPlugin directionalityPlugin = new DirectionalityPlugin();
         settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
-        settings.add(emotionsPlugin.getEmotionsButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        // settings.add(iespellPlugin.getIespellButton(), TinyMCESettings.Toolbar.third,
-        // TinyMCESettings.Position.after);
-        settings.add(mediaPlugin.getMediaButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(printPlugin.getPrintButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings
-                .add(directionalityPlugin.getLtrButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings
-                .add(directionalityPlugin.getRtlButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-        settings.add(wicket.contrib.tinymce.settings.Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
         settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third,
                 TinyMCESettings.Position.after);
-
-        // fourth toolbar
-        // final SpellCheckPlugin spellCheckPlugin = new SpellCheckPlugin();
-        // settings.add(spellCheckPlugin.getSpellCheckButton(), TinyMCESettings.Toolbar.fourth,
-        // TinyMCESettings.Position.after);
 
         // other settings
         settings.setToolbarAlign(TinyMCESettings.Align.left);
         settings.setToolbarLocation(TinyMCESettings.Location.top);
         settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
         settings.setResizing(true);
+
+        // remove superflous buttons
+        settings.disableButton(Button.image);
+        settings.disableButton(Button.anchor);
+        settings.disableButton(Button.link);
+        settings.disableButton(Button.unlink);
+        settings.disableButton(Button.visualaid);
+        settings.disableButton(Button.cleanup);
+        settings.disableButton(Button.help);
 
         return settings;
     }
