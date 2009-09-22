@@ -12,6 +12,8 @@ import de.elateportal.editor.pages.EditSubtaskPage;
 import de.elateportal.model.SubTaskDefType;
 
 /**
+ * Small panel with two links: edit and delete
+ * 
  * @author sdienst
  */
 public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
