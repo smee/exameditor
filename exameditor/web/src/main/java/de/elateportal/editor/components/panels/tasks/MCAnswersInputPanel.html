@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+<wicket:head>
+<wicket:link>
+  <link rel="stylesheet" type="text/css" href="MCAnswersInputPanel.css" media="all">
+</wicket:link>
+</wicket:head>
+</head>
+<body>
+<wicket:panel>
+  <label wicket:id="title"></label>
+  <div wicket:id="answerrepeater">
+  <div wicket:id="mcanswer" class="mcanswer">
+    <!-- <input wicket:id="id" type="text" class="answerid"/>  -->
+    <input wicket:id="value" type="text" class="answertext">
+    <div class="stack">
+      <div><input type="image" wicket:id="moveUp" src="#" title="Move up"/></div>
+      <div><input type="image"  wicket:id="moveDown" title="Move down"src="#"/></div>
+    </div>
+    <input type="image" wicket:id="delete" class="delete" src="#" onclick="return confirm('Sind Sie sicher, dass diese Antwort gel&ouml;scht werden soll?');">
+  </div>
+  </div>
+  <div class="buttons">
+   <a href="#" wicket:id="addanswer">Neue Antwort</a>
+  </div>
+</wicket:panel>
+</body>
+</html>
+  

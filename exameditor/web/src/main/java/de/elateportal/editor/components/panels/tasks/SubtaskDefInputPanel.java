@@ -27,7 +27,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.IModel;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
@@ -36,7 +36,6 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import de.elateportal.editor.behaviours.TextFieldHintBehaviour;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
@@ -84,7 +83,7 @@ public class SubtaskDefInputPanel extends Panel {
          */
         private Component getTaskSpecificFormPanel(final String id) {
             if (modelClass.equals(McSubTaskDef.class)) {
-                return new McSubtaskDefInputPanel(id);
+                return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getDefaultModel());
             } else if (modelClass.equals(TextSubTaskDef.class)) {
                 return new TextSubtaskDefInputPanel(id);
             } else if (modelClass.equals(MappingSubTaskDef.class)) {
@@ -104,7 +103,8 @@ public class SubtaskDefInputPanel extends Panel {
         private void init() {
             add(new FeedbackPanel("feedback"));
             // add common subtaskdeftype input fields
-            add(new TextField<T>("id").setRequired(true).add(new TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
+            add(new TextField<T>("id").setRequired(true));// .add(new
+            // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
             add(new TextArea<T>("problem").setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
             add(new TextField<T>("hint"));
             add(new TextArea<T>("correctionHint"));
@@ -127,10 +127,9 @@ public class SubtaskDefInputPanel extends Panel {
          */
         @Override
         protected void onSubmit() {
-            // TODO clear input fields that have the hint text as content, set them to empty
             super.onSubmit();
-            clearPersistentObject();
-            setResponsePage(new ShowSubtaskDefsPage(modelClass));
+            // clearPersistentObject();
+            // setResponsePage(new ShowSubtaskDefsPage(modelClass));
         }
     }
 
