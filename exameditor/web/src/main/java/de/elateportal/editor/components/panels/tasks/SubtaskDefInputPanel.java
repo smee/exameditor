@@ -36,6 +36,7 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import de.elateportal.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef;

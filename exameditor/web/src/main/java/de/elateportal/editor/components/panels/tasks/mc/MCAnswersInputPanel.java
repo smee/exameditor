@@ -1,23 +1,20 @@
-package de.elateportal.editor.components.panels.tasks;
-
-import java.util.List;
-
-import net.databinder.components.MoveDownButton;
-import net.databinder.components.MoveUpButton;
-import net.databinder.components.RemoveItemButton;
+package de.elateportal.editor.components.panels.tasks.mc;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
+import de.elateportal.editor.components.listeditor.ListEditor;
+import de.elateportal.editor.components.listeditor.ListItem;
+import de.elateportal.editor.components.listeditor.MoveDownButton;
+import de.elateportal.editor.components.listeditor.MoveUpButton;
+import de.elateportal.editor.components.listeditor.RemoveButton;
 import de.elateportal.model.McSubTaskDef.Correct;
 import de.elateportal.model.McSubTaskDef.Incorrect;
 
@@ -38,41 +35,43 @@ public class MCAnswersInputPanel extends Panel {
         }
 
         add(new Label("title", title));
+
         container = new WebMarkupContainer("answerrepeater");
-        final ListView answers = new PropertyListView("mcanswer", model) {
+        final ListEditor answers = new ListEditor("mcanswer", model) {
             @Override
-            protected void populateItem(final ListItem item) {
+            protected void onPopulateItem(final ListItem item) {
                 // item.add(new TextField("id"));
-                item.add(new TextField("value"));
+                item.add(new TextField("value", new PropertyModel(item.getModel().getObject(), "value")));
                 // links, images for changing order and removing answers
-                item.add(new MoveUpButton("moveUp", item));
-                item.add(new MoveDownButton("moveDown", item));
-                item.add(new RemoveItemButton("delete", item));
+                item.add(new MoveUpButton("moveUp"));
+                item.add(new MoveDownButton("moveDown"));
+                item.add(new RemoveButton("delete"));
             }
-        }.setReuseItems(true);
+        };
         container.setOutputMarkupId(true);
         container.add(answers);
         add(container);
 
-        add(new AjaxFallbackLink("addanswer", Model.of("Neue Aufgabe")) {
+        final AjaxButton addAnswer = new AjaxButton("addanswer") {
             @Override
-            public void onClick(final AjaxRequestTarget target) {
-                final List list = (List) MCAnswersInputPanel.this.getDefaultModelObject();
+            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
+
                 if (modelElementClass.equals(Correct.class)) {
                     final Correct answer = new Correct();
                     answer.setId("" + System.nanoTime());
-                    final boolean res = list.add(answer);
-                    System.out.println(res);
+                    answers.addItem(answer);
                 } else {
                     final Incorrect answer = new Incorrect();
                     answer.setId("" + System.nanoTime());
-                    list.add(answer);
+                    answers.addItem(answer);
                 }
+
                 if (target != null) {
                     target.addComponent(container);
                 }
-                System.out.println(list.size());
             }
-        });
+        };
+        addAnswer.setDefaultFormProcessing(false);
+        add(addAnswer);
     }
 }
