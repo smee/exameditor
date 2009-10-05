@@ -1,5 +1,9 @@
 package de.elateportal.editor.components.panels.tasks.mc;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -46,6 +50,36 @@ public class MCAnswersInputPanel extends Panel {
                 item.add(new MoveUpButton("moveUp"));
                 item.add(new MoveDownButton("moveDown"));
                 item.add(new RemoveButton("delete"));
+            }
+
+            @Override
+            public void updateModel() {
+                /*
+                 * XXX extremely ugly hack: jpa doesn't handle ordered lists, so we need to sort the primary keys of our
+                 * element list. This way we will get the list in that very order upon the next retrieval.
+                 */
+                // find all primary keys
+                final List<Long> primaryKeys = new ArrayList<Long>();
+                for (final Object o : items) {
+                    if (o instanceof Correct) {
+                        primaryKeys.add(((Correct) o).getHjid());
+                    } else {
+                        primaryKeys.add(((Incorrect) o).getHjid());
+                    }
+                }
+                // make sure they are in an ascending order
+                Collections.sort(primaryKeys);
+                // set the primary keys in the right order
+                for (int i = 0; i < items.size(); i++) {
+                    final Object o = items.get(i);
+                    if (o instanceof Correct) {
+                        ((Correct) o).setHjid(primaryKeys.get(i));
+                    } else {
+                        ((Incorrect) o).setHjid(primaryKeys.get(i));
+                    }
+
+                }
+                super.updateModel();
             }
         };
         container.setOutputMarkupId(true);

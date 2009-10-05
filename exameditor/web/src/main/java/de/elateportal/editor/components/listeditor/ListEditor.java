@@ -9,7 +9,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 
 public abstract class ListEditor<T> extends RepeatingView implements IFormModelUpdateListener {
-    List<T> items;
+    protected List<T> items;
 
     public ListEditor(final String id, final IModel<List<T>> model) {
         super(id, model);
