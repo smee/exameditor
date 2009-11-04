@@ -1,18 +1,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+  <wicket:head>
+    <wicket:link>
+      <link rel="stylesheet" type="text/css" href="MappingSubtaskDefInputPanel.css" media="all">
+    </wicket:link>
+  </wicket:head>
 <body>
-<wicket:panel>
+ <wicket:panel>
 
-  <fieldset>
-    <legend>Spezifisch</legend> 
-    <ol>
-      <li>
-        <label for="defaulttext">Antwortvorbelegung</label> 
-        
+  <fieldset><legend>Spezifisch</legend>
+  <ol>
+    <li><label for="assignments">Zuordnungen</label></li>
+    <div wicket:id="assignementContainer">
+      <li wicket:id="assignments">
+        <label>&nbsp;</label>
+        <div class="stack">
+          <input type="text" wicket:id="id" value="3" style="width: 3em;" /> 
+          <input type="text" wicket:id="name" value="Berlin" />
+          <input type="image" wicket:id="delete" class="delete" src="#" onclick="return confirm('Sind Sie sicher, dass diese Antwort gel&ouml;scht werden soll?');">
+        </div>
       </li>
-    </ol>
+    </div>
+    <div class="buttons">
+      <a href="#" wicket:id="addassignment">Neue Zuordnung</a>
+    </div>
+    <li>
+      <label for="concepts">Konzepte</label></li>
+      <div wicket:id="conceptContainer">
+        <li wicket:id="concepts">
+          <label>&nbsp;</label>
+          <div class="stack">
+            <input type="text" wicket:id="name" value="Hauptstadt von Deutschland" style="width: 30em;" /> 
+            <input type="text" wicket:id="correctAssignmentID" value="3" style="width: 3em;"/>
+            <input type="image" wicket:id="delete" class="delete" src="#" onclick="return confirm('Sind Sie sicher, dass diese Antwort gel&ouml;scht werden soll?');">
+          </div>
+        </li>
+      </div>
+      <div class="buttons">
+        <a href="#" wicket:id="addconcept">Neues Konzept</a>
+      </div>
+  </ol>
   </fieldset>
-  
-  </wicket:panel>
+
+ </wicket:panel>
 </body>
 </html>
