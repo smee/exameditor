@@ -101,6 +101,11 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
         setDefaultModelObject(object);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.wicket.markup.html.form.IFormModelUpdateListener#updateModel()
+     */
     public void updateModel() {
         setModelObject(items);
     }

@@ -29,8 +29,24 @@ public class MCAnswersInputPanel extends Panel {
 
     private final WebMarkupContainer container;
 
+    /**
+     * @param id
+     * @param modelElementClass
+     * @param model
+     */
     @SuppressWarnings("unchecked")
     public MCAnswersInputPanel(final String id, final Class<?> modelElementClass, final IModel model) {
+        this(id, modelElementClass, model, true);
+    }
+
+    /**
+     * @param id
+     * @param modelElementClass
+     * @param model
+     * @param moveable
+     */
+    @SuppressWarnings("unchecked")
+    public MCAnswersInputPanel(final String id, final Class<?> modelElementClass, final IModel model, final boolean moveable) {
         super(id, model);
 
         String title = "Richtige Anworten";
@@ -47,8 +63,8 @@ public class MCAnswersInputPanel extends Panel {
                 // item.add(new TextField("id"));
                 item.add(new TextField("value", new PropertyModel(item.getModel().getObject(), "value")));
                 // links, images for changing order and removing answers
-                item.add(new MoveUpButton("moveUp"));
-                item.add(new MoveDownButton("moveDown"));
+                item.add(new MoveUpButton("moveUp").setVisibilityAllowed(moveable));
+                item.add(new MoveDownButton("moveDown").setVisibilityAllowed(moveable));
                 item.add(new RemoveButton("delete"));
             }
 
