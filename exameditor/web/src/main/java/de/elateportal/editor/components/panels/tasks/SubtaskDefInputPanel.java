@@ -36,7 +36,11 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import de.elateportal.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
+import de.elateportal.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
+import de.elateportal.editor.components.panels.tasks.paint.PaintSubtaskDefInputPanel;
+import de.elateportal.editor.components.panels.tasks.text.TextSubtaskDefInputPanel;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
@@ -88,7 +92,7 @@ public class SubtaskDefInputPanel extends Panel {
             } else if (modelClass.equals(TextSubTaskDef.class)) {
                 return new TextSubtaskDefInputPanel(id);
             } else if (modelClass.equals(MappingSubTaskDef.class)) {
-                return new MappingSubtaskDefInputPanel(id);
+                return new MappingSubtaskDefInputPanel(id, (IModel<MappingSubTaskDef>) getDefaultModel());
             } else if (modelClass.equals(ClozeSubTaskDef.class)) {
                 return new ClozeSubtaskDefInputPanel(id);
             } else if (modelClass.equals(PaintSubTaskDef.class)) {

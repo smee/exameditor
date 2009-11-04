@@ -1,4 +1,4 @@
-package de.elateportal.editor.components.panels.tasks;
+package de.elateportal.editor.components.panels.tasks.cloze;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
@@ -6,9 +6,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 import de.elateportal.model.TextSubTaskDef;
 
-public class TextSubtaskDefInputPanel extends Panel {
+public class ClozeSubtaskDefInputPanel extends Panel {
 
-    public TextSubtaskDefInputPanel(final String id) {
+    public ClozeSubtaskDefInputPanel(final String id) {
         super(id);
         add(new TextArea<TextSubTaskDef>("initialTextFieldValue"));
         add(new TextField<TextSubTaskDef>("textFieldHeight"));
