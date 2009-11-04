@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.convert.IConverter;
 
 import de.elateportal.editor.components.listeditor.ListEditor;
 import de.elateportal.editor.components.listeditor.ListItem;
@@ -60,8 +61,24 @@ public class MappingSubtaskDefInputPanel extends Panel {
             @Override
             protected void onPopulateItem(final ListItem<Concept> item) {
                 item.add(new TextField("name", new PropertyModel(item.getModel().getObject(), "name")).setEscapeModelStrings(false));
-                // TODO set iconverter to this textfield to convert list<String> <=> comma separated string
-                item.add(new TextField("correctAssignmentID", new PropertyModel(item.getModel().getObject(), "correctAssignmentID")));
+                // TODO use getCorrectAssignmentIDItems instead of correctAssignmentID, the former
+                // TODO is jpa specific, the later jaxb.... they don't get synchronized #$%##%!!
+                item.add(new TextField("correctAssignmentID", new PropertyModel(item.getModel().getObject(), "correctAssignmentIDItems")) {
+                    @Override
+                    public IConverter getConverter(final Class<?> type) {
+                        if (List.class.isAssignableFrom(type)) {
+                            return new CorrectAssignementConverter();
+                        } else {
+                            return super.getConverter(type);
+                        }
+                    }
+
+                    @Override
+                    public void updateModel() {
+                        // TODO Auto-generated method stub
+                        super.updateModel();
+                    }
+                });
                 item.add(new RemoveButton("delete"));
             }
 
@@ -76,6 +93,7 @@ public class MappingSubtaskDefInputPanel extends Panel {
                 }
             }
         };
+
         addConcept.setDefaultFormProcessing(false);
         add(addConcept);
         conceptContainer.setOutputMarkupId(true);
