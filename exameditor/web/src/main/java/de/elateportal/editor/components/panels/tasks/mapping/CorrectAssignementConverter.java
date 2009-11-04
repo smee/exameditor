@@ -42,7 +42,6 @@ public class CorrectAssignementConverter implements IConverter {
      * @see org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String, java.util.Locale)
      */
     public Object convertToObject(final String value, final Locale locale) {
-        System.out.println("converting " + value);
         final List<CorrectAssignmentIDItem> result = new ArrayList<CorrectAssignmentIDItem>();
         for (final String s : StringUtils.split(value, ',')) {
             final CorrectAssignmentIDItem ca = new CorrectAssignmentIDItem();
