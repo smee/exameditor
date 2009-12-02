@@ -100,6 +100,7 @@
       <plugin>
         <groupId>org.jvnet.hyperjaxb3</groupId>
         <artifactId>maven-hyperjaxb3-plugin</artifactId>
+        <version>0.5.3</version>
         <executions>
           <execution>
             <goals>

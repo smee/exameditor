@@ -1,6 +1,7 @@
 package de.elateportal.editor.components.panels.tasks.mc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import de.elateportal.editor.components.listeditor.EditorButton;
 import de.elateportal.editor.components.listeditor.ListEditor;
 import de.elateportal.editor.components.listeditor.ListItem;
 import de.elateportal.editor.components.listeditor.MoveDownButton;
@@ -28,7 +30,7 @@ import de.elateportal.model.McSubTaskDef.Incorrect;
 public class MCAnswersInputPanel extends Panel {
 
     private final WebMarkupContainer container;
-
+    Collection<EditorButton> moveButtons=new ArrayList<EditorButton>();
     /**
      * @param id
      * @param modelElementClass
@@ -61,10 +63,14 @@ public class MCAnswersInputPanel extends Panel {
             @Override
             protected void onPopulateItem(final ListItem item) {
                 // item.add(new TextField("id"));
-                item.add(new TextField("value", new PropertyModel(item.getModel().getObject(), "value")));
+                item.add(new TextField("value", new PropertyModel(item.getModel(), "value")));
                 // links, images for changing order and removing answers
-                item.add(new MoveUpButton("moveUp").setVisibilityAllowed(moveable));
-                item.add(new MoveDownButton("moveDown").setVisibilityAllowed(moveable));
+                MoveUpButton mub=new MoveUpButton("moveUp");
+                MoveDownButton mdb=new MoveDownButton("moveDown");
+                moveButtons.add(mub);
+                moveButtons.add(mdb);
+                item.add(mub.setVisibilityAllowed(moveable));
+                item.add(mdb.setVisibilityAllowed(moveable));
                 item.add(new RemoveButton("delete"));
             }
 
@@ -77,26 +83,37 @@ public class MCAnswersInputPanel extends Panel {
                 // find all primary keys
                 final List<Long> primaryKeys = new ArrayList<Long>();
                 for (final Object o : items) {
-                    if (o instanceof Correct) {
-                        primaryKeys.add(((Correct) o).getHjid());
-                    } else {
-                        primaryKeys.add(((Incorrect) o).getHjid());
-                    }
+                	Long id = getId(o);
+                    if(id!=null)
+                    	primaryKeys.add(id);
+                    
                 }
                 // make sure they are in an ascending order
                 Collections.sort(primaryKeys);
                 // set the primary keys in the right order
-                for (int i = 0; i < items.size(); i++) {
-                    final Object o = items.get(i);
-                    if (o instanceof Correct) {
-                        ((Correct) o).setHjid(primaryKeys.get(i));
-                    } else {
-                        ((Incorrect) o).setHjid(primaryKeys.get(i));
-                    }
-
+                for (int i = 0; i < primaryKeys.size(); i++) {
+                    setId(items.get(i),primaryKeys.get(i));
+                }
+                for (int i = primaryKeys.size();i<items.size(); i++) {
+                	setId(items.get(i),null);
                 }
                 super.updateModel();
             }
+
+						private void setId(Object o, Long id) {
+							if (o instanceof Correct) {
+								((Correct) o).setHjid(id);
+							} else {
+								((Incorrect) o).setHjid(id);
+							}
+						}
+						private Long getId(Object o) {
+							if (o instanceof Correct) {
+								return ((Correct) o).getHjid();
+							} else {
+								return ((Incorrect) o).getHjid();
+							}
+						}
         };
         container.setOutputMarkupId(true);
         container.add(answers);
@@ -123,5 +140,13 @@ public class MCAnswersInputPanel extends Panel {
         };
         addAnswer.setDefaultFormProcessing(false);
         add(addAnswer);
+    }
+    /**
+     * Toggle visibility of moveup/down buttons.
+     * @param flag
+     */
+    public void setMoveButtonsVisible(boolean flag) {
+    	for(EditorButton b:moveButtons)
+    		b.setVisibilityAllowed(flag);
     }
 }

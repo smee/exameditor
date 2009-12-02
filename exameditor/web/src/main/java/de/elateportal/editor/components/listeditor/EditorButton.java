@@ -1,9 +1,12 @@
 package de.elateportal.editor.components.listeditor;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.ImageButton;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 
@@ -45,6 +48,22 @@ public abstract class EditorButton extends ImageButton {
     protected void onDetach() {
         parent = null;
         super.onDetach();
+    }
+
+		/**
+     * Reset raw input of {@link FormComponent} children of {@link ListItem}s.
+     * @param idx
+     */
+    protected void resetInputFields(int... idx) {
+    	for (int i : idx) {
+    		ListItem li = (ListItem) getEditor().get(i);
+    		for (Iterator<Component> it = (Iterator<Component>) li.iterator(); it.hasNext();) {
+    			Component c = it.next();
+    			if (c instanceof FormComponent)
+    				((FormComponent) c).modelChanged();
+    		}
+    	}
+    
     }
 
 }

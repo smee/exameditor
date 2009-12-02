@@ -23,7 +23,7 @@ public class MoveUpButton extends EditorButton {
 
         if (idx > 0 && itemCount > 1) {
             Collections.swap(getList(), idx, idx - 1);
-            System.out.println(getList());
+            resetInputFields(idx,idx-1);
         }
     }
 }

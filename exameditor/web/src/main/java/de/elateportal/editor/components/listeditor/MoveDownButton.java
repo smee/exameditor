@@ -22,6 +22,7 @@ public class MoveDownButton extends EditorButton {
 
         if (idx < itemCount - 1 && itemCount > 1) {
             Collections.swap(getList(), idx, idx + 1);
+            resetInputFields(idx,idx+1);
         }
     }
 }
