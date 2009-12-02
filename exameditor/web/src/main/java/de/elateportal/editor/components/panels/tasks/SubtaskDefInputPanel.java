@@ -153,6 +153,7 @@ public class SubtaskDefInputPanel extends Panel {
         @Override
         protected void onSubmit() {
             super.onSubmit();
+            info("Gespeichert!");
             // clearPersistentObject();
             // setResponsePage(new ShowSubtaskDefsPage(modelClass));
         }

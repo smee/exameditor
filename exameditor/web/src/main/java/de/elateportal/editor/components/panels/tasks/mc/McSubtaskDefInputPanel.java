@@ -9,7 +9,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
 import de.elateportal.model.McSubTaskDef;
-import de.elateportal.model.TextSubTaskDef;
 import de.elateportal.model.McSubTaskDef.Correct;
 import de.elateportal.model.McSubTaskDef.Incorrect;
 
@@ -22,8 +21,8 @@ public class McSubtaskDefInputPanel extends Panel {
         numanswersInput.add(new MinimumValidator<Integer>(1));
         add(numanswersInput);
         // TODO add validator (min<=max, min >0, max<=#answers)
-        add(new TextField<TextSubTaskDef>("maxCorrectAnswers"));
-        add(new TextField<TextSubTaskDef>("minCorrectAnswers"));
+        add(new TextField<Integer>("maxCorrectAnswers"));
+        add(new TextField<Integer>("minCorrectAnswers").add(new MinimumValidator<Integer>(1)));
         add(new AjaxCheckBox("preserveOrderOfAnswers") {
 
 					@Override
