@@ -7,7 +7,6 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
@@ -15,6 +14,7 @@ import org.apache.wicket.util.convert.IConverter;
 import de.elateportal.editor.components.listeditor.ListEditor;
 import de.elateportal.editor.components.listeditor.ListItem;
 import de.elateportal.editor.components.listeditor.RemoveButton;
+import de.elateportal.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef.Assignment;
 import de.elateportal.model.MappingSubTaskDef.Concept;
@@ -23,7 +23,7 @@ import de.elateportal.model.MappingSubTaskDef.Concept;
  * @author Steffen Dienst
  * 
  */
-public class MappingSubtaskDefInputPanel extends Panel {
+public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<MappingSubTaskDef> {
     private final WebMarkupContainer assignementContainer, conceptContainer;
 
     public MappingSubtaskDefInputPanel(final String id, final IModel<MappingSubTaskDef> model) {

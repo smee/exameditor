@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -63,7 +64,13 @@ public class MCAnswersInputPanel extends Panel {
             @Override
             protected void onPopulateItem(final ListItem item) {
                 // item.add(new TextField("id"));
-                item.add(new TextField("value", new PropertyModel(item.getModel(), "value")));
+                item.add(new TextField("value", new PropertyModel(item.getModel(), "value")).add(new AjaxFormComponentUpdatingBehavior("onblur") {
+									@Override
+                  protected void onUpdate(AjaxRequestTarget target) {
+										// send the textfield value via ajax to the server, fixes the bug, that entered value gets lost when using the up/down buttons
+                  }
+                	
+                }));
                 // links, images for changing order and removing answers
                 MoveUpButton mub=new MoveUpButton("moveUp");
                 MoveDownButton mdb=new MoveDownButton("moveDown");

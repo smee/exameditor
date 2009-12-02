@@ -2,11 +2,12 @@ package de.elateportal.editor.components.panels.tasks.paint;
 
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 
+import de.elateportal.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
+import de.elateportal.model.PaintSubTaskDef;
 import de.elateportal.model.TextSubTaskDef;
 
-public class PaintSubtaskDefInputPanel extends Panel {
+public class PaintSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<PaintSubTaskDef> {
 
     public PaintSubtaskDefInputPanel(final String id) {
         super(id);

@@ -64,3 +64,8 @@ table.dataview tr.even {
 table.dataview tr.odd {
   background-color: #ffffff;
 }
+
+.error {
+  border-style: solid;
+  border-color: red;
+}

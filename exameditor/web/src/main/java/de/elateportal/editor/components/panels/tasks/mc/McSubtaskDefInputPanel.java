@@ -3,16 +3,16 @@ package de.elateportal.editor.components.panels.tasks.mc;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
+import de.elateportal.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elateportal.model.McSubTaskDef;
 import de.elateportal.model.McSubTaskDef.Correct;
 import de.elateportal.model.McSubTaskDef.Incorrect;
 
-public class McSubtaskDefInputPanel extends Panel {
+public class McSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<McSubTaskDef> {
 	  private final MCAnswersInputPanel correctAnswers,incorrectAnswers;
 	
     public McSubtaskDefInputPanel(final String id, final IModel<McSubTaskDef> model) {
@@ -21,8 +21,8 @@ public class McSubtaskDefInputPanel extends Panel {
         numanswersInput.add(new MinimumValidator<Integer>(1));
         add(numanswersInput);
         // TODO add validator (min<=max, min >0, max<=#answers)
-        add(new TextField<Integer>("maxCorrectAnswers"));
         add(new TextField<Integer>("minCorrectAnswers").add(new MinimumValidator<Integer>(1)));
+        add(new TextField<Integer>("maxCorrectAnswers"));
         add(new AjaxCheckBox("preserveOrderOfAnswers") {
 
 					@Override
