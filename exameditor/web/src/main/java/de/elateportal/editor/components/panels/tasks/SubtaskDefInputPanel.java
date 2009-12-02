@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor.components.panels.tasks;
 
+import java.util.Locale;
+
 import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
@@ -28,6 +30,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
@@ -108,11 +111,28 @@ public class SubtaskDefInputPanel extends Panel {
         private void init() {
             add(new FeedbackPanel("feedback"));
             // add common subtaskdeftype input fields
-            add(new TextField<T>("id").setRequired(true));// .add(new
+            add(new TextField<String>("id").setRequired(true));// .add(new
             // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
-            add(new TextArea<T>("problem").setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
-            add(new TextField<T>("hint"));
-            add(new TextArea<T>("correctionHint"));
+            TextArea<String> problemText =new TextArea<String>("problem") {
+            	@Override
+            	public IConverter getConverter(Class<?> type) {
+            	  return new IConverter() {
+
+									public Object convertToObject(String text, Locale locale) {
+										return text.replaceAll("<p>", "").replaceAll("</p>","<br/>");
+                  }
+
+									public String convertToString(Object value, Locale locale) {
+	                  return value==null?"":value.toString();
+                  }
+								};
+            	}
+            }; 
+            // set the type, else the converter won't get called
+            problemText.setType(String.class);
+            add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
+            add(new TextField<String>("hint"));
+            add(new TextArea<String>("correctionHint"));
             add(new org.apache.wicket.markup.html.form.Button("saveButton"));
             add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
                 @Override
