@@ -106,7 +106,6 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 			}
 			removeTrailingSemicolon(sb);
 			sb.append("]");
-			System.out.println(sb);
 			return sb.toString();
 		}
 
