@@ -25,6 +25,12 @@
         <textarea id="problem" wicket:id="problem"  cols="60" rows="5"></textarea> 
       </li>
       
+    </ol>
+  </fieldset>
+  <div wicket:id="specificelements"></div>
+  <fieldset>
+    <legend><span>Weiteres</span></legend> 
+    <ol>  
       <li>
         <label for="hint">Hinweis</label> 
         <input id="hint" wicket:id="hint" type="text" style="width: 35em;"></input>
@@ -36,7 +42,6 @@
     </ol>
   </fieldset>
   <!--  may get extended by forms of concrete subtaskdefs -->
-  <div wicket:id="specificelements"></div>
   <fieldset class="submit">
     <input wicket:id="saveButton" value="Ok" type="submit" />
     <input wicket:id="cancelButton" value="Abbrechen" type="submit" />

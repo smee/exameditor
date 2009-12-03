@@ -131,6 +131,11 @@ public class SubtaskDefInputPanel extends Panel {
 			// set the type, else the converter won't get called
 			problemText.setType(String.class);
 			add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
+
+			// add subtask input elements
+			add(getTaskSpecificFormPanel("specificelements"));
+
+			// add correction and hints
 			add(new TextField<String>("hint"));
 			add(new TextArea<String>("correctionHint"));
 			add(new org.apache.wicket.markup.html.form.Button("saveButton"));
@@ -141,8 +146,6 @@ public class SubtaskDefInputPanel extends Panel {
 					setResponsePage(new ShowSubtaskDefsPage(modelClass));
 				}
 			}.setDefaultFormProcessing(false));
-			// add subtask input elements
-			add(getTaskSpecificFormPanel("specificelements"));
 		}
 
 		/*

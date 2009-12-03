@@ -7,6 +7,16 @@
     <legend>Spezifisch</legend> 
     <ol>
       <li>
+        <div wicket:id="correctanswers"></div>
+      </li>
+      <li>
+        <div wicket:id="incorrectanswers"></div>
+      </li>
+      <li>
+        <label for="preserveOrderOfAnswers">Reihenfolge der Antworten beibehalten</label> 
+        <input id="preserveOrderOfAnswers" wicket:id="preserveOrderOfAnswers" type="checkbox" /> 
+      </li>
+      <li>
         <label for="displayedAnswers">Anzahl anzuzeigender Antworten</label> 
         <input id="displayedAnswers" wicket:id="displayedAnswers" type="text" /> 
       </li>
@@ -17,16 +27,6 @@
       <li>
         <label for="maxCorrectAnswers">Max. Anzahl richtiger Antworten</label> 
         <input id="maxCorrectAnswers" wicket:id="maxCorrectAnswers" type="text" /> 
-      </li>
-      <li>
-        <label for="preserveOrderOfAnswers">Reihenfolge der Antworten beibehalten</label> 
-        <input id="preserveOrderOfAnswers" wicket:id="preserveOrderOfAnswers" type="checkbox" /> 
-      </li>
-      <li>
-        <div wicket:id="correctanswers"></div>
-      </li>
-      <li>
-        <div wicket:id="incorrectanswers"></div>
       </li>
     </ol>
   </fieldset>
