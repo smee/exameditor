@@ -1,0 +1,241 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x0223fc10, pid=5008, tid=4180
+#
+# JRE version: 6.0_16-b01
+# Java VM: Java HotSpot(TM) Client VM (14.2-b01 mixed mode windows-x86 )
+# Problematic frame:
+# j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1.__jr_init_selector__$de$elateportal$editor$components$panels$tree$ComplexTaskDefTree$1(I[Ljava/lang/Object;)V+5
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0cd17400):  JavaThread "33008558@qtp-4629854-1" [_thread_in_Java, id=4180, stack(0x0d8c0000,0x0d910000)]
+
+siginfo: ExceptionCode=0xc0000005, writing address 0x0200b2f4
+
+Registers:
+EAX=0x0431ca18, EBX=0x00000028, ECX=0x0006c874, EDX=0x00000000
+ESP=0x0d90e924, EBP=0x0d90e944, ESI=0x094e4228, EDI=0x0d90e954
+EIP=0x0223fc10, EFLAGS=0x00010207
+
+Top of Stack: (sp=0x0d90e924)
+0x0d90e924:   0d90e924 094e4225 0d90e954 094e64f8
+0x0d90e934:   00000000 094e4268 00000000 0d90e94c
+0x0d90e944:   0d90e974 02232da1 042b5310 042b5c48
+0x0d90e954:   0d90e954 08aa239c 0d90e988 092a1340
+0x0d90e964:   00000000 08aa23f0 0d90e94c 0d90e980
+0x0d90e974:   0d90e9ac 02232da1 0431ca18 042b5310
+0x0d90e984:   095d2158 042b5c48 0d90e98c 08ac3523
+0x0d90e994:   0d90e9bc 092a28d0 00000000 08ac3558 
+
+Instructions: (pc=0x0223fc10)
+0x0223fc00:   0f 85 17 00 00 00 58 59 3b 01 89 04 19 c1 e9 09
+0x0223fc10:   c6 04 0d 80 ea f9 01 00 e9 ab 00 00 00 83 f8 01 
+
+
+Stack: [0x0d8c0000,0x0d910000],  sp=0x0d90e924,  free space=314k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1.__jr_init_selector__$de$elateportal$editor$components$panels$tree$ComplexTaskDefTree$1(I[Ljava/lang/Object;)V+5
+j  org.apache.wicket.Component.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+84
+j  org.apache.wicket.MarkupContainer.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+3
+j  org.apache.wicket.markup.html.WebMarkupContainer.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+3
+j  org.apache.wicket.markup.html.WebMarkupContainerWithAssociatedMarkup.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+3
+j  org.apache.wicket.markup.html.panel.Panel.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+3
+j  wickettree.content.StyledLinkLabel.<init>(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)V+3
+j  wickettree.content.Folder.<init>(Ljava/lang/String;Lwickettree/AbstractTree;Lorg/apache/wicket/model/IModel;)V+3
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1$$M$8f52b970.__init__(Lde/elateportal/editor/components/panels/tree/ComplexTaskDefTree$1;Lde/elateportal/editor/components/panels/tree/ComplexTaskDefTree;Ljava/lang/String;Lwickettree/AbstractTree;Lorg/apache/wicket/model/IModel;)V+10
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1$$M$8f52b970.__jr_selector__(ILjava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+79
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1$$A$8f52b970.__jr_selector__(ILjava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+3
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$1.__jr_init_selector__$de$elateportal$editor$components$panels$tree$ComplexTaskDefTree$1(I[Ljava/lang/Object;)V+40
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$$M$f3c24047.newContentComponent(Lde/elateportal/editor/components/panels/tree/ComplexTaskDefTree;Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+36
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree$$A$f3c24047.newContentComponent(Lde/elateportal/editor/components/panels/tree/ComplexTaskDefTree;Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+3
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree.newContentComponent(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+44
+j  wickettree.AbstractTree$1.createContent(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+6
+j  wickettree.Node.<init>(Ljava/lang/String;Lwickettree/AbstractTree;Lorg/apache/wicket/model/IModel;)V+39
+j  wickettree.AbstractTree$1.<init>(Lwickettree/AbstractTree;Ljava/lang/String;Lwickettree/AbstractTree;Lorg/apache/wicket/model/IModel;)V+10
+j  wickettree.AbstractTree.newNodeComponent(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+8
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree.newNodeComponent(Ljava/lang/String;Lorg/apache/wicket/model/IModel;)Lorg/apache/wicket/Component;+41
+j  wickettree.nested.Subtree$1.populateItem(Lorg/apache/wicket/markup/repeater/Item;)V+12
+j  org.apache.wicket.markup.repeater.RefreshingView$1.newItem(ILorg/apache/wicket/model/IModel;)Lorg/apache/wicket/markup/repeater/Item;+26
+j  org.apache.wicket.markup.repeater.DefaultItemReuseStrategy$1.next()Lorg/apache/wicket/markup/repeater/Item;+22
+j  org.apache.wicket.markup.repeater.DefaultItemReuseStrategy$1.next()Ljava/lang/Object;+1
+j  org.apache.wicket.markup.repeater.RefreshingView.addItems(Ljava/util/Iterator;)V+12
+j  org.apache.wicket.markup.repeater.RefreshingView.onPopulate()V+30
+j  org.apache.wicket.markup.repeater.AbstractRepeater.onBeforeRender()V+1
+j  org.apache.wicket.Component.internalBeforeRender()V+56
+j  org.apache.wicket.Component.beforeRender()V+8
+j  org.apache.wicket.MarkupContainer.onBeforeRenderChildren()V+30
+j  org.apache.wicket.Component.onBeforeRender()V+8
+j  org.apache.wicket.Component.internalBeforeRender()V+56
+j  org.apache.wicket.Component.beforeRender()V+8
+j  org.apache.wicket.MarkupContainer.onBeforeRenderChildren()V+30
+j  org.apache.wicket.Component.onBeforeRender()V+8
+j  de.elateportal.editor.components.panels.tree.ComplexTaskDefTree.onBeforeRender()V+37
+j  org.apache.wicket.Component.internalBeforeRender()V+56
+j  org.apache.wicket.Component.beforeRender()V+8
+j  org.apache.wicket.MarkupContainer.onBeforeRenderChildren()V+30
+j  org.apache.wicket.Component.onBeforeRender()V+8
+j  org.apache.wicket.Page.onBeforeRender()V+1
+j  de.elateportal.editor.pages.OverviewPage.onBeforeRender()V+37
+j  de.elateportal.editor.pages.TaskDefPage.onBeforeRender()V+37
+j  org.apache.wicket.Component.internalBeforeRender()V+56
+j  org.apache.wicket.Component.beforeRender()V+8
+j  org.apache.wicket.Component.prepareForRender(Z)V+1
+j  org.apache.wicket.Component.prepareForRender()V+2
+j  org.apache.wicket.Page.renderPage()V+88
+j  org.apache.wicket.request.target.component.BookmarkablePageRequestTarget.respond(Lorg/apache/wicket/RequestCycle;)V+85
+j  org.apache.wicket.request.AbstractRequestCycleProcessor.respond(Lorg/apache/wicket/RequestCycle;)V+18
+j  org.apache.wicket.RequestCycle.processEventsAndRespond()V+20
+j  org.apache.wicket.RequestCycle.step()V+89
+j  org.apache.wicket.RequestCycle.steps()V+31
+j  org.apache.wicket.RequestCycle.request()V+10
+j  org.apache.wicket.protocol.http.WicketFilter.doGet(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)Z+367
+j  org.apache.wicket.protocol.http.WicketFilter.doFilter(Ljavax/servlet/ServletRequest;Ljavax/servlet/ServletResponse;Ljavax/servlet/FilterChain;)V+264
+j  org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(Ljavax/servlet/ServletRequest;Ljavax/servlet/ServletResponse;)V+53
+j  org.mortbay.jetty.servlet.ServletHandler.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+465
+j  org.mortbay.jetty.security.SecurityHandler.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+206
+j  org.mortbay.jetty.servlet.SessionHandler.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+225
+j  org.mortbay.jetty.handler.ContextHandler.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+709
+j  org.mortbay.jetty.webapp.WebAppContext.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+25
+j  org.mortbay.jetty.handler.HandlerCollection.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+42
+j  org.mortbay.jetty.handler.HandlerWrapper.handle(Ljava/lang/String;Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;I)V+23
+j  org.mortbay.jetty.Server.handle(Lorg/mortbay/jetty/HttpConnection;)V+110
+j  org.mortbay.jetty.HttpConnection.handleRequest()V+137
+j  org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete()V+438
+J  org.mortbay.jetty.HttpParser.parseNext()J
+j  org.mortbay.jetty.HttpParser.parseAvailable()J+1
+j  org.mortbay.jetty.HttpConnection.handle()V+122
+j  org.mortbay.io.nio.SelectChannelEndPoint.run()V+4
+j  org.mortbay.thread.QueuedThreadPool$PoolThread.run()V+25
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0xecf9c]
+V  [jvm.dll+0x1741e1]
+V  [jvm.dll+0xed167]
+V  [jvm.dll+0xed1dd]
+V  [jvm.dll+0x116290]
+V  [jvm.dll+0x1d0424]
+V  [jvm.dll+0x173e5c]
+C  [msvcr71.dll+0x9565]
+C  [kernel32.dll+0x13677]
+C  [ntdll.dll+0x39d72]
+C  [ntdll.dll+0x39d45]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x0c601000 JavaThread "ModificationWatcher Task" daemon [_thread_blocked, id=3752, stack(0x0dc40000,0x0dc90000)]
+  0x0d11e800 JavaThread "HSQLDB Timer @9d9edd" daemon [_thread_blocked, id=4684, stack(0x0dbb0000,0x0dc00000)]
+  0x0cef8800 JavaThread "PageSavingThread-WicketFilter" daemon [_thread_blocked, id=4388, stack(0x0d410000,0x0d460000)]
+  0x0ce2e400 JavaThread "Timer-0" daemon [_thread_blocked, id=4724, stack(0x0db20000,0x0db70000)]
+  0x0cd25400 JavaThread "Thread-6" daemon [_thread_blocked, id=3252, stack(0x0d9d0000,0x0da20000)]
+=>0x0cd17400 JavaThread "33008558@qtp-4629854-1" [_thread_in_Java, id=4180, stack(0x0d8c0000,0x0d910000)]
+  0x0cd16c00 JavaThread "6233000@qtp-4629854-0 - Acceptor0 SelectChannelConnector@0.0.0.0:8080" [_thread_in_native, id=1828, stack(0x0d830000,0x0d880000)]
+  0x0cb3e400 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=3560, stack(0x0d530000,0x0d580000)]
+  0x0cb3cc00 JavaThread "CompilerThread0" daemon [_thread_blocked, id=2176, stack(0x0d4a0000,0x0d4f0000)]
+  0x0cb3c000 JavaThread "Thread-0" daemon [_thread_blocked, id=5000, stack(0x0d380000,0x0d3d0000)]
+  0x020fdc00 JavaThread "Attach Listener" daemon [_thread_blocked, id=4136, stack(0x0c4f0000,0x0c540000)]
+  0x020f5400 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=2852, stack(0x0c460000,0x0c4b0000)]
+  0x020c0c00 JavaThread "Finalizer" daemon [_thread_blocked, id=4748, stack(0x0c3d0000,0x0c420000)]
+  0x020bc400 JavaThread "Reference Handler" daemon [_thread_blocked, id=4800, stack(0x0c340000,0x0c390000)]
+  0x0202c000 JavaThread "main" [_thread_blocked, id=3988, stack(0x01f70000,0x01fc0000)]
+
+Other Threads:
+  0x020b7800 VMThread [stack: 0x0c2b0000,0x0c300000] [id=4756]
+  0x0cc1a000 WatcherThread [stack: 0x0d5c0000,0x0d610000] [id=3604]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ def new generation   total 1152K, used 499K [0x042b0000, 0x043e0000, 0x04790000)
+  eden space 1088K,  40% used [0x042b0000, 0x0431df48, 0x043c0000)
+  from space 64K,  93% used [0x043c0000, 0x043cf040, 0x043d0000)
+  to   space 64K,   0% used [0x043d0000, 0x043d0000, 0x043e0000)
+ tenured generation   total 13888K, used 9006K [0x04790000, 0x05520000, 0x082b0000)
+   the space 13888K,  64% used [0x04790000, 0x0505b9d8, 0x0505ba00, 0x05520000)
+ compacting perm gen  total 21248K, used 21180K [0x082b0000, 0x09770000, 0x0c2b0000)
+   the space 21248K,  99% used [0x082b0000, 0x0975f3b0, 0x0975f400, 0x09770000)
+No shared spaces configured.
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	C:\Java\jdk1.6.0_16_32bit\bin\javaw.exe
+0x776f0000 - 0x77870000 	C:\Windows\SysWOW64\ntdll.dll
+0x76dd0000 - 0x76ed0000 	C:\Windows\syswow64\kernel32.dll
+0x76d80000 - 0x76dc6000 	C:\Windows\syswow64\KERNELBASE.dll
+0x77230000 - 0x772d0000 	C:\Windows\syswow64\ADVAPI32.dll
+0x766b0000 - 0x7675c000 	C:\Windows\syswow64\msvcrt.dll
+0x76660000 - 0x76679000 	C:\Windows\SysWOW64\sechost.dll
+0x769c0000 - 0x76ab0000 	C:\Windows\syswow64\RPCRT4.dll
+0x75260000 - 0x752c0000 	C:\Windows\syswow64\SspiCli.dll
+0x75250000 - 0x7525c000 	C:\Windows\syswow64\CRYPTBASE.dll
+0x75400000 - 0x75500000 	C:\Windows\syswow64\USER32.dll
+0x76c90000 - 0x76d20000 	C:\Windows\syswow64\GDI32.dll
+0x776c0000 - 0x776ca000 	C:\Windows\syswow64\LPK.dll
+0x76b60000 - 0x76bfd000 	C:\Windows\syswow64\USP10.dll
+0x76150000 - 0x761b0000 	C:\Windows\system32\IMM32.DLL
+0x768d0000 - 0x7699c000 	C:\Windows\syswow64\MSCTF.dll
+0x7c340000 - 0x7c396000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\msvcr71.dll
+0x6d8b0000 - 0x6db3b000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\client\jvm.dll
+0x73220000 - 0x73252000 	C:\Windows\system32\WINMM.dll
+0x73390000 - 0x733db000 	C:\Windows\system32\apphelp.dll
+0x6d860000 - 0x6d86c000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\verify.dll
+0x6d3e0000 - 0x6d3ff000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\java.dll
+0x6d340000 - 0x6d348000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\hpi.dll
+0x769a0000 - 0x769a5000 	C:\Windows\syswow64\PSAPI.DLL
+0x6d380000 - 0x6d39a000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\instrument.dll
+0x6d8a0000 - 0x6d8af000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\zip.dll
+0x6d6c0000 - 0x6d6d3000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\net.dll
+0x76760000 - 0x76795000 	C:\Windows\syswow64\WS2_32.dll
+0x76ab0000 - 0x76ab6000 	C:\Windows\syswow64\NSI.dll
+0x72d80000 - 0x72dbc000 	C:\Windows\system32\mswsock.dll
+0x6f790000 - 0x6f796000 	C:\Windows\System32\wship6.dll
+0x72d70000 - 0x72d80000 	C:\Windows\system32\NLAapi.dll
+0x72d20000 - 0x72d64000 	C:\Windows\system32\DNSAPI.dll
+0x72d00000 - 0x72d08000 	C:\Windows\System32\winrnr.dll
+0x72cf0000 - 0x72d00000 	C:\Windows\system32\napinsp.dll
+0x72cd0000 - 0x72ce2000 	C:\Windows\system32\pnrpnsp.dll
+0x72d10000 - 0x72d15000 	C:\Windows\System32\wshtcpip.dll
+0x73e10000 - 0x73e2c000 	C:\Windows\system32\IPHLPAPI.DLL
+0x73e00000 - 0x73e07000 	C:\Windows\system32\WINNSI.DLL
+0x72c80000 - 0x72c86000 	C:\Windows\system32\rasadhlp.dll
+0x72c90000 - 0x72cc8000 	C:\Windows\System32\fwpuclnt.dll
+0x73c00000 - 0x73c16000 	C:\Windows\system32\CRYPTSP.dll
+0x73bc0000 - 0x73bfb000 	C:\Windows\system32\rsaenh.dll
+0x73650000 - 0x73667000 	C:\Windows\system32\USERENV.dll
+0x733e0000 - 0x733eb000 	C:\Windows\system32\profapi.dll
+0x6d6e0000 - 0x6d6e9000 	C:\Java\jdk1.6.0_16_32bit\jre\bin\nio.dll
+
+VM Arguments:
+jvm_args: -Xverify:none -javaagent:T:\tools\javarebel\jrebel.jar -Dfile.encoding=UTF-8 
+java_command: net.databinder.web.DataServer -noverify -javaagent:T:\tools\javarebel\jrebel.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Java\jdk1.6.0_16
+PATH=C:/Program Files (x86)/Java/jre6/bin/client;C:/Program Files (x86)/Java/jre6/bin;C:\Program Files (x86)\CollabNet\Subversion Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\tools\Graphviz2.24\bin;C:\Java\jdk1.6.0_16\bin\;t:\tools;t:\util;t:\util\usr\local\wbin
+USERNAME=Steffen Dienst
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 15 Stepping 11, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7600 
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 15 stepping 11, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3
+
+Memory: 4k page, physical 4193640k(2307620k free), swap 4194303k(4194303k free)
+
+vm_info: Java HotSpot(TM) Client VM (14.2-b01) for windows-x86 JRE (1.6.0_16-b01), built on Jul 31 2009 11:26:58 by "java_re" with MS VC++ 7.1
+
+time: Mon Dec 07 20:31:08 2009
+elapsed time: 827 seconds
+

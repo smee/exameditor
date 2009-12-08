@@ -145,6 +145,11 @@
       <artifactId>wicket-tree</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>    
+    <dependency>
+  	   <groupId>com.google.collections</groupId>
+  	  <artifactId>google-collections</artifactId>
+      <version>1.0-rc4</version>
+    </dependency>    
   </dependencies>
   <repositories>
     <repository>
