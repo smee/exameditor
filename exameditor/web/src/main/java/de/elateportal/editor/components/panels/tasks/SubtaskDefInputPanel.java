@@ -20,6 +20,7 @@ package de.elateportal.editor.components.panels.tasks;
 
 import java.util.Locale;
 
+import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.Component;
@@ -30,6 +31,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
+import org.hibernate.Session;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
@@ -44,7 +46,6 @@ import de.elateportal.editor.components.panels.tasks.mapping.MappingSubtaskDefIn
 import de.elateportal.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tasks.paint.PaintSubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tasks.text.TextSubtaskDefInputPanel;
-import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.McSubTaskDef;
@@ -106,8 +107,9 @@ public class SubtaskDefInputPanel extends Panel {
 		}
 
 		/**
-         * 
-         */
+		 * @param returnPage
+		 * 
+		 */
 		private void init() {
 			add(new FeedbackPanel("feedback"));
 			// add common subtaskdeftype input fields
@@ -143,7 +145,7 @@ public class SubtaskDefInputPanel extends Panel {
 				@Override
 				public void onSubmit() {
 					clearPersistentObject();
-					setResponsePage(new ShowSubtaskDefsPage(modelClass));
+					// setResponsePage(returnPage);
 				}
 			}.setDefaultFormProcessing(false));
 		}
@@ -160,6 +162,25 @@ public class SubtaskDefInputPanel extends Panel {
 			// clearPersistentObject();
 			// setResponsePage(new ShowSubtaskDefsPage(modelClass));
 		}
+
+		/**
+		 * Reattach entity, why does {@link DataForm} use session.save(..)?
+		 * 
+		 * @see net.databinder.components.hib.DataForm#saveIfNew(net.databinder.models.hib.HibernateObjectModel)
+		 */
+		@Override
+		protected boolean saveIfNew(HibernateObjectModel<T> model) {
+			Session session = getHibernateSession();
+			if (!session.contains(model.getObject())) {
+				onBeforeSave(model);
+				session.saveOrUpdate(model.getObject());
+				// updating binding status; though it will happen on detach
+				// some UI components may like to know sooner.
+				getPersistentObjectModel().checkBinding();
+				return true;
+			}
+			return false;
+		}
 	}
 
 	/**
@@ -171,9 +192,11 @@ public class SubtaskDefInputPanel extends Panel {
 
 	/**
 	 * @param id
+	 * @param returnPage
 	 * @param clazz
 	 */
-	public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz, final SubTaskDefType object) {
+	public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz,
+	    final SubTaskDefType object) {
 		super(id);
 		if (object != null) {
 			add(new SubtaskDefForm("taskform", object));
