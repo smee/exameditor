@@ -21,13 +21,17 @@ body{
   margin: 0;
 }
 
-#mainContent{
-  width: 46.25em;
+.mainContent{
+  width: 56.25em;
   margin: 1.5em auto;
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
 }
+.mainContent #menu {
+	width: 61.25em;	
+}
+
 
 h1{
   font-size: 1.125em;

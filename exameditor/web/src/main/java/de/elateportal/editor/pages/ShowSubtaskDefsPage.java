@@ -26,55 +26,56 @@ import de.elateportal.model.SubTaskDefType;
  */
 public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends OverviewPage {
 
-    public ShowSubtaskDefsPage() {
-        this((Class<T>) SubTaskDefType.class);
-    }
+	public ShowSubtaskDefsPage() {
+		this((Class<T>) SubTaskDefType.class);
+	}
 
-    @SuppressWarnings("unchecked")
-    public ShowSubtaskDefsPage(final Class<T> clazz) {
-        add(new Label("heading", "Alle Aufgaben"));
-        final Link<Void> newTaskLink = new Link("newTaskdefLink") {
-            @Override
-            public void onClick() {
-                setResponsePage(new EditSubtaskPage(clazz));
-            }
-        };
-        // hide link if this is no specific subtask type
-        if (clazz.equals(SubTaskDefType.class)) {
-            newTaskLink.setVisible(false);
-        }
+	@SuppressWarnings("unchecked")
+	public ShowSubtaskDefsPage(final Class<T> clazz) {
+		add(new Label("heading", "Alle Aufgaben"));
+		final Link<Void> newTaskLink = new Link("newTaskdefLink") {
+			@Override
+			public void onClick() {
+				setResponsePage(new EditSubtaskPage(clazz));
+			}
+		};
+		// hide link if this is no specific subtask type
+		if (clazz.equals(SubTaskDefType.class)) {
+			newTaskLink.setVisible(false);
+		}
 
-        add(newTaskLink);
+		add(newTaskLink);
 
-        final SortableHibernateProvider<T> provider = new SortableHibernateProvider<T>(clazz, new CriteriaFilterAndSort(new SubTaskDefType() {
-                        }, "id", true, false));
+		final SortableHibernateProvider<T> provider = new SortableHibernateProvider<T>(clazz, new CriteriaFilterAndSort(
+		    new SubTaskDefType() {
+		}, "id", true, false));
 
-        final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
+		final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
-        columns.add(new PropertyColumn<T>(new Model<String>("ID"), "id", "id"));
-        columns.add(new PropertyColumn<T>(new Model<String>("Problem"), "problem", "problem") {
-            @Override
-            public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
-                // add a label that renders it's html contents
-                item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
-            }
-        });
-        columns.add(new PropertyColumn<T>(new Model<String>("Aufgabentyp"), "class.simpleName") {
-            @Override
-            protected IModel<String> createLabelModel(final IModel<T> rowModel) {
-                return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
-            }
-        });
-        // edit links
-        if (!clazz.equals(SubTaskDefType.class)) {
-            columns.add(new HeaderlessColumn<T>() {
+		columns.add(new PropertyColumn<T>(new Model<String>("ID"), "id", "id"));
+		columns.add(new PropertyColumn<T>(new Model<String>("Problem"), "problem", "problem") {
+			@Override
+			public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
+				// add a label that renders it's html contents
+				item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
+			}
+		});
+		columns.add(new PropertyColumn<T>(new Model<String>("Aufgabentyp"), "class.simpleName") {
+			@Override
+			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
+				return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+			}
+		});
+		// edit links
+		if (!clazz.equals(SubTaskDefType.class)) {
+			columns.add(new HeaderlessColumn<T>() {
 
-                public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId, final IModel<T> rowModel) {
-                    cellItem.add(new TaskActionsPanel<T>(componentId, rowModel));
-                }
-            });
-        }
+				public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId, final IModel<T> rowModel) {
+					cellItem.add(new TaskActionsPanel<T>(componentId, rowModel));
+				}
+			});
+		}
 
-        add(new DefaultDataTable<T>("datatable", columns, provider, 10));
-    }
+		add(new DefaultDataTable<T>("datatable", columns, provider, 10));
+	}
 }

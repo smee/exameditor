@@ -12,7 +12,6 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
@@ -22,13 +21,14 @@ import de.elateportal.editor.components.listeditor.ListItem;
 import de.elateportal.editor.components.listeditor.MoveDownButton;
 import de.elateportal.editor.components.listeditor.MoveUpButton;
 import de.elateportal.editor.components.listeditor.RemoveButton;
+import de.elateportal.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elateportal.model.McSubTaskDef.Correct;
 import de.elateportal.model.McSubTaskDef.Incorrect;
 
 /**
  * @author sdienst
  */
-public class MCAnswersInputPanel extends Panel {
+public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 
 	private final WebMarkupContainer container;
 	Collection<EditorButton> moveButtons = new ArrayList<EditorButton>();

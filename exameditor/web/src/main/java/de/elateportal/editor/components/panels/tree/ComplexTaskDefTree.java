@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.IModel;
 
 import wickettree.NestedTree;
+import de.elateportal.editor.pages.TaskDefPage;
 
 /**
  * @author Steffen Dienst
@@ -31,14 +32,18 @@ import wickettree.NestedTree;
  */
 public class ComplexTaskDefTree extends NestedTree {
 
-	public ComplexTaskDefTree(String id, ComplexTaskdefTreeProvider provider) {
+	private final TaskDefPage taskDefPage;
+
+	public ComplexTaskDefTree(String id, TaskDefPage taskDefPage, ComplexTaskdefTreeProvider provider) {
 		super(id, provider);
+		this.taskDefPage = taskDefPage;
 		add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
+
 	}
 
 	@Override
 	protected Component newContentComponent(String id, IModel model) {
-		return new TaskTreeElement(id, this, model);
+		return new TaskTreeElement(id, this, taskDefPage, model);
 	}
 
 }

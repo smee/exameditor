@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elateportal.editor.components.panels.tree;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -51,9 +52,9 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
 		}
 	};
 
-	private final IModel<ComplexTaskDef> model;
+	private final IModel<List<ComplexTaskDef>> model;
 
-	public ComplexTaskdefTreeProvider(IModel<ComplexTaskDef> model) {
+	public ComplexTaskdefTreeProvider(IModel<List<ComplexTaskDef>> model) {
 		this.model = model;
 	}
 
@@ -74,10 +75,10 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
 		return Iterators.transform(cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems().iterator(),
 		    new Function<McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem, TaskBlockType>() {
 
-			    public TaskBlockType apply(McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block) {
-				    return block.getItem();
-			    }
-		    });
+			public TaskBlockType apply(McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block) {
+				return block.getItem();
+			}
+		});
 	}
 
 	private Iterator<Object> getChildren(ClozeTaskBlock tb) {
@@ -129,7 +130,7 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
 	}
 
 	public Iterator<? extends Object> getRoots() {
-		return Iterators.singletonIterator(model.getObject());
+		return model.getObject().iterator();
 	}
 
 	public boolean hasChildren(Object object) {

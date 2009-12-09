@@ -29,11 +29,13 @@ import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.McSubTaskDef;
 import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.SubTaskDefType;
 import de.elateportal.model.TextSubTaskDef;
 import de.elateportal.model.ComplexTaskDef.Category;
 import de.elateportal.model.ComplexTaskDef.Category.ClozeTaskBlock;
@@ -77,12 +79,14 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
 	.build();
 
-	private final AbstractTree<T> tree;
+	private final ComplexTaskDefTree tree;
+	private final TaskDefPage page;
 
-	public TaskTreeElement(String id, AbstractTree<T> tree, IModel<T> model) {
+	public TaskTreeElement(String id, ComplexTaskDefTree tree, TaskDefPage page, IModel<T> model) {
 		super(id, model);
 
 		this.tree = tree;
+		this.page = page;
 	}
 
 	protected String getClosedStyleClass() {
@@ -179,6 +183,9 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 			tree.collapse(t);
 		} else {
 			tree.expand(t);
+		}
+		if (t instanceof SubTaskDefType) {
+			page.renderPanelFor((SubTaskDefType) t, target);
 		}
 	}
 }

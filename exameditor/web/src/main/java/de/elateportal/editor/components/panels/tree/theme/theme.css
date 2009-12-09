@@ -1,5 +1,7 @@
 @CHARSET "ISO-8859-1";
-
+.tree {
+	overflow:auto;	
+}
 div.tree-subtree {
   margin: 0px 0px 0px 18px;
   padding: 0px;

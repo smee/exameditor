@@ -19,13 +19,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elateportal.editor.pages;
 
 import net.databinder.models.hib.CriteriaBuilder;
-import net.databinder.models.hib.HibernateObjectModel;
+import net.databinder.models.hib.HibernateListModel;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.hibernate.Criteria;
 
+import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
 import de.elateportal.model.ComplexTaskDef;
+import de.elateportal.model.SubTaskDefType;
 
 /**
  * @author Steffen Dienst
@@ -33,14 +38,30 @@ import de.elateportal.model.ComplexTaskDef;
  */
 public class TaskDefPage extends OverviewPage {
 
+	private Component editPanel;
+
 	public TaskDefPage() {
-		HibernateObjectModel<ComplexTaskDef> taskdefModel = new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class,
+		HibernateListModel<ComplexTaskDef> taskdefModel = new HibernateListModel<ComplexTaskDef>(ComplexTaskDef.class,
 		    new CriteriaBuilder() {
 
-			    public void build(Criteria criteria) {
-				    criteria.setMaxResults(1);
-			    }
-		    });
-		add(new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(taskdefModel)));
+			public void build(Criteria criteria) {
+				// criteria.setMaxResults(1);
+			}
+		});
+		add(new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(taskdefModel)));
+		editPanel = new WebMarkupContainer("editpanel");
+		add(editPanel.setOutputMarkupId(true));
+	}
+
+	/**
+	 * @param subtask
+	 * @param target
+	 */
+	public void renderPanelFor(SubTaskDefType subtask, AjaxRequestTarget target) {
+		SubtaskDefInputPanel edit = new SubtaskDefInputPanel("editpanel", subtask.getClass(), subtask);
+		edit.setOutputMarkupId(true);
+		editPanel.replaceWith(edit);
+		editPanel = edit;
+		target.addComponent(editPanel);
 	}
 }
