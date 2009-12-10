@@ -11,6 +11,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeaderlessColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredPropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
@@ -46,21 +49,27 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends OverviewPage 
 
 		add(newTaskLink);
 
-		final SortableHibernateProvider<T> provider = new SortableHibernateProvider<T>(clazz, new CriteriaFilterAndSort(
+		CriteriaFilterAndSort builder = new CriteriaFilterAndSort(
 		    new SubTaskDefType() {
-		}, "id", true, false));
+		}, "id", true, false);
+		FilterForm form = new FilterForm("form", builder);
+		add(form);
+
+		final SortableHibernateProvider<T> provider = new SortableHibernateProvider<T>(clazz, builder);
 
 		final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
 		columns.add(new PropertyColumn<T>(new Model<String>("ID"), "id", "id"));
-		columns.add(new PropertyColumn<T>(new Model<String>("Problem"), "problem", "problem") {
+		columns.add(new TextFilteredPropertyColumn<T, String>(Model.of("Aufgabenstellung"), "problem", "problem") {
+			// columns.add(new PropertyColumn<T>(new Model<String>("Problem"),
+			// "problem", "problem") {
 			@Override
 			public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
 				// add a label that renders it's html contents
 				item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
 			}
 		});
-		columns.add(new PropertyColumn<T>(new Model<String>("Aufgabentyp"), "class.simpleName") {
+		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
 				return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
@@ -75,7 +84,8 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends OverviewPage 
 				}
 			});
 		}
-
-		add(new DefaultDataTable<T>("datatable", columns, provider, 10));
+		DefaultDataTable<T> table = new DefaultDataTable<T>("datatable", columns, provider, 10);
+		table.addTopToolbar(new FilterToolbar(table, form, builder));
+		form.add(table);
 	}
 }
