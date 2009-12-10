@@ -1,0 +1,8 @@
+AuthUserFile d:/.htpasswd
+AuthName "Please enter your ID and password"
+AuthType Basic
+require valid-user
+<Limit GET>
+satisfy all
+require valid-user
+</Limit>
