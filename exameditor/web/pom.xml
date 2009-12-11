@@ -109,11 +109,6 @@
       <version>[6.1,6.1.99]</version>
     </dependency>
     <dependency>
-      <groupId>swit</groupId>
-      <artifactId>swit</artifactId>
-      <version>0.9</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket</artifactId>
       <version>1.4.3</version>
