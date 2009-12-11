@@ -76,14 +76,12 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends OverviewPage 
 			}
 		});
 		// edit links
-		if (!clazz.equals(SubTaskDefType.class)) {
-			columns.add(new HeaderlessColumn<T>() {
+		columns.add(new HeaderlessColumn<T>() {
 
-				public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId, final IModel<T> rowModel) {
-					cellItem.add(new TaskActionsPanel<T>(componentId, rowModel));
-				}
-			});
-		}
+			public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId, final IModel<T> rowModel) {
+				cellItem.add(new TaskActionsPanel<T>(componentId, rowModel));
+			}
+		});
 		DefaultDataTable<T> table = new DefaultDataTable<T>("datatable", columns, provider, 10);
 		table.addTopToolbar(new FilterToolbar(table, form, builder));
 		form.add(table);
