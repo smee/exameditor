@@ -3,6 +3,8 @@
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"    
     jxb:extensionBindingPrefixes="xjc"
 >
     <jxb:bindings  schemaLocation="complexTaskDef.xsd"  node="/xs:schema">
@@ -12,5 +14,12 @@
         <jxb:schemaBindings>
             <jxb:package name="de.elateportal.model"/>
         </jxb:schemaBindings>
+    </jxb:bindings>
+    <jxb:bindings  schemaLocation="complexTaskDef.xsd"  node="/xs:schema">
+      <jxb:bindings node="//xs:element[@name='description']">
+          <hj:basic>
+            <orm:column length="1024"/>
+          </hj:basic>
+      </jxb:bindings>
     </jxb:bindings>
 </jxb:bindings>
