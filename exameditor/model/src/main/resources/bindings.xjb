@@ -4,9 +4,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
     xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"    
-    jxb:extensionBindingPrefixes="xjc"
->
+    xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"    
+    jxb:extensionBindingPrefixes="xjc">
     <jxb:bindings  schemaLocation="complexTaskDef.xsd"  node="/xs:schema">
         <jxb:globalBindings>
             <xjc:serializable uid="-6026937020915831338"/>
@@ -14,12 +13,25 @@
         <jxb:schemaBindings>
             <jxb:package name="de.elateportal.model"/>
         </jxb:schemaBindings>
-    </jxb:bindings>
-    <jxb:bindings  schemaLocation="complexTaskDef.xsd"  node="/xs:schema">
+	  
+	  <hj:persistence>  
+	    <hj:default-generated-id transient="true" name="Hjid"/>  
+	  </hj:persistence>
+	   
       <jxb:bindings node="//xs:element[@name='description']">
           <hj:basic>
             <orm:column length="1024"/>
           </hj:basic>
       </jxb:bindings>
+      <jxb:bindings node="//xs:complexType[@name='SubTaskDefType']/xs:attribute[@name='id']">
+          <hj:basic>
+            <orm:column name="xmlid"/>
+          </hj:basic>
+      </jxb:bindings>      
+      <jxb:bindings node="//xs:element[@name='problem']">
+          <hj:basic>
+            <orm:column length="1024"/>
+          </hj:basic>
+      </jxb:bindings>      
     </jxb:bindings>
 </jxb:bindings>
