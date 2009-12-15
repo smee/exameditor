@@ -91,10 +91,7 @@ public class PreviewPanel extends Panel {
 					    "sampleUser", "Max Mustermann",
 					    RequestUtils.toAbsolutePath(urlFor(TaskDefPage.class, null).toString()));
 					TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
-					try {
-						System.out.println(delegateObject.getTasklet());
-					} catch (Exception e) {
-					}
+
 					getRequestCycle().setRequestTarget(
 					    new RedirectRequestTarget(
 					    getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
