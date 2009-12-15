@@ -81,14 +81,20 @@ public class PreviewPanel extends Panel {
 					marshaller.marshal(sampleTaskdef, sw);
 					// set xml to use
 					taskfactory.setTaskDefXml(sw.toString());
-					TaskManagerImpl tm = new TaskManagerImpl(taskfactory, new TaskletContainerImpl(taskfactory));
+					TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
+					// clear internal static caches
+					taskletContainer.reset();
+					TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
 
 					TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
 					    tm,
 					    "sampleUser", "Max Mustermann",
 					    RequestUtils.toAbsolutePath(urlFor(TaskDefPage.class, null).toString()));
 					TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
-
+					try {
+						System.out.println(delegateObject.getTasklet());
+					} catch (Exception e) {
+					}
 					getRequestCycle().setRequestTarget(
 					    new RedirectRequestTarget(
 					    getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
