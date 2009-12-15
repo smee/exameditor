@@ -21,11 +21,11 @@ package de.elateportal.editor.pages;
 import net.databinder.models.hib.CriteriaBuilder;
 import net.databinder.models.hib.HibernateListModel;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.hibernate.Criteria;
 
+import de.elateportal.editor.components.panels.PreviewPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
@@ -38,19 +38,29 @@ import de.elateportal.model.SubTaskDefType;
  */
 public class TaskDefPage extends OverviewPage {
 
-	private Component editPanel;
+	private Panel editPanel;
+	private final HibernateListModel<ComplexTaskDef> taskdefModel;
+	private ComplexTaskDefTree tree;
+	private final PreviewPanel previewPanel;
 
 	public TaskDefPage() {
-		HibernateListModel<ComplexTaskDef> taskdefModel = new HibernateListModel<ComplexTaskDef>(ComplexTaskDef.class,
+		taskdefModel = new HibernateListModel<ComplexTaskDef>(ComplexTaskDef.class,
 		    new CriteriaBuilder() {
 
 			public void build(Criteria criteria) {
 				// criteria.setMaxResults(1);
 			}
 		});
-		add(new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(taskdefModel)));
-		editPanel = new WebMarkupContainer("editpanel");
+		add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(taskdefModel)));
+		previewPanel = new PreviewPanel("editpanel", tree);
+		editPanel = previewPanel;
 		add(editPanel.setOutputMarkupId(true));
+	}
+
+	public void renderPanelFor(ComplexTaskDef t, AjaxRequestTarget target) {
+		editPanel.replaceWith(previewPanel);
+		editPanel = previewPanel;
+		target.addComponent(editPanel);
 	}
 
 	/**

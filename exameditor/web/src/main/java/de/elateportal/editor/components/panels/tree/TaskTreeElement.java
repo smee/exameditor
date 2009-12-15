@@ -187,5 +187,9 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 		if (t instanceof SubTaskDefType) {
 			page.renderPanelFor((SubTaskDefType) t, target);
 		}
+		if (t instanceof ComplexTaskDef) {
+			tree.setCurrentTaskdef((ComplexTaskDef) t);
+			page.renderPanelFor((ComplexTaskDef) t, target);
+		}
 	}
 }

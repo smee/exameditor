@@ -6,3 +6,7 @@ require valid-user
 satisfy all
 require valid-user
 </Limit>
+<Limit POST>
+satisfy all
+require valid-user
+</Limit>

@@ -173,11 +173,20 @@
     <profile>
     <!-- Preview of complextask using taskmodel-core-view -->
       <id>preview</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>de.elateportal</groupId>
           <artifactId>taskmodel-api</artifactId>
           <version>1.0.0-SNAPSHOT</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>com.sun.xml.bind</artifactId>
+              <groupId>jaxb-impl</groupId>
+            </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
           <groupId>de.elateportal</groupId>
