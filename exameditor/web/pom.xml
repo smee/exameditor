@@ -33,6 +33,7 @@
       <plugin>
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
+          <downloadSources>true</downloadSources>
           <additionalProjectnatures>
             <projectnature>wicketbench.wicketnature</projectnature>
           </additionalProjectnatures>
@@ -217,7 +218,7 @@
       <version>1.0.6</version>
       <exclusions>
         <exclusion>
-          <groupId>com.sun.xml.bind</groupId>
+          <groupId>javax.xml.bind</groupId>
           <artifactId>jaxb-api</artifactId>
         </exclusion>
       </exclusions>
