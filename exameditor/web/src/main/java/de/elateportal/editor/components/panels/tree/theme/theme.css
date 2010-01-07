@@ -97,8 +97,9 @@ span.tree-content a:hover {
 }
 
 span.tree-content .selected span.tree-label {
-  background-color: #0000ee;
-  color: #FFFFFF;
+  background-color: #faf7f5;
+  /*color: #FFFFFF;*/
+  border: 0.1em dashed;
 }
 
 
