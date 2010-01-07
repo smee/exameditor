@@ -5,6 +5,10 @@ import net.databinder.hib.DataApplication;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 import de.elateportal.editor.pages.OverviewPage;
+import de.elateportal.editor.pages.ShowSubtaskDefsPage;
+import de.elateportal.editor.pages.StatisticPage;
+import de.elateportal.editor.pages.TaskDefPage;
+import de.elateportal.editor.pages.UploadComplexTaskdefPage;
 
 public class TaskEditorApplication extends DataApplication {
 	/**
@@ -115,10 +119,11 @@ public class TaskEditorApplication extends DataApplication {
 	@Override
 	protected void init() {
 		super.init();
-		// System.out.println(AbstractLink.class.getProtectionDomain().getCodeSource());
-		// for (final Method m : AbstractLink.class.getDeclaredMethods()) {
-		// System.out.println(m);
-		// }
+		mountBookmarkablePage("taskdefs", TaskDefPage.class);
+		mountBookmarkablePage("statistics", StatisticPage.class);
+		mountBookmarkablePage("subtaskdefs", ShowSubtaskDefsPage.class);
+		mountBookmarkablePage("import", UploadComplexTaskdefPage.class);
+
 		getMarkupSettings().setStripWicketTags(true);
 	}
 
