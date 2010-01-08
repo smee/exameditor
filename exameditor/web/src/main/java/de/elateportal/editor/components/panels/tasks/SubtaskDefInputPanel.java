@@ -58,204 +58,204 @@ import de.elateportal.model.TextSubTaskDef;
  * 
  */
 public class SubtaskDefInputPanel extends Panel {
-	/**
-	 * @author Steffen Dienst
-	 * 
-	 * @param <T>
-	 */
-	public class SubtaskDefForm<T extends SubTaskDefType> extends ShinyForm<T> {
+    /**
+     * @author Steffen Dienst
+     * 
+     * @param <T>
+     */
+    public class SubtaskDefForm<T extends SubTaskDefType> extends ShinyForm<T> {
 
-		private final Class<? extends SubTaskDefType> modelClass;
+        private final Class<? extends SubTaskDefType> modelClass;
 
-		public SubtaskDefForm(final String id, final Class<T> modelClass) {
-			super(id, modelClass);
-			this.modelClass = modelClass;
-			init();
-		}
+        public SubtaskDefForm(final String id, final Class<T> modelClass) {
+            super(id, modelClass);
+            this.modelClass = modelClass;
+            init();
+        }
 
-		public SubtaskDefForm(final String id, final T object) {
-			super(id, new HibernateObjectModel<T>(object));
-			this.modelClass = object.getClass();
-			init();
-		}
+        public SubtaskDefForm(final String id, final T object) {
+            super(id, new HibernateObjectModel<T>(object));
+            this.modelClass = object.getClass();
+            init();
+        }
 
-		/**
-		 * @param submittingButton
-		 */
-		protected void delegateSubmit(final org.apache.wicket.markup.html.form.Button submittingButton) {
-		}
+        /**
+         * @param submittingButton
+         */
+        protected void delegateSubmit(final org.apache.wicket.markup.html.form.Button submittingButton) {
+        }
 
-		/**
-		 * @param id
-		 * @param modelClass2
-		 * @return
-		 */
-		private Component getTaskSpecificFormPanel(final String id) {
-			if (modelClass.equals(McSubTaskDef.class)) {
-				return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getModel());
-			} else if (modelClass.equals(TextSubTaskDef.class)) {
-				return new TextSubtaskDefInputPanel(id);
-			} else if (modelClass.equals(MappingSubTaskDef.class)) {
-				return new MappingSubtaskDefInputPanel(id, (IModel<MappingSubTaskDef>) getModel());
-			} else if (modelClass.equals(ClozeSubTaskDef.class)) {
-				return new ClozeSubtaskDefInputPanel(id, (IModel<ClozeSubTaskDef>) getModel());
-			} else if (modelClass.equals(PaintSubTaskDef.class)) {
-				return new PaintSubtaskDefInputPanel(id);
-			} else {
-				return new EmptyPanel(id);
-			}
-		}
+        /**
+         * @param id
+         * @param modelClass2
+         * @return
+         */
+        private Component getTaskSpecificFormPanel(final String id) {
+            if (modelClass.equals(McSubTaskDef.class)) {
+                return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getModel());
+            } else if (modelClass.equals(TextSubTaskDef.class)) {
+                return new TextSubtaskDefInputPanel(id);
+            } else if (modelClass.equals(MappingSubTaskDef.class)) {
+                return new MappingSubtaskDefInputPanel(id, (IModel<MappingSubTaskDef>) getModel());
+            } else if (modelClass.equals(ClozeSubTaskDef.class)) {
+                return new ClozeSubtaskDefInputPanel(id, (IModel<ClozeSubTaskDef>) getModel());
+            } else if (modelClass.equals(PaintSubTaskDef.class)) {
+                return new PaintSubtaskDefInputPanel(id);
+            } else {
+                return new EmptyPanel(id);
+            }
+        }
 
-		/**
-		 * @param returnPage
-		 * 
-		 */
-		private void init() {
-			add(new FeedbackPanel("feedback"));
-			// add common subtaskdeftype input fields
-			add(new TextField<String>("id").setRequired(true));// .add(new
-			// TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
-			TextArea<String> problemText = new TextArea<String>("problem") {
-				@Override
-				public IConverter getConverter(Class<?> type) {
-					return new IConverter() {
+        /**
+         * @param returnPage
+         * 
+         */
+        private void init() {
+            add(new FeedbackPanel("feedback"));
+            // add common subtaskdeftype input fields
+            add(new TextField<String>("xmlid").setRequired(true));// .add(new
+            // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
+            final TextArea<String> problemText = new TextArea<String>("problem") {
+                @Override
+                public IConverter getConverter(final Class<?> type) {
+                    return new IConverter() {
 
-						public Object convertToObject(String text, Locale locale) {
-							return text.replaceAll("<p>", "").replaceAll("</p>", "<br/>");
-						}
+                        public Object convertToObject(final String text, final Locale locale) {
+                            return text.replaceAll("<p>", "").replaceAll("</p>", "<br/>");
+                        }
 
-						public String convertToString(Object value, Locale locale) {
-							return value == null ? "" : value.toString();
-						}
-					};
-				}
-			};
-			// set the type, else the converter won't get called
-			problemText.setType(String.class);
-			add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
+                        public String convertToString(final Object value, final Locale locale) {
+                            return value == null ? "" : value.toString();
+                        }
+                    };
+                }
+            };
+            // set the type, else the converter won't get called
+            problemText.setType(String.class);
+            add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
 
-			// add subtask input elements
-			add(getTaskSpecificFormPanel("specificelements"));
+            // add subtask input elements
+            add(getTaskSpecificFormPanel("specificelements"));
 
-			// add correction and hints
-			add(new TextField<String>("hint"));
-			add(new TextArea<String>("correctionHint"));
-			add(new org.apache.wicket.markup.html.form.Button("saveButton"));
-			add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
-				@Override
-				public void onSubmit() {
-					clearPersistentObject();
-					// setResponsePage(returnPage);
-				}
-			}.setDefaultFormProcessing(false));
-		}
+            // add correction and hints
+            add(new TextField<String>("hint"));
+            add(new TextArea<String>("correctionHint"));
+            add(new org.apache.wicket.markup.html.form.Button("saveButton"));
+            add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
+                @Override
+                public void onSubmit() {
+                    clearPersistentObject();
+                    // setResponsePage(returnPage);
+                }
+            }.setDefaultFormProcessing(false));
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see net.databinder.components.hib.DataForm#onSubmit()
-		 */
-		@Override
-		protected void onSubmit() {
-			super.onSubmit();
-			info("Gespeichert!");
-			// clearPersistentObject();
-			// setResponsePage(new ShowSubtaskDefsPage(modelClass));
-		}
+        /*
+         * (non-Javadoc)
+         * 
+         * @see net.databinder.components.hib.DataForm#onSubmit()
+         */
+        @Override
+        protected void onSubmit() {
+            super.onSubmit();
+            info("Gespeichert!");
+            // clearPersistentObject();
+            // setResponsePage(new ShowSubtaskDefsPage(modelClass));
+        }
 
-		/**
-		 * Reattach entity, why does {@link DataForm} use session.save(..)?
-		 * 
-		 * @see net.databinder.components.hib.DataForm#saveIfNew(net.databinder.models.hib.HibernateObjectModel)
-		 */
-		@Override
-		protected boolean saveIfNew(HibernateObjectModel<T> model) {
-			Session session = getHibernateSession();
-			if (!session.contains(model.getObject())) {
-				onBeforeSave(model);
-				session.saveOrUpdate(model.getObject());
-				// updating binding status; though it will happen on detach
-				// some UI components may like to know sooner.
-				getPersistentObjectModel().checkBinding();
-				return true;
-			}
-			return false;
-		}
-	}
+        /**
+         * Reattach entity, why does {@link DataForm} use session.save(..)?
+         * 
+         * @see net.databinder.components.hib.DataForm#saveIfNew(net.databinder.models.hib.HibernateObjectModel)
+         */
+        @Override
+        protected boolean saveIfNew(final HibernateObjectModel<T> model) {
+            final Session session = getHibernateSession();
+            if (!session.contains(model.getObject())) {
+                onBeforeSave(model);
+                session.saveOrUpdate(model.getObject());
+                // updating binding status; though it will happen on detach
+                // some UI components may like to know sooner.
+                getPersistentObjectModel().checkBinding();
+                return true;
+            }
+            return false;
+        }
+    }
 
-	/**
-	 * @param id
-	 */
-	public SubtaskDefInputPanel(final String id) {
-		super(id);
-	}
+    /**
+     * @param id
+     */
+    public SubtaskDefInputPanel(final String id) {
+        super(id);
+    }
 
-	/**
-	 * @param id
-	 * @param returnPage
-	 * @param clazz
-	 */
-	public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz,
-	    final SubTaskDefType object) {
-		super(id);
-		if (object != null) {
-			add(new SubtaskDefForm("taskform", object));
-		} else {
-			add(new SubtaskDefForm("taskform", clazz));
-		}
-	}
+    /**
+     * @param id
+     * @param returnPage
+     * @param clazz
+     */
+    public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz,
+            final SubTaskDefType object) {
+        super(id);
+        if (object != null) {
+            add(new SubtaskDefForm("taskform", object));
+        } else {
+            add(new SubtaskDefForm("taskform", clazz));
+        }
+    }
 
-	/**
-	 * Add all tinymce features to the rich text editor.
-	 * 
-	 * @return
-	 */
-	public TinyMCESettings createFullFeatureset() {
-		final TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
+    /**
+     * Add all tinymce features to the rich text editor.
+     * 
+     * @return
+     */
+    public TinyMCESettings createFullFeatureset() {
+        final TinyMCESettings settings = new TinyMCESettings(TinyMCESettings.Theme.advanced);
 
-		// first toolbar
-		settings.add(Button.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
-		settings.add(Button.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        // first toolbar
+        settings.add(Button.fontselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
+        settings.add(Button.fontsizeselect, TinyMCESettings.Toolbar.first, TinyMCESettings.Position.after);
 
-		// second toolbar
-		final PastePlugin pastePlugin = new PastePlugin();
-		final SearchReplacePlugin searchReplacePlugin = new SearchReplacePlugin();
-		settings.add(Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(pastePlugin.getPasteTextButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(pastePlugin.getPasteWordButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(searchReplacePlugin.getSearchButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
-		settings.add(searchReplacePlugin.getReplaceButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        // second toolbar
+        final PastePlugin pastePlugin = new PastePlugin();
+        final SearchReplacePlugin searchReplacePlugin = new SearchReplacePlugin();
+        settings.add(Button.cut, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.copy, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(pastePlugin.getPasteButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(pastePlugin.getPasteTextButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(pastePlugin.getPasteWordButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(searchReplacePlugin.getSearchButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
+        settings.add(searchReplacePlugin.getReplaceButton(), TinyMCESettings.Toolbar.second, TinyMCESettings.Position.before);
 
-		settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-		settings.add(Button.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
-		settings.add(Button.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.forecolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
+        settings.add(Button.backcolor, TinyMCESettings.Toolbar.second, TinyMCESettings.Position.after);
 
-		// third toolbar
-		final TablePlugin tablePlugin = new TablePlugin();
-		final FullScreenPlugin fullScreenPlugin = new FullScreenPlugin();
-		settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
-		settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
-		settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
-		settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        // third toolbar
+        final TablePlugin tablePlugin = new TablePlugin();
+        final FullScreenPlugin fullScreenPlugin = new FullScreenPlugin();
+        settings.add(tablePlugin.getTableControls(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
+        settings.add(Button.separator, TinyMCESettings.Toolbar.third, TinyMCESettings.Position.before);
+        settings.add(fullScreenPlugin.getFullscreenButton(), TinyMCESettings.Toolbar.third, TinyMCESettings.Position.after);
 
-		// other settings
-		settings.setToolbarAlign(TinyMCESettings.Align.left);
-		settings.setToolbarLocation(TinyMCESettings.Location.top);
-		settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
-		settings.setResizing(true);
+        // other settings
+        settings.setToolbarAlign(TinyMCESettings.Align.left);
+        settings.setToolbarLocation(TinyMCESettings.Location.top);
+        settings.setStatusbarLocation(TinyMCESettings.Location.bottom);
+        settings.setResizing(true);
 
-		// remove superflous buttons
-		settings.disableButton(Button.image);
-		settings.disableButton(Button.anchor);
-		settings.disableButton(Button.link);
-		settings.disableButton(Button.unlink);
-		settings.disableButton(Button.visualaid);
-		settings.disableButton(Button.cleanup);
-		settings.disableButton(Button.help);
+        // remove superflous buttons
+        settings.disableButton(Button.image);
+        settings.disableButton(Button.anchor);
+        settings.disableButton(Button.link);
+        settings.disableButton(Button.unlink);
+        settings.disableButton(Button.visualaid);
+        settings.disableButton(Button.cleanup);
+        settings.disableButton(Button.help);
 
-		return settings;
-	}
+        return settings;
+    }
 }

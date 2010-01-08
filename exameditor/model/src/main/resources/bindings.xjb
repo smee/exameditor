@@ -27,6 +27,7 @@
           <hj:basic>
             <orm:column name="xmlid"/>
           </hj:basic>
+          <jxb:property name="xmlid"/>
       </jxb:bindings>      
       <jxb:bindings node="//xs:element[@name='problem']">
           <hj:basic>
