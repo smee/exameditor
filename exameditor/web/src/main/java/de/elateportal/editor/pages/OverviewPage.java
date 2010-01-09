@@ -4,10 +4,17 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.databinder.auth.components.hib.DataSignInPage;
+import net.databinder.auth.components.hib.DataUserStatusPanel;
+import net.databinder.auth.hib.AuthDataSession;
+import net.databinder.components.NullPlug;
+
+import org.apache.wicket.Page;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.link.Link;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
 import de.elateportal.editor.components.menu.ChromeMenu;
@@ -23,9 +30,11 @@ public class OverviewPage extends WebPage {
 
 	/** Add components to be displayed on page. */
 	public OverviewPage() {
-		// add(new DataStyleLink("css"));
+		if (AuthDataSession.get().isSignedIn())
+			add(new ChromeMenu("menubar", getMenuList(), ChromeMenu.Theme.THEME1));
+		else
+			add(new NullPlug("menubar"));
 
-		add(new ChromeMenu("menubar", getMenuList(), ChromeMenu.Theme.THEME1));
 		// make sure tinymce works, even when adding it via ajax
 		// see http://wicketbyexample.com/wicket-tinymce-some-advanced-tips/
 		add(new HeaderContributor(new IHeaderContributor() {
@@ -33,6 +42,28 @@ public class OverviewPage extends WebPage {
 				response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
 			}
 		}));
+
+		// sign in/out links
+		add(new DataUserStatusPanel("userStatus") {
+			@Override
+			protected Link getSignInLink(String id) {
+				return new Link(id) {
+					@Override
+					public boolean isVisible() {
+						return !getAuthSession().isSignedIn();
+					}
+
+					@Override
+					public void onClick() {
+						setResponsePage(new DataSignInPage(new DataSignInPage.ReturnPage() {
+							public Page get() {
+								return new OverviewPage();
+							}
+						}));
+					}
+				};
+			}
+		});
 	}
 
 	/**

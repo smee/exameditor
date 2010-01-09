@@ -36,7 +36,7 @@ import de.elateportal.model.SubTaskDefType;
  * @author Steffen Dienst
  * 
  */
-public class TaskDefPage extends OverviewPage {
+public class TaskDefPage extends SecurePage {
 
 	private Panel editPanel;
 	private final HibernateListModel<ComplexTaskDef> taskdefModel;
