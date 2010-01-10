@@ -36,8 +36,13 @@ import net.databinder.auth.data.hib.BasicPassword;
 import org.apache.wicket.authorization.strategies.role.Roles;
 import org.hibernate.annotations.CollectionOfElements;
 
+import de.elateportal.model.AddonSubTaskDef;
+import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
-import de.elateportal.model.SubTaskDefType;
+import de.elateportal.model.MappingSubTaskDef;
+import de.elateportal.model.McSubTaskDef;
+import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.TextSubTaskDef;
 
 /**
  * @author Steffen Dienst
@@ -59,11 +64,27 @@ public class BasicUser implements DataUser {
 
 	@CollectionOfElements(targetElement = ComplexTaskDef.class)
 	private final List<ComplexTaskDef> taskdefs;
-	@CollectionOfElements(targetElement = SubTaskDefType.class)
-	private final List<SubTaskDefType> subtaskdefs;
+
+	@CollectionOfElements(targetElement = AddonSubTaskDef.class)
+	private final List<AddonSubTaskDef> addonSubtaskdefs;
+	@CollectionOfElements(targetElement = McSubTaskDef.class)
+	private final List<McSubTaskDef> mcSubtaskdefs;
+	@CollectionOfElements(targetElement = ClozeSubTaskDef.class)
+	private final List<ClozeSubTaskDef> clozeSubtaskdefs;
+	@CollectionOfElements(targetElement = TextSubTaskDef.class)
+	private final List<TextSubTaskDef> textSubtaskdefs;
+	@CollectionOfElements(targetElement = PaintSubTaskDef.class)
+	private final List<PaintSubTaskDef> paintSubtaskdefs;
+	@CollectionOfElements(targetElement = MappingSubTaskDef.class)
+	private final List<MappingSubTaskDef> mappingSubtaskdefs;
 
 	public BasicUser() {
-		subtaskdefs = new ArrayList<SubTaskDefType>();
+		addonSubtaskdefs = new ArrayList<AddonSubTaskDef>();
+		mcSubtaskdefs = new ArrayList<McSubTaskDef>();
+		clozeSubtaskdefs = new ArrayList<ClozeSubTaskDef>();
+		textSubtaskdefs = new ArrayList<TextSubTaskDef>();
+		paintSubtaskdefs = new ArrayList<PaintSubTaskDef>();
+		mappingSubtaskdefs = new ArrayList<MappingSubTaskDef>();
 		taskdefs = new ArrayList<ComplexTaskDef>();
 
 		roles = new Roles(Roles.USER);
@@ -74,8 +95,28 @@ public class BasicUser implements DataUser {
 		this.roles.add(role);
 	}
 
+	public List<AddonSubTaskDef> getAddonSubtaskdefs() {
+		return addonSubtaskdefs;
+	}
+
+	public List<ClozeSubTaskDef> getClozeSubtaskdefs() {
+		return clozeSubtaskdefs;
+	}
+
 	public Integer getId() {
 		return id;
+	}
+
+	public List<MappingSubTaskDef> getMappingSubtaskdefs() {
+		return mappingSubtaskdefs;
+	}
+
+	public List<McSubTaskDef> getMcSubtaskdefs() {
+		return mcSubtaskdefs;
+	}
+
+	public List<PaintSubTaskDef> getPaintSubtaskdefs() {
+		return paintSubtaskdefs;
 	}
 
 	/*
@@ -91,12 +132,12 @@ public class BasicUser implements DataUser {
 		return new HashSet<String>(roles);
 	}
 
-	public List<SubTaskDefType> getSubtaskdefs() {
-		return subtaskdefs;
+	public List<ComplexTaskDef> getTaskdefs() {
+		return taskdefs;
 	}
 
-	public List<ComplexTaskDef> getTaskDefs() {
-		return taskdefs;
+	public List<TextSubTaskDef> getTextSubtaskdefs() {
+		return textSubtaskdefs;
 	}
 
 	/*

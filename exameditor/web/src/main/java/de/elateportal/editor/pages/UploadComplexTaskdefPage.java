@@ -3,6 +3,7 @@ package de.elateportal.editor.pages;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -21,6 +22,7 @@ import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
 import de.elateportal.editor.user.BasicUser;
+import de.elateportal.editor.util.Stuff;
 import de.elateportal.model.AddonSubTaskDef;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
@@ -28,22 +30,10 @@ import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.McSubTaskDef;
 import de.elateportal.model.PaintSubTaskDef;
 import de.elateportal.model.SubTaskDefType;
+import de.elateportal.model.TaskBlockType;
 import de.elateportal.model.TextSubTaskDef;
 import de.elateportal.model.ComplexTaskDef.Category;
-import de.elateportal.model.ComplexTaskDef.Category.AddonTaskBlock;
-import de.elateportal.model.ComplexTaskDef.Category.ClozeTaskBlock;
-import de.elateportal.model.ComplexTaskDef.Category.MappingTaskBlock;
-import de.elateportal.model.ComplexTaskDef.Category.McTaskBlock;
 import de.elateportal.model.ComplexTaskDef.Category.McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
-import de.elateportal.model.ComplexTaskDef.Category.PaintTaskBlock;
-import de.elateportal.model.ComplexTaskDef.Category.TextTaskBlock;
-import de.elateportal.model.ComplexTaskDef.Category.AddonTaskBlock.AddonSubTaskDefOrChoiceItem;
-import de.elateportal.model.ComplexTaskDef.Category.AddonTaskBlock.Choice;
-import de.elateportal.model.ComplexTaskDef.Category.ClozeTaskBlock.ClozeSubTaskDefOrChoiceItem;
-import de.elateportal.model.ComplexTaskDef.Category.MappingTaskBlock.MappingSubTaskDefOrChoiceItem;
-import de.elateportal.model.ComplexTaskDef.Category.McTaskBlock.McSubTaskDefOrChoiceItem;
-import de.elateportal.model.ComplexTaskDef.Category.PaintTaskBlock.PaintSubTaskDefOrChoiceItem;
-import de.elateportal.model.ComplexTaskDef.Category.TextTaskBlock.TextSubTaskDefOrChoiceItem;
 
 /**
  * @author sdienst
@@ -92,117 +82,28 @@ public class UploadComplexTaskdefPage extends SecurePage {
 		add(new FileUploadForm("uploadform"));
 	}
 
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(AddonTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
-		if (block == null)
-			return stds;
-		if (block.getAddonSubTaskDefOrChoiceItems() != null)
-			for (AddonSubTaskDefOrChoiceItem item : block.getAddonSubTaskDefOrChoiceItems()) {
-				AddonSubTaskDef st = item.getItemAddonSubTaskDef();
-				if (st != null)
-					stds.add(st);
-				else {
-					Choice choice = item.getItemChoice();
-					stds.addAll(choice.getAddonSubTaskDef());
-				}
-			}
-		return stds;
-	}
-
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(ClozeTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
-		if (block == null)
-			return stds;
-		if (block.getClozeSubTaskDefOrChoiceItems() != null)
-			for (ClozeSubTaskDefOrChoiceItem item : block.getClozeSubTaskDefOrChoiceItems()) {
-				ClozeSubTaskDef st = item.getItemClozeSubTaskDef();
-				if (st != null)
-					stds.add(st);
-				else {
-					de.elateportal.model.ComplexTaskDef.Category.ClozeTaskBlock.Choice choice = item.getItemChoice();
-					stds.addAll(choice.getClozeSubTaskDef());
-				}
-			}
-		return stds;
-	}
-
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(ComplexTaskDef taskdef) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
+	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(ComplexTaskDef taskdef, Class<T> clazz) throws Exception {
+		Collection<T> stds = new ArrayList<T>();
 		for (Category cat : taskdef.getCategory())
 			for (McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block : cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems()) {
-				stds.addAll(getAllSubtaskdefs(block.getItemAddonTaskBlock()));
-				stds.addAll(getAllSubtaskdefs(block.getItemClozeTaskBlock()));
-				stds.addAll(getAllSubtaskdefs(block.getItemMappingTaskBlock()));
-				stds.addAll(getAllSubtaskdefs(block.getItemMcTaskBlock()));
-				stds.addAll(getAllSubtaskdefs(block.getItemPaintTaskBlock()));
-				stds.addAll(getAllSubtaskdefs(block.getItemTextTaskBlock()));
+				stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) Stuff.call(block, "getItem%sTaskBlock", clazz), clazz));
 			}
 		return stds;
 	}
 
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(MappingTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
+	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(TaskBlockType block, Class<T> clazz) throws Exception {
+		Collection<T> stds = new ArrayList<T>();
 		if (block == null)
 			return stds;
-		if (block.getMappingSubTaskDefOrChoiceItems() != null)
-			for (MappingSubTaskDefOrChoiceItem item : block.getMappingSubTaskDefOrChoiceItems()) {
-				MappingSubTaskDef st = item.getItemMappingSubTaskDef();
+		List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
+		if (items != null)
+			for (Object item : items) {
+				T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
 				if (st != null)
 					stds.add(st);
 				else {
-					de.elateportal.model.ComplexTaskDef.Category.MappingTaskBlock.Choice choice = item.getItemChoice();
-					stds.addAll(choice.getMappingSubTaskDef());
-				}
-			}
-		return stds;
-	}
-
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(McTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
-		if (block == null)
-			return stds;
-		if (block.getMcSubTaskDefOrChoiceItems() != null)
-			for (McSubTaskDefOrChoiceItem item : block.getMcSubTaskDefOrChoiceItems()) {
-				McSubTaskDef st = item.getItemMcSubTaskDef();
-				if (st != null)
-					stds.add(st);
-				else {
-					de.elateportal.model.ComplexTaskDef.Category.McTaskBlock.Choice choice = item.getItemChoice();
-					stds.addAll(choice.getMcSubTaskDef());
-				}
-			}
-		return stds;
-	}
-
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(PaintTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
-		if (block == null)
-			return stds;
-		if (block.getPaintSubTaskDefOrChoiceItems() != null)
-			for (PaintSubTaskDefOrChoiceItem item : block.getPaintSubTaskDefOrChoiceItems()) {
-				PaintSubTaskDef st = item.getItemPaintSubTaskDef();
-				if (st != null)
-					stds.add(st);
-				else {
-					de.elateportal.model.ComplexTaskDef.Category.PaintTaskBlock.Choice choice = item.getItemChoice();
-					stds.addAll(choice.getPaintSubTaskDef());
-				}
-			}
-		return stds;
-	}
-
-	private Collection<? extends SubTaskDefType> getAllSubtaskdefs(TextTaskBlock block) {
-		Collection<SubTaskDefType> stds = new ArrayList<SubTaskDefType>();
-		if (block == null)
-			return stds;
-		if (block.getTextSubTaskDefOrChoiceItems() != null)
-			for (TextSubTaskDefOrChoiceItem item : block.getTextSubTaskDefOrChoiceItems()) {
-				TextSubTaskDef st = item.getItemTextSubTaskDef();
-				if (st != null)
-					stds.add(st);
-				else {
-					de.elateportal.model.ComplexTaskDef.Category.TextTaskBlock.Choice choice = item.getItemChoice();
-					stds.addAll(choice.getTextSubTaskDef());
+					Object choice = Stuff.call(item, "getItemChoice");
+					stds.addAll((Collection<T>) Stuff.call(choice, "get%sSubTaskDef", clazz));
 				}
 			}
 		return stds;
@@ -231,14 +132,22 @@ public class UploadComplexTaskdefPage extends SecurePage {
 		return null;
 	}
 
-	public void persistIntoDB(final ComplexTaskDef taskdef) {
+	public void persistIntoDB(final ComplexTaskDef taskdef) throws Exception {
 		final Session session = Databinder.getHibernateSession();
 		final Transaction trans = session.beginTransaction();
 		session.save(taskdef);
 		// add to current user
 		BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
-		user.getTaskDefs().add(taskdef);
-		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef));
+
+		user.getTaskdefs().add(taskdef);
+
+		user.getAddonSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
+		user.getMcSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
+		user.getPaintSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
+		user.getMappingSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
+		user.getClozeSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
+		user.getTextSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
+
 		session.saveOrUpdate(user);
 
 		trans.commit();

@@ -16,6 +16,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 
 import de.elateportal.editor.user.BasicUser;
+import de.elateportal.model.AddonSubTaskDef;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
@@ -41,6 +42,7 @@ public class StatisticPanel extends Panel {
 		classes.add(MappingSubTaskDef.class);
 		classes.add(PaintSubTaskDef.class);
 		classes.add(TextSubTaskDef.class);
+		classes.add(AddonSubTaskDef.class);
 
 		final ListView container = new ListView<Class>("globalstatslist", classes) {
 			@Override
@@ -60,13 +62,32 @@ public class StatisticPanel extends Panel {
 		final ListView container2 = new ListView<Class>("privatestatslist", classes) {
 			@Override
 			protected void populateItem(final ListItem<Class> item) {
-				BasicUser user = (BasicUser) AuthDataSession.get().getUser();
 				item.add(new Label("statname", new ResourceModel(item.getModelObject().getSimpleName())));
-				item.add(new Label("statvalue", model));
+				item.add(new Label("statvalue", count(item.getModelObject())));
 			}
 		};
 
 		add(container);
 		add(container2);
+	}
+
+	protected String count(Class clazz) {
+		BasicUser user = (BasicUser) AuthDataSession.get().getUser();
+		if (clazz.isAssignableFrom(ComplexTaskDef.class))
+			return Integer.toString(user.getTaskdefs().size());
+		else if (clazz.isAssignableFrom(McSubTaskDef.class))
+			return Integer.toString(user.getMcSubtaskdefs().size());
+		else if (clazz.isAssignableFrom(ClozeSubTaskDef.class))
+			return Integer.toString(user.getClozeSubtaskdefs().size());
+		else if (clazz.isAssignableFrom(TextSubTaskDef.class))
+			return Integer.toString(user.getTextSubtaskdefs().size());
+		else if (clazz.isAssignableFrom(MappingSubTaskDef.class))
+			return Integer.toString(user.getMappingSubtaskdefs().size());
+		else if (clazz.isAssignableFrom(PaintSubTaskDef.class))
+			return Integer.toString(user.getPaintSubtaskdefs().size());
+		else if (clazz.isAssignableFrom(AddonSubTaskDef.class))
+			return Integer.toString(user.getAddonSubtaskdefs().size());
+		else
+			return "0";
 	}
 }
