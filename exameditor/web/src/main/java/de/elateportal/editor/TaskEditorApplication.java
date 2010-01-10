@@ -1,16 +1,24 @@
 package de.elateportal.editor;
 
-import net.databinder.hib.DataApplication;
+import net.databinder.auth.data.hib.BasicPassword;
+import net.databinder.auth.hib.AuthDataApplication;
+import net.databinder.hib.Databinder;
+import net.databinder.hib.SessionUnit;
 
+import org.apache.wicket.authorization.strategies.role.Roles;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Projections;
 
 import de.elateportal.editor.pages.OverviewPage;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
 import de.elateportal.editor.pages.StatisticPage;
 import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.editor.pages.UploadComplexTaskdefPage;
+import de.elateportal.editor.user.BasicUser;
 
-public class TaskEditorApplication extends DataApplication {
+public class TaskEditorApplication extends AuthDataApplication {
 	/**
 	 * @return
 	 */
@@ -116,6 +124,14 @@ public class TaskEditorApplication extends DataApplication {
 		return OverviewPage.class;
 	}
 
+	public byte[] getSalt() {
+		return "secrect hash salt".getBytes();
+	}
+
+	public Class getUserClass() {
+		return BasicUser.class;
+	}
+
 	@Override
 	protected void init() {
 		super.init();
@@ -125,6 +141,23 @@ public class TaskEditorApplication extends DataApplication {
 		mountBookmarkablePage("import", UploadComplexTaskdefPage.class);
 
 		getMarkupSettings().setStripWicketTags(true);
+		// open session for loading recipe titles
+		Databinder.ensureSession(new SessionUnit() {
+
+			public Object run(Session sess) {
+				Transaction transaction = sess.beginTransaction();
+				Integer count = (Integer) sess.createCriteria(BasicUser.class).setProjection(Projections.rowCount()).uniqueResult();
+				if (count == 0) {
+					BasicUser adminUser = new BasicUser();
+					adminUser.setUsername("admin");
+					adminUser.setPassword(new BasicPassword("admin"));
+					adminUser.addRole(Roles.ADMIN);
+					sess.save(adminUser);
+					transaction.commit();
+				}
+				return null;
+			}
+		});
 	}
 
 }

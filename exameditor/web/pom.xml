@@ -164,21 +164,23 @@
       <artifactId>wicket</artifactId>
       <version>1.4.3</version>
       <type>jar</type>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-extensions</artifactId>
       <version>1.4.3</version>
       <type>jar</type>
-      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <artifactId>wicket-auth-roles</artifactId>
+      <groupId>org.apache.wicket</groupId>
+      <version>1.4.3</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.5.8</version>
       <type>jar</type>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
