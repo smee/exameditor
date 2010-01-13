@@ -6,7 +6,8 @@
     xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
     xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"    
     jxb:extensionBindingPrefixes="xjc">
-    <jxb:bindings  schemaLocation="complexTaskDef.xsd"  node="/xs:schema">
+    
+    <jxb:bindings schemaLocation="complexTaskDef.xsd" node="/xs:schema">
         <jxb:globalBindings>
             <xjc:serializable uid="-6026937020915831338"/>
         </jxb:globalBindings>
@@ -16,6 +17,14 @@
 	  
 	  <hj:persistence>  
 	    <hj:default-generated-id transient="true" name="Hjid"/>  
+		<hj:default-to-many>
+			<hj:many-to-many/>
+		</hj:default-to-many>
+		<hj:default-single-property type="xsd:string">
+			<hj:basic>
+				<orm:column length="1000"/>
+			</hj:basic>
+		</hj:default-single-property>		
 	  </hj:persistence>
 	   
       <jxb:bindings node="//xs:element[@name='description']">
