@@ -24,6 +24,7 @@ import org.hibernate.classic.Session;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.editor.util.Stuff;
 import de.elateportal.model.AddonSubTaskDef;
+import de.elateportal.model.Category;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
@@ -32,125 +33,126 @@ import de.elateportal.model.PaintSubTaskDef;
 import de.elateportal.model.SubTaskDefType;
 import de.elateportal.model.TaskBlockType;
 import de.elateportal.model.TextSubTaskDef;
-import de.elateportal.model.ComplexTaskDef.Category;
-import de.elateportal.model.ComplexTaskDef.Category.McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
+import de.elateportal.model.Category.McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
 
 /**
  * @author sdienst
  */
 public class UploadComplexTaskdefPage extends SecurePage {
 
-	private class FileUploadForm<T> extends Form<T> {
-		private FileUploadField fileUploadField;
+    private class FileUploadForm<T> extends Form<T> {
+        private FileUploadField fileUploadField;
 
-		public FileUploadForm(final String name) {
-			super(name);
+        public FileUploadForm(final String name) {
+            super(name);
 
-			// set this form to multipart mode (allways needed for uploads!)
-			setMultiPart(true);
+            // set this form to multipart mode (allways needed for uploads!)
+            setMultiPart(true);
 
-			// Add one file input field
-			add(fileUploadField = new FileUploadField("fileInput"));
+            // Add one file input field
+            add(fileUploadField = new FileUploadField("fileInput"));
 
-			setMaxSize(Bytes.kilobytes(1000));
-			add(new FeedbackPanel("feedback"));
-		}
+            setMaxSize(Bytes.kilobytes(1000));
+            add(new FeedbackPanel("feedback"));
+        }
 
-		/**
-		 * @see org.apache.wicket.markup.html.form.Form#onSubmit()
-		 */
-		@Override
-		protected void onSubmit() {
-			final FileUpload upload = fileUploadField.getFileUpload();
-			if (upload != null) {
-				try {
-					final ComplexTaskDef taskdef = loadTaskDef(upload);
-					if (taskdef != null) {
-						persistIntoDB(taskdef);
-						setResponsePage(StatisticPage.class);
-					} else {
-						error(String.format("Die Datei '%s' enthält keine gültige Aufgabendefinition!", upload.getClientFileName()));
-					}
-				} catch (final Exception e) {
-					throw new IllegalStateException("Unable to add new complextaskdef to database!", e);
-				}
-			}
-		}
-	}
+        /**
+         * @see org.apache.wicket.markup.html.form.Form#onSubmit()
+         */
+        @Override
+        protected void onSubmit() {
+            final FileUpload upload = fileUploadField.getFileUpload();
+            if (upload != null) {
+                try {
+                    final ComplexTaskDef taskdef = loadTaskDef(upload);
+                    if (taskdef != null) {
+                        persistIntoDB(taskdef);
+                        setResponsePage(StatisticPage.class);
+                    } else {
+                        error(String.format("Die Datei '%s' enthält keine gültige Aufgabendefinition!", upload.getClientFileName()));
+                    }
+                } catch (final Exception e) {
+                    throw new IllegalStateException("Unable to add new complextaskdef to database!", e);
+                }
+            }
+        }
+    }
 
-	public UploadComplexTaskdefPage() {
-		add(new FileUploadForm("uploadform"));
-	}
+    public UploadComplexTaskdefPage() {
+        add(new FileUploadForm("uploadform"));
+    }
 
-	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(ComplexTaskDef taskdef, Class<T> clazz) throws Exception {
-		Collection<T> stds = new ArrayList<T>();
-		for (Category cat : taskdef.getCategory())
-			for (McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block : cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems()) {
-				stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) Stuff.call(block, "getItem%sTaskBlock", clazz), clazz));
-			}
-		return stds;
-	}
+    private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz) throws Exception {
+        final Collection<T> stds = new ArrayList<T>();
+        for (final Category cat : taskdef.getCategory()) {
+            for (final McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block : cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems()) {
+                stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) Stuff.call(block, "getItem%sTaskBlock", clazz), clazz));
+            }
+        }
+        return stds;
+    }
 
-	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(TaskBlockType block, Class<T> clazz) throws Exception {
-		Collection<T> stds = new ArrayList<T>();
-		if (block == null)
-			return stds;
-		List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
-		if (items != null)
-			for (Object item : items) {
-				T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
-				if (st != null)
-					stds.add(st);
-				else {
-					Object choice = Stuff.call(item, "getItemChoice");
-					stds.addAll((Collection<T>) Stuff.call(choice, "get%sSubTaskDef", clazz));
-				}
-			}
-		return stds;
-	}
+    private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlockType block, final Class<T> clazz) throws Exception {
+        final Collection<T> stds = new ArrayList<T>();
+        if (block == null) {
+            return stds;
+        }
+        final List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
+        if (items != null) {
+            for (final Object item : items) {
+                final T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
+                if (st != null) {
+                    stds.add(st);
+                } else {
+                    final Object choice = Stuff.call(item, "getItemChoice");
+                    stds.addAll((Collection<T>) Stuff.call(choice, "get%sSubTaskDef", clazz));
+                }
+            }
+        }
+        return stds;
+    }
 
-	/**
-	 * @param upload
-	 * @return
-	 */
-	public ComplexTaskDef loadTaskDef(final FileUpload upload) {
-		try {
-			final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
-			final Unmarshaller unmarshaller = context.createUnmarshaller();
+    /**
+     * @param upload
+     * @return
+     */
+    public ComplexTaskDef loadTaskDef(final FileUpload upload) {
+        try {
+            final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+            final Unmarshaller unmarshaller = context.createUnmarshaller();
 
-			final JAXBElement unmarshalledElement;
-			final Object unmarshalledObject;
+            final JAXBElement unmarshalledElement;
+            final Object unmarshalledObject;
 
-			final Object result = unmarshaller.unmarshal(upload.getInputStream());
-			return (ComplexTaskDef) result;
+            final Object result = unmarshaller.unmarshal(upload.getInputStream());
+            return (ComplexTaskDef) result;
 
-		} catch (final JAXBException e) {
-			e.printStackTrace();
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+        } catch (final JAXBException e) {
+            e.printStackTrace();
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	public void persistIntoDB(final ComplexTaskDef taskdef) throws Exception {
-		final Session session = Databinder.getHibernateSession();
-		final Transaction trans = session.beginTransaction();
-		session.save(taskdef);
-		// add to current user
-		BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
+    public void persistIntoDB(final ComplexTaskDef taskdef) throws Exception {
+        final Session session = Databinder.getHibernateSession();
+        final Transaction trans = session.beginTransaction();
+        session.save(taskdef);
+        // add to current user
+        final BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
 
-		user.getTaskdefs().add(taskdef);
+        user.getTaskdefs().add(taskdef);
 
-		user.getAddonSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
-		user.getMcSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
-		user.getPaintSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
-		user.getMappingSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
-		user.getClozeSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
-		user.getTextSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
+        user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
 
-		session.saveOrUpdate(user);
+        session.saveOrUpdate(user);
+        trans.commit();
 
-		trans.commit();
-
-	}
+    }
 }
