@@ -28,7 +28,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.util.convert.IConverter;
 
-import de.elateportal.model.MappingSubTaskDef.Concept.CorrectAssignmentIDItem;
+import de.elateportal.model.MappingSubTaskDef.Concept.ConceptCorrectAssignmentIDItem;
 
 /**
  * @author Steffen Dienst
@@ -36,33 +36,37 @@ import de.elateportal.model.MappingSubTaskDef.Concept.CorrectAssignmentIDItem;
  */
 public class CorrectAssignementConverter implements IConverter {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String, java.util.Locale)
-     */
-    public Object convertToObject(final String value, final Locale locale) {
-        final List<CorrectAssignmentIDItem> result = new ArrayList<CorrectAssignmentIDItem>();
-        for (final String s : StringUtils.split(value, ',')) {
-            final CorrectAssignmentIDItem ca = new CorrectAssignmentIDItem();
-            ca.setItem(s);
-            result.add(ca);
-        }
-        return result;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String,
+	 * java.util.Locale)
+	 */
+	public Object convertToObject(final String value, final Locale locale) {
+		final List<ConceptCorrectAssignmentIDItem> result = new ArrayList<ConceptCorrectAssignmentIDItem>();
+		for (final String s : StringUtils.split(value, ',')) {
+			final ConceptCorrectAssignmentIDItem ca = new ConceptCorrectAssignmentIDItem();
+			ca.setItem(s);
+			result.add(ca);
+		}
+		return result;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.wicket.util.convert.IConverter#convertToString(java.lang.Object, java.util.Locale)
-     */
-    public String convertToString(final Object value, final Locale locale) {
-        final List<CorrectAssignmentIDItem> list = (List<CorrectAssignmentIDItem>) value;
-        final Iterator stringIterator = IteratorUtils.transformedIterator(list.iterator(), new Transformer() {
-                public Object transform(final Object input) {
-                return ((CorrectAssignmentIDItem) input).getItem();
-                }
-                        });
-        return StringUtils.join(stringIterator, ",");
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.wicket.util.convert.IConverter#convertToString(java.lang.Object,
+	 * java.util.Locale)
+	 */
+	public String convertToString(final Object value, final Locale locale) {
+		final List<ConceptCorrectAssignmentIDItem> list = (List<ConceptCorrectAssignmentIDItem>) value;
+		final Iterator stringIterator = IteratorUtils.transformedIterator(list.iterator(), new Transformer() {
+			public Object transform(final Object input) {
+				return ((ConceptCorrectAssignmentIDItem) input).getItem();
+			}
+		});
+		return StringUtils.join(stringIterator, ",");
+	}
 }

@@ -17,9 +17,9 @@ import org.apache.wicket.util.convert.IConverter;
 import de.elateportal.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ClozeSubTaskDef.Cloze;
+import de.elateportal.model.ClozeSubTaskDef.Cloze.ClozeTextOrGapItem;
 import de.elateportal.model.ClozeSubTaskDef.Cloze.Gap;
-import de.elateportal.model.ClozeSubTaskDef.Cloze.TextOrGapItem;
-import de.elateportal.model.ClozeSubTaskDef.Cloze.Gap.CorrectItem;
+import de.elateportal.model.ClozeSubTaskDef.Cloze.Gap.GapCorrectItem;
 
 /**
  * @author Steffen Dienst
@@ -43,7 +43,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 		 * , java.util.Locale)
 		 */
 		public Object convertToObject(String value, Locale locale) {
-			List<TextOrGapItem> items = new ArrayList<TextOrGapItem>();
+			List<ClozeTextOrGapItem> items = new ArrayList<ClozeTextOrGapItem>();
 			StringTokenizer st = new StringTokenizer(value, "[]", true);
 			boolean inGap = false;
 
@@ -68,7 +68,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 		public String convertToString(Object value, Locale locale) {
 			Cloze cloze = (Cloze) value;
 			StringBuilder sb = new StringBuilder();
-			for (TextOrGapItem togi : cloze.getTextOrGapItems()) {
+			for (ClozeTextOrGapItem togi : cloze.getTextOrGapItems()) {
 				String text = togi.getItemText();
 				if (text != null) {
 					sb.append(text);
@@ -81,16 +81,16 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 			return sb.toString();
 		}
 
-		private TextOrGapItem createGapItem(String token) {
-			List<CorrectItem> correctValues = new ArrayList<CorrectItem>();
+		private ClozeTextOrGapItem createGapItem(String token) {
+			List<GapCorrectItem> correctValues = new ArrayList<GapCorrectItem>();
 			for (String correctValue : token.split(";")) {
-				CorrectItem item = new CorrectItem();
+				GapCorrectItem item = new GapCorrectItem();
 				item.setItem(correctValue);
 				correctValues.add(item);
 			}
 			Gap gap = new Gap();
 			gap.setCorrectItems(correctValues);
-			TextOrGapItem textOrGapItem = new TextOrGapItem();
+			ClozeTextOrGapItem textOrGapItem = new ClozeTextOrGapItem();
 			textOrGapItem.setItemGap(gap);
 			return textOrGapItem;
 		}
@@ -101,7 +101,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 		 */
 		protected String createGapText(Gap gap) {
 			StringBuilder sb = new StringBuilder("[");
-			for (CorrectItem ci : gap.getCorrectItems()) {
+			for (GapCorrectItem ci : gap.getCorrectItems()) {
 				sb.append(ci.getItem()).append(";");
 			}
 			removeTrailingSemicolon(sb);
@@ -109,8 +109,8 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 			return sb.toString();
 		}
 
-		private TextOrGapItem createTextItem(String text) {
-			TextOrGapItem textOrGapItem = new TextOrGapItem();
+		private ClozeTextOrGapItem createTextItem(String text) {
+			ClozeTextOrGapItem textOrGapItem = new ClozeTextOrGapItem();
 			textOrGapItem.setItemText(text);
 			return textOrGapItem;
 		}
@@ -130,7 +130,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 			StringBuilder sb = new StringBuilder("");
 			sb.append("<input type=\"text\" value=\"");
 			int maxLen = 0;
-			for (CorrectItem ci : gap.getCorrectItems()) {
+			for (GapCorrectItem ci : gap.getCorrectItems()) {
 				sb.append(ci.getItem() + ";");
 				maxLen = Math.max(maxLen, ci.getItem().length());
 			}
