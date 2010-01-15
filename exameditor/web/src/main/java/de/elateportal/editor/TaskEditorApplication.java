@@ -39,13 +39,11 @@ public class TaskEditorApplication extends AuthDataApplication {
 
   @Override
   public org.apache.wicket.Session newSession(final Request request, final Response response) {
-    System.out.println("new session");
     activeUsers.incrementAndGet();
     return new AuthDataSession(request) {
       @Override
       public void signOut() {
         activeUsers.decrementAndGet();
-        System.out.println("signed out");
         super.signOut();
       }
     };
@@ -75,64 +73,41 @@ public class TaskEditorApplication extends AuthDataApplication {
     config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.class);
     config.addAnnotatedClass(de.elateportal.model.Category.class);
     config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.AddonTaskBlockAddonSubTaskDefOrChoiceItem.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.AddonTaskBlockAddonSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.Choice.class);
     config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.Choice.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeConfig.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeTaskBlockClozeSubTaskDefOrChoiceItem.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.Choice.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingConfig.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingTaskBlockMappingSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeConfig.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeTaskBlockClozeSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingConfig.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingTaskBlockMappingSubTaskDefOrChoiceItem.class);
     config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.Choice.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Different.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Regular.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McTaskBlockMcSubTaskDefOrChoiceItem.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Different.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Regular.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McTaskBlockMcSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem.class);
     config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.Choice.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.PaintTaskBlockPaintSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.PaintTaskBlockPaintSubTaskDefOrChoiceItem.class);
     config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.Choice.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.TextTaskBlockTextSubTaskDefOrChoiceItem.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.Choice.class);
+    config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.TextTaskBlockTextSubTaskDefOrChoiceItem.class);
     config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.class);
     config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.CorrectOnlyProcessedTasks.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.MultipleCorrectors.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.Regular.class);
+    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.CorrectOnlyProcessedTasks.class);
+    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.MultipleCorrectors.class);
+    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.Regular.class);
     config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Revisions.class);
     config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Revisions.Revision.class);
     config.addAnnotatedClass(de.elateportal.model.Config.class);
     config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.class);
     config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Assignment.class);
     config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Concept.class);
-    config
-    .addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Concept.ConceptCorrectAssignmentIDItem.class);
+    config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Concept.ConceptCorrectAssignmentIDItem.class);
     config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.class);
     config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.Correct.class);
     config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.Incorrect.class);
