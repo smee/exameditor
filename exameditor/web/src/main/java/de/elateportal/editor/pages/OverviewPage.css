@@ -30,9 +30,10 @@ body{
   /* border: 0.063em solid #ccc; */
   text-align: left;
   min-height:20em;
+  height: 80%;
 }
 .mainContent #menu {
-	width: 61.25em;	
+	width: 56.25em;	
 }
 
 .footer {
