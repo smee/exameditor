@@ -71,7 +71,10 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
-				return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+				if (rowModel.getObject() == null)
+					return Model.of("???");
+				else
+					return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
 			}
 		});
 		// edit links

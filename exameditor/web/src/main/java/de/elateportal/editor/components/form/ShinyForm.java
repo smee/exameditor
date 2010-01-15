@@ -5,13 +5,14 @@ import net.databinder.models.hib.HibernateObjectModel;
 
 /**
  * {@link DataForm} with red border on invalid form fields.
+ * 
  * @author Steffen Dienst
- *
+ * 
  * @param <T>
  */
 public class ShinyForm<T> extends DataForm<T> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final ShinyFormVisitor shinyVisitor = new ShinyFormVisitor();
 
 	public ShinyForm(String id) {
@@ -23,7 +24,7 @@ public class ShinyForm<T> extends DataForm<T> {
 	}
 
 	public ShinyForm(String id, HibernateObjectModel<T> hibernateObjectModel) {
-		super(id,hibernateObjectModel);
+		super(id, hibernateObjectModel);
 	}
 
 	@Override

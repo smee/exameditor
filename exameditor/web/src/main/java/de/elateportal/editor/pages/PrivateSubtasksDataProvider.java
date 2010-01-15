@@ -88,7 +88,8 @@ final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> 
 	public int size() {
 		Session sess = Databinder.getHibernateSession(getFactoryKey());
 		Query q = sess.createQuery(createQueryString());
-		return q.list().size();
-		// return super.size();
+		int size = q.list().size();
+		System.out.println("got " + size + " results");
+		return size;
 	}
 }
