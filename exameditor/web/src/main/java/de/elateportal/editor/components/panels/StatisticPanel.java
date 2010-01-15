@@ -29,65 +29,55 @@ import de.elateportal.model.TextSubTaskDef;
  */
 public class StatisticPanel extends Panel {
 
-	/**
-	 * @param id
-	 */
-	public StatisticPanel(final String id) {
-		super(id);
+  /**
+   * @param id
+   */
+  public StatisticPanel(final String id) {
+    super(id);
 
-		final List<Class> classes = new ArrayList<Class>();
-		classes.add(ComplexTaskDef.class);
-		classes.add(McSubTaskDef.class);
-		classes.add(ClozeSubTaskDef.class);
-		classes.add(MappingSubTaskDef.class);
-		classes.add(PaintSubTaskDef.class);
-		classes.add(TextSubTaskDef.class);
-		classes.add(AddonSubTaskDef.class);
+    final List<Class> classes = new ArrayList<Class>();
+    classes.add(ComplexTaskDef.class);
+    classes.add(McSubTaskDef.class);
+    classes.add(ClozeSubTaskDef.class);
+    classes.add(MappingSubTaskDef.class);
+    classes.add(PaintSubTaskDef.class);
+    classes.add(TextSubTaskDef.class);
+    classes.add(AddonSubTaskDef.class);
 
-		final ListView container = new ListView<Class>("globalstatslist", classes) {
-			@Override
-			protected void populateItem(final ListItem<Class> item) {
-				// new model that queries the number of rows in a table
-				final HibernateObjectModel<Integer> model = new HibernateObjectModel<Integer>(item.getModelObject(),
-				    new CriteriaBuilder() {
-					public void build(final Criteria criteria) {
-						// return "count(*)"
-						criteria.setProjection(Projections.rowCount());
-					}
-				});
-				item.add(new Label("statname", new ResourceModel(item.getModelObject().getSimpleName())));
-				item.add(new Label("statvalue", model));
-			}
-		};
-		final ListView container2 = new ListView<Class>("privatestatslist", classes) {
-			@Override
-			protected void populateItem(final ListItem<Class> item) {
-				item.add(new Label("statname", new ResourceModel(item.getModelObject().getSimpleName())));
-				item.add(new Label("statvalue", count(item.getModelObject())));
-			}
-		};
+    final ListView<Class> container = new AlternatingListView<Class>("globalstatslist", classes) {
 
-		add(container);
-		add(container2);
-	}
+      @Override
+      protected void populateItem(final ListItem<Class> item) {
+        // new model that queries the number of rows in a table
+        final HibernateObjectModel<Integer> model = new HibernateObjectModel<Integer>(item.getModelObject(),
+            new CriteriaBuilder() {
+          public void build(final Criteria criteria) {
+            // return "count(*)"
+            criteria.setProjection(Projections.rowCount());
+          }
+        });
+        item.add(new Label("statname", new ResourceModel(item.getModelObject().getSimpleName())));
+        item.add(new Label("statvalue", model));
+      }
+    };
+    final ListView container2 = new AlternatingListView<Class>("privatestatslist", classes) {
+      @Override
+      protected void populateItem(final ListItem<Class> item) {
+        item.add(new Label("statname", new ResourceModel(item.getModelObject().getSimpleName())));
+        item.add(new Label("statvalue", count(item.getModelObject())));
+      }
+    };
 
-	protected String count(Class clazz) {
-		BasicUser user = (BasicUser) AuthDataSession.get().getUser();
-		if (clazz.isAssignableFrom(ComplexTaskDef.class))
-			return Integer.toString(user.getTaskdefs().size());
-		else if (clazz.isAssignableFrom(McSubTaskDef.class))
-			return Integer.toString(user.getMcSubtaskdefs().size());
-		else if (clazz.isAssignableFrom(ClozeSubTaskDef.class))
-			return Integer.toString(user.getClozeSubtaskdefs().size());
-		else if (clazz.isAssignableFrom(TextSubTaskDef.class))
-			return Integer.toString(user.getTextSubtaskdefs().size());
-		else if (clazz.isAssignableFrom(MappingSubTaskDef.class))
-			return Integer.toString(user.getMappingSubtaskdefs().size());
-		else if (clazz.isAssignableFrom(PaintSubTaskDef.class))
-			return Integer.toString(user.getPaintSubtaskdefs().size());
-		else if (clazz.isAssignableFrom(AddonSubTaskDef.class))
-			return Integer.toString(user.getAddonSubtaskdefs().size());
-		else
-			return "0";
-	}
+    add(container);
+    add(container2);
+  }
+
+  protected String count(final Class clazz) {
+    final BasicUser user = (BasicUser) AuthDataSession.get().getUser();
+    if (clazz.isAssignableFrom(ComplexTaskDef.class)) {
+      return Integer.toString(user.getTaskdefs().size());
+    } else {
+      return Integer.toString(user.getSubtaskdefsOf(clazz).size());
+    }
+  }
 }

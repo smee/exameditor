@@ -18,17 +18,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor.pages;
 
+import java.util.List;
+
 import net.databinder.auth.hib.AuthDataSession;
+import net.databinder.models.hib.HibernateListModel;
+import net.databinder.models.hib.HibernateObjectModel;
+import net.databinder.models.hib.QueryBuilder;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.IModel;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import de.elateportal.editor.components.panels.PreviewPanel;
+import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
-import de.elateportal.editor.user.BasicUser;
+import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.SubTaskDefType;
 
@@ -43,26 +52,43 @@ public class TaskDefPage extends SecurePage {
 	private final PreviewPanel previewPanel;
 
 	public TaskDefPage() {
-		// TODO use detachablemodel that delegates to current user
-		add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(new ListModel<ComplexTaskDef>(
-		    ((BasicUser) AuthDataSession.get().getUser()).getTaskdefs()))));
+		IModel<List<ComplexTaskDef>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
+			public Query build(Session sess) {
+				return sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
+				    AuthDataSession.get().getUser().getUsername()));
+			}
+		});
+		add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(tasklistmodel)));
 		previewPanel = new PreviewPanel("editpanel", tree);
 		editPanel = previewPanel;
 		add(editPanel.setOutputMarkupId(true));
 	}
 
-	public void renderPanelFor(ComplexTaskDef t, AjaxRequestTarget target) {
-		editPanel.replaceWith(previewPanel);
-		editPanel = previewPanel;
-		target.addComponent(editPanel);
-	}
-
 	/**
-	 * @param subtask
+	 * Replace right hand form panel with an edit panel for the given model
+	 * object.
+	 * 
+	 * @param t
 	 * @param target
 	 */
-	public void renderPanelFor(SubTaskDefType subtask, AjaxRequestTarget target) {
-		SubtaskDefInputPanel edit = new SubtaskDefInputPanel("editpanel", subtask.getClass(), subtask);
+	public void renderPanelFor(final Object t, final AjaxRequestTarget target) {
+		if (t instanceof ComplexTaskDef) {
+			replaceEditPanelWith(target, previewPanel);
+		} else if (t instanceof Category) {
+			Category cat = (Category) t;
+			replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat
+			    .getHjid())));
+		} else if (t instanceof SubTaskDefType) {
+			SubTaskDefType st = (SubTaskDefType) t;
+			replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", new HibernateObjectModel<SubTaskDefType>(st.getClass(),
+			    st.getHjid())));
+		} else {
+			replaceEditPanelWith(target, new EmptyPanel("editpanel"));
+		}
+
+	}
+
+	private void replaceEditPanelWith(final AjaxRequestTarget target, final Panel edit) {
 		edit.setOutputMarkupId(true);
 		editPanel.replaceWith(edit);
 		editPanel = edit;

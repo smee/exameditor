@@ -4,14 +4,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <body>
   <wicket:panel>
-   Private Aufgaben:
-    <dl wicket:id="privatestatslist">
-    <dt wicket:id="statname">Anzahl MC-Aufgaben</dt><dd wicket:id="statvalue">55</dd>
-    </dl>
-   Gespeicherte Aufgaben aller Benutzer:
-    <dl wicket:id="globalstatslist">
-    <dt wicket:id="statname">Anzahl MC-Aufgaben</dt><dd wicket:id="statvalue">55</dd>
-    </dl>
+   
+   <table class="dataview" align="left" style="margin-right: 2em;">
+    <thead><tr><td>Private Aufgaben:</td></tr></thead>
+   	<tr wicket:id="privatestatslist">
+   		<td wicket:id="statname">Anzahl MC-Aufgaben</td>
+   		<td wicket:id="statvalue">55</td>
+   	</tr>
+    </table>
+   
+   <table class="dataview" >
+   <thead><tr><td>Gespeicherte Aufgaben aller Benutzer:</td></tr></thead>
+   	<tr wicket:id="globalstatslist">
+   		<td wicket:id="statname">Anzahl MC-Aufgaben</td>
+   		<td wicket:id="statvalue">55</td>
+   	</tr>
+    </table>
   </wicket:panel>
   <DL>
   <DT>Dweeb</DT>

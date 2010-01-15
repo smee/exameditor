@@ -1,7 +1,11 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
 <wicket:link>
   <link href="OverviewPage.css" type="text/css" rel="stylesheet" />
+</wicket:link>
+<wicket:link>
+  <link rel="stylesheet" type="text/css" href="Forms.css" media="all"/>
 </wicket:link>
 <!--
 <link wicket:id="css" href="" type="text/css" rel="stylesheet" />
@@ -11,14 +15,11 @@
 </head>
 <body>
 
-<div class="userStatus" wicket:id="userStatus">
-	Some User | <a href="#">Abmelden</a>
-</div>
+<div class="userStatus" wicket:id="userStatus">Some User | <a href="#">Abmelden</a></div>
 <div class="mainContent">
   <div id="menu"><span wicket:id="menubar"></span></div>
-<div class="mainContent">
-  <wicket:child/>
+  <div wicket:id="loginpanel" id="box"></div><wicket:child />
 </div>
-</div>
+<div class="footer" wicket:id="footer" />
 </body>
 </html>

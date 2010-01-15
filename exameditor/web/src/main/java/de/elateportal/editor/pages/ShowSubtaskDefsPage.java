@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.databinder.models.hib.CriteriaFilterAndSort;
-import net.databinder.models.hib.SortableHibernateProvider;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeaderlessColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar;
@@ -56,8 +56,6 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 		final FilterForm form = new FilterForm("form", builder);
 		add(form);
 
-		final SortableHibernateProvider<T> provider = new SortableHibernateProvider<T>(clazz, builder);
-
 		final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
 		columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid"));
@@ -73,7 +71,10 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
-				return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+				if (rowModel.getObject() == null)
+					return Model.of("???");
+				else
+					return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
 			}
 		});
 		// edit links
@@ -83,6 +84,9 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 				cellItem.add(new TaskActionsPanel<T>(componentId, rowModel));
 			}
 		});
+		// XXX ugly hack, need to create own data access layer
+		final ISortableDataProvider<T> provider = new PrivateSubtasksDataProvider<T>(clazz, builder, builder, clazz);
+
 		final DefaultDataTable<T> table = new DefaultDataTable<T>("datatable", columns, provider, 10);
 		table.addTopToolbar(new FilterToolbar(table, form, builder));
 		form.add(table);

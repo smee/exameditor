@@ -24,6 +24,7 @@ import org.hibernate.classic.Session;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.editor.util.Stuff;
 import de.elateportal.model.AddonSubTaskDef;
+import de.elateportal.model.Category;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
@@ -32,8 +33,7 @@ import de.elateportal.model.PaintSubTaskDef;
 import de.elateportal.model.SubTaskDefType;
 import de.elateportal.model.TaskBlockType;
 import de.elateportal.model.TextSubTaskDef;
-import de.elateportal.model.ComplexTaskDef.Category;
-import de.elateportal.model.ComplexTaskDef.Category.McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
+import de.elateportal.model.Category.CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
 
 /**
  * @author sdienst
@@ -82,30 +82,36 @@ public class UploadComplexTaskdefPage extends SecurePage {
 		add(new FileUploadForm("uploadform"));
 	}
 
-	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(ComplexTaskDef taskdef, Class<T> clazz) throws Exception {
-		Collection<T> stds = new ArrayList<T>();
-		for (Category cat : taskdef.getCategory())
-			for (McTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block : cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems()) {
+	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz)
+	    throws Exception {
+		final Collection<T> stds = new ArrayList<T>();
+		for (final Category cat : taskdef.getCategory()) {
+			for (final CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block : cat
+			    .getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems()) {
 				stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) Stuff.call(block, "getItem%sTaskBlock", clazz), clazz));
 			}
+		}
 		return stds;
 	}
 
-	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(TaskBlockType block, Class<T> clazz) throws Exception {
-		Collection<T> stds = new ArrayList<T>();
-		if (block == null)
+	private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlockType block, final Class<T> clazz)
+	    throws Exception {
+		final Collection<T> stds = new ArrayList<T>();
+		if (block == null) {
 			return stds;
-		List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
-		if (items != null)
-			for (Object item : items) {
-				T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
-				if (st != null)
+		}
+		final List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
+		if (items != null) {
+			for (final Object item : items) {
+				final T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
+				if (st != null) {
 					stds.add(st);
-				else {
-					Object choice = Stuff.call(item, "getItemChoice");
+				} else {
+					final Object choice = Stuff.call(item, "getItemChoice");
 					stds.addAll((Collection<T>) Stuff.call(choice, "get%sSubTaskDef", clazz));
 				}
 			}
+		}
 		return stds;
 	}
 
@@ -137,19 +143,18 @@ public class UploadComplexTaskdefPage extends SecurePage {
 		final Transaction trans = session.beginTransaction();
 		session.save(taskdef);
 		// add to current user
-		BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
+		final BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
 
 		user.getTaskdefs().add(taskdef);
 
-		user.getAddonSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
-		user.getMcSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
-		user.getPaintSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
-		user.getMappingSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
-		user.getClozeSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
-		user.getTextSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
+		user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
 
 		session.saveOrUpdate(user);
-
 		trans.commit();
 
 	}
