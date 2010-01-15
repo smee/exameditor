@@ -18,13 +18,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor.pages;
 
+import java.util.List;
+
 import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 
 import de.elateportal.editor.components.panels.PreviewPanel;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
@@ -48,8 +50,13 @@ public class TaskDefPage extends SecurePage {
 
   public TaskDefPage() {
     // TODO use detachablemodel that delegates to current user
-    add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(new ListModel<ComplexTaskDef>(
-        ((BasicUser) AuthDataSession.get().getUser()).getTaskdefs()))));
+    add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(new AbstractReadOnlyModel() {
+
+      @Override
+      public List<ComplexTaskDef> getObject() {
+        return ((BasicUser) AuthDataSession.get().getUser()).getTaskdefs();
+      }
+    })));
     previewPanel = new PreviewPanel("editpanel", tree);
     editPanel = previewPanel;
     add(editPanel.setOutputMarkupId(true));
