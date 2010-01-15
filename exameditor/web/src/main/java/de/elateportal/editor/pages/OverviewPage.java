@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.databinder.auth.components.DataSignInPanel;
+import net.databinder.auth.components.DataSignInPageBase.ReturnPage;
 import net.databinder.auth.components.hib.DataSignInPage;
 import net.databinder.auth.components.hib.DataUserStatusPanel;
 import net.databinder.auth.hib.AuthDataSession;
@@ -21,6 +23,7 @@ import de.elateportal.editor.components.menu.ChromeMenu;
 import de.elateportal.editor.components.menu.LinkVO;
 import de.elateportal.editor.components.menu.LinkVO.Create;
 import de.elateportal.editor.components.panels.Footer;
+import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.McSubTaskDef;
@@ -52,7 +55,8 @@ public class OverviewPage extends WebPage {
         return new Link(id) {
           @Override
           public boolean isVisible() {
-            return !getAuthSession().isSignedIn();
+            // return !getAuthSession().isSignedIn();
+            return false;
           }
 
           @Override
@@ -64,6 +68,16 @@ public class OverviewPage extends WebPage {
             }));
           }
         };
+      }
+    });
+    add(new DataSignInPanel<BasicUser>("loginpanel", new ReturnPage() {
+      public Page get() {
+        return new OverviewPage();
+      }
+    }) {
+      @Override
+      public boolean isVisible() {
+        return !AuthDataSession.get().isSignedIn();
       }
     });
     add(new Footer("footer"));

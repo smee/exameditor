@@ -79,3 +79,20 @@ table.dataview tr.odd {
   border-style: solid;
   border-color: red;
 }
+div#box {
+  border: thin dotted #6F6F6F;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  width: 17em;
+}
+div#box label {
+  width: 7em;
+  display:block;
+  float:left;  
+}
+div#box p {
+  clear: left;
+  padding-left: 9em;
+  margin: auto;
+}
