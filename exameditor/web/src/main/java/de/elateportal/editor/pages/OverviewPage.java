@@ -35,7 +35,7 @@ public class OverviewPage extends WebPage {
   /** Add components to be displayed on page. */
   public OverviewPage() {
     if (AuthDataSession.get().isSignedIn()) {
-      add(new ChromeMenu("menubar", getMenuList(), ChromeMenu.Theme.THEME1));
+      add(new ChromeMenu("menubar", getMenuList(), ChromeMenu.Theme.THEME5));
     } else {
       add(new NullPlug("menubar"));
     }
@@ -87,12 +87,13 @@ public class OverviewPage extends WebPage {
    * @return
    */
   private List<List<LinkVO>> getMenuList() {
+    final Class<? extends Page> pageClass = getPage().getClass();
     final List<List<LinkVO>> res = new LinkedList<List<LinkVO>>();
     // must not create the link result page now,
     // leads to StackoverflowError in case of resultpage extends OverviewPage
 
-    res.add(Arrays.asList(new LinkVO(TaskDefPage.class, "Prüfungen")));
-    res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben"), new LinkVO(new Create() {
+    res.add(Arrays.asList(new LinkVO(TaskDefPage.class, "Prüfungen").setSelected(pageClass.equals(TaskDefPage.class))));
+    res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben").setSelected(pageClass.equals(ShowSubtaskDefsPage.class)), new LinkVO(new Create() {
       public WebPage createPage() {
         return new ShowSubtaskDefsPage(McSubTaskDef.class);
       }
@@ -117,8 +118,8 @@ public class OverviewPage extends WebPage {
         return new ShowSubtaskDefsPage(MappingSubTaskDef.class);
       }
     }, "Alle Zuordnungs-Aufgaben")));
-    res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken")));
-    res.add(Arrays.asList(new LinkVO(UploadComplexTaskdefPage.class, "Importieren")));
+    res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken").setSelected(pageClass.equals(StatisticPage.class))));
+    res.add(Arrays.asList(new LinkVO(UploadComplexTaskdefPage.class, "Importieren").setSelected(pageClass.equals(UploadComplexTaskdefPage.class))));
     return res;
   }
 }

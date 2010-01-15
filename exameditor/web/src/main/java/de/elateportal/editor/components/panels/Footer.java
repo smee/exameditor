@@ -17,13 +17,13 @@ public class Footer extends Panel {
   public Footer(final String id) {
     super(id);
 
-    add(new Label("currentyear", Model.of(Calendar.getInstance().get(Calendar.YEAR))));
+    add(new Label("currentyear", Model.of(Calendar.getInstance().get(Calendar.YEAR))).setRenderBodyOnly(true));
     add(new Label("usercount", new AbstractReadOnlyModel<Integer>() {
       @Override
       public Integer getObject() {
         return TaskEditorApplication.getInstance().getActiveUsersCount();
       }
-    }));
+    }).setRenderBodyOnly(true));
   }
 
 }
