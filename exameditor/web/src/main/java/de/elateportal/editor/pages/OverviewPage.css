@@ -36,7 +36,7 @@ body{
 }
 
 .footer {
-  clear:left;
+  clear:both;
   margin: 1.5em auto;
 }
 h1{
