@@ -32,37 +32,33 @@ import org.mortbay.jetty.webapp.WebAppContext;
  */
 public class Startup extends DataServer {
 
-	/**
-	 * @param args
-	 */
-	public static void main(final String[] args) {
-		new Startup();
+  /**
+   * @param args
+   */
+  public static void main(final String[] args) {
+    new Startup();
 
-	}
+  }
 
-	@Override
-	protected void configure(final Server server, final WebAppContext context) throws Exception {
-		super.configure(server, context);
-		for (final Handler h : server.getHandlers()) {
-			if (h instanceof MovedContextHandler) {
-				server.removeHandler(h);
-			}
-		}
-		//
-		// make sure we find extra dependencies
-		context.setParentLoaderPriority(true);
+  @Override
+  protected void configure(final Server server, final WebAppContext context) throws Exception {
+    super.configure(server, context);
+    for (final Handler h : server.getHandlers()) {
+      if (h instanceof MovedContextHandler) {
+        server.removeHandler(h);
+      }
+    }
+    //
+    // make sure we find extra dependencies
+    context.setParentLoaderPriority(true);
 
-		final WebAppDeployer wad = new WebAppDeployer();
-		wad.setContexts(server);
-		wad.setWebAppDir("target/preview");
-		// wad.setExtract(true);
-		wad.start();
-    // HTAccessHandler htaccess = new HTAccessHandler();
-    // htaccess.setProtegee(context);
-    // context.setSecurityHandler(htaccess);
-		// use empty session path to make sure, all webapps share the session id
-		// this is needed for data exchange via TaskModelViewDelegate
-		context.getSessionHandler().getSessionManager().setSessionPath("/");
-
-	}
+    final WebAppDeployer wad = new WebAppDeployer();
+    wad.setContexts(server);
+    wad.setWebAppDir("target/preview");
+    // wad.setExtract(true);
+    wad.start();
+    // use empty session path to make sure, all webapps share the session id
+    // this is needed for data exchange via TaskModelViewDelegate
+    context.getSessionHandler().getSessionManager().setSessionPath("/");
+  }
 }

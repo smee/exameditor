@@ -9,6 +9,7 @@ http://creativecommons.org/licenses/by-sa/2.0/uk/
 */
 html{
   font-size: 100%; /* WinIE text resize correction */
+  heigth: 100%;
 } 
 
 body{
@@ -19,6 +20,7 @@ body{
   background: #e6e6e6;
   padding: 0;
   margin: 0;
+  heigth: 100%;
 }
 
 .mainContent{
@@ -27,12 +29,17 @@ body{
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
+  min-height:20em;
+  height: 80%;
 }
 .mainContent #menu {
-	width: 61.25em;	
+	width: 56.25em;	
 }
 
-
+.footer {
+  clear:both;
+  margin: 1.5em auto;
+}
 h1{
   font-size: 1.125em;
   line-height: 1em;
@@ -72,4 +79,22 @@ table.dataview tr.odd {
 .error {
   border-style: solid;
   border-color: red;
+}
+div#box {
+  border: thin dotted #6F6F6F;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  width: 17em;
+}
+div#box label {
+  width: 7em;
+  display:block;
+  text-align: left;
+  margin-right: 0;
+}
+div#box p {
+  clear: left;
+  padding-left: 9em;
+  margin: auto;
 }

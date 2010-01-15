@@ -36,7 +36,6 @@ import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.MappingSubTaskDef;
 import de.elateportal.model.McSubTaskDef;
 import de.elateportal.model.PaintSubTaskDef;
-import de.elateportal.model.SubTaskDefType;
 import de.elateportal.model.TextSubTaskDef;
 import de.elateportal.model.Category.ClozeTaskBlock;
 import de.elateportal.model.Category.MappingTaskBlock;
@@ -49,152 +48,149 @@ import de.elateportal.model.Category.TextTaskBlock;
  * 
  */
 public class TaskTreeElement<T> extends StyledLinkLabel<T> {
-	final static ImmutableMap<Class<?>, String> expressions = new ImmutableMap.Builder<Class<?>, String>()
+  final static ImmutableMap<Class<?>, String> expressions = new ImmutableMap.Builder<Class<?>, String>()
 
-	.put(ComplexTaskDef.class, "title")
-	    .put(Category.class, "title")
-	    .put(McTaskBlock.class, "class.simpleName")
-	    .put(MappingTaskBlock.class, "class.simpleName")
-	    .put(ClozeTaskBlock.class, "class.simpleName")
-	    .put(TextTaskBlock.class, "class.simpleName")
-	    .put(PaintTaskBlock.class, "class.simpleName")
-	    .put(McSubTaskDef.class, "xmlid")
-	    .put(MappingSubTaskDef.class, "xmlid")
-	    .put(ClozeSubTaskDef.class, "xmlid")
-	    .put(TextSubTaskDef.class, "xmlid")
-	    .put(PaintSubTaskDef.class, "xmlid")
-	    .build();
-	final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
-	    .put(ComplexTaskDef.class, "tree-exam")
-	    .put(McTaskBlock.class, "tree-mc")
-	    .put(MappingTaskBlock.class, "tree-mapping")
-	    .put(ClozeTaskBlock.class, "tree-cloze")
-	    .put(TextTaskBlock.class, "tree-text")
-	    .put(PaintTaskBlock.class, "tree-paint")
-	    .put(McSubTaskDef.class, "tree-mc")
-	    .put(MappingSubTaskDef.class, "tree-mapping")
-	    .put(ClozeSubTaskDef.class, "tree-cloze")
-	    .put(TextSubTaskDef.class, "tree-text")
-	    .put(PaintSubTaskDef.class, "tree-paint")
+  .put(ComplexTaskDef.class, "title")
+  .put(Category.class, "title")
+  .put(McTaskBlock.class, "class.simpleName")
+  .put(MappingTaskBlock.class, "class.simpleName")
+  .put(ClozeTaskBlock.class, "class.simpleName")
+  .put(TextTaskBlock.class, "class.simpleName")
+  .put(PaintTaskBlock.class, "class.simpleName")
+  .put(McSubTaskDef.class, "xmlid")
+  .put(MappingSubTaskDef.class, "xmlid")
+  .put(ClozeSubTaskDef.class, "xmlid")
+  .put(TextSubTaskDef.class, "xmlid")
+  .put(PaintSubTaskDef.class, "xmlid")
+  .build();
+  final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
+  .put(ComplexTaskDef.class, "tree-exam")
+  .put(McTaskBlock.class, "tree-mc")
+  .put(MappingTaskBlock.class, "tree-mapping")
+  .put(ClozeTaskBlock.class, "tree-cloze")
+  .put(TextTaskBlock.class, "tree-text")
+  .put(PaintTaskBlock.class, "tree-paint")
+  .put(McSubTaskDef.class, "tree-mc")
+  .put(MappingSubTaskDef.class, "tree-mapping")
+  .put(ClozeSubTaskDef.class, "tree-cloze")
+  .put(TextSubTaskDef.class, "tree-text")
+  .put(PaintSubTaskDef.class, "tree-paint")
 
-	.build();
+  .build();
 
-	private final ComplexTaskDefTree tree;
-	private final TaskDefPage page;
+  private final ComplexTaskDefTree tree;
+  private final TaskDefPage page;
 
-	public TaskTreeElement(final String id, final ComplexTaskDefTree tree, final TaskDefPage page, final IModel<T> model) {
-		super(id, model);
+  public TaskTreeElement(final String id, final ComplexTaskDefTree tree, final TaskDefPage page, final IModel<T> model) {
+    super(id, model);
 
-		this.tree = tree;
-		this.page = page;
-	}
+    this.tree = tree;
+    this.page = page;
+  }
 
-	protected String getClosedStyleClass() {
-		return "tree-folder-closed";
-	}
+  protected String getClosedStyleClass() {
+    return "tree-folder-closed";
+  }
 
-	protected String getOpenStyleClass() {
-		return "tree-folder-open";
-	}
+  protected String getOpenStyleClass() {
+    return "tree-folder-open";
+  }
 
-	/**
-	 * Get a style class for anything other than closed or open folders.
-	 */
-	protected String getOtherStyleClass(final T t) {
-		return "tree-folder-other";
-	}
+  /**
+   * Get a style class for anything other than closed or open folders.
+   */
+  protected String getOtherStyleClass(final T t) {
+    return "tree-folder-other";
+  }
 
-	/**
-	 * Get a style class to render for a selected folder.
-	 * 
-	 * @see #isSelected()
-	 */
-	protected String getSelectedStyleClass() {
-		return "selected";
-	}
+  /**
+   * Get a style class to render for a selected folder.
+   * 
+   * @see #isSelected()
+   */
+  protected String getSelectedStyleClass() {
+    return "selected";
+  }
 
-	/**
-	 * Delegates to others methods depending wether the given model is a folder,
-	 * expanded, collapsed or selected.
-	 * 
-	 * @see ITreeProvider#hasChildren(Object)
-	 * @see AbstractTree#getState(Object)
-	 * @see #isSelected()
-	 * @see #getOpenStyleClass()
-	 * @see #getClosedStyleClass()
-	 * @see #getOtherStyleClass(Object)
-	 * @see #getSelectedStyleClass()
-	 */
-	@Override
-	protected String getStyleClass() {
-		final T t = getModelObject();
+  /**
+   * Delegates to others methods depending wether the given model is a folder,
+   * expanded, collapsed or selected.
+   * 
+   * @see ITreeProvider#hasChildren(Object)
+   * @see AbstractTree#getState(Object)
+   * @see #isSelected()
+   * @see #getOpenStyleClass()
+   * @see #getClosedStyleClass()
+   * @see #getOtherStyleClass(Object)
+   * @see #getSelectedStyleClass()
+   */
+  @Override
+  protected String getStyleClass() {
+    final T t = getModelObject();
 
-		String styleClass;
-		if (tree.getProvider().hasChildren(t)) {
-			if (tree.getState(t) == State.EXPANDED) {
-				styleClass = getOpenStyleClass();
-			} else {
-				styleClass = getClosedStyleClass();
-			}
-		} else {
-			styleClass = getOtherStyleClass(t);
-		}
-		// overwrite syle class for specific model classes (uses custom icons)
-		final String configuredClass = styleClasses.get(t.getClass());
-		if (configuredClass != null) {
-			styleClass = configuredClass;
-		}
-		if (getModel().equals(tree.getSelected())) {
-			styleClass += " " + getSelectedStyleClass();
-		}
+    String styleClass;
+    if (tree.getProvider().hasChildren(t)) {
+      if (tree.getState(t) == State.EXPANDED) {
+        styleClass = getOpenStyleClass();
+      } else {
+        styleClass = getClosedStyleClass();
+      }
+    } else {
+      styleClass = getOtherStyleClass(t);
+    }
+    // overwrite syle class for specific model classes (uses custom icons)
+    final String configuredClass = styleClasses.get(t.getClass());
+    if (configuredClass != null) {
+      styleClass = configuredClass;
+    }
+    if (getModel().equals(tree.getSelected())) {
+      styleClass += " " + getSelectedStyleClass();
+    }
 
-		return styleClass;
-	}
+    return styleClass;
+  }
 
-	/**
-	 * Always clickable.
-	 * 
-	 * @see ITreeProvider#hasChildren(Object)
-	 */
-	@Override
-	protected boolean isClickable() {
-		return true;
-	}
+  /**
+   * Always clickable.
+   * 
+   * @see ITreeProvider#hasChildren(Object)
+   */
+  @Override
+  protected boolean isClickable() {
+    return true;
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * wickettree.content.StyledLinkLabel#newLabelModel(org.apache.wicket.model
-	 * .IModel)
-	 */
-	@Override
-	protected IModel<String> newLabelModel(final IModel<T> model) {
-		final Object o = model.getObject();
-		if (o instanceof ComplexTaskDef) {
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * wickettree.content.StyledLinkLabel#newLabelModel(org.apache.wicket.model
+   * .IModel)
+   */
+  @Override
+  protected IModel<String> newLabelModel(final IModel<T> model) {
+    final Object o = model.getObject();
+    if (o instanceof ComplexTaskDef) {
 
-		}
-		return new PropertyModel<String>(model, expressions.get(o.getClass()));
-	}
+    }
+    return new PropertyModel<String>(model, expressions.get(o.getClass()));
+  }
 
-	/**
-	 * Toggle the node's {@link State} on click.
-	 */
-	@Override
-	protected void onClick(final AjaxRequestTarget target) {
-		final T t = getModelObject();
-		if (tree.getState(t) == State.EXPANDED) {
-			tree.collapse(t);
-		} else {
-			tree.expand(t);
-		}
-		if (t instanceof SubTaskDefType) {
-			page.renderPanelFor((SubTaskDefType) t, target);
-		}
-		if (t instanceof ComplexTaskDef) {
-			tree.setCurrentTaskdef((ComplexTaskDef) t);
-			page.renderPanelFor((ComplexTaskDef) t, target);
-		}
-		tree.select(getModel(), target);
-	}
+  /**
+   * Toggle the node's {@link State} on click.
+   */
+  @Override
+  protected void onClick(final AjaxRequestTarget target) {
+    final T t = getModelObject();
+    if (tree.getState(t) == State.EXPANDED) {
+      tree.collapse(t);
+    } else {
+      tree.expand(t);
+    }
+    if (t instanceof ComplexTaskDef) {
+      tree.setCurrentTaskdef((ComplexTaskDef) t);
+    }
+    page.renderPanelFor(t, target);
+    tree.select(getModel(), target);
+  }
 }
