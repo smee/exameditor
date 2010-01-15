@@ -90,7 +90,8 @@ div#box {
 div#box label {
   width: 7em;
   display:block;
-  float:left;  
+  text-align: left;
+  margin-right: 0;
 }
 div#box p {
   clear: left;
