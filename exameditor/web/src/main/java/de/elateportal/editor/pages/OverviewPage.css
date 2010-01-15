@@ -9,6 +9,7 @@ http://creativecommons.org/licenses/by-sa/2.0/uk/
 */
 html{
   font-size: 100%; /* WinIE text resize correction */
+  heigth: 100%;
 } 
 
 body{
@@ -19,6 +20,7 @@ body{
   background: #e6e6e6;
   padding: 0;
   margin: 0;
+  heigth: 100%;
 }
 
 .mainContent{
@@ -27,12 +29,16 @@ body{
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
+  min-height:20em;
 }
 .mainContent #menu {
 	width: 61.25em;	
 }
 
-
+.footer {
+  clear:left;
+  margin: 1.5em auto;
+}
 h1{
   font-size: 1.125em;
   line-height: 1em;
