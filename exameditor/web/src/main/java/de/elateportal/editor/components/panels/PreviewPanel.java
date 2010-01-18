@@ -28,11 +28,12 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.request.target.basic.RedirectRequestTarget;
+import org.apache.wicket.request.target.component.PageRequestTarget;
 
-import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.editor.preview.DummyTaskFactoryImpl;
 import de.elateportal.model.ComplexTaskDef;
 import de.thorstenberger.taskmodel.TaskModelViewDelegate;
@@ -54,8 +55,8 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
 public class PreviewPanel extends Panel {
   private static AtomicLong tryId = new AtomicLong(0);
 
-  public PreviewPanel(final String id, final ComplexTaskDef sampleTaskdef) {
-    super(id);
+  public PreviewPanel(final String id, final IModel<ComplexTaskDef> hibernateObjectModel) {
+    super(id, hibernateObjectModel);
     setOutputMarkupId(true);
 
     add(new Link("previewLink") {
@@ -74,8 +75,8 @@ public class PreviewPanel extends Panel {
           final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
           final Marshaller marshaller = context.createMarshaller();
           final StringWriter sw = new StringWriter();
-
-          marshaller.marshal(sampleTaskdef, sw);
+          // TODO enable preview for one category, taskblock, subtaskdef
+          marshaller.marshal(PreviewPanel.this.getDefaultModelObject(), sw);
           // set xml to use
           taskfactory.setTaskDefXml(sw.toString());
           final TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
@@ -86,7 +87,7 @@ public class PreviewPanel extends Panel {
           final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
               tm,
               "sampleUser", "Max Mustermann",
-              RequestUtils.toAbsolutePath(urlFor(TaskDefPage.class, null).toString()));
+              RequestUtils.toAbsolutePath(urlFor(new PageRequestTarget(getPage())).toString()));
           TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
 
           getRequestCycle().setRequestTarget(

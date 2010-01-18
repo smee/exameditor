@@ -73,11 +73,10 @@ public class TaskDefPage extends SecurePage {
    */
   public void renderPanelFor(final Object t, final AjaxRequestTarget target) {
     if (t instanceof ComplexTaskDef) {
-      replaceEditPanelWith(target, new PreviewPanel("editpanel", tree.getCurrentTaskdef()));
+      replaceEditPanelWith(target, new PreviewPanel("editpanel", new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class,tree.getCurrentTaskdef().getHjid())));
     } else if (t instanceof Category) {
       final Category cat = (Category) t;
-      replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat
-          .getHjid())));
+      replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat.getHjid())));
     } else if (t instanceof SubTaskDefType) {
       final SubTaskDefType st = (SubTaskDefType) t;
       replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", new HibernateObjectModel<SubTaskDefType>(st.getClass(),
