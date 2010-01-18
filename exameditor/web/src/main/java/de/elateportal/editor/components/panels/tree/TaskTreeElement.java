@@ -182,9 +182,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   @Override
   protected void onClick(final AjaxRequestTarget target) {
     final T t = getModelObject();
-    if (tree.getState(t) == State.EXPANDED) {
-      tree.collapse(t);
-    } else {
+    if (tree.getState(t) == State.COLLAPSED) {
       tree.expand(t);
     }
     if (t instanceof ComplexTaskDef) {
