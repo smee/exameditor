@@ -1,4 +1,4 @@
-package de.elateportal.editor.pages;
+package de.elateportal.editor.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,6 +37,7 @@ import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
+import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.SubTaskDefType;

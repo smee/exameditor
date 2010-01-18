@@ -32,6 +32,7 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.SubTaskDefType;
 
 /**
