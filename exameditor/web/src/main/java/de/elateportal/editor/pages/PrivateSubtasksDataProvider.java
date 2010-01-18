@@ -44,52 +44,55 @@ import de.elateportal.model.SubTaskDefType;
  * @param <T>
  */
 final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> {
-	private final CriteriaFilterAndSort builder;
-	private final Class<T> clazz;
-	final String query = "select task from BasicUser user left join user.subtaskdefs task where user.username='%s'";
-	final String classQuery = "and task.class in (%s)";
+  private final CriteriaFilterAndSort builder;
+  private final Class<T> clazz;
+  final String query = "select task from BasicUser user left join user.subtaskdefs task where user.username='%s'";
+  final String classQuery = "and task.class in (%s)";
 
-	PrivateSubtasksDataProvider(Class<T> objectClass, OrderingCriteriaBuilder criteriaBuilder,
-	    CriteriaFilterAndSort builder, Class<T> clazz) {
-		super(objectClass, criteriaBuilder);
-		this.builder = builder;
-		this.clazz = clazz;
-	}
+  PrivateSubtasksDataProvider(final Class<T> objectClass, final OrderingCriteriaBuilder criteriaBuilder,
+      final CriteriaFilterAndSort builder, final Class<T> clazz) {
+    super(objectClass, criteriaBuilder);
+    this.builder = builder;
+    this.clazz = clazz;
+  }
 
-	private String createQueryString() {
-		String q = String.format(query, AuthDataSession.get().getUser().getUsername());
-		if (!SubTaskDefType.class.equals(clazz))
-			q = q + String.format(classQuery, clazz.getName());
-		for (Map.Entry<String, String> entry : (Set<Map.Entry<String, String>>) ((Map) builder.getFilterState()).entrySet()) {
-			String property = entry.getKey();
-			String value = entry.getValue();
-			if (value == null)
-				continue;
-			q = q + " and task." + property + " like '%" + value + "%'";
-		}
-		SingleSortState sort = (SingleSortState) getSortState();
-		if (sort.getSort() != null) {
-			q = q + " order by task." + sort.getSort().getProperty() + " " + (sort.getSort().isAscending() ? " asc" : "desc");
-		}
-		return q;
-	}
+  private String createQueryString() {
+    String q = String.format(query, AuthDataSession.get().getUser().getUsername());
+    if (!SubTaskDefType.class.equals(clazz)) {
+      q = q + String.format(classQuery, clazz.getName());
+    }
+    for (final Map.Entry<String, String> entry : (Set<Map.Entry<String, String>>) ((Map) builder.getFilterState()).entrySet()) {
+      final String property = entry.getKey();
+      final String value = entry.getValue();
+      if (value == null) {
+        continue;
+      }
+      q = q + " and task." + property + " like '%" + value + "%'";
+    }
+    final SingleSortState sort = (SingleSortState) getSortState();
+    if (sort.getSort() != null) {
+      q = q + " order by task." + sort.getSort().getProperty() + " " + (sort.getSort().isAscending() ? " asc" : "desc");
+    }
+    return q;
+  }
 
-	@Override
-	public Iterator<T> iterator(int first, int count) {
-		Session sess = Databinder.getHibernateSession(getFactoryKey());
+  @Override
+  public Iterator<T> iterator(final int first, final int count) {
+    final Session sess = Databinder.getHibernateSession(getFactoryKey());
 
-		Query q = sess.createQuery(createQueryString());
-		q.setFirstResult(first);
-		q.setMaxResults(count);
-		return q.iterate();
-	}
+    final Query q = sess.createQuery(createQueryString());
+    q.setFirstResult(first);
+    q.setMaxResults(count);
+    // q.setResultTransformer(RemoveNullResultTransformer.INSTANCE);
+    return q.iterate();
+  }
 
-	@Override
-	public int size() {
-		Session sess = Databinder.getHibernateSession(getFactoryKey());
-		Query q = sess.createQuery(createQueryString());
-		int size = q.list().size();
-		System.out.println("got " + size + " results");
-		return size;
-	}
+  @Override
+  public int size() {
+    final Session sess = Databinder.getHibernateSession(getFactoryKey());
+    final Query q = sess.createQuery(createQueryString());
+    q.setResultTransformer(RemoveNullResultTransformer.INSTANCE);
+    final int size = q.list().size();
+    return size;
+  }
 }
