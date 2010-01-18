@@ -39,8 +39,25 @@ public class TaskEditorApplication extends AuthDataApplication {
 
   @Override
   public org.apache.wicket.Session newSession(final Request request, final Response response) {
-    activeUsers.incrementAndGet();
     return new AuthDataSession(request) {
+      @Override
+      public boolean signIn(final String username, final String password, final boolean setCookie) {
+        final boolean loggedIn = super.signIn(username, password, setCookie);
+        if (loggedIn) {
+          activeUsers.incrementAndGet();
+        }
+        return loggedIn;
+      }
+
+      @Override
+      protected boolean cookieSignIn() {
+        final boolean loggedIn = super.cookieSignIn();
+        if (loggedIn) {
+          activeUsers.incrementAndGet();
+        }
+        return loggedIn;
+
+      }
       @Override
       public void signOut() {
         activeUsers.decrementAndGet();
