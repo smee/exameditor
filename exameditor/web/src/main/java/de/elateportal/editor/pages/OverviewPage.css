@@ -24,16 +24,13 @@ body{
 }
 
 .mainContent{
-  width: 56.25em;
+  width: 59.5em;
   margin: 1.5em auto;
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
   min-height:20em;
   height: 80%;
-}
-.mainContent #menu {
-	width: 56.25em;	
 }
 
 .footer {

@@ -7,6 +7,9 @@ div.buttons {
   clear: left;
   padding-left: 10em;
 }
+div.buttons img {
+  border-width:0;
+}
 div.stack {
   padding-left: 10em;
 }

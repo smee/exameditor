@@ -29,12 +29,12 @@ label {
 fieldset {
   float: left;
   clear: left;
-  width: 43em;
+  width: 46em;
   background-color: #F2EFE9;
   background-image: url(formbackground.png);
   background-repeat: repeat-x;
   
-  margin: 0 0 -1em 1.5em;
+  margin: 0 0 -1em 0.5em;
   padding: 0 0 1em 0;
   border-style: none;
   border-top: 1px solid #BFBAB0;

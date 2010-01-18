@@ -49,7 +49,6 @@ public class TaskDefPage extends SecurePage {
 
   private Panel editPanel;
   private ComplexTaskDefTree tree;
-  private final PreviewPanel previewPanel;
 
   public TaskDefPage() {
     final IModel<List<ComplexTaskDef>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
@@ -61,8 +60,7 @@ public class TaskDefPage extends SecurePage {
       }
     });
     add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(tasklistmodel)));
-    previewPanel = new PreviewPanel("editpanel", tree);
-    editPanel = previewPanel;
+    editPanel = new EmptyPanel("editpanel");
     add(editPanel.setOutputMarkupId(true));
   }
 
@@ -75,7 +73,7 @@ public class TaskDefPage extends SecurePage {
    */
   public void renderPanelFor(final Object t, final AjaxRequestTarget target) {
     if (t instanceof ComplexTaskDef) {
-      replaceEditPanelWith(target, previewPanel);
+      replaceEditPanelWith(target, new PreviewPanel("editpanel", tree.getCurrentTaskdef()));
     } else if (t instanceof Category) {
       final Category cat = (Category) t;
       replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat

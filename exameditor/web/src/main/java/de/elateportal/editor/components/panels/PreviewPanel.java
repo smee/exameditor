@@ -32,7 +32,6 @@ import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.request.target.basic.RedirectRequestTarget;
 
-import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.editor.preview.DummyTaskFactoryImpl;
 import de.elateportal.model.ComplexTaskDef;
@@ -53,69 +52,67 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
  * 
  */
 public class PreviewPanel extends Panel {
-	private static AtomicLong tryId = new AtomicLong(0);
+  private static AtomicLong tryId = new AtomicLong(0);
 
-	public PreviewPanel(String id, final ComplexTaskDefTree tree) {
-		super(id);
-		setOutputMarkupId(true);
+  public PreviewPanel(final String id, final ComplexTaskDef sampleTaskdef) {
+    super(id);
+    setOutputMarkupId(true);
 
-		add(new Link("previewLink") {
+    add(new Link("previewLink") {
 
-			@Override
-			public void onClick() {
+      @Override
+      public void onClick() {
 
-				ComplexTaskFactory ctf = new ComplexTaskFactoryImpl(new ComplexTaskletCorrectorImpl());
-				DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
-				    new ComplexTaskHandlingDAOImpl(
-				    ctf),
-				    new ComplexTaskBuilderImpl(ctf));
-				// use currently selected taskmodel (in the tree)
-				ComplexTaskDef sampleTaskdef = tree.getCurrentTaskdef();
+        final ComplexTaskFactory ctf = new ComplexTaskFactoryImpl(new ComplexTaskletCorrectorImpl());
+        final DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
+            new ComplexTaskHandlingDAOImpl(
+                ctf),
+                new ComplexTaskBuilderImpl(ctf));
+        // use currently selected taskmodel (in the tree)
+        try {
+          // marshal to xml
+          final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+          final Marshaller marshaller = context.createMarshaller();
+          final StringWriter sw = new StringWriter();
 
-				try {
-					// marshal to xml
-					JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
-					final Marshaller marshaller = context.createMarshaller();
-					StringWriter sw = new StringWriter();
+          marshaller.marshal(sampleTaskdef, sw);
+          // set xml to use
+          taskfactory.setTaskDefXml(sw.toString());
+          final TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
+          // clear internal static caches
+          taskletContainer.reset();
+          final TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
 
-					marshaller.marshal(sampleTaskdef, sw);
-					// set xml to use
-					taskfactory.setTaskDefXml(sw.toString());
-					TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
-					// clear internal static caches
-					taskletContainer.reset();
-					TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
+          final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
+              tm,
+              "sampleUser", "Max Mustermann",
+              RequestUtils.toAbsolutePath(urlFor(TaskDefPage.class, null).toString()));
+          TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
 
-					TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
-					    tm,
-					    "sampleUser", "Max Mustermann",
-					    RequestUtils.toAbsolutePath(urlFor(TaskDefPage.class, null).toString()));
-					TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
+          getRequestCycle().setRequestTarget(
+              new RedirectRequestTarget(
+                  getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
+        } catch (final JAXBException e) {
+          e.printStackTrace();
+        }
+      }
 
-					getRequestCycle().setRequestTarget(
-					    new RedirectRequestTarget(
-					    getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
-				} catch (JAXBException e) {
-					e.printStackTrace();
-				}
-			}
+    });
+  }
 
-		});
-	}
-
-	public StringBuffer getContextUrl() {
-		HttpServletRequest req = ((WebRequest) getRequest()).getHttpServletRequest();
-		String protocol = req.isSecure() ? "https://" : "http://";
-		String hostname = req.getServerName();
-		int port = req.getServerPort();
-		StringBuffer url = new StringBuffer(128);
-		url.append(protocol);
-		url.append(hostname);
-		if ((port != 80) && (port != 443)) {
-			url.append(":");
-			url.append(port);
-		}
-		return url;
-	}
+  public StringBuffer getContextUrl() {
+    final HttpServletRequest req = ((WebRequest) getRequest()).getHttpServletRequest();
+    final String protocol = req.isSecure() ? "https://" : "http://";
+    final String hostname = req.getServerName();
+    final int port = req.getServerPort();
+    final StringBuffer url = new StringBuffer(128);
+    url.append(protocol);
+    url.append(hostname);
+    if ((port != 80) && (port != 443)) {
+      url.append(":");
+      url.append(port);
+    }
+    return url;
+  }
 
 }

@@ -24,3 +24,4 @@ target/
 /wicket
 /wicket-tree-read-only
 /oiosaml
+hs_err*
