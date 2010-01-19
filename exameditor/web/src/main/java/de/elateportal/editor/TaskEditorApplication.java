@@ -135,6 +135,8 @@ public class TaskEditorApplication extends AuthDataApplication {
     config.addAnnotatedClass(de.elateportal.model.TaskBlockType.class);
     config.addAnnotatedClass(de.elateportal.model.TextSubTaskDef.class);
 
+    // fix for bug in HSQLDB, see http://issues.appfuse.org/browse/APF-101
+    config.setProperty("hibernate.jdbc.batch_size", "0");
     // config.setProperty("hibernate.show_sql", "true");
   }
 

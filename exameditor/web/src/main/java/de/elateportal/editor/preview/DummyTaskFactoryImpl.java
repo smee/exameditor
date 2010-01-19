@@ -183,8 +183,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 		InputStream is = null;
 		try {
 			is = new ByteArrayInputStream(this.taskdefXml.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
+		} catch (final UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		final TaskDef_ComplexImpl cp = new TaskDef_ComplexImpl(taskId, DUMMY_TITLE,
@@ -229,7 +228,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 	public Tasklet getTasklet(final String userId, final long taskId) {
 		try {
 			return createTasklet(userId, taskId);
-		} catch (TaskApiException e) {
+		} catch (final TaskApiException e) {
 			e.printStackTrace();
 			return null;
 		}

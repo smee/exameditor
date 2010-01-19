@@ -35,18 +35,16 @@ public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitor
 	/**
 	 * @param id
 	 */
-	public SubtaskSpecificsInputPanel(String id) {
+	public SubtaskSpecificsInputPanel(final String id) {
 		super(id);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @param id
 	 * @param model
 	 */
-	public SubtaskSpecificsInputPanel(String id, IModel<T> model) {
+	public SubtaskSpecificsInputPanel(final String id, final IModel<T> model) {
 		super(id, model);
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)

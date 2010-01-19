@@ -24,27 +24,26 @@ body{
 }
 
 .mainContent{
-  width: 59.5em;
+  width: 62em;
   margin: 1.5em auto;
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
   min-height:20em;
-  height: 80%;
+  height: 100%;
 }
 .mainContent div#toolbar {
  background: #F2E2CB;
  float:left;
  margin-bottom: 1em;
- min-height: 2em;
-  border-bottom: 1px solid #DADADA;
+ min-height: 1.4em;
+ border-bottom: 1px solid #DADADA;
 }
 .mainContent div#toolbar a{
-  padding: 0.5em 0.5em 0.5em 0.5em;
+  padding: 0.8em 0.5em;
   text-decoration: none;
   color: black;  
   font-weight:bold;
-  border-right: 1px solid #DADADA;
 }
 
 div.clear {

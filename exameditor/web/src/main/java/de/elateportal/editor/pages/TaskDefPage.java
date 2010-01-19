@@ -29,25 +29,32 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import net.databinder.auth.hib.AuthDataSession;
+import net.databinder.components.NullPlug;
+import net.databinder.hib.Databinder;
 import net.databinder.models.hib.HibernateListModel;
 import net.databinder.models.hib.HibernateObjectModel;
 import net.databinder.models.hib.QueryBuilder;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.link.DownloadLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import de.elateportal.editor.components.panels.PreviewPanel;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
+import de.elateportal.editor.preview.PreviewLink;
+import de.elateportal.editor.preview.PreviewPanel;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
@@ -61,6 +68,7 @@ public class TaskDefPage extends SecurePage {
 
   private Panel editPanel;
   private ComplexTaskDefTree tree;
+  private final ComplexTaskdefTreeProvider treeProvider;
 
   public TaskDefPage() {
     super();
@@ -72,7 +80,8 @@ public class TaskDefPage extends SecurePage {
         return q;
       }
     });
-    add(tree = new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(tasklistmodel)) {
+    treeProvider = new ComplexTaskdefTreeProvider(tasklistmodel);
+    add(tree = new ComplexTaskDefTree("tree", treeProvider) {
       @Override
       protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
         renderPanelFor(selectedModel, target);
@@ -144,8 +153,30 @@ public class TaskDefPage extends SecurePage {
         }
       }, "pruefung.xml");
       downloadLink.setDeleteAfterDownload(true);
-      add(downloadLink);
 
+      final Link deleteLink = new Link("delete") {
+
+        @Override
+        public void onClick() {
+          System.out.println("removing " + tree.getSelected().getObject());
+          final org.hibernate.classic.Session session = Databinder.getHibernateSession();
+          final Transaction transaction = session.beginTransaction();
+          session.delete(tree.getSelected().getObject());
+          transaction.commit();
+        }
+      };
+      deleteLink.add(new AttributeModifier("onclick", true, Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
+
+      add(new PreviewLink("preview", new AbstractReadOnlyModel<ComplexTaskDef>() {
+        @Override
+        public ComplexTaskDef getObject() {
+          return tree.getCurrentTaskdef().getObject();
+        }
+      }));
+
+      add(downloadLink);
+      // add(deleteLink);
+      add(new NullPlug("delete"));
     }
   }
 }

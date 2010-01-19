@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package de.elateportal.editor.components.panels;
+package de.elateportal.editor.preview;
 
 import java.io.StringWriter;
 import java.util.concurrent.atomic.AtomicLong;
@@ -27,14 +27,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.request.target.basic.RedirectRequestTarget;
 import org.apache.wicket.request.target.component.PageRequestTarget;
 
-import de.elateportal.editor.preview.DummyTaskFactoryImpl;
 import de.elateportal.model.ComplexTaskDef;
 import de.thorstenberger.taskmodel.TaskModelViewDelegate;
 import de.thorstenberger.taskmodel.TaskModelViewDelegateObject;
@@ -49,59 +47,24 @@ import de.thorstenberger.taskmodel.impl.TaskModelViewDelegateObjectImpl;
 import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
 
 /**
+ * Link that calls the locally running taskcore-view webapp to show live preview of a complextaskdef. Will return to the
+ * current page afterwards.
+ * 
  * @author Steffen Dienst
  * 
  */
-public class PreviewPanel extends Panel {
-  private static AtomicLong tryId = new AtomicLong(0);
+public class PreviewLink extends Link<ComplexTaskDef> {
 
-  public PreviewPanel(final String id, final IModel<ComplexTaskDef> hibernateObjectModel) {
-    super(id, hibernateObjectModel);
-    setOutputMarkupId(true);
-
-    add(new Link("previewLink") {
-
-      @Override
-      public void onClick() {
-
-        final ComplexTaskFactory ctf = new ComplexTaskFactoryImpl(new ComplexTaskletCorrectorImpl());
-        final DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
-            new ComplexTaskHandlingDAOImpl(
-                ctf),
-                new ComplexTaskBuilderImpl(ctf));
-        // use currently selected taskmodel (in the tree)
-        try {
-          // marshal to xml
-          final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
-          final Marshaller marshaller = context.createMarshaller();
-          final StringWriter sw = new StringWriter();
-          // TODO enable preview for one category, taskblock, subtaskdef
-          marshaller.marshal(PreviewPanel.this.getDefaultModelObject(), sw);
-          // set xml to use
-          taskfactory.setTaskDefXml(sw.toString());
-          final TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
-          // clear internal static caches
-          taskletContainer.reset();
-          final TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
-
-          final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
-              tm,
-              "sampleUser", "Max Mustermann",
-              RequestUtils.toAbsolutePath(urlFor(new PageRequestTarget(getPage())).toString()));
-          TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
-
-          getRequestCycle().setRequestTarget(
-              new RedirectRequestTarget(
-                  getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
-        } catch (final JAXBException e) {
-          e.printStackTrace();
-        }
-      }
-
-    });
+  public PreviewLink(final String id, final IModel<ComplexTaskDef> model) {
+    super(id, model);
   }
 
-  public StringBuffer getContextUrl() {
+  /**
+   * Find external absolute url.
+   * 
+   * @return
+   */
+  private String getContextUrl() {
     final HttpServletRequest req = ((WebRequest) getRequest()).getHttpServletRequest();
     final String protocol = req.isSecure() ? "https://" : "http://";
     final String hostname = req.getServerName();
@@ -113,7 +76,45 @@ public class PreviewPanel extends Panel {
       url.append(":");
       url.append(port);
     }
-    return url;
+    return url.toString();
   }
 
+  @Override
+  public void onClick() {
+
+    final ComplexTaskFactory ctf = new ComplexTaskFactoryImpl(new ComplexTaskletCorrectorImpl());
+    final DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
+        new ComplexTaskHandlingDAOImpl(
+            ctf),
+            new ComplexTaskBuilderImpl(ctf));
+    // use currently selected taskmodel (in the tree)
+    try {
+      // marshal to xml
+      final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+      final Marshaller marshaller = context.createMarshaller();
+      final StringWriter sw = new StringWriter();
+      // TODO enable preview for one category, taskblock, subtaskdef
+      marshaller.marshal(getModelObject(), sw);
+      // set xml to use
+      taskfactory.setTaskDefXml(sw.toString());
+      final TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);
+      // clear internal static caches
+      taskletContainer.reset();
+      final TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
+
+      final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
+          tm,
+          "sampleUser", "Max Mustermann",
+          RequestUtils.toAbsolutePath(urlFor(new PageRequestTarget(getPage())).toString()));
+      TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
+
+      getRequestCycle().setRequestTarget(
+          new RedirectRequestTarget(
+              getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
+    } catch (final JAXBException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static AtomicLong tryId = new AtomicLong(0);
 }
