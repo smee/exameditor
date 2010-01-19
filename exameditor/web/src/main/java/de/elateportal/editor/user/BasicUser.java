@@ -46,153 +46,113 @@ import de.elateportal.model.SubTaskDefType;
  */
 @Entity
 public class BasicUser implements DataUser {
-    private BasicPassword password;
+  private BasicPassword password;
 
-    @Column(unique = true)
-    private String username;
+  @Column(unique = true)
+  private String username;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Integer hjid;
 
-    @CollectionOfElements(targetElement = String.class)
-    private final Set<String> roles;
+  @CollectionOfElements(targetElement = String.class)
+  private final Set<String> roles;
 
-    @CollectionOfElements(targetElement = ComplexTaskDef.class)
-    private final List<ComplexTaskDef> taskdefs;
+  @CollectionOfElements(targetElement = ComplexTaskDef.class)
+  private final List<ComplexTaskDef> taskdefs;
 
-    @CollectionOfElements(targetElement = SubTaskDefType.class)
-    private final List<SubTaskDefType> subtaskdefs;
+  @CollectionOfElements(targetElement = SubTaskDefType.class)
+  private final List<SubTaskDefType> subtaskdefs;
 
-    // @CollectionOfElements(targetElement = AddonSubTaskDef.class)
-    // private final List<AddonSubTaskDef> addonSubtaskdefs;
-    // @CollectionOfElements(targetElement = McSubTaskDef.class)
-    // private final List<McSubTaskDef> mcSubtaskdefs;
-    // @CollectionOfElements(targetElement = ClozeSubTaskDef.class)
-    // private final List<ClozeSubTaskDef> clozeSubtaskdefs;
-    // @CollectionOfElements(targetElement = TextSubTaskDef.class)
-    // private final List<TextSubTaskDef> textSubtaskdefs;
-    // @CollectionOfElements(targetElement = PaintSubTaskDef.class)
-    // private final List<PaintSubTaskDef> paintSubtaskdefs;
-    // @CollectionOfElements(targetElement = MappingSubTaskDef.class)
-    // private final List<MappingSubTaskDef> mappingSubtaskdefs;
+  public BasicUser() {
+    taskdefs = new ArrayList<ComplexTaskDef>();
+    subtaskdefs = new ArrayList<SubTaskDefType>();
 
-    public BasicUser() {
-        // addonSubtaskdefs = new ArrayList<AddonSubTaskDef>();
-        // mcSubtaskdefs = new ArrayList<McSubTaskDef>();
-        // clozeSubtaskdefs = new ArrayList<ClozeSubTaskDef>();
-        // textSubtaskdefs = new ArrayList<TextSubTaskDef>();
-        // paintSubtaskdefs = new ArrayList<PaintSubTaskDef>();
-        // mappingSubtaskdefs = new ArrayList<MappingSubTaskDef>();
-        taskdefs = new ArrayList<ComplexTaskDef>();
-        subtaskdefs = new ArrayList<SubTaskDefType>();
+    roles = new Roles(Roles.USER);
+    password = new BasicPassword();
+  }
 
-        roles = new Roles(Roles.USER);
-        password = new BasicPassword();
+  /**
+   * @return the subtaskdefs
+   */
+  public List<SubTaskDefType> getSubtaskdefs() {
+    return subtaskdefs;
+  }
+
+  /**
+   * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDefType}. CAUTION: You must not add new
+   * instances to this list, they won't get persisted. Use {@link #getSubtaskdefs()}.add(...) instead.
+   * 
+   * @param <T>
+   * @param clazz
+   * @return
+   */
+  public <T extends SubTaskDefType> Collection<T> getSubtaskdefsOf(final Class<T> clazz) {
+    final Set<T> res = new HashSet<T>();
+    for (final SubTaskDefType st : getSubtaskdefs()) {
+      if (st.getClass().isAssignableFrom(clazz)) {
+        res.add((T) st);
+      }
     }
+    return res;
+  }
 
-    /**
-     * @return the subtaskdefs
-     */
-    public List<SubTaskDefType> getSubtaskdefs() {
-        return subtaskdefs;
-    }
+  public void addRole(final String role) {
+    this.roles.add(role);
+  }
+  public Integer getHjid() {
+    return hjid;
+  }
 
-    /**
-     * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDefType}. CAUTION: You must not add new
-     * instances to this list, they won't get persisted. Use {@link #getSubtaskdefs()}.add(...) instead.
-     * 
-     * @param <T>
-     * @param clazz
-     * @return
-     */
-    public <T extends SubTaskDefType> Collection<T> getSubtaskdefsOf(final Class<T> clazz) {
-        final Set<T> res = new HashSet<T>();
-        for (final SubTaskDefType st : getSubtaskdefs()) {
-            if (st.getClass().isAssignableFrom(clazz)) {
-                res.add((T) st);
-            }
-        }
-        return res;
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.databinder.auth.data.DataUser#getPassword()
+   */
+  public DataPassword getPassword() {
+    return password;
+  }
 
-    public void addRole(final String role) {
-        this.roles.add(role);
-    }
+  public Set<String> getRoles() {
+    return new HashSet<String>(roles);
+  }
 
-    // public List<AddonSubTaskDef> getAddonSubtaskdefs() {
-    // return addonSubtaskdefs;
-    // }
+  public List<ComplexTaskDef> getTaskdefs() {
+    return taskdefs;
+  }
 
-    // public List<ClozeSubTaskDef> getClozeSubtaskdefs() {
-    // return clozeSubtaskdefs;
-    // }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.databinder.auth.data.DataUser#getUsername()
+   */
+  public String getUsername() {
+    return username;
+  }
 
-    public Integer getId() {
-        return id;
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.databinder.auth.data.DataUser#hasRole(java.lang.String)
+   */
+  public boolean hasRole(final String role) {
+    return roles.contains(role);
+  }
 
-    // public List<MappingSubTaskDef> getMappingSubtaskdefs() {
-    // return mappingSubtaskdefs;
-    // }
-    //
-    // public List<McSubTaskDef> getMcSubtaskdefs() {
-    // return mcSubtaskdefs;
-    // }
-    //
-    // public List<PaintSubTaskDef> getPaintSubtaskdefs() {
-    // return paintSubtaskdefs;
-    // }
+  public void setId(final Integer id) {
+    this.hjid = id;
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.databinder.auth.data.DataUser#getPassword()
-     */
-    public DataPassword getPassword() {
-        return password;
-    }
+  public void setPassword(final BasicPassword password) {
+    this.password = password;
+  }
 
-    public Set<String> getRoles() {
-        return new HashSet<String>(roles);
-    }
+  public void setUsername(final String username) {
+    this.username = username;
+  }
 
-    public List<ComplexTaskDef> getTaskdefs() {
-        return taskdefs;
-    }
-
-    // public List<TextSubTaskDef> getTextSubtaskdefs() {
-    // return textSubtaskdefs;
-    // }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.databinder.auth.data.DataUser#getUsername()
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.databinder.auth.data.DataUser#hasRole(java.lang.String)
-     */
-    public boolean hasRole(final String role) {
-        return roles.contains(role);
-    }
-
-    public void setId(final Integer id) {
-        this.id = id;
-    }
-
-    public void setPassword(final BasicPassword password) {
-        this.password = password;
-    }
-
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
+  @Override
+  public String toString() {
+    return String.format("[user '%s']", getUsername());
+  }
 }

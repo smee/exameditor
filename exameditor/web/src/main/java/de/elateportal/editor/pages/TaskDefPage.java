@@ -48,12 +48,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import de.elateportal.editor.TaskEditorApplication;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
 import de.elateportal.editor.preview.PreviewLink;
 import de.elateportal.editor.preview.PreviewPanel;
+import de.elateportal.editor.user.BasicUser;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
@@ -73,7 +75,7 @@ public class TaskDefPage extends SecurePage {
 
   public TaskDefPage() {
     super();
-    final IModel<List<ComplexTaskDef>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
+    IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
       public Query build(final Session sess) {
         final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
             AuthDataSession.get().getUser().getUsername()));
@@ -81,6 +83,10 @@ public class TaskDefPage extends SecurePage {
         return q;
       }
     });
+    // the admin sees all taskdefs
+    if (TaskEditorApplication.isAdmin()) {
+      tasklistmodel = new HibernateListModel(BasicUser.class);
+    }
     treeProvider = new ComplexTaskdefTreeProvider(tasklistmodel);
     add(tree = new ComplexTaskDefTree("tree", treeProvider) {
       @Override

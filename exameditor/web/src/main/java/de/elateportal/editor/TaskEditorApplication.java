@@ -181,4 +181,13 @@ public class TaskEditorApplication extends AuthDataApplication {
     });
   }
 
+  /**
+   * Has the current user the role ADMIN?
+   * 
+   * @return
+   */
+  public static boolean isAdmin() {
+    return AuthDataSession.get().getUser().hasRole(Roles.ADMIN);
+  }
+
 }

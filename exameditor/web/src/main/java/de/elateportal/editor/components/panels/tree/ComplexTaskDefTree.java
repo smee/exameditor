@@ -42,7 +42,6 @@ public class ComplexTaskDefTree extends NestedTree {
   public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
     super(id, provider);
     add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
-    currentTaskdef = (IModel<ComplexTaskDef>) selectFirstTaskdef(provider);
   }
 
   /*

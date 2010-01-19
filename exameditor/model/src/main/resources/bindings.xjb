@@ -17,14 +17,11 @@
 	  
 	  <hj:persistence>  
 	    <hj:default-generated-id transient="true" name="Hjid"/>  
-		<hj:default-to-many>
-			<hj:many-to-many/>
-		</hj:default-to-many>
-		<hj:default-single-property type="xsd:string">
+		<hj:default-single-property type="xs:string">
 			<hj:basic>
-				<orm:column length="1000"/>
+				<orm:column length="500"/>
 			</hj:basic>
-		</hj:default-single-property>		
+		</hj:default-single-property>	
 	  </hj:persistence>
 	   
       <jxb:bindings node="//xs:element[@name='description']">

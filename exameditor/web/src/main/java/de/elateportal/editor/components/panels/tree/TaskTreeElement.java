@@ -29,6 +29,7 @@ import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.Category;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
@@ -49,6 +50,7 @@ import de.elateportal.model.Category.TextTaskBlock;
 public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   final static ImmutableMap<Class<?>, String> expressions = new ImmutableMap.Builder<Class<?>, String>()
 
+  .put(BasicUser.class, "username")
   .put(ComplexTaskDef.class, "title")
   .put(Category.class, "title")
   .put(McTaskBlock.class, "class.simpleName")

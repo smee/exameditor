@@ -32,6 +32,7 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import de.elateportal.editor.TaskEditorApplication;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.SubTaskDefType;
 
@@ -48,7 +49,8 @@ final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> 
   private final CriteriaFilterAndSort builder;
   private final Class<T> clazz;
   final String query = "select task from BasicUser user left join user.subtaskdefs task where user.username='%s'";
-  final String classQuery = "and task.class in (%s)";
+  final String adminQuery = "from de.elateportal.model.SubTaskDefType task where 1=1";
+  final String classQuery = " and task.class in (%s)";
 
   PrivateSubtasksDataProvider(final Class<T> objectClass, final OrderingCriteriaBuilder criteriaBuilder,
       final CriteriaFilterAndSort builder, final Class<T> clazz) {
@@ -59,6 +61,11 @@ final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> 
 
   private String createQueryString() {
     String q = String.format(query, AuthDataSession.get().getUser().getUsername());
+    // admin sees all subtasks
+    if (TaskEditorApplication.isAdmin()) {
+      q = adminQuery;
+    }
+
     if (!SubTaskDefType.class.equals(clazz)) {
       q = q + String.format(classQuery, clazz.getName());
     }

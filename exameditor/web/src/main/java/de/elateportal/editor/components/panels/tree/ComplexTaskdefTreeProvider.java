@@ -32,7 +32,9 @@ import wickettree.ITreeProvider;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 
+import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
 import de.elateportal.model.TaskBlockType;
@@ -58,9 +60,9 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     }
   };
 
-  private final IModel<List<ComplexTaskDef>> model;
+  private final IModel<List<?>> model;
 
-  public ComplexTaskdefTreeProvider(final IModel<List<ComplexTaskDef>> model) {
+  public ComplexTaskdefTreeProvider(final IModel<List<?>> model) {
     this.model = model;
   }
 
@@ -109,7 +111,9 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
    * @see wickettree.ITreeProvider#getChildren(java.lang.Object)
    */
   public Iterator<? extends Object> getChildren(final Object object) {
-    if (object instanceof ComplexTaskDef) {
+    if (object instanceof BasicUser) {
+      return getChildren((BasicUser) object);
+    } else if (object instanceof ComplexTaskDef) {
       return getChildren((ComplexTaskDef) object);
     } else if (object instanceof Category) {
       return getChildren((Category) object);
@@ -128,6 +132,9 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     }
   }
 
+  private Iterator<?> getChildren(final BasicUser user) {
+    return user.getTaskdefs().iterator();
+  }
   private Iterator<Object> getChildren(final PaintTaskBlock tb) {
     return Iterators.transform(tb.getPaintSubTaskDefOrChoiceItems().iterator(), itemGetter);
   }
