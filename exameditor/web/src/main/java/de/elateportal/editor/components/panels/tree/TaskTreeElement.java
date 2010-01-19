@@ -186,6 +186,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
       tree.expand(t);
     }
     if (t instanceof ComplexTaskDef) {
+      // TODO traverse parents to find taskdef predecessor for every object!
       tree.setCurrentTaskdef((ComplexTaskDef) t);
     }
     page.renderPanelFor(t, target);

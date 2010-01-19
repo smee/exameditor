@@ -20,6 +20,8 @@ package de.elateportal.editor.components.panels.tree;
 
 import java.util.Iterator;
 
+import net.databinder.models.hib.HibernateObjectModel;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.CSSPackageResource;
@@ -36,80 +38,81 @@ import de.elateportal.model.ComplexTaskDef;
  */
 public class ComplexTaskDefTree extends NestedTree {
 
-    private final TaskDefPage taskDefPage;
-    private ComplexTaskDef currentTaskdef;
-    private IModel<?> selectedModel;
+  private final TaskDefPage taskDefPage;
+  private IModel<ComplexTaskDef> currentTaskdef;
+  private IModel<?> selectedModel;
 
-    public ComplexTaskDefTree(final String id, final TaskDefPage taskDefPage, final ComplexTaskdefTreeProvider provider) {
-        super(id, provider);
-        this.taskDefPage = taskDefPage;
-        add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
+  public ComplexTaskDefTree(final String id, final TaskDefPage taskDefPage, final ComplexTaskdefTreeProvider provider) {
+    super(id, provider);
+    this.taskDefPage = taskDefPage;
+    add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
 
-        currentTaskdef = selectFirstTaskdef(provider);
+    currentTaskdef = selectFirstTaskdef(provider);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.apache.wicket.Component#detachModels()
+   */
+  @Override
+  public void detachModels() {
+    super.detachModels();
+    if (selectedModel != null) {
+      selectedModel.detach();
     }
+  }
+  public ComplexTaskDef getCurrentTaskdef() {
+    return currentTaskdef.getObject();
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.wicket.Component#detachModels()
-     */
-    @Override
-    public void detachModels() {
-        super.detachModels();
-        if (selectedModel != null) {
-            selectedModel.detach();
-        }
-    }
-    public ComplexTaskDef getCurrentTaskdef() {
-        return currentTaskdef;
-    }
+  @Override
+  protected Component newContentComponent(final String id, final IModel model) {
+    return new TaskTreeElement(id, this, taskDefPage, model);
+  }
 
-    @Override
-    protected Component newContentComponent(final String id, final IModel model) {
-        return new TaskTreeElement(id, this, taskDefPage, model);
+  /**
+   * @param provider
+   * @return
+   */
+  private IModel<ComplexTaskDef> selectFirstTaskdef(final ComplexTaskdefTreeProvider provider) {
+    final Iterator<? extends Object> roots = provider.getRoots();
+    if (roots.hasNext()) {
+      final ComplexTaskDef ctd = (ComplexTaskDef) roots.next();
+      return new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class, ctd.getHjid());
+    } else {
+      return null;
     }
+  }
 
-    /**
-     * @param provider
-     * @return
-     */
-    private ComplexTaskDef selectFirstTaskdef(final ComplexTaskdefTreeProvider provider) {
-        final Iterator<? extends Object> roots = provider.getRoots();
-        if (roots.hasNext()) {
-            return (ComplexTaskDef) roots.next();
-        } else {
-            return null;
-        }
+  public void setCurrentTaskdef(final ComplexTaskDef t) {
+    this.currentTaskdef = new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class, t.getHjid());
+  }
+
+  /**
+   * @param modelObject
+   * @param tree2
+   * @param target
+   */
+  void select(final IModel<?> modelObject, final AjaxRequestTarget target) {
+    if (selectedModel != null) {
+      // redraw the now deselected node
+      updateNode(selectedModel.getObject(), target);
+      selectedModel.detach();
+      selectedModel = null;
     }
+    selectedModel = modelObject;
 
-    public void setCurrentTaskdef(final ComplexTaskDef t) {
-        this.currentTaskdef = t;
-    }
+    updateNode(modelObject.getObject(), target);
+  }
 
-    /**
-     * @param modelObject
-     * @param tree2
-     * @param target
-     */
-    void select(final IModel<?> modelObject, final AjaxRequestTarget target) {
-        if (selectedModel != null) {
-            // redraw the now deselected node
-            updateNode(selectedModel.getObject(), target);
-            selectedModel.detach();
-            selectedModel = null;
-        }
-        selectedModel = modelObject;
-
-        updateNode(modelObject.getObject(), target);
-    }
-
-    /**
-     * Return model of the currently selected node.
-     * 
-     * @return
-     */
-    public IModel<?> getSelected() {
-        return selectedModel;
-    }
+  /**
+   * Return model of the currently selected node.
+   * 
+   * @return
+   */
+  public IModel<?> getSelected() {
+    return selectedModel;
+  }
 
 }
