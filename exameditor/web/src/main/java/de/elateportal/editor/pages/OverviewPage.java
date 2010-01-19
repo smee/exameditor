@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.databinder.auth.components.DataSignInPanel;
-import net.databinder.auth.components.DataSignInPageBase.ReturnPage;
 import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.components.NullPlug;
 
@@ -52,11 +51,7 @@ public class OverviewPage extends WebPage {
 
     // sign in/out links
     add(new UserStatusPanel("userStatus"));
-    add(new DataSignInPanel<BasicUser>("loginpanel", new ReturnPage() {
-      public Page get() {
-        return new OverviewPage();
-      }
-    }) {
+    add(new DataSignInPanel<BasicUser>("loginpanel", null) {
       @Override
       public boolean isVisible() {
         return !AuthDataSession.get().isSignedIn();

@@ -72,16 +72,14 @@ public class TaskDefPage extends SecurePage {
         return q;
       }
     });
-    add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(tasklistmodel)));
+    add(tree = new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(tasklistmodel)) {
+      @Override
+      protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+        renderPanelFor(selectedModel, target);
+      }
+    });
     editPanel = new EmptyPanel("editpanel");
     add(editPanel.setOutputMarkupId(true));
-  }
-
-  /**
-   * @return
-   */
-  protected ComplexTaskDefTree getTree() {
-    return tree;
   }
 
   /**
@@ -90,16 +88,15 @@ public class TaskDefPage extends SecurePage {
    * @param t
    * @param target
    */
-  public void renderPanelFor(final Object t, final AjaxRequestTarget target) {
+  public void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+    final Object t = selectedModel.getObject();
     if (t instanceof ComplexTaskDef) {
-      replaceEditPanelWith(target, new PreviewPanel("editpanel", new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class,tree.getCurrentTaskdef().getHjid())));
+      replaceEditPanelWith(target, new PreviewPanel("editpanel", (IModel<ComplexTaskDef>) selectedModel));
     } else if (t instanceof Category) {
-      final Category cat = (Category) t;
-      replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat.getHjid())));
+      replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
     } else if (t instanceof SubTaskDefType) {
       final SubTaskDefType st = (SubTaskDefType) t;
-      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", new HibernateObjectModel<SubTaskDefType>(st.getClass(),
-          st.getHjid())));
+      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDefType>) selectedModel));
     } else {
       replaceEditPanelWith(target, new EmptyPanel("editpanel"));
     }
@@ -134,7 +131,7 @@ public class TaskDefPage extends SecurePage {
             final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
             final Marshaller marshaller = context.createMarshaller();
             final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-            marshaller.marshal(getTree().getCurrentTaskdef(), bw);
+            marshaller.marshal(tree.getCurrentTaskdef().getObject(), bw);
             bw.close();
           } catch (final IOException e) {
             error("Konnte leider keine Datei schreiben, Infos siehe Logfile.");
