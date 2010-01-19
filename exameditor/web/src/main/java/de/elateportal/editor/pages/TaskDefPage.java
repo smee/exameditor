@@ -29,7 +29,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import net.databinder.auth.hib.AuthDataSession;
-import net.databinder.components.NullPlug;
 import net.databinder.hib.Databinder;
 import net.databinder.models.hib.HibernateListModel;
 import net.databinder.models.hib.HibernateObjectModel;
@@ -58,7 +57,9 @@ import de.elateportal.editor.preview.PreviewPanel;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
+import de.elateportal.model.ObjectFactory;
 import de.elateportal.model.SubTaskDefType;
+import de.elateportal.model.ComplexTaskDef.Revisions.Revision;
 
 /**
  * @author Steffen Dienst
@@ -140,7 +141,9 @@ public class TaskDefPage extends SecurePage {
             final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
             final Marshaller marshaller = context.createMarshaller();
             final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-            marshaller.marshal(tree.getCurrentTaskdef().getObject(), bw);
+            final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();
+            addRevisionTo(ctd);
+            marshaller.marshal(ctd, bw);
             bw.close();
           } catch (final IOException e) {
             error("Konnte leider keine Datei schreiben, Infos siehe Logfile.");
@@ -150,6 +153,21 @@ public class TaskDefPage extends SecurePage {
             e.printStackTrace();
           }
           return tempFile;
+        }
+
+
+        /**
+         * Add current timestamp+author name as new revision.
+         * 
+         * @param ctd
+         */
+        private void addRevisionTo(final ComplexTaskDef ctd) {
+          final Revision rev = new ObjectFactory().createComplexTaskDefRevisionsRevision();
+          rev.setAuthor(AuthDataSession.get().getUser().getUsername());
+          rev.setDate(System.currentTimeMillis());
+          final List<Revision> revisions = ctd.getRevisions().getRevision();
+          rev.setSerialNumber(revisions.size());
+          revisions.add(rev);
         }
       }, "pruefung.xml");
       downloadLink.setDeleteAfterDownload(true);
@@ -175,8 +193,8 @@ public class TaskDefPage extends SecurePage {
       }));
 
       add(downloadLink);
-      // add(deleteLink);
-      add(new NullPlug("delete"));
+      add(deleteLink);
+      // add(new NullPlug("delete"));
     }
   }
 }
