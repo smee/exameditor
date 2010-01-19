@@ -63,9 +63,8 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
       @Override
       protected void onPopulateItem(final ListItem<Concept> item) {
         item.add(new TextField<String>("name", new PropertyModel<String>(item.getModel().getObject(), "name")).setEscapeModelStrings(false));
-        // TODO use getCorrectAssignmentIDItems instead of correctAssignmentID,
-        // the former
-        // TODO is jpa specific, the later jaxb.... they don't get synchronized
+        // use getCorrectAssignmentIDItems instead of correctAssignmentID,
+        // the former is jpa specific, the later jaxb.... they don't get synchronized
         // #$%##%!!
         item.add(new TextField<String>("correctAssignmentID", new PropertyModel<String>(item.getModel(), "correctAssignmentIDItems")) {
           @Override

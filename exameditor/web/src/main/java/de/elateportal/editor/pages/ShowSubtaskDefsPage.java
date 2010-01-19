@@ -60,8 +60,6 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 
 		columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid"));
 		columns.add(new TextFilteredPropertyColumn<T, String>(Model.of("Aufgabenstellung"), "problem", "problem") {
-			// columns.add(new PropertyColumn<T>(new Model<String>("Problem"),
-			// "problem", "problem") {
 			@Override
 			public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
 				// add a label that renders it's html contents
@@ -71,10 +69,11 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
-				if (rowModel.getObject() == null)
-					return Model.of("???");
-				else
-					return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+				if (rowModel.getObject() == null) {
+          return Model.of("???");
+        } else {
+          return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
+        }
 			}
 		});
 		// edit links

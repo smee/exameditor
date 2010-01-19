@@ -29,7 +29,6 @@ import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
-import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.model.Category;
 import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
@@ -79,13 +78,11 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .build();
 
   private final ComplexTaskDefTree tree;
-  private final TaskDefPage page;
 
-  public TaskTreeElement(final String id, final ComplexTaskDefTree tree, final TaskDefPage page, final IModel<T> model) {
+  public TaskTreeElement(final String id, final ComplexTaskDefTree tree, final IModel<T> model) {
     super(id, model);
 
     this.tree = tree;
-    this.page = page;
   }
 
   protected String getClosedStyleClass() {
@@ -126,6 +123,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
    */
   @Override
   protected String getStyleClass() {
+    // TODO add error icons for invalid model elements
     final T t = getModelObject();
 
     String styleClass;
@@ -170,9 +168,6 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   @Override
   protected IModel<String> newLabelModel(final IModel<T> model) {
     final Object o = model.getObject();
-    if (o instanceof ComplexTaskDef) {
-
-    }
     return new PropertyModel<String>(model, expressions.get(o.getClass()));
   }
 
@@ -185,10 +180,6 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
     if (tree.getState(t) == State.COLLAPSED) {
       tree.expand(t);
     }
-    if (t instanceof ComplexTaskDef) {
-      tree.setCurrentTaskdef((ComplexTaskDef) t);
-    }
-    page.renderPanelFor(t, target);
     tree.select(getModel(), target);
   }
 }

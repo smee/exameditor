@@ -26,8 +26,8 @@ import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.IModel;
 
+import wickettree.ITreeProvider;
 import wickettree.NestedTree;
-import de.elateportal.editor.pages.TaskDefPage;
 import de.elateportal.model.ComplexTaskDef;
 
 /**
@@ -36,80 +36,123 @@ import de.elateportal.model.ComplexTaskDef;
  */
 public class ComplexTaskDefTree extends NestedTree {
 
-    private final TaskDefPage taskDefPage;
-    private ComplexTaskDef currentTaskdef;
-    private IModel<?> selectedModel;
+  private IModel<ComplexTaskDef> currentTaskdef;
+  private IModel<?> selectedModel;
 
-    public ComplexTaskDefTree(final String id, final TaskDefPage taskDefPage, final ComplexTaskdefTreeProvider provider) {
-        super(id, provider);
-        this.taskDefPage = taskDefPage;
-        add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
+  public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
+    super(id, provider);
+    add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
+    currentTaskdef = (IModel<ComplexTaskDef>) selectFirstTaskdef(provider);
+  }
 
-        currentTaskdef = selectFirstTaskdef(provider);
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.apache.wicket.Component#detachModels()
+   */
+  @Override
+  public void detachModels() {
+    super.detachModels();
+    if (selectedModel != null) {
+      selectedModel.detach();
     }
+    if (currentTaskdef != null) {
+      currentTaskdef.detach();
+    }
+  }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.wicket.Component#detachModels()
-     */
-    @Override
-    public void detachModels() {
-        super.detachModels();
-        if (selectedModel != null) {
-            selectedModel.detach();
+  public IModel<ComplexTaskDef> getCurrentTaskdef() {
+    return currentTaskdef;
+  }
+
+  @Override
+  protected Component newContentComponent(final String id, final IModel model) {
+    return new TaskTreeElement(id, this, model);
+  }
+
+  /**
+   * @param provider
+   * @return
+   */
+  private IModel<?> selectFirstTaskdef(final ComplexTaskdefTreeProvider provider) {
+    final Iterator<? extends Object> roots = provider.getRoots();
+    if (roots.hasNext()) {
+      final ComplexTaskDef ctd = (ComplexTaskDef) roots.next();
+      return provider.model(ctd);
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Inform the tree about the selection. This is needed to be able to call {@link #onSelect(IModel, AjaxRequestTarget)}
+   * 
+   * @param model
+   * @param tree2
+   * @param target
+   */
+  void select(final IModel<?> model, final AjaxRequestTarget target) {
+    if (selectedModel != null) {
+      // redraw the now deselected node
+      updateNode(selectedModel.getObject(), target);
+      selectedModel.detach();
+      selectedModel = null;
+    }
+    selectedModel = model;
+    updateNode(model.getObject(), target);
+    this.currentTaskdef = findCurrentTaskDef(model);
+    onSelect(selectedModel, target);
+  }
+
+  /**
+   * Gets called whenever the tree selection changes.
+   * 
+   * @param selectedModel
+   * @param target
+   */
+  protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+  }
+
+  /**
+   * traverse parents to find taskdef predecessor for every object!
+   * 
+   * @param selected
+   */
+  private IModel<ComplexTaskDef> findCurrentTaskDef(final IModel<?> selected) {
+    final ITreeProvider prov = getProvider();
+    final Iterator<?> it = prov.getRoots();
+    while (it.hasNext()) {
+      final IModel<?> root = prov.model(it.next());
+      if (subtreeContains(selected, root)) {
+        return (IModel<ComplexTaskDef>) root;
+      }
+    }
+    return null;
+  }
+
+  private boolean subtreeContains(final IModel<?> selected, final IModel<?> currentNode) {
+    final ITreeProvider provider = getProvider();
+    if (currentNode.equals(selected)) {
+      return true;
+    } else if (provider.hasChildren(currentNode.getObject())) {
+      final Iterator childrenIterator = provider.getChildren(currentNode.getObject());
+      while (childrenIterator.hasNext()) {
+        final boolean inSubtree = subtreeContains(selected, provider.model(childrenIterator.next()));
+        if (inSubtree) {
+          return true;
         }
+      }
     }
-    public ComplexTaskDef getCurrentTaskdef() {
-        return currentTaskdef;
-    }
+    return false;
+  }
 
-    @Override
-    protected Component newContentComponent(final String id, final IModel model) {
-        return new TaskTreeElement(id, this, taskDefPage, model);
-    }
-
-    /**
-     * @param provider
-     * @return
-     */
-    private ComplexTaskDef selectFirstTaskdef(final ComplexTaskdefTreeProvider provider) {
-        final Iterator<? extends Object> roots = provider.getRoots();
-        if (roots.hasNext()) {
-            return (ComplexTaskDef) roots.next();
-        } else {
-            return null;
-        }
-    }
-
-    public void setCurrentTaskdef(final ComplexTaskDef t) {
-        this.currentTaskdef = t;
-    }
-
-    /**
-     * @param modelObject
-     * @param tree2
-     * @param target
-     */
-    void select(final IModel<?> modelObject, final AjaxRequestTarget target) {
-        if (selectedModel != null) {
-            // redraw the now deselected node
-            updateNode(selectedModel.getObject(), target);
-            selectedModel.detach();
-            selectedModel = null;
-        }
-        selectedModel = modelObject;
-
-        updateNode(modelObject.getObject(), target);
-    }
-
-    /**
-     * Return model of the currently selected node.
-     * 
-     * @return
-     */
-    public IModel<?> getSelected() {
-        return selectedModel;
-    }
+  /**
+   * Return model of the currently selected node.
+   * 
+   * @return
+   */
+  public IModel<?> getSelected() {
+    return selectedModel;
+  }
 
 }

@@ -18,25 +18,43 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor.pages;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
 import net.databinder.auth.hib.AuthDataSession;
+import net.databinder.components.NullPlug;
+import net.databinder.hib.Databinder;
 import net.databinder.models.hib.HibernateListModel;
 import net.databinder.models.hib.HibernateObjectModel;
 import net.databinder.models.hib.QueryBuilder;
 
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.link.DownloadLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import de.elateportal.editor.components.panels.PreviewPanel;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
+import de.elateportal.editor.preview.PreviewLink;
+import de.elateportal.editor.preview.PreviewPanel;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
 import de.elateportal.model.ComplexTaskDef;
@@ -50,8 +68,10 @@ public class TaskDefPage extends SecurePage {
 
   private Panel editPanel;
   private ComplexTaskDefTree tree;
+  private final ComplexTaskdefTreeProvider treeProvider;
 
   public TaskDefPage() {
+    super();
     final IModel<List<ComplexTaskDef>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
       public Query build(final Session sess) {
         final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
@@ -60,28 +80,32 @@ public class TaskDefPage extends SecurePage {
         return q;
       }
     });
-    add(tree = new ComplexTaskDefTree("tree", this, new ComplexTaskdefTreeProvider(tasklistmodel)));
+    treeProvider = new ComplexTaskdefTreeProvider(tasklistmodel);
+    add(tree = new ComplexTaskDefTree("tree", treeProvider) {
+      @Override
+      protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+        renderPanelFor(selectedModel, target);
+      }
+    });
     editPanel = new EmptyPanel("editpanel");
     add(editPanel.setOutputMarkupId(true));
   }
 
   /**
-   * Replace right hand form panel with an edit panel for the given model
-   * object.
+   * Replace right hand form panel with an edit panel for the given model object.
    * 
    * @param t
    * @param target
    */
-  public void renderPanelFor(final Object t, final AjaxRequestTarget target) {
+  public void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+    final Object t = selectedModel.getObject();
     if (t instanceof ComplexTaskDef) {
-      replaceEditPanelWith(target, new PreviewPanel("editpanel", new HibernateObjectModel<ComplexTaskDef>(ComplexTaskDef.class,tree.getCurrentTaskdef().getHjid())));
+      replaceEditPanelWith(target, new PreviewPanel("editpanel", (IModel<ComplexTaskDef>) selectedModel));
     } else if (t instanceof Category) {
-      final Category cat = (Category) t;
-      replaceEditPanelWith(target, new CategoryPanel("editpanel", new HibernateObjectModel<Category>(Category.class, cat.getHjid())));
+      replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
     } else if (t instanceof SubTaskDefType) {
       final SubTaskDefType st = (SubTaskDefType) t;
-      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", new HibernateObjectModel<SubTaskDefType>(st.getClass(),
-          st.getHjid())));
+      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDefType>) selectedModel));
     } else {
       replaceEditPanelWith(target, new EmptyPanel("editpanel"));
     }
@@ -93,5 +117,66 @@ public class TaskDefPage extends SecurePage {
     editPanel.replaceWith(edit);
     editPanel = edit;
     target.addComponent(editPanel);
+  }
+
+  @Override
+  protected Component createToolbar(final String id) {
+    return new TaskDefActions(id);
+  }
+
+  private class TaskDefActions extends Panel {
+
+    public TaskDefActions(final String id) {
+      super(id);
+
+      final DownloadLink downloadLink = new DownloadLink("export", new AbstractReadOnlyModel<File>() {
+
+        @Override
+        public File getObject() {
+          File tempFile = null;
+          try {
+            tempFile = File.createTempFile("taskdef", "export");
+            // marshal to xml
+            final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+            final Marshaller marshaller = context.createMarshaller();
+            final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+            marshaller.marshal(tree.getCurrentTaskdef().getObject(), bw);
+            bw.close();
+          } catch (final IOException e) {
+            error("Konnte leider keine Datei schreiben, Infos siehe Logfile.");
+            e.printStackTrace();
+          } catch (final JAXBException e) {
+            error("Konnte leider kein XML erstellen, Infos siehe Logfile.");
+            e.printStackTrace();
+          }
+          return tempFile;
+        }
+      }, "pruefung.xml");
+      downloadLink.setDeleteAfterDownload(true);
+
+      final Link deleteLink = new Link("delete") {
+
+        @Override
+        public void onClick() {
+          System.out.println("removing " + tree.getSelected().getObject());
+          final org.hibernate.classic.Session session = Databinder.getHibernateSession();
+          final Transaction transaction = session.beginTransaction();
+          session.delete(tree.getSelected().getObject());
+          transaction.commit();
+        }
+      };
+      deleteLink.add(new AttributeModifier("onclick", true, Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
+
+      add(new PreviewLink("preview", new AbstractReadOnlyModel<ComplexTaskDef>() {
+        @Override
+        public ComplexTaskDef getObject() {
+          return tree.getCurrentTaskdef().getObject();
+        }
+      }));
+
+      add(downloadLink);
+      // add(deleteLink);
+      add(new NullPlug("delete"));
+    }
   }
 }

@@ -14,10 +14,12 @@ visibility: hidden;
 .chromestyle ul{
 border: 1px solid #BBB;
 width: 100%;
-background: url(chromebg.gif) center center repeat-x; /*THEME CHANGE HERE*/
-padding: 4px 0;
+background: url(chromebg5.gif) center center repeat-x; /*THEME CHANGE HERE*/
+padding: 0.25em 0;
 margin: 0;
 text-align: left; /*set value to "left", "center", or "right"*/
+height: 1.1em;
+border-bottom: 0.3em solid #F2E2CB;
 }
 
 .chromestyle ul li{
@@ -27,14 +29,14 @@ display: inline;
 .chromestyle ul li a{
 color: #494949;
 opacity: 0.4;
-padding: 4px 7px;
+padding: 0.25em 0.5em;
 margin: 0;
 text-decoration: none;
 border-right: 1px solid #DADADA;
 }
 
 .chromestyle ul li a:hover, .chromestyle ul li a.selected{ /*script dynamically adds a class of "selected" to the current active menu item*/
-background: url(chromebg-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
+background: url(chromebg5-over.gif) center center repeat-x; /*THEME CHANGE HERE*/
 opacity: 1.0;
 }
 

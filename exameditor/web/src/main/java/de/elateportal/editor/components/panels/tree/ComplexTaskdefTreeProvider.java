@@ -44,6 +44,9 @@ import de.elateportal.model.Category.PaintTaskBlock;
 import de.elateportal.model.Category.TextTaskBlock;
 
 /**
+ * Provide tree structure for rendering. Represents a {@link ComplexTaskDef} in a user comprehensible way. <br>
+ * TODO add taskdef choice blocks
+ * 
  * @author Steffen Dienst
  * 
  */

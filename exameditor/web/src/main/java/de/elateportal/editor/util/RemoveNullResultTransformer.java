@@ -27,10 +27,4 @@ public class RemoveNullResultTransformer extends BasicTransformerAdapter {
     }
     return result;
   }
-  @Override
-  public Object transformTuple(final Object[] tuple, final String[] aliases) {
-    // TODO Auto-generated method stub
-    return super.transformTuple(tuple, aliases);
-  }
-
 }
