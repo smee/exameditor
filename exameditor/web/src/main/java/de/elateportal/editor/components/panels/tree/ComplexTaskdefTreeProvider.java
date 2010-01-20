@@ -36,14 +36,14 @@ import com.google.common.collect.Lists;
 
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.Category;
+import de.elateportal.model.ClozeTaskBlock;
 import de.elateportal.model.ComplexTaskDef;
+import de.elateportal.model.MCTaskBlock;
+import de.elateportal.model.MappingTaskBlock;
+import de.elateportal.model.PaintTaskBlock;
 import de.elateportal.model.TaskBlockType;
-import de.elateportal.model.Category.CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem;
-import de.elateportal.model.Category.ClozeTaskBlock;
-import de.elateportal.model.Category.MappingTaskBlock;
-import de.elateportal.model.Category.McTaskBlock;
-import de.elateportal.model.Category.PaintTaskBlock;
-import de.elateportal.model.Category.TextTaskBlock;
+import de.elateportal.model.TextTaskBlock;
+import de.elateportal.model.Category.CategoryTaskBlocksItem;
 
 /**
  * Provide tree structure for rendering. Represents a {@link ComplexTaskDef} in a user comprehensible way. <br>
@@ -80,10 +80,10 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   }
 
   private Iterator<TaskBlockType> getChildren(final Category cat) {
-    return Iterators.transform(cat.getMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItems().iterator(),
-        new Function<CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem, TaskBlockType>() {
+    return Iterators.transform(cat.getTaskBlocksItems().iterator(),
+        new Function<CategoryTaskBlocksItem, TaskBlockType>() {
 
-      public TaskBlockType apply(final CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem block) {
+      public TaskBlockType apply(final CategoryTaskBlocksItem block) {
         return block.getItem();
       }
     });
@@ -101,7 +101,7 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     return Iterators.transform(tb.getMappingSubTaskDefOrChoiceItems().iterator(), itemGetter);
   }
 
-  private Iterator<Object> getChildren(final McTaskBlock tb) {
+  private Iterator<Object> getChildren(final MCTaskBlock tb) {
     return Iterators.transform(tb.getMcSubTaskDefOrChoiceItems().iterator(), itemGetter);
   }
 
@@ -117,8 +117,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
       return getChildren((ComplexTaskDef) object);
     } else if (object instanceof Category) {
       return getChildren((Category) object);
-    } else if (object instanceof McTaskBlock) {
-      return getChildren((McTaskBlock) object);
+    } else if (object instanceof MCTaskBlock) {
+      return getChildren((MCTaskBlock) object);
     } else if (object instanceof ClozeTaskBlock) {
       return getChildren((ClozeTaskBlock) object);
     } else if (object instanceof MappingTaskBlock) {
@@ -130,6 +130,69 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     } else {
       return Iterators.emptyIterator();
     }
+  }
+
+  /**
+   * Use {@link #findParentOf(Object)}, remove the child from it's parent's children and return the parent.
+   * 
+   * @param child
+   * @return
+   */
+  public Object removeFromParent(final Object child) {
+    final Object parent = findParentOf(child);
+    if (parent != null) {
+      if (parent instanceof BasicUser) {
+        ((BasicUser) parent).getTaskdefs().remove(child);
+      } else if (parent instanceof ComplexTaskDef) {
+        ((ComplexTaskDef) parent).getCategory().remove(child);
+      } else if (parent instanceof Category) {
+        Iterators.removeAll(getChildren((Category) parent), Lists.newArrayList(child));
+      } else if (parent instanceof MCTaskBlock) {
+        Iterators.removeAll(getChildren(parent), Lists.newArrayList(child));
+      } else if (parent instanceof ClozeTaskBlock) {
+        Iterators.removeAll(getChildren((ClozeTaskBlock) parent), Lists.newArrayList(child));
+      } else if (parent instanceof MappingTaskBlock) {
+        Iterators.removeAll(getChildren((MappingTaskBlock) parent), Lists.newArrayList(child));
+      } else if (parent instanceof TextTaskBlock) {
+        Iterators.removeAll(getChildren((TextTaskBlock) parent), Lists.newArrayList(child));
+      } else if (parent instanceof PaintTaskBlock) {
+        Iterators.removeAll(getChildren((PaintTaskBlock) parent), Lists.newArrayList(child));
+      }
+    }
+    return parent;
+  }
+
+  /**
+   * Find the model where is true: getChildren(parent).contains(child).
+   * 
+   * @param child
+   * @return
+   */
+  public Object findParentOf(final Object child) {
+    final Iterator it = getRoots();
+    while (it.hasNext()) {
+      final Object root = it.next();
+      final Object parent = findParentOf(root, child);
+      if (parent != null) {
+        return parent;
+      }
+    }
+    return null;
+  }
+
+  private Object findParentOf(final Object current, final Object child) {
+    final Iterator it = getChildren(current);
+    while (it.hasNext()) {
+      final Object potentialParent = it.next();
+      if (potentialParent.equals(child)) {
+        return current;
+      }
+      final Object parent = findParentOf(potentialParent, child);
+      if (parent != null) {
+        return parent;
+      }
+    }
+    return null;
   }
 
   private Iterator<?> getChildren(final BasicUser user) {

@@ -182,12 +182,24 @@ public class TaskDefPage extends SecurePage {
 
         @Override
         public void onClick() {
-          System.out.println("removing " + tree.getSelected().getObject());
+          final Object toDelete = tree.getSelected().getObject();
+          System.out.println("removing " + toDelete);
+          final Object parent = treeProvider.findParentOf(toDelete);
+          System.out.println("parent is " + parent);
+          if (parent instanceof Category) {
+            System.out.println(((Category) parent).getTaskBlocksItems());
+          }
           final org.hibernate.classic.Session session = Databinder.getHibernateSession();
-          final Transaction transaction = session.beginTransaction();
-          session.delete(tree.getSelected().getObject());
+          Transaction transaction = session.beginTransaction();
+          session.save(treeProvider.removeFromParent(toDelete));
+          session.flush();
+          transaction.commit();
+
+          transaction = session.beginTransaction();
+          session.delete(toDelete);
           transaction.commit();
         }
+
       };
       deleteLink.add(new AttributeModifier("onclick", true, Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
 

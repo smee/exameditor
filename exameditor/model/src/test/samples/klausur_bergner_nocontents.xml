@@ -1,0 +1,6112 @@
+<?xml version="1.0"?>
+<complexTaskDef xmlns="http://complex.taskmodel.thorstenberger.de/complexTaskDef">
+  <config>
+    <time>90</time>
+    <tries>1</tries>
+    <tasksPerPage>2</tasksPerPage>
+    <kindnessExtensionTime>3</kindnessExtensionTime>
+    <correctionMode>
+      <multipleCorrectors numberOfCorrectors="2"/>
+    </correctionMode>
+  </config>
+  <title>Modulpr&#xFC;fung zum Modul 1  im Polyvalenten BA Lehramt SS 2009 (Nach- und Wiederholungstermin) (28.10.2009)</title>
+  <description> </description>
+  <startText>Durch Starten der Klausur erkl&#xE4;ren Sie verbindlich und unwiderruflich, dass Sie sich gesundheitlich in der Lage f&#xFC;hlen, sich der Pr&#xFC;fung zu unterziehen.</startText>
+  <category id="kat_mc" ignoreOrderOfBlocks="true" mixAllSubTasks="true" tasksPerPage="3" title="Multiple Choice">
+    <mcTaskBlock>
+      <config noOfSelectedTasks="5" pointsPerTask="5.0" preserveOrder="false"/>
+      <mc-config>
+        <regular>
+          <negativePoints>1.0</negativePoints>
+        </regular>
+      </mc-config>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-1" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-2" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-3" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-4" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-5" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-6" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-7" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-8" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-9" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-10" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-11" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-12" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-13" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-14" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-15" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-16" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-17" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-18" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-19" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-20" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-21" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-22" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-23" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-24" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-25" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-26" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-h&#xF6;rner-27" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+    </mcTaskBlock>
+    <mcTaskBlock>
+      <config noOfSelectedTasks="5" pointsPerTask="5.0" preserveOrder="false"/>
+      <mc-config>
+        <regular>
+          <negativePoints>1.0</negativePoints>
+        </regular>
+      </mc-config>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-1" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-2" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-3" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-4" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-5" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-6" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-7" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-8" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-9" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-10" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-11" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-12" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-13" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-14" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-15" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-16" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-17" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-18" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-19" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-vorl-wollersheim-20" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+    </mcTaskBlock>
+    <mcTaskBlock>
+      <config noOfSelectedTasks="5" pointsPerTask="5.0" preserveOrder="false"/>
+      <mc-config>
+        <regular>
+          <negativePoints>1.0</negativePoints>
+        </regular>
+      </mc-config>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-1" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-2" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-3" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-4" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-5" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-6" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-7" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-8" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-9" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-10" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-11" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-12" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-13" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-14" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-15" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-16" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-17" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-18" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-19" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-20" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-21" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-22" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-23" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-24" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-25" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+      <mcSubTaskDef category="multipleSelect" id="mc-seminar-h&#xF6;rner-26" maxCorrectAnswers="4" minCorrectAnswers="1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <displayedAnswers>5</displayedAnswers>
+        <correct id="c1">
+  correctAnswer
+</correct>
+        <correct id="c2">
+  correctAnswer
+</correct>
+        <correct id="c3">
+  correctAnswer
+</correct>
+        <correct id="c4">
+  correctAnswer
+</correct>
+        <incorrect id="i1">
+  correctAnswer
+</incorrect>
+        <incorrect id="i2">
+  correctAnswer
+</incorrect>
+        <incorrect id="i3">
+  correctAnswer
+</incorrect>
+        <incorrect id="i4">
+  correctAnswer
+</incorrect>
+      </mcSubTaskDef>
+    </mcTaskBlock>
+  </category>
+  <category id="kat_zuord" ignoreOrderOfBlocks="true" mixAllSubTasks="true" title="Zuordnung">
+    <mappingTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <mapping-config negativePoints="1.0"/>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+    </mappingTaskBlock>
+    <mappingTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <mapping-config negativePoints="1.0"/>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-vorl-wollersheim-20">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+    </mappingTaskBlock>
+    <mappingTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <mapping-config negativePoints="1.0"/>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+      <mappingSubTaskDef id="zuord-seminar-h&#xF6;rner-20">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <concept name="name">
+          <correctAssignmentID>2</correctAssignmentID>
+          <correctAssignmentID>4</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>1</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>3</correctAssignmentID>
+          <correctAssignmentID>5</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>5</correctAssignmentID>
+          <correctAssignmentID>3</correctAssignmentID>
+        </concept>
+        <concept name="name">
+          <correctAssignmentID>4</correctAssignmentID>
+          <correctAssignmentID>2</correctAssignmentID>
+        </concept>
+        <assignment id="1" name="name"/>
+        <assignment id="2" name="name"/>
+        <assignment id="3" name="name"/>
+        <assignment id="4" name="name"/>
+        <assignment id="5" name="name"/>
+      </mappingSubTaskDef>
+    </mappingTaskBlock>
+  </category>
+  <category id="kat_L&#xFC;T" ignoreOrderOfBlocks="true" mixAllSubTasks="true" title="L&#xFC;ckentext">
+    <clozeTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <cloze-config ignoreCase="true" negativePoints="1.0"/>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-2" trash="true">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-2_korrigiert">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-h&#xF6;rner-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+    </clozeTaskBlock>
+    <clozeTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <cloze-config ignoreCase="true" negativePoints="1.0"/>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap ignoreCase="true">
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap ignoreCase="true">
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-vorl-wollersheim-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+    </clozeTaskBlock>
+    <clozeTaskBlock>
+      <config noOfSelectedTasks="2" pointsPerTask="5.0" preserveOrder="false"/>
+      <cloze-config ignoreCase="true" negativePoints="1.0"/>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-15,5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-20">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-21">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+      <clozeSubTaskDef id="l&#xFC;ckentext-seminar-h&#xF6;rner-22">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <cloze>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+          <gap>
+            <correct>
+  correctAnswer
+</correct>
+          </gap>
+          <text>bla bla bla</text>
+        </cloze>
+      </clozeSubTaskDef>
+    </clozeTaskBlock>
+  </category>
+  <category id="kat_freitext" ignoreOrderOfBlocks="true" mixAllSubTasks="true" tasksPerPage="1" title="Freitext">
+    <textTaskBlock>
+      <config noOfSelectedTasks="1" pointsPerTask="5.0" preserveOrder="false"/>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-12" trash="true">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+        <initialTextFieldValue>initial value</initialTextFieldValue>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-19" trash="true">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-20">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-21">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-22">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-23">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-hoerner-24">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-h&#xF6;rner-25">
+        <problem>bla bla bla</problem>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+    </textTaskBlock>
+    <textTaskBlock>
+      <config noOfSelectedTasks="1" pointsPerTask="5.0" preserveOrder="false"/>
+      <textSubTaskDef id="freitext-vorl-wollersheim-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-16">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-vorl-wollersheim-20">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+    </textTaskBlock>
+    <textTaskBlock>
+      <config noOfSelectedTasks="1" pointsPerTask="5.0" preserveOrder="false"/>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-1">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-2">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-3">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-4">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-5">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-6">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-7">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-8">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-9">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-10">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-11">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-12">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-13">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-14">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-15">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-22">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-17">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-18">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-19">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-23">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-21">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-24">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-25">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-26">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-27">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-28">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-29">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+      <textSubTaskDef id="freitext-seminar-h&#xF6;rner-30">
+        <problem>bla bla bla</problem>
+        <hint>bla bla bla</hint>
+        <correctionHint>hint hint</correctionHint>
+      </textSubTaskDef>
+    </textTaskBlock>
+  </category>
+</complexTaskDef>

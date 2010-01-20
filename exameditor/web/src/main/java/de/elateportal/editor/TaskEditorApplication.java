@@ -1,6 +1,16 @@
 package de.elateportal.editor;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import net.databinder.auth.data.hib.BasicPassword;
 import net.databinder.auth.hib.AuthDataApplication;
@@ -11,10 +21,15 @@ import net.databinder.hib.SessionUnit;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.authorization.strategies.role.Roles;
+import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import de.elateportal.editor.pages.OverviewPage;
 import de.elateportal.editor.pages.ShowSubtaskDefsPage;
@@ -76,68 +91,51 @@ public class TaskEditorApplication extends AuthDataApplication {
   @Override
   protected void configureHibernate(final AnnotationConfiguration config) {
     super.configureHibernate(config);
-    // add all model classes
-    config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.AddonSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.Cloze.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.Cloze.Gap.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.Cloze.Gap.GapCorrectItem.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.Cloze.ClozeTextOrGapItem.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.GraphicalCloze.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.GraphicalCloze.Gap.class);
-    config.addAnnotatedClass(de.elateportal.model.ClozeSubTaskDef.GraphicalCloze.Gap.GapCorrectItem.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.AddonTaskBlockAddonSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.AddonTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeConfig.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.ClozeTaskBlock.ClozeTaskBlockClozeSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingConfig.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.MappingTaskBlock.MappingTaskBlockMappingSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Different.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McConfig.Regular.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.McTaskBlock.McTaskBlockMcSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.CategoryMcTaskBlockOrClozeTaskBlockOrTextTaskBlockItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.PaintTaskBlock.PaintTaskBlockPaintSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.Choice.class);
-    config.addAnnotatedClass(de.elateportal.model.Category.TextTaskBlock.TextTaskBlockTextSubTaskDefOrChoiceItem.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.CorrectOnlyProcessedTasks.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.MultipleCorrectors.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Config.CorrectionMode.Regular.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Revisions.class);
-    config.addAnnotatedClass(de.elateportal.model.ComplexTaskDef.Revisions.Revision.class);
-    config.addAnnotatedClass(de.elateportal.model.Config.class);
-    config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Assignment.class);
-    config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Concept.class);
-    config.addAnnotatedClass(de.elateportal.model.MappingSubTaskDef.Concept.ConceptCorrectAssignmentIDItem.class);
-    config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.Correct.class);
-    config.addAnnotatedClass(de.elateportal.model.McSubTaskDef.Incorrect.class);
-    config.addAnnotatedClass(de.elateportal.model.PaintSubTaskDef.class);
-    config.addAnnotatedClass(de.elateportal.model.PaintSubTaskDef.Images.class);
-    config.addAnnotatedClass(de.elateportal.model.PaintSubTaskDef.TextualAnswer.class);
-    config.addAnnotatedClass(de.elateportal.model.SubTaskDefType.class);
-    config.addAnnotatedClass(de.elateportal.model.TaskBlockType.class);
-    config.addAnnotatedClass(de.elateportal.model.TextSubTaskDef.class);
+
+    // add all model classes from persistence.xml
+    addPersistentModelClasses(config, getClass().getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
 
     // fix for bug in HSQLDB, see http://issues.appfuse.org/browse/APF-101
     config.setProperty("hibernate.jdbc.batch_size", "0");
     // config.setProperty("hibernate.show_sql", "true");
+  }
+
+  /**
+   * Fetch all &lt;class&gt; elements from META-INF/persistence.xml and, assuming these classes have JPA annotations,
+   * add them to the hibernate configuration.
+   * 
+   * @param config
+   * @param in
+   */
+  private void addPersistentModelClasses(final AnnotationConfiguration config, final InputStream in) {
+    try {
+      final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder docBuilder;
+      docBuilder = docBuilderFactory.newDocumentBuilder();
+      final Document doc = docBuilder.parse(in);
+
+      final XPath xpath = XPathFactory.newInstance().newXPath();
+      final NodeList nodes = (NodeList) xpath.evaluate("//class/text()", doc, XPathConstants.NODESET);
+      for (int i = 0; i < nodes.getLength(); i++) {
+        config.addAnnotatedClass(Class.forName(nodes.item(i).getNodeValue()));
+      }
+      return;
+    } catch (final ParserConfigurationException e) {
+      e.printStackTrace();
+    } catch (final SAXException e) {
+      e.printStackTrace();
+    } catch (final IOException e) {
+      e.printStackTrace();
+    } catch (final XPathExpressionException e) {
+      e.printStackTrace();
+    } catch (final MappingException e) {
+      e.printStackTrace();
+    } catch (final DOMException e) {
+      e.printStackTrace();
+    } catch (final ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+    System.exit(1);
   }
 
   @Override

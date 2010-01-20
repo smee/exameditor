@@ -39,6 +39,21 @@
           <hj:basic>
             <orm:column length="1024"/>
           </hj:basic>
+      </jxb:bindings><!--
+      <jxb:bindings node="//xs:complexType[@name='Category']/xs:choice">
+        <hj:one-to-many>
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-refresh />
+            <orm:cascade-merge />
+          </orm:cascade>
+        </hj:one-to-many>
       </jxb:bindings>      
+    -->
+    <jxb:bindings node="//xs:complexType[@name='Category']/xs:choice">
+      <jxb:property name="TaskBlocks"/>
+    </jxb:bindings> 
+    
     </jxb:bindings>
 </jxb:bindings>

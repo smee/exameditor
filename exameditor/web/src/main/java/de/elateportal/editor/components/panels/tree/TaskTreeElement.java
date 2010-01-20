@@ -32,16 +32,16 @@ import com.google.common.collect.ImmutableMap;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.Category;
 import de.elateportal.model.ClozeSubTaskDef;
+import de.elateportal.model.ClozeTaskBlock;
 import de.elateportal.model.ComplexTaskDef;
+import de.elateportal.model.MCTaskBlock;
 import de.elateportal.model.MappingSubTaskDef;
+import de.elateportal.model.MappingTaskBlock;
 import de.elateportal.model.McSubTaskDef;
 import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.PaintTaskBlock;
 import de.elateportal.model.TextSubTaskDef;
-import de.elateportal.model.Category.ClozeTaskBlock;
-import de.elateportal.model.Category.MappingTaskBlock;
-import de.elateportal.model.Category.McTaskBlock;
-import de.elateportal.model.Category.PaintTaskBlock;
-import de.elateportal.model.Category.TextTaskBlock;
+import de.elateportal.model.TextTaskBlock;
 
 /**
  * @author Steffen Dienst
@@ -53,7 +53,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .put(BasicUser.class, "username")
   .put(ComplexTaskDef.class, "title")
   .put(Category.class, "title")
-  .put(McTaskBlock.class, "class.simpleName")
+      .put(MCTaskBlock.class, "class.simpleName")
   .put(MappingTaskBlock.class, "class.simpleName")
   .put(ClozeTaskBlock.class, "class.simpleName")
   .put(TextTaskBlock.class, "class.simpleName")
@@ -66,7 +66,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .build();
   final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
   .put(ComplexTaskDef.class, "tree-exam")
-  .put(McTaskBlock.class, "tree-mc")
+      .put(MCTaskBlock.class, "tree-mc")
   .put(MappingTaskBlock.class, "tree-mapping")
   .put(ClozeTaskBlock.class, "tree-cloze")
   .put(TextTaskBlock.class, "tree-text")
