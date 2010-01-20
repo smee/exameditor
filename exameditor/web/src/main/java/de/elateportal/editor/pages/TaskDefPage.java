@@ -50,11 +50,11 @@ import org.hibernate.Transaction;
 import de.elateportal.editor.TaskEditorApplication;
 import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
+import de.elateportal.editor.components.panels.tasks.ComplexTaskdefPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elateportal.editor.components.panels.tree.ComplexTaskdefTreeProvider;
 import de.elateportal.editor.preview.PreviewLink;
-import de.elateportal.editor.preview.PreviewPanel;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.Category;
@@ -107,7 +107,7 @@ public class TaskDefPage extends SecurePage {
   public void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
     final Object t = selectedModel.getObject();
     if (t instanceof ComplexTaskDef) {
-      replaceEditPanelWith(target, new PreviewPanel("editpanel", (IModel<ComplexTaskDef>) selectedModel));
+      replaceEditPanelWith(target, new ComplexTaskdefPanel("editpanel", (HibernateObjectModel<ComplexTaskDef>) selectedModel));
     } else if (t instanceof Category) {
       replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
     } else if (t instanceof SubTaskDefType) {
