@@ -69,19 +69,6 @@ public class ComplexTaskDefTree extends NestedTree {
     return new TaskTreeElement(id, this, model);
   }
 
-  /**
-   * @param provider
-   * @return
-   */
-  private IModel<?> selectFirstTaskdef(final ComplexTaskdefTreeProvider provider) {
-    final Iterator<? extends Object> roots = provider.getRoots();
-    if (roots.hasNext()) {
-      final ComplexTaskDef ctd = (ComplexTaskDef) roots.next();
-      return provider.model(ctd);
-    } else {
-      return null;
-    }
-  }
 
   /**
    * Inform the tree about the selection. This is needed to be able to call {@link #onSelect(IModel, AjaxRequestTarget)}
@@ -99,7 +86,7 @@ public class ComplexTaskDefTree extends NestedTree {
     }
     selectedModel = model;
     updateNode(model.getObject(), target);
-    this.currentTaskdef = findCurrentTaskDef(model);
+    this.currentTaskdef = (IModel<ComplexTaskDef>) findCurrentTaskDef(model);
     onSelect(selectedModel, target);
   }
 
@@ -117,32 +104,49 @@ public class ComplexTaskDefTree extends NestedTree {
    * 
    * @param selected
    */
-  private IModel<ComplexTaskDef> findCurrentTaskDef(final IModel<?> selected) {
-    final ITreeProvider prov = getProvider();
+  private IModel<?> findCurrentTaskDef(final IModel<?> selected) {
+    if (isComplextask(selected)) {
+      return selected;
+    }
+
+    final ComplexTaskdefTreeProvider prov = (ComplexTaskdefTreeProvider) getProvider();
     final Iterator<?> it = prov.getRoots();
     while (it.hasNext()) {
       final IModel<?> root = prov.model(it.next());
-      if (subtreeContains(selected, root)) {
-        return (IModel<ComplexTaskDef>) root;
+      final IModel<?> ctdModel = findTaskDefThatContains(selected, root);
+      if (ctdModel != null) {
+        return ctdModel;
       }
     }
     return null;
   }
 
-  private boolean subtreeContains(final IModel<?> selected, final IModel<?> currentNode) {
+  /**
+   * @param selected
+   * @return
+   */
+  private boolean isComplextask(final IModel<?> selected) {
+    return selected.getObject().getClass().equals(ComplexTaskDef.class);
+  }
+
+  private IModel<?> findTaskDefThatContains(final IModel<?> selected, final IModel<?> currentNode) {
     final ITreeProvider provider = getProvider();
     if (currentNode.equals(selected)) {
-      return true;
+      return currentNode;
     } else if (provider.hasChildren(currentNode.getObject())) {
       final Iterator childrenIterator = provider.getChildren(currentNode.getObject());
       while (childrenIterator.hasNext()) {
-        final boolean inSubtree = subtreeContains(selected, provider.model(childrenIterator.next()));
-        if (inSubtree) {
-          return true;
+        final IModel<?> inSubtree = findTaskDefThatContains(selected, provider.model(childrenIterator.next()));
+        if (inSubtree != null) {
+          if (inSubtree.getObject().getClass().equals(ComplexTaskDef.class)) {
+            return inSubtree;
+          } else {
+            return currentNode;
+          }
         }
       }
     }
-    return false;
+    return null;
   }
 
   /**
