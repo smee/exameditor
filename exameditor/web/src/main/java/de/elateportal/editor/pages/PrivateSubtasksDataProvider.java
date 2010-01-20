@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.hib.Databinder;
 import net.databinder.models.hib.CriteriaFilterAndSort;
 import net.databinder.models.hib.OrderingCriteriaBuilder;
@@ -33,6 +32,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import de.elateportal.editor.TaskEditorApplication;
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.util.RemoveNullResultTransformer;
 import de.elateportal.model.SubTaskDefType;
 
@@ -60,7 +60,7 @@ final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> 
   }
 
   private String createQueryString() {
-    String q = String.format(query, AuthDataSession.get().getUser().getUsername());
+    String q = String.format(query, TaskEditorSession.get().getUser().getUsername());
     // admin sees all subtasks
     if (TaskEditorApplication.isAdmin()) {
       q = adminQuery;

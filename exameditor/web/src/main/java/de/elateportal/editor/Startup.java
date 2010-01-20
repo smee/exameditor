@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elateportal.editor;
 
+import java.io.File;
+
 import net.databinder.web.DataServer;
 
 import org.mortbay.jetty.Handler;
@@ -36,6 +38,11 @@ public class Startup extends DataServer {
    * @param args
    */
   public static void main(final String[] args) {
+    final File dbLockfile = new File("target/database.lck");
+    if (dbLockfile.exists()) {
+      dbLockfile.delete();
+    }
+
     new Startup();
 
   }

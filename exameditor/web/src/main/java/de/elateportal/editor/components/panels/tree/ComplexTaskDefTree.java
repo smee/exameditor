@@ -78,7 +78,7 @@ public class ComplexTaskDefTree extends NestedTree {
    * @param target
    */
   void select(final IModel<?> model, final AjaxRequestTarget target) {
-    if (selectedModel != null) {
+    if (selectedModel != null && selectedModel.getObject() != null) {
       // redraw the now deselected node
       updateNode(selectedModel.getObject(), target);
       selectedModel.detach();

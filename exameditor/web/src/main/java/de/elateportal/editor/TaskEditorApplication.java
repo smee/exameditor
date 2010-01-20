@@ -14,7 +14,6 @@ import javax.xml.xpath.XPathFactory;
 
 import net.databinder.auth.data.hib.BasicPassword;
 import net.databinder.auth.hib.AuthDataApplication;
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.hib.Databinder;
 import net.databinder.hib.SessionUnit;
 
@@ -26,6 +25,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
+import org.hibernate.event.PreDeleteEvent;
+import org.hibernate.event.PreDeleteEventListener;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -39,7 +40,7 @@ import de.elateportal.editor.pages.UploadComplexTaskdefPage;
 import de.elateportal.editor.user.BasicUser;
 
 public class TaskEditorApplication extends AuthDataApplication {
-  AtomicInteger activeUsers = new AtomicInteger(0);
+  private final AtomicInteger activeUsers = new AtomicInteger(0);
 
   public int getActiveUsersCount() {
     return activeUsers.get();
@@ -54,31 +55,7 @@ public class TaskEditorApplication extends AuthDataApplication {
 
   @Override
   public org.apache.wicket.Session newSession(final Request request, final Response response) {
-    return new AuthDataSession(request) {
-      @Override
-      public boolean signIn(final String username, final String password, final boolean setCookie) {
-        final boolean loggedIn = super.signIn(username, password, setCookie);
-        if (loggedIn) {
-          activeUsers.incrementAndGet();
-        }
-        return loggedIn;
-      }
-
-      @Override
-      protected boolean cookieSignIn() {
-        final boolean loggedIn = super.cookieSignIn();
-        if (loggedIn) {
-          activeUsers.incrementAndGet();
-        }
-        return loggedIn;
-
-      }
-      @Override
-      public void signOut() {
-        activeUsers.decrementAndGet();
-        super.signOut();
-      }
-    };
+    return new TaskEditorSession(request);
   }
 
   /*
@@ -98,6 +75,19 @@ public class TaskEditorApplication extends AuthDataApplication {
     // fix for bug in HSQLDB, see http://issues.appfuse.org/browse/APF-101
     config.setProperty("hibernate.jdbc.batch_size", "0");
     // config.setProperty("hibernate.show_sql", "true");
+
+    config.setListener("pre-delete", new PreDeleteEventListener() {
+
+      @Override
+      public boolean onPreDelete(final PreDeleteEvent event) {
+        if (TaskEditorSession.get().isSubtaskDeletionAllowed()) {
+          return false;
+        }
+        final String entityname = event.getEntity().getClass().getName();
+        final boolean veto = entityname.contains("SubTaskDef") && !entityname.contains("TaskBlock");
+        return veto;
+      }
+    });
   }
 
   /**
@@ -185,7 +175,15 @@ public class TaskEditorApplication extends AuthDataApplication {
    * @return
    */
   public static boolean isAdmin() {
-    return AuthDataSession.get().getUser().hasRole(Roles.ADMIN);
+    return TaskEditorSession.get().getUser().hasRole(Roles.ADMIN);
+  }
+
+  public void incrementUsers() {
+    this.activeUsers.incrementAndGet();
+  }
+
+  public void decrementUsers() {
+    this.activeUsers.decrementAndGet();
   }
 
 }

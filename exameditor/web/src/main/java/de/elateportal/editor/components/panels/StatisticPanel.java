@@ -3,7 +3,6 @@ package de.elateportal.editor.components.panels;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.models.hib.CriteriaBuilder;
 import net.databinder.models.hib.HibernateObjectModel;
 
@@ -15,6 +14,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.model.AddonSubTaskDef;
 import de.elateportal.model.ClozeSubTaskDef;
@@ -73,7 +73,7 @@ public class StatisticPanel extends Panel {
   }
 
   protected String count(final Class clazz) {
-    final BasicUser user = (BasicUser) AuthDataSession.get().getUser();
+    final BasicUser user = TaskEditorSession.get().getUser();
     if (clazz.isAssignableFrom(ComplexTaskDef.class)) {
       return Integer.toString(user.getTaskdefs().size());
     } else {

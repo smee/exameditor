@@ -32,17 +32,13 @@ import wickettree.ITreeProvider;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
 
 import de.elateportal.editor.user.BasicUser;
+import de.elateportal.editor.util.Stuff;
 import de.elateportal.model.Category;
-import de.elateportal.model.ClozeTaskBlock;
 import de.elateportal.model.ComplexTaskDef;
-import de.elateportal.model.MCTaskBlock;
-import de.elateportal.model.MappingTaskBlock;
-import de.elateportal.model.PaintTaskBlock;
+import de.elateportal.model.SubTaskDefType;
 import de.elateportal.model.TaskBlockType;
-import de.elateportal.model.TextTaskBlock;
 import de.elateportal.model.Category.CategoryTaskBlocksItem;
 
 /**
@@ -89,21 +85,15 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     });
   }
 
-  private Iterator<Object> getChildren(final ClozeTaskBlock tb) {
-    return Iterators.transform(tb.getClozeSubTaskDefOrChoiceItems().iterator(), itemGetter);
+  private Iterator<Object> getChildren(final TaskBlockType tb) {
+    return Iterators.transform(Stuff.getItems(tb).iterator(), itemGetter);
   }
 
   private Iterator<Category> getChildren(final ComplexTaskDef ctd) {
     return ctd.getCategory().iterator();
   }
 
-  private Iterator<Object> getChildren(final MappingTaskBlock tb) {
-    return Iterators.transform(tb.getMappingSubTaskDefOrChoiceItems().iterator(), itemGetter);
-  }
 
-  private Iterator<Object> getChildren(final MCTaskBlock tb) {
-    return Iterators.transform(tb.getMcSubTaskDefOrChoiceItems().iterator(), itemGetter);
-  }
 
   /*
    * (non-Javadoc)
@@ -117,26 +107,18 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
       return getChildren((ComplexTaskDef) object);
     } else if (object instanceof Category) {
       return getChildren((Category) object);
-    } else if (object instanceof MCTaskBlock) {
-      return getChildren((MCTaskBlock) object);
-    } else if (object instanceof ClozeTaskBlock) {
-      return getChildren((ClozeTaskBlock) object);
-    } else if (object instanceof MappingTaskBlock) {
-      return getChildren((MappingTaskBlock) object);
-    } else if (object instanceof TextTaskBlock) {
-      return getChildren((TextTaskBlock) object);
-    } else if (object instanceof PaintTaskBlock) {
-      return getChildren((PaintTaskBlock) object);
+    } else if (object instanceof TaskBlockType) {
+      return getChildren((TaskBlockType) object);
     } else {
       return Iterators.emptyIterator();
     }
   }
 
   /**
-   * Use {@link #findParentOf(Object)}, remove the child from it's parent's children and return the parent.
+   * Removes object from it's parent. Returns that object, that needs to get deleted from the database.
    * 
    * @param child
-   * @return
+   * @return the object to delete
    */
   public Object removeFromParent(final Object child) {
     final Object parent = findParentOf(child);
@@ -145,31 +127,21 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
         ((BasicUser) parent).getTaskdefs().remove(child);
       } else if (parent instanceof ComplexTaskDef) {
         ((ComplexTaskDef) parent).getCategory().remove(child);
-      } else if (parent instanceof Category) {
-        Iterators.removeAll(getChildren((Category) parent), Lists.newArrayList(child));
-      } else if (parent instanceof MCTaskBlock) {
-        Iterators.removeAll(getChildren(parent), Lists.newArrayList(child));
-      } else if (parent instanceof ClozeTaskBlock) {
-        Iterators.removeAll(getChildren((ClozeTaskBlock) parent), Lists.newArrayList(child));
-      } else if (parent instanceof MappingTaskBlock) {
-        Iterators.removeAll(getChildren((MappingTaskBlock) parent), Lists.newArrayList(child));
-      } else if (parent instanceof TextTaskBlock) {
-        Iterators.removeAll(getChildren((TextTaskBlock) parent), Lists.newArrayList(child));
-      } else if (parent instanceof PaintTaskBlock) {
-        Iterators.removeAll(getChildren((PaintTaskBlock) parent), Lists.newArrayList(child));
+      } else {
+        return clearPhysicalParent(child, parent);
       }
     }
-    return parent;
+    return child;
   }
 
   /**
-   * Find the model where is true: getChildren(parent).contains(child).
+   * Find the model where is true: this.getChildren(parent).contains(child).
    * 
    * @param child
    * @return
    */
-  public Object findParentOf(final Object child) {
-    final Iterator it = getRoots();
+  private Object findParentOf(final Object child) {
+    final Iterator<?> it = getRoots();
     while (it.hasNext()) {
       final Object root = it.next();
       final Object parent = findParentOf(root, child);
@@ -180,8 +152,39 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     return null;
   }
 
+  private Object clearPhysicalParent(final Object child, final Object logicalParent) {
+    if (child instanceof TaskBlockType) {
+      final Category cat = (Category) logicalParent;
+      for (final CategoryTaskBlocksItem tbi : cat.getTaskBlocksItems()) {
+        if (tbi.getItem() == child) {
+          cat.getTaskBlocksItems().remove(tbi);
+          // tbi.setItem(null);
+          // TODO unlink subtaskdefs or better: do not propagate delete to subtaskdefs.... needs HJ3 fix, see
+          // http://jira.highsource.org/browse/HJIII-26
+          return tbi;
+        }
+      }
+    } else if (child instanceof SubTaskDefType) {
+      final TaskBlockType tb = (TaskBlockType) logicalParent;
+      try {
+        final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", (Class<? extends de.elateportal.model.SubTaskDefType>) child.getClass());
+        for (final Item<?> item : itemsList) {
+          if(item.getItem()==child) {
+            itemsList.remove(item);
+            // item.setItem(null);
+            // TODO unlink subtaskdefs
+            return item;
+          }
+        }
+      } catch (final Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return logicalParent;
+  }
+
   private Object findParentOf(final Object current, final Object child) {
-    final Iterator it = getChildren(current);
+    final Iterator<?> it = getChildren(current);
     while (it.hasNext()) {
       final Object potentialParent = it.next();
       if (potentialParent.equals(child)) {
@@ -198,14 +201,6 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   private Iterator<?> getChildren(final BasicUser user) {
     return user.getTaskdefs().iterator();
   }
-  private Iterator<Object> getChildren(final PaintTaskBlock tb) {
-    return Iterators.transform(tb.getPaintSubTaskDefOrChoiceItems().iterator(), itemGetter);
-  }
-
-  private Iterator<Object> getChildren(final TextTaskBlock tb) {
-    return Iterators.transform(tb.getTextSubTaskDefOrChoiceItems().iterator(), itemGetter);
-  }
-
   public Iterator<? extends Object> getRoots() {
     return model.getObject().iterator();
   }

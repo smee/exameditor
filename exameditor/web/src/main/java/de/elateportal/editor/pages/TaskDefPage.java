@@ -28,7 +28,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.hib.Databinder;
 import net.databinder.models.hib.HibernateListModel;
 import net.databinder.models.hib.HibernateObjectModel;
@@ -49,6 +48,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import de.elateportal.editor.TaskEditorApplication;
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.components.panels.tasks.CategoryPanel;
 import de.elateportal.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elateportal.editor.components.panels.tree.ComplexTaskDefTree;
@@ -78,7 +78,7 @@ public class TaskDefPage extends SecurePage {
     IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
       public Query build(final Session sess) {
         final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
-            AuthDataSession.get().getUser().getUsername()));
+            TaskEditorSession.get().getUser().getUsername()));
         q.setResultTransformer(RemoveNullResultTransformer.INSTANCE);
         return q;
       }
@@ -169,7 +169,7 @@ public class TaskDefPage extends SecurePage {
          */
         private void addRevisionTo(final ComplexTaskDef ctd) {
           final Revision rev = new ObjectFactory().createComplexTaskDefRevisionsRevision();
-          rev.setAuthor(AuthDataSession.get().getUser().getUsername());
+          rev.setAuthor(TaskEditorSession.get().getUser().getUsername());
           rev.setDate(System.currentTimeMillis());
           final List<Revision> revisions = ctd.getRevisions().getRevision();
           rev.setSerialNumber(revisions.size() + 1);
@@ -182,22 +182,14 @@ public class TaskDefPage extends SecurePage {
 
         @Override
         public void onClick() {
-          final Object toDelete = tree.getSelected().getObject();
-          System.out.println("removing " + toDelete);
-          final Object parent = treeProvider.findParentOf(toDelete);
-          System.out.println("parent is " + parent);
-          if (parent instanceof Category) {
-            System.out.println(((Category) parent).getTaskBlocksItems());
+          final Object toDelete = treeProvider.removeFromParent(tree.getSelected().getObject());
+          if (!(toDelete instanceof SubTaskDefType)) {
+            final org.hibernate.classic.Session session = Databinder.getHibernateSession();
+            final Transaction transaction = session.beginTransaction();
+            session.delete(toDelete);
+            transaction.commit();
           }
-          final org.hibernate.classic.Session session = Databinder.getHibernateSession();
-          Transaction transaction = session.beginTransaction();
-          session.save(treeProvider.removeFromParent(toDelete));
-          session.flush();
-          transaction.commit();
 
-          transaction = session.beginTransaction();
-          session.delete(toDelete);
-          transaction.commit();
         }
 
       };

@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.databinder.auth.components.DataSignInPanel;
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.components.NullPlug;
 
 import org.apache.wicket.Component;
@@ -17,6 +16,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.components.menu.ChromeMenu;
 import de.elateportal.editor.components.menu.LinkVO;
 import de.elateportal.editor.components.menu.LinkVO.Create;
@@ -33,7 +33,7 @@ public class OverviewPage extends WebPage {
 
   /** Add components to be displayed on page. */
   public OverviewPage() {
-    if (AuthDataSession.get().isSignedIn()) {
+    if (TaskEditorSession.get().isSignedIn()) {
       add(new ChromeMenu("menubar", getMenuList(), ChromeMenu.Theme.THEME5));
       add(createToolbar("toolbar"));
     } else {
@@ -54,7 +54,7 @@ public class OverviewPage extends WebPage {
     add(new DataSignInPanel<BasicUser>("loginpanel", null) {
       @Override
       public boolean isVisible() {
-        return !AuthDataSession.get().isSignedIn();
+        return !TaskEditorSession.get().isSignedIn();
       }
     });
     add(new Footer("footer"));

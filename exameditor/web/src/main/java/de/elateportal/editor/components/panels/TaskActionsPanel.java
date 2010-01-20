@@ -8,6 +8,7 @@ import org.apache.wicket.model.IModel;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.pages.EditSubtaskPage;
 import de.elateportal.model.SubTaskDefType;
 
@@ -18,33 +19,42 @@ import de.elateportal.model.SubTaskDefType;
  */
 public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
 
-    /**
-     * @param id
-     * @param model
-     */
-    public TaskActionsPanel(final String id, final IModel<T> model) {
-        super(id, model);
-        add(new Link("edit") {
+  /**
+   * @param id
+   * @param model
+   */
+  public TaskActionsPanel(final String id, final IModel<T> model) {
+    super(id, model);
+    add(new Link("edit") {
 
-            @Override
-            public void onClick() {
-                final T modelObject = (T) getParent().getDefaultModelObject();
-                setResponsePage(new EditSubtaskPage(modelObject.getClass(), modelObject));
-            }
+      @Override
+      public void onClick() {
+        final T modelObject = (T) getParent().getDefaultModelObject();
+        setResponsePage(new EditSubtaskPage(modelObject.getClass(), modelObject));
+      }
 
-        });
-        add(new Link("remove") {
+    });
+    add(new Link("remove") {
 
-            @Override
-            public void onClick() {
-                final T modelObject = (T) getParent().getDefaultModelObject();
-                final Session session = Databinder.getHibernateSession();
-                final Transaction trans = session.beginTransaction();
-                session.delete(modelObject);
-                trans.commit();
-            }
+      @Override
+      public void onClick() {
+        final T modelObject = (T) getParent().getDefaultModelObject();
+        // XXX hack because normally we veto any deletion of subtaskdefs
+        TaskEditorSession.get().setDeletionAllowed(true);
+        try {
+          // remove subtaskdef from current user object
+          TaskEditorSession.get().getUser().getSubtaskdefs().remove(modelObject);
 
-        });
-    }
+          final Session session = Databinder.getHibernateSession();
+          final Transaction trans = session.beginTransaction();
+          session.delete(modelObject);
+          trans.commit();
+        } finally {
+          TaskEditorSession.get().setDeletionAllowed(false);
+        }
+      }
+
+    });
+  }
 
 }

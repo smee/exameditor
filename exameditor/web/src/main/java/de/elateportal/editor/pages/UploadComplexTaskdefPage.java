@@ -1,16 +1,11 @@
 package de.elateportal.editor.pages;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import net.databinder.auth.hib.AuthDataSession;
 import net.databinder.hib.Databinder;
 
 import org.apache.wicket.markup.html.form.Form;
@@ -21,13 +16,16 @@ import org.apache.wicket.util.lang.Bytes;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
+import de.elateportal.editor.TaskEditorSession;
 import de.elateportal.editor.user.BasicUser;
 import de.elateportal.editor.util.Stuff;
-import de.elateportal.model.Category;
+import de.elateportal.model.AddonSubTaskDef;
+import de.elateportal.model.ClozeSubTaskDef;
 import de.elateportal.model.ComplexTaskDef;
-import de.elateportal.model.SubTaskDefType;
-import de.elateportal.model.TaskBlockType;
-import de.elateportal.model.Category.CategoryTaskBlocksItem;
+import de.elateportal.model.MappingSubTaskDef;
+import de.elateportal.model.McSubTaskDef;
+import de.elateportal.model.PaintSubTaskDef;
+import de.elateportal.model.TextSubTaskDef;
 
 /**
  * @author sdienst
@@ -76,38 +74,6 @@ public class UploadComplexTaskdefPage extends SecurePage {
     add(new FileUploadForm("uploadform"));
   }
 
-  private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz)
-  throws Exception {
-    final Collection<T> stds = new ArrayList<T>();
-    for (final Category cat : taskdef.getCategory()) {
-      for (final CategoryTaskBlocksItem block : cat.getTaskBlocksItems()) {
-        stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) Stuff.call(block, "getItem%sTaskBlock", clazz), clazz));
-      }
-    }
-    return stds;
-  }
-
-  private <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlockType block, final Class<T> clazz)
-  throws Exception {
-    final Collection<T> stds = new ArrayList<T>();
-    if (block == null) {
-      return stds;
-    }
-    final List items = (List) Stuff.call(block, "get%sSubTaskDefOrChoiceItems", clazz);
-    if (items != null) {
-      for (final Object item : items) {
-        final T st = (T) Stuff.call(item, "getItem%sSubTaskDef", clazz);
-        if (st != null) {
-          stds.add(st);
-        } else {
-          final Object choice = Stuff.call(item, "getItemChoice");
-          stds.addAll((Collection<T>) Stuff.call(choice, "get%sSubTaskDef", clazz));
-        }
-      }
-    }
-    return stds;
-  }
-
   /**
    * @param upload
    * @return
@@ -116,9 +82,6 @@ public class UploadComplexTaskdefPage extends SecurePage {
     try {
       final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
       final Unmarshaller unmarshaller = context.createUnmarshaller();
-
-      final JAXBElement unmarshalledElement;
-      final Object unmarshalledObject;
 
       final Object result = unmarshaller.unmarshal(upload.getInputStream());
       return (ComplexTaskDef) result;
@@ -136,16 +99,14 @@ public class UploadComplexTaskdefPage extends SecurePage {
     final Transaction trans = session.beginTransaction();
     session.save(taskdef);
     // add to current user
-    final BasicUser user = (BasicUser) ((AuthDataSession) org.apache.wicket.Session.get()).getUser();
-
+    final BasicUser user = TaskEditorSession.get().getUser();
     user.getTaskdefs().add(taskdef);
-
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, McSubTaskDef.class));
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
-    // user.getSubtaskdefs().addAll(getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, McSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
+    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
 
     session.saveOrUpdate(user);
     trans.commit();
