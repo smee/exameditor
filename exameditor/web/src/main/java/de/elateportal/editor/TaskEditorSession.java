@@ -43,45 +43,6 @@ public class TaskEditorSession extends AuthDataSessionBase<BasicUser> {
   public static TaskEditorSession get() {
     return (TaskEditorSession) WebSession.get();
   }
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.databinder.auth.AuthDataSessionBase#signIn(java.lang.String, java.lang.String, boolean)
-   */
-  @Override
-  public boolean signIn(final String username, final String password, final boolean setCookie) {
-    final boolean loggedIn = super.signIn(username, password, setCookie);
-    if (loggedIn) {
-      TaskEditorApplication.getInstance().incrementUsers();
-    }
-    return loggedIn;
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.databinder.auth.AuthDataSessionBase#cookieSignIn()
-   */
-  @Override
-  protected boolean cookieSignIn() {
-    final boolean loggedIn = super.cookieSignIn();
-    if (loggedIn) {
-      TaskEditorApplication.getInstance().incrementUsers();
-    }
-    return loggedIn;
-
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.apache.wicket.Session#invalidate()
-   */
-  @Override
-  public void invalidate() {
-    super.invalidate();
-    TaskEditorApplication.getInstance().decrementUsers();
-  }
 
   private boolean subtaskDeletionAllowed = false;
 

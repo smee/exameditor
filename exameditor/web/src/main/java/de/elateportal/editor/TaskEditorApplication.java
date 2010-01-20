@@ -150,9 +150,9 @@ public class TaskEditorApplication extends AuthDataApplication {
     mountBookmarkablePage("import", UploadComplexTaskdefPage.class);
 
     getMarkupSettings().setStripWicketTags(true);
-    // open session for loading recipe titles
-    Databinder.ensureSession(new SessionUnit() {
 
+    // make sure there is at least one user with role admin
+    Databinder.ensureSession(new SessionUnit() {
       public Object run(final Session sess) {
         final Transaction transaction = sess.beginTransaction();
         final Integer count = (Integer) sess.createCriteria(BasicUser.class).setProjection(Projections.rowCount()).uniqueResult();
