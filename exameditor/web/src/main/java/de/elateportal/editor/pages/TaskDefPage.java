@@ -172,7 +172,7 @@ public class TaskDefPage extends SecurePage {
           rev.setAuthor(AuthDataSession.get().getUser().getUsername());
           rev.setDate(System.currentTimeMillis());
           final List<Revision> revisions = ctd.getRevisions().getRevision();
-          rev.setSerialNumber(revisions.size());
+          rev.setSerialNumber(revisions.size() + 1);
           revisions.add(rev);
         }
       }, "pruefung.xml");
