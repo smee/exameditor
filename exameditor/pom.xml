@@ -5,7 +5,7 @@
     to run with embedded server logging to console, do mvn exec:java
   -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.elateportal</groupId>
+  <groupId>de.elatexam</groupId>
   <artifactId>exameditor</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Basic editor</name>

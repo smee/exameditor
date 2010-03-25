@@ -5,7 +5,7 @@
     to run with embedded server logging to console, do mvn exec:java
   -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.elateportal</groupId>
+  <groupId>de.elatexam</groupId>
   <artifactId>exameditor-web</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Basic editor web frontend</name>
@@ -16,7 +16,7 @@
   -->
   <packaging>war</packaging>
   <parent>
-    <groupId>de.elateportal</groupId>
+    <groupId>de.elatexam</groupId>
     <artifactId>exameditor</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
@@ -29,14 +29,6 @@
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>net.databinder.web.DataServer</mainClass>
-          <includePluginDependencies>true</includePluginDependencies>
         </configuration>
       </plugin>
       <plugin>
@@ -67,7 +59,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <configuration>
-          <mainClass>de.elateportal.editor.Startup</mainClass>
+          <mainClass>de.elatexam.editor.Startup</mainClass>
           <includePluginDependencies>true</includePluginDependencies>
         </configuration>
       </plugin>
@@ -88,7 +80,7 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>de.elateportal</groupId>
+                  <groupId>de.elatexam</groupId>
                   <artifactId>taskmodel-core-view</artifactId>
                   <version>1.0.0-SNAPSHOT</version>
                   <type>war</type>
@@ -119,7 +111,7 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>de.elateportal</groupId>
+      <groupId>de.elatexam</groupId>
       <artifactId>exameditor-model</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -223,7 +215,7 @@
       <version>1.0-rc4</version>
     </dependency>
     <dependency>
-      <groupId>de.elateportal</groupId>
+      <groupId>de.elatexam</groupId>
       <artifactId>taskmodel-api</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
@@ -239,7 +231,7 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>de.elateportal</groupId>
+      <groupId>de.elatexam</groupId>
       <artifactId>taskmodel-core</artifactId>
       <version>1.0.0-SNAPSHOT</version>
       <exclusions>

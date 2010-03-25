@@ -1,0 +1,25 @@
+<wicket:panel>
+	<div class="chromestyle" id="chromemenu">
+		<ul>
+			<li wicket:id="menuLinkList">
+	        	<a href="#" wicket:id="menuLink" ><span wicket:id="linkText">Link im Toplevelmenu zu ...</span></a>
+	        </li>
+		</ul>
+	</div>
+	
+	<span wicket:id="submenuList">
+		<div wicket:id="submenuDiv" class="dropmenudiv">
+			<span wicket:id="submenuItem">
+				<a href="#" wicket:id="menuLink" ><span wicket:id="linkText">Link im Submenu zu ....</span></a>
+			</span>
+		</div>
+	</span>
+	
+
+	<script type="text/javascript">
+	cssdropdown.startchrome("chromemenu")
+	</script>
+</wicket:panel>
+
+
+

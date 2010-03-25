@@ -12,7 +12,7 @@
             <xjc:serializable uid="-6026937020915831338"/>
         </jxb:globalBindings>
         <jxb:schemaBindings>
-            <jxb:package name="de.elateportal.model"/>
+            <jxb:package name="de.elatexam.model"/>
         </jxb:schemaBindings>
 	  
 	  <hj:persistence>  

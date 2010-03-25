@@ -14,7 +14,7 @@ public class RoundtripTest
 
 
     public String getContextPath() {
-        return "de.elateportal.model";
+        return "de.elatexam.model";
     }
 
 }

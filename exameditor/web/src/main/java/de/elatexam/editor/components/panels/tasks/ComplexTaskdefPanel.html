@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+
+<title>Pruefungspanel</title>
+<link rel="stylesheet" type="text/css" href="../../../pages/Forms.css" />
+</head>
+<body>
+<wicket:panel>
+  <form wicket:id="complexTaskDefForm">
+<div wicket:id="feedback"></div>
+  <fieldset>
+    <legend><span>Pr&uuml;fung</span></legend> 
+    <ol>
+    <!-- 
+      <li>
+        <label for="title">Interner Name</label> 
+        <input id="title" wicket:id="id" type="text" class="longinput"/> 
+      </li>
+       -->
+      <li>
+        <label for="title">Titel</label> 
+        <input type="text" id="title" wicket:id="title" class="longinput"></input> 
+      </li>
+      <li>
+        <label for="description">Beschreibung</label> 
+        <textarea id="description" wicket:id="description"></textarea> 
+      </li>      
+      <li>
+        <label for="startText">Starttext</label> 
+        <textarea id="startText" wicket:id="startText" cols="50" rows="3"></textarea> 
+      </li>      
+      <li>
+        <label for="showHandlingHintsBeforeStart">Hinweise vor Pr&uuml;fungsstart anzeigen</label> 
+        <input type="checkbox" id="showHandlingHintsBeforeStart" wicket:id="showHandlingHintsBeforeStart"/> 
+      </li>      
+    </ol>
+  </fieldset>
+  <fieldset>
+    <legend><span>Einstellungen</span></legend> 
+    <ol>
+      <li>
+        <label for="config.time">Dauer (in min)</label> 
+        <input type="text" id="config.time" wicket:id="config.time"></input> 
+      </li>
+      <li>
+        <label for="config.tries">Anzahl durchf&uuml;rbarer Versuche</label> 
+        <input type="text" id="config.tries" wicket:id="config.tries"></input> 
+      </li>      
+      <li>
+        <label for="config.tasksPerPage">Aufgaben pro Seite</label> 
+        <input type="text" id="config.tasksPerPage" wicket:id="config.tasksPerPage"></input> 
+      </li>      
+      <li>
+        <label for="config.kindnessExtensionTime">Kulanzzeit (in min)</label> 
+        <input type="text" id="config.kindnessExtensionTime" wicket:id="config.kindnessExtensionTime"></input> 
+      </li>      
+      <li>
+        <label for="config.correctionMode">Korrektureinstellungen</label>
+        <select id="config.correctionMode" wicket:id="config.correctionMode">
+          <option value="regular">regulaer</option>
+          <option value="foo">foo</option>
+          <option value="bar">bar</option>
+        </select> 
+      </li>      
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <input wicket:id="saveButton" value="Ok" type="submit" />
+    <input wicket:id="cancelButton" value="Abbrechen" type="submit" />
+  </fieldset>  
+</form>
+</wicket:panel>
+</body>
+</html>
+  

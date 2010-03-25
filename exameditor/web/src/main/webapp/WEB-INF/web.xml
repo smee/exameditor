@@ -9,7 +9,7 @@
     </filter-class>
     <init-param>
       <param-name>applicationClassName</param-name>
-      <param-value>de.elateportal.editor.TaskEditorApplication
+      <param-value>de.elatexam.editor.TaskEditorApplication
       </param-value>
     </init-param>
   </filter>
@@ -19,7 +19,7 @@
   </filter-mapping>
   <listener>
     <listener-class>
-      de.elateportal.editor.ActiveUserCounter
+      de.elatexam.editor.ActiveUserCounter
   </listener-class>
   </listener>
   <session-config>
