@@ -88,6 +88,15 @@
                   <outputDirectory>${project.build.directory}/preview</outputDirectory>
                   <destFileName>taskmodel-core-view.war</destFileName>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>de.elatexam</groupId>
+                  <artifactId>drawtask</artifactId>
+                  <version>1.0.2-SNAPSHOT</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/applet</outputDirectory>
+                  <destFileName>drawapplet.jar</destFileName>
+                </artifactItem>
               </artifactItems>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -240,6 +249,12 @@
           <artifactId>jaxb-api</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>2.3</version>
+      <classifier>jdk15</classifier>
     </dependency>
   </dependencies>
   <repositories>

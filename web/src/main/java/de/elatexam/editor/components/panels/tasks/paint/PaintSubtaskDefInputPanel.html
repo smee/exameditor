@@ -7,16 +7,26 @@
     <legend>Spezifisch</legend> 
     <ol>
       <li>
-        <label for="defaulttext">Antwortvorbelegung</label> 
-        <textarea id="defaulttext" wicket:id="initialTextFieldValue"  cols="60" rows="5"></textarea> 
+        <label for="paintapplet">&nbsp;</label> 
+        <applet wicket:id="paintapplet" id="paintapplet mayscript="true"></applet>
+      </li>
+    </ol>
+    <ol>
+      <li>
+        <label for="colorChangeable">Farbe änderbar</label> 
+        <input id="colorChangeable" wicket:id="colorChangeable" type="checkbox" /> 
+      </li>
+      <li>
+        <label for="strokewidthChangeable">Strichstärke änderbar</label> 
+        <input id="strokewidthChangeable" wicket:id="strokewidthChangeable" type="checkbox" /> 
       </li>
       <li>
         <label for="height">H&ouml;he des Textfeldes</label> 
-        <input id="height" wicket:id="textFieldHeight" type="text" /> 
+        <input id="height" wicket:id="textualAnswer.textFieldHeight" type="text" /> 
       </li>
       <li>
         <label for="width">Breite des Textfeldes</label> 
-        <input id="width" wicket:id="textFieldWidth" type="text" /> 
+        <input id="width" wicket:id="textualAnswer.textFieldWidth" type="text" /> 
       </li>
     </ol>
   </fieldset>

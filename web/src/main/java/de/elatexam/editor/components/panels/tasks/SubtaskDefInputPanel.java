@@ -38,27 +38,27 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import de.elatexam.model.ClozeSubTaskDef;
-import de.elatexam.model.MappingSubTaskDef;
-import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.SubTaskDefType;
-import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.editor.components.form.ShinyForm;
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.paint.PaintSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.text.TextSubtaskDefInputPanel;
+import de.elatexam.model.ClozeSubTaskDef;
+import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.PaintSubTaskDef;
+import de.elatexam.model.SubTaskDefType;
+import de.elatexam.model.TextSubTaskDef;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 public class SubtaskDefInputPanel extends Panel {
   /**
    * @author Steffen Dienst
-   * 
+   *
    * @param <T>
    */
   public class SubtaskDefForm<T extends SubTaskDefType> extends ShinyForm<T> {
@@ -104,7 +104,7 @@ public class SubtaskDefInputPanel extends Panel {
       } else if (modelClass.equals(ClozeSubTaskDef.class)) {
         return new ClozeSubtaskDefInputPanel(id, (IModel<ClozeSubTaskDef>) getModel());
       } else if (modelClass.equals(PaintSubTaskDef.class)) {
-        return new PaintSubtaskDefInputPanel(id);
+        return new PaintSubtaskDefInputPanel(id, (IModel<PaintSubTaskDef>) getModel());
       } else {
         return new EmptyPanel(id);
       }
@@ -112,7 +112,7 @@ public class SubtaskDefInputPanel extends Panel {
 
     /**
      * @param returnPage
-     * 
+     *
      */
     private void init() {
       add(new FeedbackPanel("feedback"));
@@ -156,7 +156,7 @@ public class SubtaskDefInputPanel extends Panel {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see net.databinder.components.hib.DataForm#onSubmit()
      */
     @Override
@@ -191,7 +191,7 @@ public class SubtaskDefInputPanel extends Panel {
 
   /**
    * Add all tinymce features to the rich text editor.
-   * 
+   *
    * @return
    */
   public static TinyMCESettings createFullFeatureset() {

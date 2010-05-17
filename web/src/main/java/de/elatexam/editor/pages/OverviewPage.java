@@ -16,11 +16,9 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import de.elatexam.model.ClozeSubTaskDef;
-import de.elatexam.model.MappingSubTaskDef;
-import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.TextSubTaskDef;
+
+import com.mrhaki.wicket.components.DeployJava;
+
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.menu.ChromeMenu;
 import de.elatexam.editor.components.menu.LinkVO;
@@ -28,6 +26,11 @@ import de.elatexam.editor.components.menu.LinkVO.Create;
 import de.elatexam.editor.components.panels.Footer;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.user.UserStatusPanel;
+import de.elatexam.model.ClozeSubTaskDef;
+import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.PaintSubTaskDef;
+import de.elatexam.model.TextSubTaskDef;
 
 public class OverviewPage extends WebPage {
 
@@ -46,6 +49,7 @@ public class OverviewPage extends WebPage {
     add(new HeaderContributor(new IHeaderContributor() {
       public void renderHead(final IHeaderResponse response) {
         response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
+        response.renderJavascriptReference(DeployJava.LOCAL_REFERENCE);
       }
     }));
 
@@ -62,7 +66,7 @@ public class OverviewPage extends WebPage {
 
   /**
    * Create a panel with links etc. that act as toolbar. This panel gets rendered right below the menu.
-   * 
+   *
    * @return
    */
   protected Component createToolbar(final String id) {
