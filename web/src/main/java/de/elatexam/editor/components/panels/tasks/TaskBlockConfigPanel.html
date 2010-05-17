@@ -1,0 +1,25 @@
+<html xmlns:wicket>
+<wicket:panel>
+  <form wicket:id="categoryform">
+<div wicket:id="feedback"></div>
+  <fieldset>
+    <legend><span>Kategorie</span></legend> 
+    <ol>
+      <li>
+        <label for="pointsPerTask">Punkte pro Aufgabe</label> 
+        <input type="text" id="pointsPerTask" wicket:id="pointsPerTask" class="longinput"></input> 
+      </li>
+      <li>
+        <label for="noOfSelectedTasks">Anzahl zu wählender Aufgaben</label> 
+        <input type="text" id="noOfSelectedTasks" wicket:id="noOfSelectedTasks"></input> 
+      </li>      
+    </ol>
+  </fieldset>
+  <fieldset class="submit">
+    <input wicket:id="saveButton" value="Ok" type="submit" />
+    <input wicket:id="cancelButton" value="Abbrechen" type="submit" />
+  </fieldset>  
+</form>
+</wicket:panel>
+</html>
+  
