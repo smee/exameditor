@@ -8,13 +8,13 @@ import org.apache.wicket.model.IModel;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
-import de.elatexam.model.SubTaskDefType;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.pages.EditSubtaskPage;
+import de.elatexam.model.SubTaskDefType;
 
 /**
  * Small panel with two links: edit and delete
- * 
+ *
  * @author sdienst
  */
 public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
@@ -25,7 +25,7 @@ public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
    */
   public TaskActionsPanel(final String id, final IModel<T> model) {
     super(id, model);
-    add(new Link("edit") {
+    add(new Link<T>("edit") {
 
       @Override
       public void onClick() {
@@ -34,7 +34,7 @@ public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
       }
 
     });
-    add(new Link("remove") {
+    add(new Link<T>("remove") {
 
       @Override
       public void onClick() {
