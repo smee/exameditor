@@ -47,31 +47,35 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import de.elatexam.model.Category;
-import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.ObjectFactory;
-import de.elatexam.model.SubTaskDefType;
-import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
 import de.elatexam.editor.TaskEditorApplication;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.panels.tasks.CategoryPanel;
 import de.elatexam.editor.components.panels.tasks.ComplexTaskdefPanel;
 import de.elatexam.editor.components.panels.tasks.SubtaskDefInputPanel;
+import de.elatexam.editor.components.panels.tasks.TaskBlockConfigPanel;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskdefTreeProvider;
 import de.elatexam.editor.preview.PreviewLink;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.RemoveNullResultTransformer;
+import de.elatexam.model.Category;
+import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.ObjectFactory;
+import de.elatexam.model.SubTaskDefType;
+import de.elatexam.model.TaskBlockType;
+import de.elatexam.model.TaskblockConfig;
+import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 public class TaskDefPage extends SecurePage {
 
   private Panel editPanel;
   private ComplexTaskDefTree tree;
   private final ComplexTaskdefTreeProvider treeProvider;
+  private TaskDefActions taskdefactions;
 
   public TaskDefPage() {
     super();
@@ -92,6 +96,7 @@ public class TaskDefPage extends SecurePage {
       @Override
       protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
         renderPanelFor(selectedModel, target);
+        taskdefactions.onSelect(selectedModel, target);
       }
     });
     editPanel = new EmptyPanel("editpanel");
@@ -100,7 +105,7 @@ public class TaskDefPage extends SecurePage {
 
   /**
    * Replace right hand form panel with an edit panel for the given model object.
-   * 
+   *
    * @param t
    * @param target
    */
@@ -110,6 +115,9 @@ public class TaskDefPage extends SecurePage {
       replaceEditPanelWith(target, new ComplexTaskdefPanel("editpanel", (HibernateObjectModel<ComplexTaskDef>) selectedModel));
     } else if (t instanceof Category) {
       replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
+    } else if (t instanceof TaskBlockType) {
+      // TODO render panels for taskblock subtypes, not just generic block config
+      replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlockType) selectedModel.getObject()).getConfig().getHjid())));
     } else if (t instanceof SubTaskDefType) {
       final SubTaskDefType st = (SubTaskDefType) t;
       replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDefType>) selectedModel));
@@ -128,15 +136,22 @@ public class TaskDefPage extends SecurePage {
 
   @Override
   protected Component createToolbar(final String id) {
-    return new TaskDefActions(id);
+    if (this.taskdefactions == null) {
+      this.taskdefactions = new TaskDefActions(id);
+    }
+    return this.taskdefactions;
   }
 
   private class TaskDefActions extends Panel {
 
+    private final Link deleteLink;
+    private final DownloadLink downloadLink;
+    private final PreviewLink previewLink;
+
     public TaskDefActions(final String id) {
       super(id);
 
-      final DownloadLink downloadLink = new DownloadLink("export", new AbstractReadOnlyModel<File>() {
+      downloadLink = new DownloadLink("export", new AbstractReadOnlyModel<File>() {
 
         @Override
         public File getObject() {
@@ -164,7 +179,7 @@ public class TaskDefPage extends SecurePage {
 
         /**
          * Add current timestamp+author name as new revision.
-         * 
+         *
          * @param ctd
          */
         private void addRevisionTo(final ComplexTaskDef ctd) {
@@ -177,8 +192,10 @@ public class TaskDefPage extends SecurePage {
         }
       }, "pruefung.xml");
       downloadLink.setDeleteAfterDownload(true);
+      downloadLink.setOutputMarkupId(true);
+      downloadLink.setEnabled(false);
 
-      final Link deleteLink = new Link("delete") {
+      deleteLink = new Link("delete") {
 
         @Override
         public void onClick() {
@@ -195,16 +212,28 @@ public class TaskDefPage extends SecurePage {
       };
       deleteLink.add(new AttributeModifier("onclick", true, Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
 
-      add(new PreviewLink("preview", new AbstractReadOnlyModel<ComplexTaskDef>() {
+      previewLink = new PreviewLink("preview", new AbstractReadOnlyModel<ComplexTaskDef>() {
         @Override
         public ComplexTaskDef getObject() {
           return tree.getCurrentTaskdef().getObject();
         }
-      }));
+      });
+      previewLink.setOutputMarkupId(true);
+      previewLink.setEnabled(false);
+
+      add(previewLink);
 
       add(downloadLink);
       add(deleteLink);
       // add(new NullPlug("delete"));
+    }
+
+    public void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+      final boolean enabled = !(selectedModel.getObject() instanceof BasicUser);
+      this.downloadLink.setEnabled(enabled);
+      this.previewLink.setEnabled(enabled);
+      target.addComponent(downloadLink);
+      target.addComponent(previewLink);
     }
   }
 }

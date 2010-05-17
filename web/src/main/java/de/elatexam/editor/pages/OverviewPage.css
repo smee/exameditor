@@ -45,6 +45,13 @@ body{
   color: black;  
   font-weight:bold;
 }
+.mainContent div#toolbar span em{
+  padding: 0.8em 0.5em;
+  text-decoration: none;
+  color: gray;  
+  font-weight:bold;
+  font-style: normal;
+}
 
 div.clear {
   clear:both;
