@@ -6,3 +6,4 @@ target/
 .settings/
 hs_err*
 .externalToolBuilders/
+velocity.log
