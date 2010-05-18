@@ -14,30 +14,30 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
+import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeSubTaskDef.Cloze;
 import de.elatexam.model.ClozeSubTaskDef.Cloze.ClozeTextOrGapItem;
 import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap;
 import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap.GapCorrectItem;
-import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeSubTaskDef> {
 	/**
 	 * Converter for cloze/text to string representation.
 	 * <p>
 	 * Syntax: [aaa;bbb] means gap with "aaa" or "bbb" as correct input
-	 * 
+	 *
 	 * @author Steffen Dienst
-	 * 
+	 *
 	 */
 	private static class ClozeConverter implements IConverter {
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see
 		 * org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String
 		 * , java.util.Locale)
@@ -49,6 +49,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 
 			while (st.hasMoreTokens()) {
 				String token = st.nextToken();
+        System.out.println(token);
 				if ("[".equals(token)) {
 					inGap = true;
 				} else if ("]".equals(token)) {
@@ -82,13 +83,31 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 		}
 
 		private ClozeTextOrGapItem createGapItem(String token) {
+      int gapSize = -1;
+      System.out.println(token);
 			List<GapCorrectItem> correctValues = new ArrayList<GapCorrectItem>();
 			for (String correctValue : token.split(";")) {
+        correctValue = correctValue.trim();
+        System.out.println(correctValue);
+        if (correctValue.startsWith("{") && correctValue.endsWith("}")) {
+          String gapLen = correctValue.substring(1, correctValue.length() - 1);
+          System.out.println(gapLen);
+          try {
+            gapSize = Integer.parseInt(gapLen);
+          } catch (NumberFormatException e) {
+            e.printStackTrace();
+          }
+
+        } else {
 				GapCorrectItem item = new GapCorrectItem();
 				item.setItem(correctValue);
 				correctValues.add(item);
-			}
+        }
+      }
 			Gap gap = new Gap();
+      if (gapSize > 0) {
+        gap.setInputLength(gapSize);
+      }
 			gap.setCorrectItems(correctValues);
 			ClozeTextOrGapItem textOrGapItem = new ClozeTextOrGapItem();
 			textOrGapItem.setItemGap(gap);
@@ -118,8 +137,9 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 		protected void removeTrailingSemicolon(StringBuilder sb) {
 			// remove last semicolon
 			int lastCharIdx = sb.length() - 1;
-			if (sb.charAt(lastCharIdx) == ';')
-				sb.deleteCharAt(lastCharIdx);
+			if (sb.charAt(lastCharIdx) == ';') {
+        sb.deleteCharAt(lastCharIdx);
+      }
 		}
 	}
 
@@ -135,6 +155,11 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 				maxLen = Math.max(maxLen, ci.getItem().length());
 			}
 			removeTrailingSemicolon(sb);
+
+      if (gap.getInputLength() != null && gap.getInputLength() > maxLen) {
+        maxLen = gap.getInputLength();
+      }
+
 			sb.append("\" size=\"" + maxLen + "\"");
 			sb.append(" disabled=\"disabled\"/>");
 			return sb.toString();
