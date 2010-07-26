@@ -54,6 +54,9 @@
     <jxb:bindings node="//xs:complexType[@name='Category']/xs:choice">
       <jxb:property name="TaskBlocks"/>
     </jxb:bindings> 
+    <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType//xs:sequence/xs:choice">
+      <jxb:property name="AnswerDefinitions"/>
+    </jxb:bindings> 
     
     </jxb:bindings>
 </jxb:bindings>

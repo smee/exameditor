@@ -231,24 +231,7 @@ TODO:
 							</xs:simpleType>
 						</xs:element>
                         <xs:choice maxOccurs="unbounded">
-    						<xs:element name="correct" maxOccurs="unbounded">
-    							<xs:complexType>
-    								<xs:simpleContent>
-    									<xs:extension base="xs:string">
-    										<xs:attribute name="id" type="xs:string" use="required"/>
-    									</xs:extension>
-    								</xs:simpleContent>
-    							</xs:complexType>
-    						</xs:element>
-    						<xs:element name="incorrect" minOccurs="0" maxOccurs="unbounded">
-    							<xs:complexType>
-    								<xs:simpleContent>
-    									<xs:extension base="xs:string">
-    										<xs:attribute name="id" type="xs:string" use="required"/>
-    									</xs:extension>
-    								</xs:simpleContent>
-    							</xs:complexType>
-    						</xs:element>
+    						<xs:element name="correct" maxOccurs="unbounded" type="NamedString"/>    						<xs:element name="incorrect" minOccurs="0" maxOccurs="unbounded" type="NamedString"/>
                         </xs:choice>
 					</xs:sequence>
 					<xs:attribute name="category" use="required">
@@ -701,5 +684,12 @@ TODO:
 	  <xs:attribute use="required" name="preserveOrder"
 	    type="xs:boolean">
 	  </xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NamedString">
+	  <xs:simpleContent>
+	    <xs:extension base="xs:string">
+	      <xs:attribute use="required" name="id" type="xs:string"></xs:attribute>
+	    </xs:extension>
+	  </xs:simpleContent>
 	</xs:complexType>
 </xs:schema>
