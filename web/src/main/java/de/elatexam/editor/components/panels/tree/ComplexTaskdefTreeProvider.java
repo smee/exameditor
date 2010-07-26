@@ -36,10 +36,10 @@ import com.google.common.collect.Iterators;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
-import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.SubTaskDefType;
-import de.elatexam.model.TaskBlockType;
 import de.elatexam.model.Category.CategoryTaskBlocksItem;
+import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.TaskBlock;
 
 /**
  * Provide tree structure for rendering. Represents a {@link ComplexTaskDef} in a user comprehensible way. <br>
@@ -75,17 +75,17 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     model.detach();
   }
 
-  private Iterator<TaskBlockType> getChildren(final Category cat) {
+    private Iterator<TaskBlock> getChildren(final Category cat) {
     return Iterators.transform(cat.getTaskBlocksItems().iterator(),
-        new Function<CategoryTaskBlocksItem, TaskBlockType>() {
+                new Function<CategoryTaskBlocksItem, TaskBlock>() {
 
-      public TaskBlockType apply(final CategoryTaskBlocksItem block) {
+      public TaskBlock apply(final CategoryTaskBlocksItem block) {
         return block.getItem();
       }
     });
   }
 
-  private Iterator<Object> getChildren(final TaskBlockType tb) {
+    private Iterator<Object> getChildren(final TaskBlock tb) {
     return Iterators.transform(Stuff.getItems(tb).iterator(), itemGetter);
   }
 
@@ -101,17 +101,16 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
    * @see wickettree.ITreeProvider#getChildren(java.lang.Object)
    */
   public Iterator<? extends Object> getChildren(final Object object) {
-    if (object instanceof BasicUser) {
-      return getChildren((BasicUser) object);
-    } else if (object instanceof ComplexTaskDef) {
-      return getChildren((ComplexTaskDef) object);
-    } else if (object instanceof Category) {
-      return getChildren((Category) object);
-    } else if (object instanceof TaskBlockType) {
-      return getChildren((TaskBlockType) object);
-    } else {
-      return Iterators.emptyIterator();
-    }
+    if (object instanceof BasicUser)
+        return getChildren((BasicUser) object);
+    else if (object instanceof ComplexTaskDef)
+        return getChildren((ComplexTaskDef) object);
+    else if (object instanceof Category)
+        return getChildren((Category) object);
+        else if (object instanceof TaskBlock)
+        return getChildren((TaskBlock) object);
+    else
+        return Iterators.emptyIterator();
   }
 
   /**
@@ -127,9 +126,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
         ((BasicUser) parent).getTaskdefs().remove(child);
       } else if (parent instanceof ComplexTaskDef) {
         ((ComplexTaskDef) parent).getCategory().remove(child);
-      } else {
+      } else
         return clearPhysicalParent(child, parent);
-      }
     }
     return child;
   }
@@ -145,15 +143,14 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     while (it.hasNext()) {
       final Object root = it.next();
       final Object parent = findParentOf(root, child);
-      if (parent != null) {
+      if (parent != null)
         return parent;
-      }
     }
     return null;
   }
 
   private Object clearPhysicalParent(final Object child, final Object logicalParent) {
-    if (child instanceof TaskBlockType) {
+        if (child instanceof TaskBlock) {
       final Category cat = (Category) logicalParent;
       for (final CategoryTaskBlocksItem tbi : cat.getTaskBlocksItems()) {
         if (tbi.getItem() == child) {
@@ -164,10 +161,10 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
           return tbi;
         }
       }
-    } else if (child instanceof SubTaskDefType) {
-      final TaskBlockType tb = (TaskBlockType) logicalParent;
+    } else if (child instanceof SubTaskDef) {
+            final TaskBlock tb = (TaskBlock) logicalParent;
       try {
-        final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", (Class<? extends de.elatexam.model.SubTaskDefType>) child.getClass());
+        final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", (Class<? extends de.elatexam.model.SubTaskDef>) child.getClass());
         for (final Item<?> item : itemsList) {
           if(item.getItem()==child) {
             itemsList.remove(item);
@@ -187,13 +184,11 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     final Iterator<?> it = getChildren(current);
     while (it.hasNext()) {
       final Object potentialParent = it.next();
-      if (potentialParent.equals(child)) {
+      if (potentialParent.equals(child))
         return current;
-      }
       final Object parent = findParentOf(potentialParent, child);
-      if (parent != null) {
+      if (parent != null)
         return parent;
-      }
     }
     return null;
   }
@@ -221,9 +216,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
         @Override
         public boolean equals(final Object obj) {
           final Object target = getObject();
-          if (target != null && obj instanceof HibernateObjectModel) {
+          if (target != null && obj instanceof HibernateObjectModel)
             return equalId(target, ((HibernateObjectModel) obj).getObject());
-          }
           return super.equals(obj);
         }
 
@@ -243,9 +237,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
         @Override
         public int hashCode() {
           final Object target = getObject();
-          if (target == null) {
+          if (target == null)
             return super.hashCode();
-          }
           int hash = 1;
           hash = hash * 31 + target.getClass().hashCode();
           hash = hash * 31 + getId(target).hashCode();

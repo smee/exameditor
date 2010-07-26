@@ -10,14 +10,14 @@ import org.hibernate.classic.Session;
 
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.pages.EditSubtaskPage;
-import de.elatexam.model.SubTaskDefType;
+import de.elatexam.model.SubTaskDef;
 
 /**
  * Small panel with two links: edit and delete
  *
  * @author sdienst
  */
-public class TaskActionsPanel<T extends SubTaskDefType> extends Panel {
+public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
 
   /**
    * @param id

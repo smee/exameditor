@@ -29,7 +29,7 @@
             <orm:column length="1024"/>
           </hj:basic>
       </jxb:bindings>
-      <jxb:bindings node="//xs:complexType[@name='SubTaskDefType']/xs:attribute[@name='id']">
+      <jxb:bindings node="//xs:complexType[@name='SubTaskDef']/xs:attribute[@name='id']">
           <hj:basic>
             <orm:column name="xmlid"/>
           </hj:basic>

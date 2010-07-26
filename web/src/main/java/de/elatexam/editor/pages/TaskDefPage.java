@@ -60,11 +60,11 @@ import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.RemoveNullResultTransformer;
 import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.ObjectFactory;
-import de.elatexam.model.SubTaskDefType;
-import de.elatexam.model.TaskBlockType;
-import de.elatexam.model.TaskblockConfig;
 import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
+import de.elatexam.model.ObjectFactory;
+import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.TaskBlock;
+import de.elatexam.model.TaskblockConfig;
 
 /**
  * @author Steffen Dienst
@@ -115,12 +115,12 @@ public class TaskDefPage extends SecurePage {
       replaceEditPanelWith(target, new ComplexTaskdefPanel("editpanel", (HibernateObjectModel<ComplexTaskDef>) selectedModel));
     } else if (t instanceof Category) {
       replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
-    } else if (t instanceof TaskBlockType) {
+        } else if (t instanceof TaskBlock) {
       // TODO render panels for taskblock subtypes, not just generic block config
-      replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlockType) selectedModel.getObject()).getConfig().getHjid())));
-    } else if (t instanceof SubTaskDefType) {
-      final SubTaskDefType st = (SubTaskDefType) t;
-      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDefType>) selectedModel));
+            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlock) selectedModel.getObject()).getConfig().getHjid())));
+    } else if (t instanceof SubTaskDef) {
+      final SubTaskDef st = (SubTaskDef) t;
+      replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
     } else {
       replaceEditPanelWith(target, new EmptyPanel("editpanel"));
     }
@@ -200,7 +200,7 @@ public class TaskDefPage extends SecurePage {
         @Override
         public void onClick() {
           final Object toDelete = treeProvider.removeFromParent(tree.getSelected().getObject());
-          if (!(toDelete instanceof SubTaskDefType)) {
+          if (!(toDelete instanceof SubTaskDef)) {
             final org.hibernate.classic.Session session = Databinder.getHibernateSession();
             final Transaction transaction = session.beginTransaction();
             session.delete(toDelete);

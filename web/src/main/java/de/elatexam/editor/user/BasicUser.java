@@ -38,7 +38,7 @@ import org.apache.wicket.authorization.strategies.role.Roles;
 import org.hibernate.annotations.CollectionOfElements;
 
 import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.SubTaskDefType;
+import de.elatexam.model.SubTaskDef;
 
 /**
  * @author Steffen Dienst
@@ -61,12 +61,12 @@ public class BasicUser implements DataUser {
   @CollectionOfElements(targetElement = ComplexTaskDef.class)
   private final List<ComplexTaskDef> taskdefs;
 
-  @CollectionOfElements(targetElement = SubTaskDefType.class)
-  private final List<SubTaskDefType> subtaskdefs;
+  @CollectionOfElements(targetElement = SubTaskDef.class)
+  private final List<SubTaskDef> subtaskdefs;
 
   public BasicUser() {
     taskdefs = new ArrayList<ComplexTaskDef>();
-    subtaskdefs = new ArrayList<SubTaskDefType>();
+    subtaskdefs = new ArrayList<SubTaskDef>();
 
     roles = new Roles(Roles.USER);
     password = new BasicPassword();
@@ -75,21 +75,21 @@ public class BasicUser implements DataUser {
   /**
    * @return the subtaskdefs
    */
-  public List<SubTaskDefType> getSubtaskdefs() {
+  public List<SubTaskDef> getSubtaskdefs() {
     return subtaskdefs;
   }
 
   /**
-   * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDefType}. CAUTION: You must not add new
+   * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDef}. CAUTION: You must not add new
    * instances to this list, they won't get persisted. Use {@link #getSubtaskdefs()}.add(...) instead.
    * 
    * @param <T>
    * @param clazz
    * @return
    */
-  public <T extends SubTaskDefType> Collection<T> getSubtaskdefsOf(final Class<T> clazz) {
+  public <T extends SubTaskDef> Collection<T> getSubtaskdefsOf(final Class<T> clazz) {
     final Set<T> res = new HashSet<T>();
-    for (final SubTaskDefType st : getSubtaskdefs()) {
+    for (final SubTaskDef st : getSubtaskdefs()) {
       if (st.getClass().isAssignableFrom(clazz)) {
         res.add((T) st);
       }

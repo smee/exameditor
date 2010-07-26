@@ -21,16 +21,16 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
-import de.elatexam.model.SubTaskDefType;
 import de.elatexam.editor.components.panels.TaskActionsPanel;
+import de.elatexam.model.SubTaskDef;
 
 /**
  * @author sdienst
  */
-public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
+public class ShowSubtaskDefsPage<T extends SubTaskDef> extends SecurePage {
 
 	public ShowSubtaskDefsPage() {
-		this((Class<T>) SubTaskDefType.class);
+        this((Class<T>) SubTaskDef.class);
 	}
 
 	// TODO use subtaskdefs from current BasicUser
@@ -44,14 +44,14 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 			}
 		};
 		// hide link if this is no specific subtask type
-		if (clazz.equals(SubTaskDefType.class)) {
+        if (clazz.equals(SubTaskDef.class)) {
 			newTaskLink.setVisible(false);
 		}
 
 		add(newTaskLink);
 
 		final CriteriaFilterAndSort builder = new CriteriaFilterAndSort(
-		    new SubTaskDefType() {
+                new SubTaskDef() {
 		}, "xmlid", true, false);
 		final FilterForm form = new FilterForm("form", builder);
 		add(form);
@@ -69,11 +69,10 @@ public class ShowSubtaskDefsPage<T extends SubTaskDefType> extends SecurePage {
 		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
-				if (rowModel.getObject() == null) {
-          return Model.of("???");
-        } else {
-          return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
-        }
+				if (rowModel.getObject() == null)
+                    return Model.of("???");
+                else
+                    return new ResourceModel(rowModel.getObject().getClass().getSimpleName() + ".short");
 			}
 		});
 		// edit links

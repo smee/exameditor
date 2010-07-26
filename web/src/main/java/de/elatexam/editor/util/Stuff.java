@@ -31,21 +31,22 @@ import com.google.common.collect.Lists;
 
 import de.elatexam.model.AddonSubTaskDef;
 import de.elatexam.model.Category;
+import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.MappingSubTaskDef;
 import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.SubTaskDefType;
-import de.elatexam.model.TaskBlockType;
+import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
-import de.elatexam.model.Category.CategoryTaskBlocksItem;
+import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
 /**
  * Misc. helper functions.
- * 
+ *
  * @author Steffen Dienst
- * 
+ *
  */
 public class Stuff {
   private static Map<Class<?>, String> refNames = new java.util.HashMap<Class<?>, String>() {
@@ -63,7 +64,7 @@ public class Stuff {
    * Call a no-parameter method, return it's value. Rethrow whatever
    * {@link Class#getMethod(String, Class...)} or
    * {@link Method#invoke(Object, Object...)} throws.
-   * 
+   *
    * @param o
    * @param methodName
    * @return
@@ -75,8 +76,8 @@ public class Stuff {
   }
 
   /**
-   * Invoke similary named methods involving {@link SubTaskDefType}s.
-   * 
+   * Invoke similary named methods involving {@link SubTaskDef}s.
+   *
    * @param o
    *          the object the method should be invoked on
    * @param methodNameTemplate
@@ -85,7 +86,7 @@ public class Stuff {
    * @return
    * @throws Exception
    */
-  public static Object call(final Object o, final String methodNameTemplate, final Class<? extends SubTaskDefType> clazz) throws Exception {
+  public static Object call(final Object o, final String methodNameTemplate, final Class<? extends SubTaskDef> clazz) throws Exception {
     final Method method = o.getClass().getMethod(String.format(methodNameTemplate, refNames.get(clazz)));
     return method.invoke(o);
   }
@@ -94,12 +95,12 @@ public class Stuff {
    * Get the items (subtaskdef|choice(subtaskdef)+)* of a taskblock. Needs to be done via reflection, because the items
    * have no common interface but similar method names. This method assumes that each subclass of {@link TaskBlockType}
    * has exactly one method named "get...SubTaskDefOrChoiceItems" that gets invoked.
-   * 
+   *
    * @param tb
    *          taskblock
    * @return list of items or empty list.
    */
-  public static List<? extends Item> getItems(final TaskBlockType tb) {
+    public static List<? extends Item> getItems(final TaskBlock tb) {
     for (final Method m : tb.getClass().getMethods()) {
       final String name = m.getName();
       if (name.startsWith("get") && name.endsWith("SubTaskDefOrChoiceItems")) {
@@ -117,23 +118,22 @@ public class Stuff {
     return Lists.newArrayList();
   }
 
-  public static <T extends SubTaskDefType> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz)
+  public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz)
   throws Exception {
     final Collection<T> stds = new ArrayList<T>();
     for (final Category cat : taskdef.getCategory()) {
       for (final CategoryTaskBlocksItem block : cat.getTaskBlocksItems()) {
-        stds.addAll(getAllSubtaskdefsFromBlock((TaskBlockType) call(block, "getItem%sTaskBlock", clazz), clazz));
+                stds.addAll(getAllSubtaskdefsFromBlock((TaskBlock) call(block, "getItem%sTaskBlock", clazz), clazz));
       }
     }
     return stds;
   }
 
-  public static <T extends SubTaskDefType> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlockType block, final Class<T> clazz)
+    public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlock block, final Class<T> clazz)
   throws Exception {
     final Collection<T> stds = new ArrayList<T>();
-    if (block == null) {
-      return stds;
-    }
+    if (block == null)
+        return stds;
     final List items = (List) call(block, "get%sSubTaskDefOrChoiceItems", clazz);
     if (items != null) {
       for (final Object item : items) {

@@ -48,7 +48,7 @@ import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.MappingSubTaskDef;
 import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.SubTaskDefType;
+import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TextSubTaskDef;
 
 /**
@@ -61,9 +61,9 @@ public class SubtaskDefInputPanel extends Panel {
    *
    * @param <T>
    */
-  public class SubtaskDefForm<T extends SubTaskDefType> extends ShinyForm<T> {
+  public class SubtaskDefForm<T extends SubTaskDef> extends ShinyForm<T> {
 
-    private final Class<? extends SubTaskDefType> modelClass;
+    private final Class<? extends SubTaskDef> modelClass;
 
     public SubtaskDefForm(final String id, final Class<T> modelClass) {
       super(id, modelClass);
@@ -116,7 +116,7 @@ public class SubtaskDefInputPanel extends Panel {
      */
     private void init() {
       add(new FeedbackPanel("feedback"));
-      // add common subtaskdeftype input fields
+      // add common SubTaskDef input fields
       add(new TextField<String>("xmlid").setRequired(true));// .add(new
       // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
       final TextArea<String> problemText = new TextArea<String>("problem") {
@@ -174,8 +174,8 @@ public class SubtaskDefInputPanel extends Panel {
    * @param returnPage
    * @param clazz
    */
-  public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDefType> clazz,
-      final SubTaskDefType object) {
+  public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDef> clazz,
+      final SubTaskDef object) {
     super(id);
     if (object != null) {
       add(new SubtaskDefForm("taskform", object));
@@ -184,9 +184,9 @@ public class SubtaskDefInputPanel extends Panel {
     }
   }
 
-  public SubtaskDefInputPanel(final String id, final HibernateObjectModel<SubTaskDefType> model) {
+  public SubtaskDefInputPanel(final String id, final HibernateObjectModel<SubTaskDef> model) {
     super(id);
-    add(new SubtaskDefForm<SubTaskDefType>("taskform", model));
+    add(new SubtaskDefForm<SubTaskDef>("taskform", model));
   }
 
   /**

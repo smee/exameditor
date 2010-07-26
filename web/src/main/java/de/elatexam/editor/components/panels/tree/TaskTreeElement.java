@@ -23,29 +23,29 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import wickettree.AbstractTree;
-import wickettree.ITreeProvider;
 import wickettree.AbstractTree.State;
+import wickettree.ITreeProvider;
 import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.MCTaskBlock;
 import de.elatexam.model.MappingSubTaskDef;
 import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintSubTaskDef;
 import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
-import de.elatexam.editor.user.BasicUser;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   final static ImmutableMap<Class<?>, String> expressions = new ImmutableMap.Builder<Class<?>, String>()
@@ -53,7 +53,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .put(BasicUser.class, "username")
   .put(ComplexTaskDef.class, "title")
   .put(Category.class, "title")
-      .put(MCTaskBlock.class, "class.simpleName")
+            .put(McTaskBlock.class, "class.simpleName")
   .put(MappingTaskBlock.class, "class.simpleName")
   .put(ClozeTaskBlock.class, "class.simpleName")
   .put(TextTaskBlock.class, "class.simpleName")
@@ -66,7 +66,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .build();
   final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
   .put(ComplexTaskDef.class, "tree-exam")
-      .put(MCTaskBlock.class, "tree-mc")
+            .put(McTaskBlock.class, "tree-mc")
   .put(MappingTaskBlock.class, "tree-mapping")
   .put(ClozeTaskBlock.class, "tree-cloze")
   .put(TextTaskBlock.class, "tree-text")
@@ -104,7 +104,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
   /**
    * Get a style class to render for a selected folder.
-   * 
+   *
    * @see #isSelected()
    */
   protected String getSelectedStyleClass() {
@@ -114,7 +114,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   /**
    * Delegates to others methods depending wether the given model is a folder,
    * expanded, collapsed or selected.
-   * 
+   *
    * @see ITreeProvider#hasChildren(Object)
    * @see AbstractTree#getState(Object)
    * @see #isSelected()
@@ -152,7 +152,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
   /**
    * Always clickable.
-   * 
+   *
    * @see ITreeProvider#hasChildren(Object)
    */
   @Override
@@ -162,7 +162,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see
    * wickettree.content.StyledLinkLabel#newLabelModel(org.apache.wicket.model
    * .IModel)
