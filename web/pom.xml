@@ -270,11 +270,6 @@
       <url>http://databinder.net/snapshot/</url>
     </repository>
     <repository>
-      <id>wicket-stuff-repo</id>
-      <name>Wicket Stuff Components</name>
-      <url>http://wicketstuff.org/maven/repository/</url>
-    </repository>
-    <repository>
       <id>wicket-tree-repo</id>
       <url>http://wicket-tree.googlecode.com/svn/repo</url>
     </repository>

@@ -83,7 +83,7 @@ public class TaskEditorApplication extends AuthDataApplication {
         if (TaskEditorSession.get().isSubtaskDeletionAllowed())
             return false;
         final String entityname = event.getEntity().getClass().getName();
-                System.out.println("storing " + event.getEntity());
+
         final boolean veto = entityname.contains("SubTaskDef") && !entityname.contains("TaskBlock");
         return veto;
       }

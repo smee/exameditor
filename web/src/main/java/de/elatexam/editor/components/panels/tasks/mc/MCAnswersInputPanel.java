@@ -42,7 +42,7 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
     public MCAnswersInputPanel(final String id, final IModel<List<McSubTaskDefAnswerDefinitionsItem>> model,
             final boolean moveable) {
 		super(id, model);
-        System.out.println(model.getClass());
+
         add(new Label("title", "Anworten"));
 
 		container = new WebMarkupContainer("answerrepeater");

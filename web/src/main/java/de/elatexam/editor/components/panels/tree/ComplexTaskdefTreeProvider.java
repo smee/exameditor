@@ -212,6 +212,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   @SuppressWarnings("unchecked")
   public IModel<Object> model(final Object object) {
     try {
+            // wrap each object in a HibernateObjectModel, implement equals/hashcode correctly (respecting the primary
+            // key only)
       return new HibernateObjectModel(object.getClass(), (Serializable) PropertyUtils.getProperty(object, "hjid")) {
         @Override
         public boolean equals(final Object obj) {
