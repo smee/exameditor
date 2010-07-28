@@ -42,3 +42,6 @@ div.buttons {
   clear: left;
   padding-left: 10em;
 }
+div.buttons img {
+  border-width:0;
+}

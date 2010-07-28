@@ -134,7 +134,12 @@ public class TaskDefPage extends SecurePage {
     target.addComponent(editPanel);
   }
 
-  @Override
+    /*
+     * (non-Javadoc)
+     *
+     * @see de.elatexam.editor.pages.OverviewPage#createToolbar(java.lang.String)
+     */
+    @Override
   protected Component createToolbar(final String id) {
     if (this.taskdefactions == null) {
       this.taskdefactions = new TaskDefActions(id);
@@ -142,7 +147,12 @@ public class TaskDefPage extends SecurePage {
     return this.taskdefactions;
   }
 
-  private class TaskDefActions extends Panel {
+    /**
+     * Actions operating on ComplexTaskDefs
+     * 
+     * 
+     */
+    private class TaskDefActions extends Panel {
 
     private final Link deleteLink;
     private final DownloadLink downloadLink;

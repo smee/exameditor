@@ -20,6 +20,7 @@ package de.elatexam.editor.components.panels.tree;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import wickettree.AbstractTree;
@@ -40,6 +41,7 @@ import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintSubTaskDef;
 import de.elatexam.model.PaintTaskBlock;
+import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
 
@@ -170,6 +172,8 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   @Override
   protected IModel<String> newLabelModel(final IModel<T> model) {
     final Object o = model.getObject();
+        if (o instanceof TaskBlock)
+            return Model.of("Aufgaben");
     return new PropertyModel<String>(model, expressions.get(o.getClass()));
   }
 

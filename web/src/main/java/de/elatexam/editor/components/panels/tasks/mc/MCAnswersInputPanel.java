@@ -7,11 +7,10 @@ import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
@@ -128,22 +127,20 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 		container.add(answers);
 		add(container);
 
-		final AjaxButton addAnswer = new AjaxButton("addanswer") {
-			@Override
-			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-
+        final AjaxFallbackLink addAnswer = new AjaxFallbackLink("addanswer") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
                 NamedString answer = new NamedString();
                 answer.setId("" + System.nanoTime());
                 McSubTaskDefAnswerDefinitionsItem answerDef = new McSubTaskDefAnswerDefinitionsItem();
                 answerDef.setItemIncorrect(answer);
                 answers.addItem(answerDef);
 
-				if (target != null) {
-					target.addComponent(container);
-				}
-			}
+                if (target != null) {
+                    target.addComponent(container);
+                }
+            }
 		};
-		addAnswer.setDefaultFormProcessing(false);
 		add(addAnswer);
 	}
 
