@@ -24,13 +24,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Panel that delegates {@link org.apache.wicket.markup.html.form.FormComponent.IVisitor} instances to 
+ * Panel that delegates {@link org.apache.wicket.markup.html.form.FormComponent.IVisitor} instances to
  * {@link FormComponent}s within this panel. We need this to allow adding behaviours to formemelements,
- * because the subtask specific {@link FormComponent}s get added in a seperate panel. 
+ * because the subtask specific {@link FormComponent}s get added in a seperate panel.
  * @author Steffen Dienst
  *
  */
-public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitorParticipant{
+public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitorParticipant {
 
 	/**
 	 * @param id
@@ -43,7 +43,7 @@ public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitor
 	 * @param id
 	 * @param model
 	 */
-	public SubtaskSpecificsInputPanel(final String id, final IModel<T> model) {
+    public SubtaskSpecificsInputPanel(final String id, final IModel<T> model) {
 		super(id, model);
 	}
 

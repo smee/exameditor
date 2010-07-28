@@ -1,5 +1,7 @@
 package de.elatexam.editor.components.panels.tasks.mc;
 
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.form.TextField;
@@ -7,33 +9,29 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
-import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.McSubTaskDef.Correct;
-import de.elatexam.model.McSubTaskDef.Incorrect;
 import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
+import de.elatexam.model.McSubTaskDef;
 
+/**
+ * @author Steffen Dienst
+ *
+ */
 public class McSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<McSubTaskDef> {
-	private final MCAnswersInputPanel correctAnswers, incorrectAnswers;
+    private final MCAnswersInputPanel correctAnswers;
 
 	public McSubtaskDefInputPanel(final String id, final IModel<McSubTaskDef> model) {
 		super(id, model);
 		boolean showMoveButtons = model.getObject().isPreserveOrderOfAnswers();
 
-		correctAnswers = new MCAnswersInputPanel("correctanswers", Correct.class, new PropertyModel<Correct>(model, "correct"),
-		    showMoveButtons);
-		incorrectAnswers = new MCAnswersInputPanel("incorrectanswers", Incorrect.class, new PropertyModel<Incorrect>(model,
-		    "incorrect"), showMoveButtons);
+        correctAnswers = new MCAnswersInputPanel("correctanswers", new PropertyModel<List<McSubTaskDef.McSubTaskDefAnswerDefinitionsItem>>(model, "answerDefinitionsItems"), showMoveButtons);
 		add(correctAnswers.setOutputMarkupId(true));
-		add(incorrectAnswers.setOutputMarkupId(true));
 
 		add(new AjaxCheckBox("preserveOrderOfAnswers") {
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
 				correctAnswers.setMoveButtonsVisible(getModelObject());
-				incorrectAnswers.setMoveButtonsVisible(getModelObject());
 				target.addComponent(correctAnswers);
-				target.addComponent(incorrectAnswers);
 			}
 
 		});

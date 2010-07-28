@@ -1,5 +1,7 @@
 package de.elatexam.editor.pages;
 
+import net.databinder.models.hib.HibernateObjectModel;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 
@@ -12,17 +14,16 @@ import de.elatexam.model.SubTaskDef;
 public class EditSubtaskPage<T extends SubTaskDef> extends SecurePage {
 
 	public EditSubtaskPage(final Class<T> clazz) {
-		this(clazz, null);
+        this(clazz, new HibernateObjectModel<T>(clazz));
 	}
 
-	public EditSubtaskPage(final Class<T> clazz, final T SubTaskDef) {
-		add(new Label("heading", "Aufgabe bearbeiten"));
-		add(createInputPanelFor("input", clazz, SubTaskDef));
+    public EditSubtaskPage(Class<T> clazz, HibernateObjectModel<T> model) {
+        add(new Label("heading", "Aufgabe bearbeiten"));
+        add(createInputPanelFor("input", clazz, model));
+    }
 
-	}
+    private Component createInputPanelFor(final String id, final Class<T> clazz, final HibernateObjectModel<T> model) {
 
-	private Component createInputPanelFor(final String id, final Class<T> clazz, final T SubTaskDef) {
-
-		return new SubtaskDefInputPanel(id, clazz, SubTaskDef);
+        return new SubtaskDefInputPanel(id, model);
 	}
 }

@@ -8,15 +8,13 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 
-import de.elatexam.model.McSubTaskDef.Correct;
-import de.elatexam.model.McSubTaskDef.Incorrect;
 import de.elatexam.editor.components.listeditor.EditorButton;
 import de.elatexam.editor.components.listeditor.ListEditor;
 import de.elatexam.editor.components.listeditor.ListItem;
@@ -24,11 +22,12 @@ import de.elatexam.editor.components.listeditor.MoveDownButton;
 import de.elatexam.editor.components.listeditor.MoveUpButton;
 import de.elatexam.editor.components.listeditor.RemoveButton;
 import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
-
+import de.elatexam.model.McSubTaskDef.McSubTaskDefAnswerDefinitionsItem;
+import de.elatexam.model.NamedString;
 /**
  * @author sdienst
  */
-public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
+public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTaskDefAnswerDefinitionsItem>> {
 
 	private final WebMarkupContainer container;
 	Collection<EditorButton> moveButtons = new ArrayList<EditorButton>();
@@ -37,43 +36,45 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 	 * @param id
 	 * @param modelElementClass
 	 * @param model
-	 */
-	@SuppressWarnings("unchecked")
-	public MCAnswersInputPanel(final String id, final Class<?> modelElementClass, final IModel model) {
-		this(id, modelElementClass, model, true);
-	}
-
-	/**
-	 * @param id
-	 * @param modelElementClass
-	 * @param model
 	 * @param moveable
 	 */
 	@SuppressWarnings("unchecked")
-	public MCAnswersInputPanel(final String id, final Class<?> modelElementClass, final IModel model, final boolean moveable) {
+    public MCAnswersInputPanel(final String id, final IModel<List<McSubTaskDefAnswerDefinitionsItem>> model,
+            final boolean moveable) {
 		super(id, model);
-
-		String title = "Richtige Anworten";
-		if (modelElementClass.equals(Incorrect.class)) {
-			title = "Falsche Antworten";
-		}
-
-		add(new Label("title", title));
+        System.out.println(model.getClass());
+        add(new Label("title", "Anworten"));
 
 		container = new WebMarkupContainer("answerrepeater");
-		final ListEditor answers = new ListEditor("mcanswer", model) {
-			private Long getId(Object o) {
-				if (o instanceof Correct) {
-					return ((Correct) o).getHjid();
-				} else {
-					return ((Incorrect) o).getHjid();
-				}
-			}
+        final ListEditor<McSubTaskDefAnswerDefinitionsItem> answers = new ListEditor<McSubTaskDefAnswerDefinitionsItem>("mcanswer", model) {
 
 			@Override
-			protected void onPopulateItem(final ListItem item) {
+            protected void onPopulateItem(final ListItem<McSubTaskDefAnswerDefinitionsItem> item) {
 				// item.add(new TextField("id"));
-				item.add(new TextField("value", new PropertyModel(item.getModel(), "value")).add(new AjaxFormComponentUpdatingBehavior(
+                McAnswersCorrectnessModel answerCorrectnessModel = new McAnswersCorrectnessModel(item.getModel());
+                item.add(new AjaxCheckBox("correct", answerCorrectnessModel) {
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        // boolean correct = getModelObject();
+                        // McSubTaskDefAnswerDefinitionsItem answerDef = item.getModelObject();
+                        // NamedString answervalue = answerDef.getItemCorrect();
+                        // answerDef.setItemCorrect(null);
+                        // if (answervalue == null) {
+                        // answervalue = answerDef.getItemIncorrect();
+                        // answerDef.setItemIncorrect(null);
+                        // }
+                        //
+                        // if (correct) {
+                        // answerDef.setItemCorrect(answervalue);
+                        // } else {
+                        // answerDef.setItemIncorrect(answervalue);
+                        // }
+                    }
+
+                });
+
+                item.add(new TextField<String>("value", new McAnswersModel(item.getModel())).add(new AjaxFormComponentUpdatingBehavior(
 				    "onblur") {
 					@Override
 					protected void onUpdate(AjaxRequestTarget target) {
@@ -93,11 +94,7 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 			}
 
 			private void setId(Object o, Long id) {
-				if (o instanceof Correct) {
-					((Correct) o).setHjid(id);
-				} else {
-					((Incorrect) o).setHjid(id);
-				}
+                ((McSubTaskDefAnswerDefinitionsItem) o).setHjid(id);
 			}
 
 			@Override
@@ -110,10 +107,10 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 				// find all primary keys
 				final List<Long> primaryKeys = new ArrayList<Long>();
 				for (final Object o : items) {
-					Long id = getId(o);
-					if (id != null)
-						primaryKeys.add(id);
-
+                    Long id = ((McSubTaskDefAnswerDefinitionsItem) o).getHjid();
+					if (id != null) {
+                        primaryKeys.add(id);
+                    }
 				}
 				// make sure they are in an ascending order
 				Collections.sort(primaryKeys);
@@ -135,15 +132,11 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 			@Override
 			protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
 
-				if (modelElementClass.equals(Correct.class)) {
-					final Correct answer = new Correct();
-					answer.setId("" + System.nanoTime());
-					answers.addItem(answer);
-				} else {
-					final Incorrect answer = new Incorrect();
-					answer.setId("" + System.nanoTime());
-					answers.addItem(answer);
-				}
+                NamedString answer = new NamedString();
+                answer.setId("" + System.nanoTime());
+                McSubTaskDefAnswerDefinitionsItem answerDef = new McSubTaskDefAnswerDefinitionsItem();
+                answerDef.setItemIncorrect(answer);
+                answers.addItem(answerDef);
 
 				if (target != null) {
 					target.addComponent(container);
@@ -156,11 +149,12 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<Object> {
 
 	/**
 	 * Toggle visibility of moveup/down buttons.
-	 * 
+	 *
 	 * @param flag
 	 */
 	public void setMoveButtonsVisible(boolean flag) {
-		for (EditorButton b : moveButtons)
-			b.setVisibilityAllowed(flag);
+		for (EditorButton b : moveButtons) {
+            b.setVisibilityAllowed(flag);
+        }
 	}
 }

@@ -55,31 +55,25 @@ import de.elatexam.model.TextSubTaskDef;
  * @author Steffen Dienst
  *
  */
-public class SubtaskDefInputPanel extends Panel {
+public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
   /**
    * @author Steffen Dienst
    *
    * @param <T>
    */
-  public class SubtaskDefForm<T extends SubTaskDef> extends ShinyForm<T> {
+    public class SubtaskDefForm<T> extends ShinyForm<T> {
 
-    private final Class<? extends SubTaskDef> modelClass;
+    private final Class<T> modelClass;
 
-    public SubtaskDefForm(final String id, final Class<T> modelClass) {
+        public SubtaskDefForm(final String id, final Class<T> modelClass) {
       super(id, modelClass);
       this.modelClass = modelClass;
       init();
     }
 
-    public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
+        public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
       super(id, model);
-      this.modelClass = model.getObject().getClass();
-      init();
-    }
-
-    public SubtaskDefForm(final String id, final T object) {
-      super(id, new HibernateObjectModel<T>(object));
-      this.modelClass = object.getClass();
+            this.modelClass = (Class<T>) model.getObject().getClass();
       init();
     }
 
@@ -95,19 +89,18 @@ public class SubtaskDefInputPanel extends Panel {
      * @return
      */
     private Component getTaskSpecificFormPanel(final String id) {
-      if (modelClass.equals(McSubTaskDef.class)) {
+      if (modelClass.equals(McSubTaskDef.class))
         return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getModel());
-      } else if (modelClass.equals(TextSubTaskDef.class)) {
+    else if (modelClass.equals(TextSubTaskDef.class))
         return new TextSubtaskDefInputPanel(id);
-      } else if (modelClass.equals(MappingSubTaskDef.class)) {
+    else if (modelClass.equals(MappingSubTaskDef.class))
         return new MappingSubtaskDefInputPanel(id, (IModel<MappingSubTaskDef>) getModel());
-      } else if (modelClass.equals(ClozeSubTaskDef.class)) {
+    else if (modelClass.equals(ClozeSubTaskDef.class))
         return new ClozeSubtaskDefInputPanel(id, (IModel<ClozeSubTaskDef>) getModel());
-      } else if (modelClass.equals(PaintSubTaskDef.class)) {
+    else if (modelClass.equals(PaintSubTaskDef.class))
         return new PaintSubtaskDefInputPanel(id, (IModel<PaintSubTaskDef>) getModel());
-      } else {
+    else
         return new EmptyPanel(id);
-      }
     }
 
     /**
@@ -174,19 +167,19 @@ public class SubtaskDefInputPanel extends Panel {
    * @param returnPage
    * @param clazz
    */
-  public SubtaskDefInputPanel(final String id, final Class<? extends SubTaskDef> clazz,
-      final SubTaskDef object) {
+    public SubtaskDefInputPanel(final String id, final Class<T> clazz,
+            final HibernateObjectModel<T> model) {
     super(id);
-    if (object != null) {
-      add(new SubtaskDefForm("taskform", object));
+        if (model != null) {
+            add(new SubtaskDefForm<T>("taskform", model));
     } else {
-      add(new SubtaskDefForm("taskform", clazz));
+            add(new SubtaskDefForm<T>("taskform", clazz));
     }
   }
 
-  public SubtaskDefInputPanel(final String id, final HibernateObjectModel<SubTaskDef> model) {
+    public SubtaskDefInputPanel(final String id, final HibernateObjectModel<T> model) {
     super(id);
-    add(new SubtaskDefForm<SubTaskDef>("taskform", model));
+        add(new SubtaskDefForm<T>("taskform", model));
   }
 
   /**

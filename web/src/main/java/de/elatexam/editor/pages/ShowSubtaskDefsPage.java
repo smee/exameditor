@@ -9,7 +9,6 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeaderlessColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar;
@@ -83,7 +82,8 @@ public class ShowSubtaskDefsPage<T extends SubTaskDef> extends SecurePage {
 			}
 		});
 		// XXX ugly hack, need to create own data access layer
-		final ISortableDataProvider<T> provider = new PrivateSubtasksDataProvider<T>(clazz, builder, builder, clazz);
+        final PrivateSubtasksDataProvider<T> provider = new PrivateSubtasksDataProvider<T>(clazz, builder, builder, clazz);
+        provider.setWrapWithPropertyModel(false);
 
 		final DefaultDataTable<T> table = new DefaultDataTable<T>("datatable", columns, provider, 10);
 		table.addTopToolbar(new FilterToolbar(table, form, builder));

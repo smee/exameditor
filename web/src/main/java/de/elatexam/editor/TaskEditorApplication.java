@@ -60,7 +60,7 @@ public class TaskEditorApplication extends AuthDataApplication {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see
    * net.databinder.hib.DataApplication#configureHibernate(org.hibernate.cfg
    * .AnnotationConfiguration)
@@ -80,10 +80,10 @@ public class TaskEditorApplication extends AuthDataApplication {
 
       @Override
       public boolean onPreDelete(final PreDeleteEvent event) {
-        if (TaskEditorSession.get().isSubtaskDeletionAllowed()) {
-          return false;
-        }
+        if (TaskEditorSession.get().isSubtaskDeletionAllowed())
+            return false;
         final String entityname = event.getEntity().getClass().getName();
+                System.out.println("storing " + event.getEntity());
         final boolean veto = entityname.contains("SubTaskDef") && !entityname.contains("TaskBlock");
         return veto;
       }
@@ -93,7 +93,7 @@ public class TaskEditorApplication extends AuthDataApplication {
   /**
    * Fetch all &lt;class&gt; elements from META-INF/persistence.xml and, assuming these classes have JPA annotations,
    * add them to the hibernate configuration.
-   * 
+   *
    * @param config
    * @param in
    */
@@ -171,7 +171,7 @@ public class TaskEditorApplication extends AuthDataApplication {
 
   /**
    * Has the current user the role ADMIN?
-   * 
+   *
    * @return
    */
   public static boolean isAdmin() {

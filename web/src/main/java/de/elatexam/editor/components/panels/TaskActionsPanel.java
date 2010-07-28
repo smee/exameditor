@@ -1,6 +1,7 @@
 package de.elatexam.editor.components.panels;
 
 import net.databinder.hib.Databinder;
+import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -29,8 +30,8 @@ public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
 
       @Override
       public void onClick() {
-        final T modelObject = (T) getParent().getDefaultModelObject();
-        setResponsePage(new EditSubtaskPage(modelObject.getClass(), modelObject));
+                final T modelObject = (T) getParent().getDefaultModelObject();
+                setResponsePage(new EditSubtaskPage(modelObject.getClass(), (HibernateObjectModel) getParent().getDefaultModel()));
       }
 
     });
