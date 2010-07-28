@@ -168,8 +168,6 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
         for (final Item<?> item : itemsList) {
           if(item.getItem()==child) {
             itemsList.remove(item);
-            // item.setItem(null);
-            // TODO unlink subtaskdefs
             return item;
           }
         }
@@ -184,7 +182,7 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     final Iterator<?> it = getChildren(current);
     while (it.hasNext()) {
       final Object potentialParent = it.next();
-      if (potentialParent.equals(child))
+            if (isSamePersistedObject(potentialParent, child))
         return current;
       final Object parent = findParentOf(potentialParent, child);
       if (parent != null)
@@ -193,7 +191,29 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
     return null;
   }
 
-  private Iterator<?> getChildren(final BasicUser user) {
+    /**
+     * Compare the generated primary keys instead of using the semantical equals method.
+     * 
+     * @param potentialParent
+     * @param child
+     * @return
+     */
+    private boolean isSamePersistedObject(Object potentialParent, Object child) {
+        try {
+            return
+            // same class?
+            potentialParent.getClass().equals(child.getClass())
+            &&
+            // same primary key?
+             ((Long) Stuff.call(potentialParent, "getHjid")).equals(Stuff.call(child, "getHjid"));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private Iterator<?> getChildren(final BasicUser user) {
     return user.getTaskdefs().iterator();
   }
   public Iterator<? extends Object> getRoots() {
