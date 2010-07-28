@@ -40,7 +40,6 @@ import de.elatexam.model.PaintSubTaskDef;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
-import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
 /**
  * Misc. helper functions.
