@@ -149,8 +149,8 @@ public class TaskDefPage extends SecurePage {
 
     /**
      * Actions operating on ComplexTaskDefs
-     * 
-     * 
+     *
+     *
      */
     private class TaskDefActions extends Panel {
 
@@ -210,6 +210,7 @@ public class TaskDefPage extends SecurePage {
         @Override
         public void onClick() {
           final Object toDelete = treeProvider.removeFromParent(tree.getSelected().getObject());
+          // do not delete subtaskdefs, only remove them from the current complextaskdef
           if (!(toDelete instanceof SubTaskDef)) {
             final org.hibernate.classic.Session session = Databinder.getHibernateSession();
             final Transaction transaction = session.beginTransaction();
@@ -221,6 +222,7 @@ public class TaskDefPage extends SecurePage {
 
       };
       deleteLink.add(new AttributeModifier("onclick", true, Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
+      deleteLink.setOutputMarkupId(true);
 
       previewLink = new PreviewLink("preview", new AbstractReadOnlyModel<ComplexTaskDef>() {
         @Override
@@ -239,11 +241,19 @@ public class TaskDefPage extends SecurePage {
     }
 
     public void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
-      final boolean enabled = !(selectedModel.getObject() instanceof BasicUser);
+      Object selected = selectedModel.getObject();
+      boolean enabled = !(selected instanceof BasicUser);
+
       this.downloadLink.setEnabled(enabled);
       this.previewLink.setEnabled(enabled);
+      this.deleteLink.setEnabled(enabled);
+            // no admin user should be able to delete himself....
+      if(selected instanceof BasicUser) {
+        this.deleteLink.setEnabled(false==((BasicUser)selected).getUsername().equals(TaskEditorSession.get().getUser().getUsername()));
+    }
       target.addComponent(downloadLink);
       target.addComponent(previewLink);
+      target.addComponent(deleteLink);
     }
   }
 }
