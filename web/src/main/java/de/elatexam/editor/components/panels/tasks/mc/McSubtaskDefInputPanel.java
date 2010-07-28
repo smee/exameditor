@@ -17,21 +17,21 @@ import de.elatexam.model.McSubTaskDef;
  *
  */
 public class McSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<McSubTaskDef> {
-    private final MCAnswersInputPanel correctAnswers;
+    private final MCAnswersInputPanel mcAnswers;
 
 	public McSubtaskDefInputPanel(final String id, final IModel<McSubTaskDef> model) {
 		super(id, model);
 		boolean showMoveButtons = model.getObject().isPreserveOrderOfAnswers();
 
-        correctAnswers = new MCAnswersInputPanel("correctanswers", new PropertyModel<List<McSubTaskDef.McSubTaskDefAnswerDefinitionsItem>>(model, "answerDefinitionsItems"), showMoveButtons);
-		add(correctAnswers.setOutputMarkupId(true));
+        mcAnswers = new MCAnswersInputPanel("correctanswers", new PropertyModel<List<McSubTaskDef.McSubTaskDefAnswerDefinitionsItem>>(model, "answerDefinitionsItems"), showMoveButtons);
+		add(mcAnswers.setOutputMarkupId(true));
 
 		add(new AjaxCheckBox("preserveOrderOfAnswers") {
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				correctAnswers.setMoveButtonsVisible(getModelObject());
-				target.addComponent(correctAnswers);
+				mcAnswers.setMoveButtonsVisible(getModelObject());
+				target.addComponent(mcAnswers);
 			}
 
 		});
