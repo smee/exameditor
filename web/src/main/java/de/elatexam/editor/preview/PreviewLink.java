@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.wicket.RequestCycle;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.RequestUtils;
@@ -49,9 +50,9 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
 /**
  * Link that calls the locally running taskcore-view webapp to show live preview of a complextaskdef. Will return to the
  * current page afterwards.
- * 
+ *
  * @author Steffen Dienst
- * 
+ *
  */
 public class PreviewLink extends Link<ComplexTaskDef> {
 
@@ -61,7 +62,7 @@ public class PreviewLink extends Link<ComplexTaskDef> {
 
   /**
    * Find external absolute url.
-   * 
+   *
    * @return
    */
   private String getContextUrl() {
@@ -105,7 +106,7 @@ public class PreviewLink extends Link<ComplexTaskDef> {
       final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
           tm,
           "sampleUser", "Max Mustermann",
-          RequestUtils.toAbsolutePath(urlFor(new PageRequestTarget(getPage())).toString()));
+                    RequestUtils.toAbsolutePath(getReturnLink()));
       TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
 
       getRequestCycle().setRequestTarget(
@@ -116,5 +117,21 @@ public class PreviewLink extends Link<ComplexTaskDef> {
     }
   }
 
-  private static AtomicLong tryId = new AtomicLong(0);
+    /**
+     * Create return link to this very page instance. Clear TaskModelViewDelegate on return.
+     * 
+     * @return
+     */
+    private String getReturnLink() {
+        return urlFor(new PageRequestTarget(getPage()) {
+            @Override
+            public void respond(RequestCycle requestCycle) {
+                // remove preview task
+                TaskModelViewDelegate.removeSession(requestCycle.getSession().getId());
+                super.respond(requestCycle);
+            }
+        }).toString();
+    }
+
+    private static AtomicLong tryId = new AtomicLong(0);
 }
