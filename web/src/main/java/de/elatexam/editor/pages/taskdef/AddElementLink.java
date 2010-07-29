@@ -40,6 +40,7 @@ import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.MappingTaskBlock.MappingConfig;
 import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.McTaskBlock.McConfig;
+import de.elatexam.model.McTaskBlock.McConfig.Regular;
 import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TaskblockConfig;
@@ -111,7 +112,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 
     /**
      * Store new objects into database.
-     * 
+     *
      * @param currentSelection
      * @param newChildrenObjects
      */
@@ -151,8 +152,10 @@ public class AddElementLink<T> extends AjaxLink<T> {
                 switch (childMap.get(taskblockclass)) {
                 case 3:
                     McConfig mcc = new McConfig();
+                    mcc.setRegular(new Regular());
                     ((McTaskBlock) taskblock).setMcConfig(mcc);
                     toSave.add(mcc);
+                    toSave.add(mcc.getRegular());
                     break;
                 case 4:
                     MappingConfig mapc = new MappingConfig();
