@@ -27,19 +27,27 @@ import java.util.Map;
 
 import org.jvnet.hyperjaxb3.item.Item;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
 import de.elatexam.model.AddonSubTaskDef;
 import de.elatexam.model.Category;
 import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ClozeSubTaskDef;
+import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintSubTaskDef;
+import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
+import de.elatexam.model.TextTaskBlock;
+import de.thorstenberger.taskmodel.complex.jaxb.ComplexTaskDefType.CategoryType.AddonTaskBlock;
+import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
 /**
  * Misc. helper functions.
@@ -48,16 +56,25 @@ import de.elatexam.model.TextSubTaskDef;
  *
  */
 public class Stuff {
-  private static Map<Class<?>, String> refNames = new java.util.HashMap<Class<?>, String>() {
-    {
-      put(McSubTaskDef.class, "Mc");
-      put(AddonSubTaskDef.class, "Addon");
-      put(ClozeSubTaskDef.class, "Cloze");
-      put(TextSubTaskDef.class, "Text");
-      put(MappingSubTaskDef.class, "Mapping");
-      put(PaintSubTaskDef.class, "Paint");
-    }
-  };
+    public static Map<Class<?>, String> subtaskNames = new ImmutableMap.Builder<Class<?>, String>()
+            .put(McSubTaskDef.class, "Mc")
+            .put(McTaskBlock.class, "Mc")
+
+            .put(AddonSubTaskDef.class, "Addon")
+            .put(AddonTaskBlock.class, "Addon")
+
+            .put(ClozeSubTaskDef.class, "Cloze")
+            .put(ClozeTaskBlock.class, "Cloze")
+
+            .put(TextSubTaskDef.class, "Text")
+            .put(TextTaskBlock.class, "Text")
+
+            .put(MappingSubTaskDef.class, "Mapping")
+            .put(MappingTaskBlock.class, "Mapping")
+
+            .put(PaintSubTaskDef.class, "Paint")
+            .put(PaintTaskBlock.class, "Paint")
+            .build();
 
   /**
    * Call a no-parameter method, return it's value. Rethrow whatever
@@ -85,9 +102,9 @@ public class Stuff {
    * @return
    * @throws Exception
    */
-  public static Object call(final Object o, final String methodNameTemplate, final Class<? extends SubTaskDef> clazz) throws Exception {
-    final Method method = o.getClass().getMethod(String.format(methodNameTemplate, refNames.get(clazz)));
-    return method.invoke(o);
+    public static Object call(final Object o, final String methodNameTemplate, final Class<?> clazz, Object... args) throws Exception {
+    final Method method = o.getClass().getMethod(String.format(methodNameTemplate, subtaskNames.get(clazz)));
+    return method.invoke(o,args);
   }
 
   /**

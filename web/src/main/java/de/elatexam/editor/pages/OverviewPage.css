@@ -32,20 +32,20 @@ body{
   min-height:20em;
   height: 100%;
 }
-.mainContent div#toolbar {
+.mainContent div.toolbar {
  background: #F2E2CB;
  float:left;
  margin-bottom: 1em;
  min-height: 1.4em;
  border-bottom: 1px solid #DADADA;
 }
-.mainContent div#toolbar a{
+.mainContent div.toolbar a{
   padding: 0.8em 0.5em;
   text-decoration: none;
   color: black;  
   font-weight:bold;
 }
-.mainContent div#toolbar span em{
+.mainContent div.toolbar span em{
   padding: 0.8em 0.5em;
   text-decoration: none;
   color: gray;  
