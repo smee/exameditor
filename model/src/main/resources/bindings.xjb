@@ -26,7 +26,7 @@
 	   
       <jxb:bindings node="//xs:element[@name='description']">
           <hj:basic>
-            <orm:column length="1024"/>
+            <orm:column length="10000"/>
           </hj:basic>
       </jxb:bindings>
       <jxb:bindings node="//xs:complexType[@name='SubTaskDef']/xs:attribute[@name='id']">
@@ -37,26 +37,77 @@
       </jxb:bindings>      
       <jxb:bindings node="//xs:element[@name='problem']">
           <hj:basic>
-            <orm:column length="1024"/>
+            <orm:column length="10000"/>
           </hj:basic>
-      </jxb:bindings><!--
-      <jxb:bindings node="//xs:complexType[@name='Category']/xs:choice">
-        <hj:one-to-many>
-          <orm:join-column />
-          <orm:cascade>
-            <orm:cascade-persist />
-            <orm:cascade-refresh />
-            <orm:cascade-merge />
-          </orm:cascade>
-        </hj:one-to-many>
-      </jxb:bindings>      
-    -->
+      </jxb:bindings>
+      
     <jxb:bindings node="//xs:complexType[@name='Category']/xs:choice">
       <jxb:property name="TaskBlocks"/>
     </jxb:bindings> 
     <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType//xs:sequence/xs:choice">
       <jxb:property name="AnswerDefinitions"/>
-    </jxb:bindings> 
-    
     </jxb:bindings>
+    
+    <jxb:bindings
+      node="//xs:complexType[@name='McTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='mcSubTaskDef']">
+      <!--<jxb:property name="foo"/>-->
+        <hj:one-to-many merge="false">
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:one-to-many>
+   </jxb:bindings> 
+    <jxb:bindings
+      node="//xs:complexType[@name='MappingTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='mappingSubTaskDef']">
+      <!--<jxb:property name="foo"/>-->
+        <hj:one-to-many merge="false">
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:one-to-many>
+   </jxb:bindings> 
+    <jxb:bindings
+      node="//xs:complexType[@name='ClozeTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='clozeSubTaskDef']">
+      <!--<jxb:property name="foo"/>-->
+        <hj:one-to-many merge="false">
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:one-to-many>
+   </jxb:bindings> 
+    <jxb:bindings
+      node="//xs:complexType[@name='TextTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:element[@ref='textSubTaskDef']">
+      <!--<jxb:property name="foo"/>-->
+        <hj:one-to-many merge="false">
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:one-to-many>
+   </jxb:bindings> 
+    <jxb:bindings
+      node="//xs:complexType[@name='PaintTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:element[@ref='paintSubTaskDef']">
+      <!--<jxb:property name="foo"/>-->
+        <hj:one-to-many merge="false">
+          <orm:join-column />
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:one-to-many>
+   </jxb:bindings> 
+    
+  </jxb:bindings>
 </jxb:bindings>

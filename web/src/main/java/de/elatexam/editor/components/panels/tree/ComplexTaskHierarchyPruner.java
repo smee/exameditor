@@ -9,7 +9,6 @@ import wickettree.ITreeProvider;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
-import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
@@ -27,7 +26,7 @@ public class ComplexTaskHierarchyPruner {
 
     /**
      * Default constructor.
-     * 
+     *
      * @param treeProvider
      */
     public ComplexTaskHierarchyPruner(ITreeProvider<Object> treeProvider) {
@@ -73,9 +72,9 @@ public class ComplexTaskHierarchyPruner {
     private Object clearPhysicalParent(final Object child, final Object logicalParent) {
         if (child instanceof TaskBlock) {
             final Category cat = (Category) logicalParent;
-            for (final CategoryTaskBlocksItem tbi : cat.getTaskBlocksItems()) {
-                if (tbi.getItem() == child) {
-                    cat.getTaskBlocksItems().remove(tbi);
+            for (final TaskBlock tbi : cat.getTaskBlocks()) {
+                if (tbi == child) {
+                    cat.getTaskBlocks().remove(tbi);
                     // tbi.setItem(null);
                     // TODO unlink subtaskdefs or better: do not propagate delete to subtaskdefs.... needs HJ3 fix, see
                     // http://jira.highsource.org/browse/HJIII-26
@@ -85,7 +84,7 @@ public class ComplexTaskHierarchyPruner {
         } else if (child instanceof SubTaskDef) {
             final TaskBlock tb = (TaskBlock) logicalParent;
             try {
-                final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", (Class<? extends de.elatexam.model.SubTaskDef>) child.getClass());
+                final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", child.getClass());
                 for (final Item<?> item : itemsList) {
                     if (item.getItem() == child) {
                         itemsList.remove(item);

@@ -25,14 +25,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.jvnet.hyperjaxb3.item.Item;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
 import de.elatexam.model.AddonSubTaskDef;
 import de.elatexam.model.Category;
-import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
@@ -116,12 +113,12 @@ public class Stuff {
    *          taskblock
    * @return list of items or empty list.
    */
-    public static List<? extends Item> getItems(final TaskBlock tb) {
+    public static <T extends SubTaskDef> List<T> getSubtaskDefs(final TaskBlock tb) {
     for (final Method m : tb.getClass().getMethods()) {
       final String name = m.getName();
-      if (name.startsWith("get") && name.endsWith("SubTaskDefOrChoiceItems")) {
+      if (name.startsWith("get") && name.endsWith("SubTaskDef")) {
         try {
-          return (List<? extends Item>) m.invoke(tb);
+                    return (List<T>) m.invoke(tb);
         } catch (final IllegalArgumentException e) {
           e.printStackTrace();
         } catch (final IllegalAccessException e) {
@@ -134,35 +131,16 @@ public class Stuff {
     return Lists.newArrayList();
   }
 
-  public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef, final Class<T> clazz)
+    public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef)
   throws Exception {
     final Collection<T> stds = new ArrayList<T>();
     for (final Category cat : taskdef.getCategory()) {
-      for (final CategoryTaskBlocksItem block : cat.getTaskBlocksItems()) {
-                stds.addAll(getAllSubtaskdefsFromBlock((TaskBlock) call(block, "getItem%sTaskBlock", clazz), clazz));
+            for (final TaskBlock block : cat.getTaskBlocks()) {
+                stds.addAll((Collection<? extends T>) getSubtaskDefs(block));
       }
     }
     return stds;
   }
 
-    public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefsFromBlock(final TaskBlock block, final Class<T> clazz)
-  throws Exception {
-    final Collection<T> stds = new ArrayList<T>();
-    if (block == null)
-        return stds;
-    final List items = (List) call(block, "get%sSubTaskDefOrChoiceItems", clazz);
-    if (items != null) {
-      for (final Object item : items) {
-        final T st = (T) call(item, "getItem%sSubTaskDef", clazz);
-        if (st != null) {
-          stds.add(st);
-        } else {
-          final Object choice = call(item, "getItemChoice");
-          stds.addAll((Collection<T>) call(choice, "get%sSubTaskDef", clazz));
-        }
-      }
-    }
-    return stds;
-  }
 
 }

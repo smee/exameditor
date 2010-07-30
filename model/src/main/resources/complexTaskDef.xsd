@@ -463,7 +463,7 @@ TODO:
 	</xs:complexType>
 	<xs:complexType name="Category">
 	  <xs:choice maxOccurs="unbounded">
-	    <xs:element name="mcTaskBlock" type="McTaskBlock"/>	    <xs:element name="clozeTaskBlock" type="ClozeTaskBlock"/>	    <xs:element name="textTaskBlock" type="TextTaskBlock"/>	    <xs:element name="mappingTaskBlock" type="MappingTaskBlock"/>	    <xs:element name="paintTaskBlock" type="PaintTaskBlock"/>	    <xs:element name="addonTaskBlock" type="addonTaskBlockComplexType"/>	  </xs:choice>
+	    <xs:element name="mcTaskBlock" type="McTaskBlock"/>	    <xs:element name="clozeTaskBlock" type="ClozeTaskBlock"/>	    <xs:element name="textTaskBlock" type="TextTaskBlock"/>	    <xs:element name="mappingTaskBlock" type="MappingTaskBlock"/>	    <xs:element name="paintTaskBlock" type="PaintTaskBlock"/>	    <xs:element name="addonTaskBlock" type="AddonTaskBlock"/>	  </xs:choice>
 	  <xs:attribute use="required" name="title" type="xs:string"></xs:attribute>
 	  <xs:attribute use="optional" name="ignoreOrderOfBlocks"
 	    type="xs:boolean">
@@ -525,18 +525,9 @@ TODO:
 	            </xs:choice>
 	          </xs:complexType>
 	        </xs:element>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="mcSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="mcSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
+          <xs:sequence>
+	        <xs:element maxOccurs="unbounded" ref="mcSubTaskDef"/>
+          </xs:sequence>
 	      </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
@@ -559,18 +550,9 @@ TODO:
 	            </xs:attribute>
 	          </xs:complexType>
 	        </xs:element>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="clozeSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="clozeSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
+	        <xs:sequence>
+	          <xs:element maxOccurs="unbounded" ref="clozeSubTaskDef"></xs:element>
+	        </xs:sequence>
 	      </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
@@ -578,20 +560,9 @@ TODO:
 	<xs:complexType name="TextTaskBlock">
 	  <xs:complexContent>
 	    <xs:extension base="TaskBlock">
-	      <xs:sequence>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="textSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="textSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
-	      </xs:sequence>
+	        <xs:sequence>
+	          <xs:element maxOccurs="unbounded" ref="textSubTaskDef"></xs:element>
+	        </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
 	</xs:complexType>
@@ -610,18 +581,9 @@ TODO:
 	            </xs:attribute>
 	          </xs:complexType>
 	        </xs:element>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="mappingSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="mappingSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
+	      <xs:sequence>  
+            <xs:element maxOccurs="unbounded" ref="mappingSubTaskDef"/>
+            </xs:sequence>
 	      </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
@@ -629,40 +591,18 @@ TODO:
 	<xs:complexType name="PaintTaskBlock">
 	  <xs:complexContent>
 	    <xs:extension base="TaskBlock">
-	      <xs:sequence>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="paintSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="paintSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
+          <xs:sequence>
+	        <xs:element maxOccurs="unbounded" ref="paintSubTaskDef"></xs:element>
 	      </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="addonTaskBlockComplexType">
+	<xs:complexType name="AddonTaskBlock">
 	  <xs:complexContent>
 	    <xs:extension base="TaskBlock">
-	      <xs:sequence>
-	        <xs:choice maxOccurs="unbounded">
-	          <xs:element ref="addonSubTaskDef"></xs:element>
-	          <xs:element name="choice">
-	            <xs:complexType>
-	              <xs:sequence>
-	                <xs:element maxOccurs="unbounded"
-	                  ref="addonSubTaskDef">
-	                </xs:element>
-	              </xs:sequence>
-	            </xs:complexType>
-	          </xs:element>
-	        </xs:choice>
-	      </xs:sequence>
+	        <xs:sequence>
+	          <xs:element maxOccurs="unbounded" ref="addonSubTaskDef"></xs:element>
+	        </xs:sequence>
 	    </xs:extension>
 	  </xs:complexContent>
 	</xs:complexType>

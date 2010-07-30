@@ -32,7 +32,6 @@ import com.google.common.collect.ImmutableMap;
 import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
-import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ClozeTaskBlock.ClozeConfig;
 import de.elatexam.model.ComplexTaskDef;
@@ -144,9 +143,8 @@ public class AddElementLink<T> extends AjaxLink<T> {
                 TaskblockConfig config = new TaskblockConfig();
                 taskblock.setConfig(config);
 
-                CategoryTaskBlocksItem taskBlocksItem = new Category.CategoryTaskBlocksItem();
-                taskBlocksItem.setItem(taskblock);
-                ((Category) selectedObject).getTaskBlocksItems().add(taskBlocksItem);
+                ((Category) selectedObject).getTaskBlocks().add(taskblock);
+                toSave.add(taskblock);
 
                 // set subclass specific config
                 switch (childMap.get(taskblockclass)) {
@@ -170,7 +168,6 @@ public class AddElementLink<T> extends AjaxLink<T> {
                 }
 
                 toSave.add(config);
-                toSave.add(taskBlocksItem);
                 toSave.add(taskblock);
                 persistObjects(selectedObject, toSave);
             } catch (InstantiationException e) {

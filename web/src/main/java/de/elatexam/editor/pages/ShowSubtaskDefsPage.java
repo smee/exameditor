@@ -22,6 +22,7 @@ import org.apache.wicket.model.ResourceModel;
 
 import de.elatexam.editor.components.panels.TaskActionsPanel;
 import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.TextSubTaskDef;
 
 /**
  * @author sdienst
@@ -50,7 +51,7 @@ public class ShowSubtaskDefsPage<T extends SubTaskDef> extends SecurePage {
 		add(newTaskLink);
 
 		final CriteriaFilterAndSort builder = new CriteriaFilterAndSort(
-                new SubTaskDef() {
+                new TextSubTaskDef() {
 		}, "xmlid", true, false);
 		final FilterForm form = new FilterForm("form", builder);
 		add(form);

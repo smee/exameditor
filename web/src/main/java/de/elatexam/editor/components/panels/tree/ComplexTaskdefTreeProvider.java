@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elatexam.editor.components.panels.tree;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,17 +27,14 @@ import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.wicket.model.IModel;
-import org.jvnet.hyperjaxb3.item.Item;
 
 import wickettree.ITreeProvider;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
-import de.elatexam.model.Category.CategoryTaskBlocksItem;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.TaskBlock;
 
@@ -48,12 +46,6 @@ import de.elatexam.model.TaskBlock;
  *
  */
 public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
-  final static Function<Item, Object> itemGetter = new Function<Item, Object>() {
-
-    public Object apply(final Item item) {
-      return item.getItem();
-    }
-  };
 
   private final IModel<List<?>> model;
 
@@ -75,17 +67,11 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   }
 
     private Iterator<TaskBlock> getChildren(final Category cat) {
-    return Iterators.transform(cat.getTaskBlocksItems().iterator(),
-                new Function<CategoryTaskBlocksItem, TaskBlock>() {
-
-      public TaskBlock apply(final CategoryTaskBlocksItem block) {
-        return block.getItem();
-      }
-    });
+        return cat.getTaskBlocks().iterator();
   }
 
     private Iterator<Object> getChildren(final TaskBlock tb) {
-    return Iterators.transform(Stuff.getItems(tb).iterator(), itemGetter);
+        return ((Collection) Stuff.getSubtaskDefs(tb)).iterator();
   }
 
   private Iterator<Category> getChildren(final ComplexTaskDef ctd) {

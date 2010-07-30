@@ -1,6 +1,7 @@
 package de.elatexam.editor.pages;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,16 +17,11 @@ import org.apache.wicket.util.lang.Bytes;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
-import de.elatexam.model.AddonSubTaskDef;
-import de.elatexam.model.ClozeSubTaskDef;
-import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.MappingSubTaskDef;
-import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
+import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.SubTaskDef;
 
 /**
  * @author sdienst
@@ -97,16 +93,17 @@ public class UploadComplexTaskdefPage extends SecurePage {
   public void persistIntoDB(final ComplexTaskDef taskdef) throws Exception {
     final Session session = Databinder.getHibernateSession();
     final Transaction trans = session.beginTransaction();
-    session.save(taskdef);
+
+        Collection<SubTaskDef> newSubtaskdefs = Stuff.getAllSubtaskdefs(taskdef);
+        for (SubTaskDef std : newSubtaskdefs) {
+            session.save(std);
+        }
+        session.save(taskdef);
+
     // add to current user
     final BasicUser user = TaskEditorSession.get().getUser();
     user.getTaskdefs().add(taskdef);
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, AddonSubTaskDef.class));
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, McSubTaskDef.class));
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, PaintSubTaskDef.class));
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, MappingSubTaskDef.class));
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, ClozeSubTaskDef.class));
-    user.getSubtaskdefs().addAll(Stuff.getAllSubtaskdefs(taskdef, TextSubTaskDef.class));
+    user.getSubtaskdefs().addAll(newSubtaskdefs);
 
     session.saveOrUpdate(user);
     trans.commit();

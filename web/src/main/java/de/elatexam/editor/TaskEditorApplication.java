@@ -80,10 +80,11 @@ public class TaskEditorApplication extends AuthDataApplication {
 
       @Override
       public boolean onPreDelete(final PreDeleteEvent event) {
+                // TODO buggy: deletes children of subtaskdefs
         if (TaskEditorSession.get().isSubtaskDeletionAllowed())
             return false;
         final String entityname = event.getEntity().getClass().getName();
-
+                System.out.println("deleting " + entityname);
         final boolean veto = entityname.contains("SubTaskDef") && !entityname.contains("TaskBlock");
         return veto;
       }
