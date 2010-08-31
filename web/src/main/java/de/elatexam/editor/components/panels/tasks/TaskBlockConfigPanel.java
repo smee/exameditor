@@ -3,6 +3,7 @@ package de.elatexam.editor.components.panels.tasks;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -34,6 +35,7 @@ public class TaskBlockConfigPanel extends Panel {
       feedback.setOutputMarkupId(true);
       add(new TextField<Float>("pointsPerTask"));
       add(new TextField<Integer>("noOfSelectedTasks").add(MinimumValidator.minimum(0)));
+      add(new CheckBox("preserveOrder"));
 
       add(new Button("saveButton") {
 
