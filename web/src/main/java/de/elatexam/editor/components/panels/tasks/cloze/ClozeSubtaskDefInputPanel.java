@@ -150,8 +150,13 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 			StringBuilder sb = new StringBuilder("");
 			sb.append("<input type=\"text\" value=\"");
 			int maxLen = 0;
+            boolean valueAdded = false;
 			for (GapCorrectItem ci : gap.getCorrectItems()) {
-				sb.append(ci.getItem() + ";");
+                if (!valueAdded) {
+                    // add the first correct value into the input field, suffices for previews
+                    sb.append(ci.getItem());
+                    valueAdded = true;
+                }
 				maxLen = Math.max(maxLen, ci.getItem().length());
 			}
 			removeTrailingSemicolon(sb);
