@@ -3,8 +3,6 @@ package de.elatexam.editor.components.panels.tree;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jvnet.hyperjaxb3.item.Item;
-
 import wickettree.ITreeProvider;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
@@ -84,11 +82,11 @@ public class ComplexTaskHierarchyPruner {
         } else if (child instanceof SubTaskDef) {
             final TaskBlock tb = (TaskBlock) logicalParent;
             try {
-                final List<Item<?>> itemsList = (List) Stuff.call(tb, "get%sSubTaskDefOrChoiceItems", child.getClass());
-                for (final Item<?> item : itemsList) {
-                    if (item.getItem() == child) {
-                        itemsList.remove(item);
-                        return item;
+                final List<SubTaskDef> itemsList = (List) Stuff.call(tb, "get%sSubTaskDef", child.getClass());
+                for (final SubTaskDef subtaskdef : itemsList) {
+                    if (subtaskdef == child) {
+                        itemsList.remove(subtaskdef);
+                        return subtaskdef;
                     }
                 }
             } catch (final Exception e) {

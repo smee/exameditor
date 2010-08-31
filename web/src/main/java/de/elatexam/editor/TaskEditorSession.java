@@ -44,15 +44,6 @@ public class TaskEditorSession extends AuthDataSessionBase<BasicUser> {
     return (TaskEditorSession) WebSession.get();
   }
 
-  private boolean subtaskDeletionAllowed = false;
-
-  public void setDeletionAllowed(final boolean value) {
-    this.subtaskDeletionAllowed = value;
-  }
-
-  public boolean isSubtaskDeletionAllowed() {
-    return subtaskDeletionAllowed;
-  }
 
   /*
    * (non-Javadoc)

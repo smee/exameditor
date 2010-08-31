@@ -20,42 +20,36 @@ import de.elatexam.model.SubTaskDef;
  */
 public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
 
-  /**
-   * @param id
-   * @param model
-   */
-  public TaskActionsPanel(final String id, final IModel<T> model) {
-    super(id, model);
-    add(new Link<T>("edit") {
+    /**
+     * @param id
+     * @param model
+     */
+    public TaskActionsPanel(final String id, final IModel<T> model) {
+        super(id, model);
+        add(new Link<T>("edit") {
 
-      @Override
-      public void onClick() {
+            @Override
+            public void onClick() {
                 final T modelObject = (T) getParent().getDefaultModelObject();
                 setResponsePage(new EditSubtaskPage(modelObject.getClass(), (HibernateObjectModel) getParent().getDefaultModel()));
-      }
+            }
 
-    });
-    add(new Link<T>("remove") {
+        });
+        add(new Link<T>("remove") {
 
-      @Override
-      public void onClick() {
-        final T modelObject = (T) getParent().getDefaultModelObject();
-        // XXX hack because normally we veto any deletion of subtaskdefs
-        TaskEditorSession.get().setDeletionAllowed(true);
-        try {
-          // remove subtaskdef from current user object
-          TaskEditorSession.get().getUser().getSubtaskdefs().remove(modelObject);
+            @Override
+            public void onClick() {
+                final T modelObject = (T) getParent().getDefaultModelObject();
+                // remove subtaskdef from current user object
+                TaskEditorSession.get().getUser().getSubtaskdefs().remove(modelObject);
 
-          final Session session = Databinder.getHibernateSession();
-          final Transaction trans = session.beginTransaction();
-          session.delete(modelObject);
-          trans.commit();
-        } finally {
-          TaskEditorSession.get().setDeletionAllowed(false);
-        }
-      }
+                final Session session = Databinder.getHibernateSession();
+                final Transaction trans = session.beginTransaction();
+                session.delete(modelObject);
+                trans.commit();
+            }
 
-    });
-  }
+        });
+    }
 
 }

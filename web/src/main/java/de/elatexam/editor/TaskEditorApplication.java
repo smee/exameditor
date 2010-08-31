@@ -25,8 +25,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
-import org.hibernate.event.PreDeleteEvent;
-import org.hibernate.event.PreDeleteEventListener;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -76,19 +74,6 @@ public class TaskEditorApplication extends AuthDataApplication {
     config.setProperty("hibernate.jdbc.batch_size", "0");
     // config.setProperty("hibernate.show_sql", "true");
 
-    config.setListener("pre-delete", new PreDeleteEventListener() {
-
-      @Override
-      public boolean onPreDelete(final PreDeleteEvent event) {
-                // TODO buggy: deletes children of subtaskdefs
-        if (TaskEditorSession.get().isSubtaskDeletionAllowed())
-            return false;
-        final String entityname = event.getEntity().getClass().getName();
-                System.out.println("deleting " + entityname);
-        final boolean veto = entityname.contains("SubTaskDef") && !entityname.contains("TaskBlock");
-        return veto;
-      }
-    });
   }
 
   /**
