@@ -27,12 +27,6 @@ public class LinkVO implements Serializable {
 
   private Create pageCallback;
 
-  private boolean isCurrentTab;
-
-  public LinkVO setSelected(final boolean value) {
-    this.isCurrentTab = value;
-    return this;
-  }
   /**
    */
   public LinkVO(final Class<? extends WebPage> linkPageClass, final String linkText) {
@@ -91,7 +85,4 @@ public class LinkVO implements Serializable {
     this.linkText = linkText;
   }
 
-  public boolean isSelected() {
-    return isCurrentTab;
-  }
 }

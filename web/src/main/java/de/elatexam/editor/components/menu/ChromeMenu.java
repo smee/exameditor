@@ -38,7 +38,7 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
   private ResourceReference CSS_REFERENCE;
 
   /**
-   * 
+   *
    * @param id
    * @param listOfMenus
    */
@@ -119,7 +119,7 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
     if (hasOrIsChildren) {
       link.add(new AttributeModifier("rel", true, Model.of("dropmenu" + itemCount)));
     }
-    if (linkInfo.isSelected()) {
+        if (linkInfo.getResponsePageClass() == getPage().getClass()) {
       link.add(new AttributeAppender("class", true, Model.of("activeTab"), " "));
     }
 
@@ -131,7 +131,7 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see
    * org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache
    * .wicket.markup.html.IHeaderResponse)
