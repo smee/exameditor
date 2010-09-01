@@ -71,8 +71,8 @@ public class TaskEditorApplication extends AuthDataApplication {
     addPersistentModelClasses(config, getClass().getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
 
     // fix for bug in HSQLDB, see http://issues.appfuse.org/browse/APF-101
-    config.setProperty("hibernate.jdbc.batch_size", "0");
-    // config.setProperty("hibernate.show_sql", "true");
+        // config.setProperty("hibernate.jdbc.batch_size", "0");
+        // config.setProperty("hibernate.show_sql", "true");
 
   }
 
