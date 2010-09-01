@@ -35,11 +35,13 @@ import de.elatexam.model.Category;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ClozeTaskBlock.ClozeConfig;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.ComplexTaskDef.Config;
+import de.elatexam.model.ComplexTaskDef.Config.CorrectionMode;
+import de.elatexam.model.ComplexTaskDef.Config.CorrectionMode.Regular;
 import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.MappingTaskBlock.MappingConfig;
 import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.McTaskBlock.McConfig;
-import de.elatexam.model.McTaskBlock.McConfig.Regular;
 import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TaskblockConfig;
@@ -82,6 +84,10 @@ public class AddElementLink<T> extends AjaxLink<T> {
         case 0: // create a new complextaskdef
             ComplexTaskDef newtaskdef = new ComplexTaskDef();
             newtaskdef.setTitle("?????");
+            Config config = new Config();
+            config.setCorrectionMode(new CorrectionMode());
+            config.getCorrectionMode().setRegular(new Regular());
+            newtaskdef.setConfig(config);
             ((BasicUser) selectedObject).getTaskdefs().add(newtaskdef);
             toSave.add(newtaskdef);
             target.addComponent(taskDefPage.getTree());
@@ -150,7 +156,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
                 switch (childMap.get(taskblockclass)) {
                 case 3:
                     McConfig mcc = new McConfig();
-                    mcc.setRegular(new Regular());
+                    mcc.setRegular(new McConfig.Regular());
                     ((McTaskBlock) taskblock).setMcConfig(mcc);
                     toSave.add(mcc);
                     toSave.add(mcc.getRegular());
@@ -159,10 +165,12 @@ public class AddElementLink<T> extends AjaxLink<T> {
                     MappingConfig mapc = new MappingConfig();
                     ((MappingTaskBlock) taskblock).setMappingConfig(mapc);
                     toSave.add(mapc);
+                    break;
                 case 5:
                     ClozeConfig cc = new ClozeConfig();
                     ((ClozeTaskBlock) taskblock).setClozeConfig(cc);
                     toSave.add(cc);
+                    break;
                 default:
                     break;
                 }
