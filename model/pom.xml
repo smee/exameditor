@@ -123,6 +123,7 @@
           <args>
             <arg>-Xinheritance</arg>
             <arg>-Xdefault-value</arg>
+            <arg>-Xfluent-api</arg>
           </args>
           <plugins>
             <plugin>
@@ -134,6 +135,11 @@
               <groupId>org.jvnet.jaxb2_commons</groupId>
               <artifactId>default-value</artifactId>
               <version>0.1-20071022</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined after last change in CVS... -->
+            </plugin> 
+            <plugin>
+              <groupId>net.java.dev.jaxb2-commons</groupId>
+              <artifactId>jaxb-fluent-api</artifactId>
+              <version>2.1.8</version>
             </plugin> 
           </plugins>
         </configuration>
