@@ -4,12 +4,14 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
     xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-    xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"    
+    xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"  
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
     jxb:extensionBindingPrefixes="xjc">
     
     <jxb:bindings schemaLocation="complexTaskDef.xsd" node="/xs:schema">
         <jxb:globalBindings>
             <xjc:serializable uid="-6026937020915831338"/>
+            <xjc:superInterface name="de.elatexam.model.Indexed"/>
         </jxb:globalBindings>
         <jxb:schemaBindings>
             <jxb:package name="de.elatexam.model"/>
@@ -27,6 +29,21 @@
       <jxb:bindings node="//xs:element[@name='description']">
           <hj:basic>
             <orm:column length="10000"/>
+          </hj:basic>
+      </jxb:bindings>
+      <jxb:bindings node="//xs:element[@name='immutableBackgroundImage']">
+          <hj:basic>
+            <orm:column length="100000"/>
+          </hj:basic>
+      </jxb:bindings>
+      <jxb:bindings node="//xs:element[@name='mutableTemplateImage']">
+          <hj:basic>
+            <orm:column length="100000"/>
+          </hj:basic>
+      </jxb:bindings>
+      <jxb:bindings node="//xs:element[@name='correctionTemplateImage']">
+          <hj:basic>
+            <orm:column length="100000"/>
           </hj:basic>
       </jxb:bindings>
       <jxb:bindings node="//xs:complexType[@name='SubTaskDef']/xs:attribute[@name='id']">
@@ -108,6 +125,10 @@
           </orm:cascade>
         </hj:one-to-many>
    </jxb:bindings> 
+   <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType">
+      <inheritance:implements>java.lang.Cloneable</inheritance:implements>
+<!--      <inheritance:extends>foo.Bar</inheritance:extends> -->
+   </jxb:bindings>
     
   </jxb:bindings>
 </jxb:bindings>
