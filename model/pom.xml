@@ -122,13 +122,19 @@
           <!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName>-->
           <args>
             <arg>-Xinheritance</arg>
+            <arg>-Xdefault-value</arg>
           </args>
           <plugins>
             <plugin>
               <groupId>org.jvnet.jaxb2_commons</groupId>
               <artifactId>jaxb2-basics</artifactId>
               <version>0.6.0</version>
-      </plugin>
+            </plugin>
+            <plugin>
+              <groupId>org.jvnet.jaxb2_commons</groupId>
+              <artifactId>default-value</artifactId>
+              <version>0.1-20071022</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined after last change in CVS... -->
+            </plugin> 
           </plugins>
         </configuration>
       </plugin>
