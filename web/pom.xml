@@ -141,6 +141,18 @@
           <artifactId>wicket-auth-roles</artifactId>
           <groupId>org.apache.wicket</groupId>
         </exclusion>
+        <exclusion>
+        	<artifactId>hibernate-c3p0</artifactId>
+        	<groupId>org.hibernate</groupId>
+        </exclusion>
+        <exclusion>
+        	<artifactId>hibernate-core</artifactId>
+        	<groupId>org.hibernate</groupId>
+        </exclusion>
+        <exclusion>
+        	<artifactId>hibernate-annotations</artifactId>
+        	<groupId>org.hibernate</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!--
@@ -265,7 +277,15 @@
             <artifactId>visural-wicket</artifactId>
             <version>0.6</version>
         </dependency>
-  --></dependencies>
+  -->
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>3.5.6-Final</version>
+    	<type>pom</type>
+    	<scope>compile</scope>
+    </dependency>
+  </dependencies>
   <repositories>
     <repository>
       <id>databinder</id>

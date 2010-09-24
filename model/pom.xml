@@ -22,7 +22,13 @@
     <dependency>
       <groupId>org.jvnet.hyperjaxb3</groupId>
       <artifactId>hyperjaxb3-ejb-runtime</artifactId>
-      <version>0.5.5</version>
+      <version>${hyperjaxb3.version}</version>
+      <exclusions>
+      	<exclusion>
+      		<artifactId>persistence-api</artifactId>
+      		<groupId>javax.persistence</groupId>
+      	</exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Test dependencies -->
@@ -36,29 +42,17 @@
     <dependency>
       <groupId>org.jvnet.hyperjaxb3</groupId>
       <artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
-      <version>0.5.5</version>
+      <version>${hyperjaxb3.version}</version>
       <scope>test</scope>
+      <exclusions>
+      	<exclusion>
+      		<artifactId>persistence-api</artifactId>
+      		<groupId>javax.persistence</groupId>
+      	</exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Hibernate Dependencies -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate</artifactId>
-      <version>3.2.6.ga</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-entitymanager</artifactId>
-      <version>3.3.2.GA</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-      <version>3.1.0.CR1</version>
-      <scope>test</scope>
-    </dependency>
     <!-- Database -->
     <dependency>
       <groupId>org.hsqldb</groupId>
@@ -81,6 +75,13 @@
     	<type>jar</type>
     	<scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>3.5.6-Final</version>
+    	<type>jar</type>
+    	<scope>test</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -88,8 +89,8 @@
       <url>http://download.java.net/maven/2</url>
     </repository>
     <repository>
-      <id>maven2-repository.jboss.com</id>
-      <url>http://repository.jboss.com/maven2</url>
+      <id>JBoss.org</id>
+      <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -109,7 +110,7 @@
       <plugin>
         <groupId>org.jvnet.hyperjaxb3</groupId>
         <artifactId>maven-hyperjaxb3-plugin</artifactId>
-        <version>0.5.5</version>
+        <version>${hyperjaxb3.version}</version>
         <executions>
           <execution>
             <goals>
@@ -173,4 +174,7 @@
         </plugin>
     </plugins>
   </build>
+  <properties>
+    <hyperjaxb3.version>0.5.5</hyperjaxb3.version>
+  </properties>
 </project>
