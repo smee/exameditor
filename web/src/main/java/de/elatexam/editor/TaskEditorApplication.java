@@ -130,6 +130,8 @@ public class TaskEditorApplication extends AuthDataApplication {
   @Override
   protected void init() {
     super.init();
+        // addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
+
     mountBookmarkablePage("taskdefs", TaskDefPage.class);
     mountBookmarkablePage("statistics", StatisticPage.class);
     mountBookmarkablePage("subtaskdefs", ShowSubtaskDefsPage.class);
