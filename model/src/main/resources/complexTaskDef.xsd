@@ -288,7 +288,7 @@ TODO:
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="SubTaskDef">
-					<xs:choice>
+                    <xs:sequence>
 						<xs:element name="cloze">
 							<xs:complexType mixed="false">
 								<xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -312,32 +312,7 @@ TODO:
 								</xs:choice>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="graphicalCloze">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="backgroundImageBase64" type="xs:string"/>
-									<xs:element name="gap" minOccurs="0" maxOccurs="unbounded">
-										<xs:complexType>
-											<xs:sequence>
-												<xs:element name="correct" type="xs:string" maxOccurs="unbounded"/>
-											</xs:sequence>
-											<xs:attribute name="inputLength" use="optional">
-												<xs:simpleType>
-													<xs:restriction base="xs:int">
-														<xs:minInclusive value="1"/>
-													</xs:restriction>
-												</xs:simpleType>
-											</xs:attribute>
-											<xs:attribute name="ignoreCase" type="xs:boolean" use="optional"/>
-											<xs:attribute name="posX" type="xs:int" use="required"/>
-											<xs:attribute name="posY" type="xs:int" use="required"/>
-											<xs:attribute name="initialValue" type="xs:string" use="optional"/>
-										</xs:complexType>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-					</xs:choice>
+                    </xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
