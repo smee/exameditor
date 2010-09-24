@@ -465,7 +465,7 @@ TODO:
 	              <xs:element name="regular">
 	                <xs:complexType>
 	                  <xs:sequence>
-	                    <xs:element name="negativePoints">
+	                    <xs:element name="negativePoints" default="1">
 	                      <xs:simpleType>
 	                        <xs:restriction base="xs:float">
 	                          <xs:minInclusive value="0"></xs:minInclusive>
