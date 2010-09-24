@@ -52,25 +52,11 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 				// item.add(new TextField("id"));
                 McAnswersCorrectnessModel answerCorrectnessModel = new McAnswersCorrectnessModel(item.getModel());
                 item.add(new AjaxCheckBox("correct", answerCorrectnessModel) {
-
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
-                        // boolean correct = getModelObject();
-                        // McSubTaskDefAnswerDefinitionsItem answerDef = item.getModelObject();
-                        // NamedString answervalue = answerDef.getItemCorrect();
-                        // answerDef.setItemCorrect(null);
-                        // if (answervalue == null) {
-                        // answervalue = answerDef.getItemIncorrect();
-                        // answerDef.setItemIncorrect(null);
-                        // }
-                        //
-                        // if (correct) {
-                        // answerDef.setItemCorrect(answervalue);
-                        // } else {
-                        // answerDef.setItemIncorrect(answervalue);
-                        // }
+                        // send the textfield value via ajax to the server, fixes the bug,
+                        // that entered value gets lost when using the up/down buttons
                     }
-
                 });
 
                 item.add(new TextField<String>("value", new McAnswersModel(item.getModel())).add(new AjaxFormComponentUpdatingBehavior(

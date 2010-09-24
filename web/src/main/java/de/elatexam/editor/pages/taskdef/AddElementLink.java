@@ -95,6 +95,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
         case 1: //create a new category
             Category cat = new Category();
             cat.setTitle("????");
+            // cat.setId(""); // TODO set category id
             ((ComplexTaskDef) selectedObject).getCategory().add(cat);
             toSave.add(cat);
             target.addComponent(taskDefPage.getTree());

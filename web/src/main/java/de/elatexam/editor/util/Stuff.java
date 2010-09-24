@@ -25,6 +25,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import net.databinder.hib.Databinder;
+
+import org.hibernate.Transaction;
+import org.hibernate.classic.Session;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
@@ -141,6 +146,20 @@ public class Stuff {
     }
     return stds;
   }
+
+    /**
+     * TODO create DAO layer!
+     * 
+     * @param objects
+     */
+    public static void saveAll(Object... objects) {
+        final Session session = Databinder.getHibernateSession();
+        final Transaction trans = session.beginTransaction();
+        for (Object obj : objects) {
+            session.saveOrUpdate(obj);
+        }
+        trans.commit();
+    }
 
 
 }
