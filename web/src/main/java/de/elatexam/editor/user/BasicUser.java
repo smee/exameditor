@@ -38,14 +38,15 @@ import org.apache.wicket.authorization.strategies.role.Roles;
 import org.hibernate.annotations.CollectionOfElements;
 
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.Indexed;
 import de.elatexam.model.SubTaskDef;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 @Entity
-public class BasicUser implements DataUser {
+public class BasicUser implements DataUser, Indexed {
   private BasicPassword password;
 
   @Column(unique = true)
@@ -53,7 +54,7 @@ public class BasicUser implements DataUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer hjid;
+    private Long hjid;
 
   @CollectionOfElements(targetElement = String.class)
   private final Set<String> roles;
@@ -82,7 +83,7 @@ public class BasicUser implements DataUser {
   /**
    * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDef}. CAUTION: You must not add new
    * instances to this list, they won't get persisted. Use {@link #getSubtaskdefs()}.add(...) instead.
-   * 
+   *
    * @param <T>
    * @param clazz
    * @return
@@ -100,13 +101,14 @@ public class BasicUser implements DataUser {
   public void addRole(final String role) {
     this.roles.add(role);
   }
-  public Integer getHjid() {
+
+    public Long getHjid() {
     return hjid;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see net.databinder.auth.data.DataUser#getPassword()
    */
   public DataPassword getPassword() {
@@ -123,7 +125,7 @@ public class BasicUser implements DataUser {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see net.databinder.auth.data.DataUser#getUsername()
    */
   public String getUsername() {
@@ -132,15 +134,11 @@ public class BasicUser implements DataUser {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see net.databinder.auth.data.DataUser#hasRole(java.lang.String)
    */
   public boolean hasRole(final String role) {
     return roles.contains(role);
-  }
-
-  public void setId(final Integer id) {
-    this.hjid = id;
   }
 
   public void setPassword(final BasicPassword password) {
@@ -155,4 +153,14 @@ public class BasicUser implements DataUser {
   public String toString() {
     return String.format("[user '%s']", getUsername());
   }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.elatexam.model.Indexed#setHjid(java.lang.Long)
+     */
+    @Override
+    public void setHjid(Long id) {
+        this.hjid = id;
+    }
 }
