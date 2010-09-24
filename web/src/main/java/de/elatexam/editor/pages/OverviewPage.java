@@ -83,7 +83,8 @@ public class OverviewPage extends WebPage {
     // leads to StackoverflowError in case of resultpage extends OverviewPage
 
     res.add(Arrays.asList(new LinkVO(TaskDefPage.class, "Prüfungen")));
-        res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben"), new LinkVO(new Create() {
+        res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben"),
+                new LinkVO(new Create() {
           public WebPage createPage() {
             return new ShowSubtaskDefsPage(McSubTaskDef.class);
           }

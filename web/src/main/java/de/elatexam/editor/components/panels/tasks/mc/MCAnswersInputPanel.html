@@ -11,16 +11,17 @@
 <wicket:panel>
   <label wicket:id="title"></label>
   <div wicket:id="answerrepeater">
-  <div wicket:id="mcanswer" class="mcanswer">
-    <!-- <input wicket:id="id" type="text" class="answerid"/>  -->
-    <input wicket:id="correct" type="checkbox" style="float:left"/>
-    <input wicket:id="value" type="text" class="answertext"/>
-    <div class="stack">
-      <div><input type="image" wicket:id="moveUp" src="#" title="Move up"/></div>
-      <div><input type="image"  wicket:id="moveDown" title="Move down" src="#"/></div>
+    <div wicket:id="mcanswer" class="mcanswer">
+      <!-- <input wicket:id="id" type="text" class="answerid"/>  -->
+      <input wicket:id="correct" type="checkbox" style="float:left"/>
+      <input wicket:id="value" type="text" class="answertext"/>
+      <div class="stack">
+        <div><input type="image" wicket:id="moveUp" src="#" title="Move up"/></div>
+        <div><input type="image"  wicket:id="moveDown" title="Move down" src="#"/></div>
+      </div>
+      <input type="image" wicket:id="delete" class="delete" title="L&ouml;schen" src="#" onclick="return confirm('Sind Sie sicher, dass diese Antwort gel&ouml;scht werden soll?');"/>
+      <div style="clear:both"/>
     </div>
-    <input type="image" wicket:id="delete" class="delete" title="L&ouml;schen" src="#" onclick="return confirm('Sind Sie sicher, dass diese Antwort gel&ouml;scht werden soll?');"/>
-  </div>
   </div>
   <div class="buttons">
    <a href="#" wicket:id="addanswer"><img src="icons/add.png" title="Neue Antwort"/></a>

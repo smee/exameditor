@@ -34,6 +34,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.validation.validator.MinimumValidator;
 import org.hibernate.classic.Session;
 
 import de.elatexam.model.ComplexTaskDef.Config;
@@ -119,6 +120,8 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         };
         valueTextfield.setOutputMarkupId(true);
         valueTextfield.setOutputMarkupPlaceholderTag(true);
+        // TODO validate correctProcessedOnly:>=1, multipleCorrectos:>=2
+        valueTextfield.add(new MinimumValidator<Integer>(0));
         add(valueTextfield);
 
         // use dynamic string key for i18n: ${} means this.toString().
@@ -126,6 +129,11 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         label.setOutputMarkupId(true);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.wicket.markup.html.form.IFormModelUpdateListener#updateModel()
+     */
     @Override
     public void updateModel() {
         System.out.println("About to update " + getDefaultModelObject());

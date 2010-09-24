@@ -93,7 +93,7 @@ span.tree-content a {
 }
 
 span.tree-content a:hover {
-  text-decoration: underline;
+  /*text-decoration: underline;*/
 }
 
 span.tree-content .selected span.tree-label {

@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 
 div.mcanswer {
-  padding-left: 10em;
+  margin-left: 10em;
   clear: left;
 }
 
@@ -10,7 +10,7 @@ div.stack {
 }
 
 div.stack input {
-  padding: 2px 0;
+  /*padding: 2px 0;*/
 }
 
 input.answerid,input.answertext {
