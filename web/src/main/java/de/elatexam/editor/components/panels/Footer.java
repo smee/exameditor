@@ -21,7 +21,7 @@ public class Footer extends Panel {
     add(new Label("usercount", new AbstractReadOnlyModel<Integer>() {
       @Override
       public Integer getObject() {
-        return TaskEditorApplication.getInstance().getActiveUsersCount();
+                return TaskEditorApplication.getInstance().getRequestLogger().getLiveSessions().length;
       }
     }).setRenderBodyOnly(true));
   }

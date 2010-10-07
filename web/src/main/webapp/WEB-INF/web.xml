@@ -19,9 +19,6 @@
   </filter-mapping>
   <listener>
   <listener-class>
-      de.elatexam.editor.ActiveUserCounter
-  </listener-class>
-  <listener-class>
       de.elatexam.editor.RemovePreviews
   </listener-class>
   </listener>
