@@ -29,6 +29,7 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
@@ -65,17 +66,12 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
 
     private final Class<T> modelClass;
 
-        public SubtaskDefForm(final String id, final Class<T> modelClass) {
-      super(id, modelClass);
-      this.modelClass = modelClass;
-      init();
-    }
 
         public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
-      super(id, model);
+            super(id, model);
             this.modelClass = (Class<T>) model.getObject().getClass();
-      init();
-    }
+            init();
+        }
 
     /**
      * @param submittingButton
@@ -110,7 +106,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     private void init() {
       add(new FeedbackPanel("feedback"));
       // add common SubTaskDef input fields
-      add(new TextField<String>("xmlid").setRequired(true));// .add(new
+            add(new TextField<String>("xmlid", new SortableIdModel(new PropertyModel(getDefaultModel(), "xmlid"))).setRequired(true));// .add(new
       // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
       final TextArea<String> problemText = new TextArea<String>("problem") {
         @Override
@@ -169,13 +165,9 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
    */
     public SubtaskDefInputPanel(final String id, final Class<T> clazz,
             final HibernateObjectModel<T> model) {
-    super(id);
-        if (model != null) {
-            add(new SubtaskDefForm<T>("taskform", model));
-    } else {
-            add(new SubtaskDefForm<T>("taskform", clazz));
+        super(id);
+        add(new SubtaskDefForm<T>("taskform", model));
     }
-  }
 
     public SubtaskDefInputPanel(final String id, final HibernateObjectModel<T> model) {
     super(id);

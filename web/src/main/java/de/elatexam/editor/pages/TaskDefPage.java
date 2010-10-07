@@ -26,12 +26,14 @@ import net.databinder.models.hib.QueryBuilder;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import wicketdnd.theme.WebTheme;
 import de.elatexam.editor.TaskEditorApplication;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.panels.tasks.CategoryPanel;
@@ -62,6 +64,9 @@ public class TaskDefPage extends SecurePage {
 
     public TaskDefPage() {
         super();
+        // add drag-n-drop theme
+        add(CSSPackageResource.getHeaderContribution(new WebTheme()));
+
         IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
             public Query build(final Session sess) {
                 final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
@@ -75,13 +80,15 @@ public class TaskDefPage extends SecurePage {
             tasklistmodel = new HibernateListModel(BasicUser.class);
         }
         treeProvider = new ComplexTaskdefTreeProvider(tasklistmodel);
-        add(tree = new ComplexTaskDefTree("tree", treeProvider) {
+        tree = new ComplexTaskDefTree("tree", treeProvider) {
             @Override
             protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
                 renderPanelFor(selectedModel, target);
                 taskdefactions.onSelect(selectedModel, target);
             }
-        });
+        };
+        add(tree);
+
         editPanel = new EmptyPanel("editpanel");
         add(editPanel.setOutputMarkupId(true));
     }

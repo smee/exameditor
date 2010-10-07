@@ -21,16 +21,14 @@ package de.elatexam.editor.pages.taskdef;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.databinder.hib.Databinder;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.hibernate.Transaction;
 
 import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.user.BasicUser;
+import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ClozeTaskBlock.ClozeConfig;
@@ -113,27 +111,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
         default:
             break;
         }
-        persistObjects(selectedObject, toSave);
-    }
-
-    /**
-     * Store new objects into database.
-     *
-     * @param currentSelection
-     * @param newChildrenObjects
-     */
-    private void persistObjects(Object currentSelection, List<Object> newChildrenObjects) {
-        // save everything touched
-        if (!newChildrenObjects.isEmpty()) {
-            newChildrenObjects.add(currentSelection);
-            final org.hibernate.classic.Session session = Databinder.getHibernateSession();
-            final Transaction transaction = session.beginTransaction();
-            for (Object object : newChildrenObjects) {
-                session.saveOrUpdate(object);
-            }
-            transaction.commit();
-            // taskdefpage.renderPanelFor(new HibernateObjectModel(toSave.get(0)), target);
-        }
+        Stuff.saveAll(selectedObject);
     }
 
     /**
@@ -144,41 +122,28 @@ public class AddElementLink<T> extends AjaxLink<T> {
     public void createTaskblock(Class<? extends TaskBlock> taskblockclass) {
         Object selectedObject = taskDefPage.getTreeSelection().getObject();
         if (selectedObject instanceof Category) {
-            List<Object> toSave = new LinkedList<Object>();
             try {
                 TaskBlock taskblock = taskblockclass.newInstance();
-                TaskblockConfig config = new TaskblockConfig();
-                taskblock.setConfig(config);
+                taskblock.setConfig(new TaskblockConfig());
 
                 ((Category) selectedObject).getTaskBlocks().add(taskblock);
-                toSave.add(taskblock);
 
                 // set subclass specific config
                 switch (childMap.get(taskblockclass)) {
                 case 3:
-                    McConfig mcc = new McConfig();
-                    mcc.setRegular(new McConfig.Regular());
-                    ((McTaskBlock) taskblock).setMcConfig(mcc);
-                    toSave.add(mcc);
-                    toSave.add(mcc.getRegular());
+                    ((McTaskBlock) taskblock).setMcConfig(new McConfig(new McConfig.Regular(), null));
                     break;
                 case 4:
-                    MappingConfig mapc = new MappingConfig();
-                    ((MappingTaskBlock) taskblock).setMappingConfig(mapc);
-                    toSave.add(mapc);
+                    ((MappingTaskBlock) taskblock).setMappingConfig(new MappingConfig());
                     break;
                 case 5:
-                    ClozeConfig cc = new ClozeConfig();
-                    ((ClozeTaskBlock) taskblock).setClozeConfig(cc);
-                    toSave.add(cc);
+                    ((ClozeTaskBlock) taskblock).setClozeConfig(new ClozeConfig());
                     break;
                 default:
                     break;
                 }
 
-                toSave.add(config);
-                toSave.add(taskblock);
-                persistObjects(selectedObject, toSave);
+                Stuff.saveAll(selectedObject);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

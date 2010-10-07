@@ -19,14 +19,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elatexam.editor.components.panels.tree;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.IComponentInheritedModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.IWrapModel;
 
 import wickettree.ITreeProvider;
 
@@ -36,6 +41,8 @@ import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.Indexed;
+import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 
 /**
@@ -47,15 +54,68 @@ import de.elatexam.model.TaskBlock;
  */
 public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
 
-  private final IModel<List<?>> model;
+    /**
+     * wrap each object in a HibernateObjectModel, implement equals/hashcode correctly (respecting the primary key only)
+     *
+     * @author Steffen Dienst
+     *
+     */
+    private static class HackedHibernateObjectModel extends HibernateObjectModel implements IWrapModel, IComponentInheritedModel {
+        private HackedHibernateObjectModel(Class objectClass, Serializable entityId) {
+            super(objectClass, entityId);
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+          final Object target = getObject();
+          if (target != null && obj instanceof HibernateObjectModel)
+            return equalId(target, ((HibernateObjectModel) obj).getObject());
+          return super.equals(obj);
+        }
+
+        private boolean equalId(final Object o1, final Object o2) {
+          return o1.getClass().equals(o2.getClass()) && getId(o1).equals(getId(o2));
+        }
+
+        private Object getId(final Object o) {
+            return ((Indexed) o).getHjid();
+        }
+
+        @Override
+        public int hashCode() {
+          final Object target = getObject();
+          if (target == null)
+            return super.hashCode();
+          int hash = 1;
+          hash = hash * 31 + target.getClass().hashCode();
+          hash = hash * 31 + getId(target).hashCode();
+          return hash;
+
+        }
+
+        // HACK: the tree uses StyledLinks which itself contains an AjaxFallBackLink without any model
+        // This breaks the DND-feature somehow. Using these two methods we signal
+        // that children may inherit this model if they have none
+        @Override
+        public IWrapModel wrapOnInheritance(Component component) {
+            return this;
+        }
+
+        @Override
+        public IModel getWrappedModel() {
+            return this;
+        }
+    }
+
+private final IModel<List<?>> model;
 
   public ComplexTaskdefTreeProvider(final IModel<List<?>> model) {
     this.model = model;
   }
 
-  public IModel createLabelModel(final IModel<?> model) {
-    return model;
-  }
+    // public IModel createLabelModel(final IModel<?> model) {
+    // return model;
+    // }
 
   /*
    * (non-Javadoc)
@@ -71,7 +131,15 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   }
 
     private Iterator<Object> getChildren(final TaskBlock tb) {
-        return ((Collection) Stuff.getSubtaskDefs(tb)).iterator();
+        List<Object> subtasks = new ArrayList<Object>(Stuff.getSubtaskDefs(tb));
+        Collections.sort(subtasks, new Comparator<Object>() {
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                return ((SubTaskDef) o1).getXmlid().compareTo(((SubTaskDef) o2).getXmlid());
+            }
+        });
+        return subtasks.iterator();
   }
 
   private Iterator<Category> getChildren(final ComplexTaskDef ctd) {
@@ -118,41 +186,8 @@ public class ComplexTaskdefTreeProvider implements ITreeProvider<Object> {
   @SuppressWarnings("unchecked")
   public IModel<Object> model(final Object object) {
     try {
-            // wrap each object in a HibernateObjectModel, implement equals/hashcode correctly (respecting the primary
-            // key only)
-      return new HibernateObjectModel(object.getClass(), (Serializable) PropertyUtils.getProperty(object, "hjid")) {
-        @Override
-        public boolean equals(final Object obj) {
-          final Object target = getObject();
-          if (target != null && obj instanceof HibernateObjectModel)
-            return equalId(target, ((HibernateObjectModel) obj).getObject());
-          return super.equals(obj);
-        }
 
-        private boolean equalId(final Object o1, final Object o2) {
-          return o1.getClass().equals(o2.getClass()) && getId(o1).equals(getId(o2));
-        }
-
-        private Object getId(final Object o) {
-          try {
-            return PropertyUtils.getProperty(o, "hjid");
-          } catch (final Exception e) {
-            throw new RuntimeException(e);
-          }
-        }
-
-        @Override
-        public int hashCode() {
-          final Object target = getObject();
-          if (target == null)
-            return super.hashCode();
-          int hash = 1;
-          hash = hash * 31 + target.getClass().hashCode();
-          hash = hash * 31 + getId(target).hashCode();
-          return hash;
-
-        }
-      };
+      return new HackedHibernateObjectModel(object.getClass(), (Serializable) PropertyUtils.getProperty(object, "hjid"));
     } catch (final Exception e) {
       e.printStackTrace();
       return null;

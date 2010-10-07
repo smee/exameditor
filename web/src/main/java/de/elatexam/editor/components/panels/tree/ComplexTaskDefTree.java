@@ -26,27 +26,65 @@ import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.IModel;
 
+import wicketdnd.DragSource;
+import wicketdnd.DropTarget;
+import wicketdnd.Location;
+import wicketdnd.Operation;
+import wicketdnd.Reject;
+import wicketdnd.Transfer;
 import wickettree.ITreeProvider;
 import wickettree.NestedTree;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.McTaskBlock;
 
 /**
  * @author Steffen Dienst
- * 
+ *
  */
 public class ComplexTaskDefTree extends NestedTree {
 
   private IModel<ComplexTaskDef> currentTaskdef;
   private IModel<?> selectedModel;
 
-  public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
-    super(id, provider);
-    add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
-  }
+    /**
+     * @param id
+     * @param provider
+     */
+    public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
+        super(id, provider);
+
+        add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
+        add(new DragSource(Operation.MOVE).drag("a.tree-mc.subtaskdef"));
+
+        add(new DropTarget(Operation.MOVE) {
+            @Override
+            public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject {
+                if (transfer == null || location == null)
+                    return;
+
+                Object droppedObject = transfer.getData();
+                Object droppedOn = location.getModelObject();
+                System.out.println("DropTarget#onDrop: dropping " + droppedObject + " on " + droppedOn);
+
+                if (droppedObject == droppedOn) {
+                    System.out.println("rejecting...");
+                    transfer.reject();
+                } else if (droppedOn instanceof McTaskBlock) {
+                    if (((McTaskBlock) droppedOn).getMcSubTaskDef().contains(droppedObject)) {
+                        System.out.println("rejecting...");
+                        transfer.reject();
+                    }
+                }
+                new ComplexTaskHierarchyPruner(provider).moveElement(droppedObject, droppedOn, location.getAnchor());
+                target.addComponent(ComplexTaskDefTree.this);
+                // super.onDrop(target, transfer, location);
+            }
+        }.dropCenter("a.tree-mc.taskblock").dropTopAndBottom("a.tree-mc.subtaskdef"));
+    }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.apache.wicket.Component#detachModels()
    */
   @Override
@@ -72,7 +110,7 @@ public class ComplexTaskDefTree extends NestedTree {
 
   /**
    * Inform the tree about the selection. This is needed to be able to call {@link #onSelect(IModel, AjaxRequestTarget)}
-   * 
+   *
    * @param model
    * @param tree2
    * @param target
@@ -92,7 +130,7 @@ public class ComplexTaskDefTree extends NestedTree {
 
   /**
    * Gets called whenever the tree selection changes.
-   * 
+   *
    * @param selectedModel
    * @param target
    */
@@ -101,22 +139,20 @@ public class ComplexTaskDefTree extends NestedTree {
 
   /**
    * traverse parents to find taskdef predecessor for every object!
-   * 
+   *
    * @param selected
    */
   private IModel<?> findCurrentTaskDef(final IModel<?> selected) {
-    if (isComplextask(selected)) {
-      return selected;
-    }
+    if (isComplextask(selected))
+        return selected;
 
     final ComplexTaskdefTreeProvider prov = (ComplexTaskdefTreeProvider) getProvider();
     final Iterator<?> it = prov.getRoots();
     while (it.hasNext()) {
       final IModel<?> root = prov.model(it.next());
       final IModel<?> ctdModel = findTaskDefThatContains(selected, root);
-      if (ctdModel != null) {
+      if (ctdModel != null)
         return ctdModel;
-      }
     }
     return null;
   }
@@ -131,18 +167,17 @@ public class ComplexTaskDefTree extends NestedTree {
 
   private IModel<?> findTaskDefThatContains(final IModel<?> selected, final IModel<?> currentNode) {
     final ITreeProvider provider = getProvider();
-    if (currentNode.equals(selected)) {
-      return currentNode;
-    } else if (provider.hasChildren(currentNode.getObject())) {
+    if (currentNode.equals(selected))
+        return currentNode;
+    else if (provider.hasChildren(currentNode.getObject())) {
       final Iterator childrenIterator = provider.getChildren(currentNode.getObject());
       while (childrenIterator.hasNext()) {
         final IModel<?> inSubtree = findTaskDefThatContains(selected, provider.model(childrenIterator.next()));
         if (inSubtree != null) {
-          if (inSubtree.getObject().getClass().equals(ComplexTaskDef.class)) {
+          if (inSubtree.getObject().getClass().equals(ComplexTaskDef.class))
             return inSubtree;
-          } else {
+        else
             return currentNode;
-          }
         }
       }
     }
@@ -151,7 +186,7 @@ public class ComplexTaskDefTree extends NestedTree {
 
   /**
    * Return model of the currently selected node.
-   * 
+   *
    * @return
    */
   public IModel<?> getSelected() {

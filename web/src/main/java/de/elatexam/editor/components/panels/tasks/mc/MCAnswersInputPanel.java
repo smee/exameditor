@@ -45,6 +45,8 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
         add(new Label("title", "Anworten"));
 
 		container = new WebMarkupContainer("answerrepeater");
+        container.setOutputMarkupId(true);
+
         final ListEditor<McSubTaskDefAnswerDefinitionsItem> answers = new ListEditor<McSubTaskDefAnswerDefinitionsItem>("mcanswer", model) {
 
 			@Override
@@ -109,7 +111,6 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 				super.updateModel();
 			}
 		};
-		container.setOutputMarkupId(true);
 		container.add(answers);
 		add(container);
 

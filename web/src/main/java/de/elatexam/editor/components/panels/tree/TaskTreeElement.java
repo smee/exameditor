@@ -30,6 +30,7 @@ import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.editor.components.panels.tasks.SortableIdModel;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
@@ -41,6 +42,7 @@ import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintSubTaskDef;
 import de.elatexam.model.PaintTaskBlock;
+import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
@@ -68,16 +70,16 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .build();
   final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
   .put(ComplexTaskDef.class, "tree-exam")
-            .put(McTaskBlock.class, "tree-mc")
-  .put(MappingTaskBlock.class, "tree-mapping")
-  .put(ClozeTaskBlock.class, "tree-cloze")
-  .put(TextTaskBlock.class, "tree-text")
-  .put(PaintTaskBlock.class, "tree-paint")
-  .put(McSubTaskDef.class, "tree-mc")
-  .put(MappingSubTaskDef.class, "tree-mapping")
-  .put(ClozeSubTaskDef.class, "tree-cloze")
-  .put(TextSubTaskDef.class, "tree-text")
-  .put(PaintSubTaskDef.class, "tree-paint")
+  .put(McTaskBlock.class, "tree-mc taskblock")
+  .put(MappingTaskBlock.class, "tree-mapping taskblock")
+  .put(ClozeTaskBlock.class, "tree-cloze taskblock")
+  .put(TextTaskBlock.class, "tree-text taskblock")
+  .put(PaintTaskBlock.class, "tree-paint taskblock")
+  .put(McSubTaskDef.class, "tree-mc subtaskdef")
+  .put(MappingSubTaskDef.class, "tree-mapping subtaskdef")
+  .put(ClozeSubTaskDef.class, "tree-cloze subtaskdef")
+  .put(TextSubTaskDef.class, "tree-text subtaskdef")
+  .put(PaintSubTaskDef.class, "tree-paint subtaskdef")
 
   .build();
 
@@ -170,12 +172,15 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
    * .IModel)
    */
   @Override
-  protected IModel<String> newLabelModel(final IModel<T> model) {
-    final Object o = model.getObject();
+    protected IModel<String> newLabelModel(final IModel<T> model) {
+        final Object o = model.getObject();
+        final IModel<String> defaultModel = new PropertyModel<String>(model, expressions.get(o.getClass()));
         if (o instanceof TaskBlock)
             return Model.of("Aufgaben");
-    return new PropertyModel<String>(model, expressions.get(o.getClass()));
-  }
+        else if (o instanceof SubTaskDef)
+            return new SortableIdModel(new PropertyModel<String>(model, "xmlid"));
+        return defaultModel;
+    }
 
   /**
    * Toggle the node's {@link State} on click.

@@ -3,11 +3,16 @@ package de.elatexam.editor.components.panels.tree;
 import java.util.Iterator;
 import java.util.List;
 
+import wicketdnd.Anchor;
 import wickettree.ITreeProvider;
+import de.elatexam.editor.components.panels.tasks.SortableIdModel;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.Indexed;
+import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 
@@ -56,7 +61,7 @@ public class ComplexTaskHierarchyPruner {
      * @param child
      * @return
      */
-    private Object findParentOf(final Object child) {
+    public Object findParentOf(final Object child) {
         final Iterator<?> it = treeProvider.getRoots();
         while (it.hasNext()) {
             final Object root = it.next();
@@ -65,6 +70,46 @@ public class ComplexTaskHierarchyPruner {
                 return parent;
         }
         return null;
+    }
+
+    /**
+     * @param element
+     * @param to
+     * @param anchor
+     */
+    public void moveElement(Object element, Object to, Anchor anchor) {
+        if (to instanceof McTaskBlock) {
+            McTaskBlock toTaskblock = (McTaskBlock) to;
+            Object parent = findParentOf(element);
+            if (parent != toTaskblock) {
+                // remove from current taskblock
+                ((McTaskBlock) parent).getMcSubTaskDef().remove(element);
+                toTaskblock.getMcSubTaskDef().add((McSubTaskDef) element);
+
+                Stuff.saveAll(parent, toTaskblock);
+            }
+        } else if (to instanceof McSubTaskDef) {
+            // change order
+            McTaskBlock toTaskblock = (McTaskBlock) findParentOf(to);
+
+            McTaskBlock fromTaskblock = (McTaskBlock) findParentOf(element);
+            fromTaskblock.getMcSubTaskDef().remove(element);
+
+            List<McSubTaskDef> subtaskdefs = toTaskblock.getMcSubTaskDef();
+            int indexOfTo = subtaskdefs.indexOf(to);
+            if (anchor == Anchor.BOTTOM) {
+                indexOfTo++;
+            }
+            subtaskdefs.add(indexOfTo, (McSubTaskDef) element);
+
+            // manifest order by using a hack:
+            int idx = 0;
+            for (McSubTaskDef std : subtaskdefs) {
+                std.setXmlid(SortableIdModel.getTaggedId(std.getXmlid(), idx));
+                idx++;
+            }
+            Stuff.saveAll(fromTaskblock, toTaskblock);
+        }
     }
 
     private Object clearPhysicalParent(final Object child, final Object logicalParent) {
@@ -93,6 +138,7 @@ public class ComplexTaskHierarchyPruner {
                 e.printStackTrace();
             }
         }
+        // all other elements have a single child, stupid jaxb default code...
         return logicalParent;
     }
 
@@ -123,7 +169,7 @@ public class ComplexTaskHierarchyPruner {
             potentialParent.getClass().equals(child.getClass())
                     &&
                     // same primary key?
-                    ((Long) Stuff.call(potentialParent, "getHjid")).equals(Stuff.call(child, "getHjid"));
+                    ((Indexed) potentialParent).getHjid().equals(((Indexed) child).getHjid());
 
         } catch (Exception e) {
             e.printStackTrace();
