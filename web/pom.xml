@@ -153,6 +153,10 @@
         	<artifactId>hibernate-annotations</artifactId>
         	<groupId>org.hibernate</groupId>
         </exclusion>
+        <exclusion>
+        	<artifactId>ejb3-persistence</artifactId>
+        	<groupId>org.hibernate</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!--
