@@ -74,9 +74,10 @@ public class ComplexTaskDefTree extends NestedTree {
                         System.out.println("rejecting...");
                         transfer.reject();
                     }
+                } else {
+                    new ComplexTaskHierarchyPruner(provider).moveElement(droppedObject, droppedOn, location.getAnchor());
+                    target.addComponent(ComplexTaskDefTree.this);
                 }
-                new ComplexTaskHierarchyPruner(provider).moveElement(droppedObject, droppedOn, location.getAnchor());
-                target.addComponent(ComplexTaskDefTree.this);
                 // super.onDrop(target, transfer, location);
             }
         }.dropCenter("a.tree-mc.taskblock").dropTopAndBottom("a.tree-mc.subtaskdef"));
