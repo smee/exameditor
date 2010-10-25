@@ -45,6 +45,10 @@ fieldset li {
   width: 100%;
   padding-bottom: 1em;
 }
+fieldset li .value {
+  padding-left: 10em;
+}
+
 fieldset label {
   float: left;
   width: 9em;
@@ -65,4 +69,5 @@ fieldset.submit {
 .longinput {
   width: 22em;
 }
+
  /* labels left aligned */
