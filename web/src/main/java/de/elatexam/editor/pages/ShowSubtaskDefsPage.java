@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.databinder.models.hib.CriteriaFilterAndSort;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeaderlessColumn;
@@ -18,9 +19,12 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 import de.elatexam.editor.components.panels.TaskActionsPanel;
+import de.elatexam.editor.components.panels.tasks.SortableIdModel;
+import de.elatexam.editor.pages.filter.LabeledTextFilter;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TextSubTaskDef;
 
@@ -58,15 +62,25 @@ public class ShowSubtaskDefsPage<T extends SubTaskDef> extends SecurePage {
 
 		final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
-		columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid"));
+        columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid") {
+            @Override
+            protected IModel<?> createLabelModel(IModel<T> rowModel) {
+                return new SortableIdModel(new PropertyModel<String>(rowModel, "xmlid"));
+            }
+        });
 		columns.add(new TextFilteredPropertyColumn<T, String>(Model.of("Aufgabenstellung"), "problem", "problem") {
 			@Override
 			public void populateItem(final Item<ICellPopulator<T>> item, final String componentId, final IModel<T> rowModel) {
 				// add a label that renders it's html contents
 				item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
 			}
+
+            @Override
+            public Component getFilter(String componentId, FilterForm form) {
+                return new LabeledTextFilter<String>(componentId, Model.of("enthält:"), getFilterModel(form), form);
+            }
 		});
-		columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
+        columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
 			@Override
 			protected IModel<String> createLabelModel(final IModel<T> rowModel) {
 				if (rowModel.getObject() == null)
