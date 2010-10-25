@@ -157,10 +157,20 @@ public class TaskDefActions extends Panel {
         Object selected = selectedModel.getObject();
         boolean enabled = !(selected instanceof BasicUser);
 
-        this.downloadLink.setEnabled(enabled);
-        this.previewLink.setEnabled(enabled);
+
+        if (selected instanceof ComplexTaskDef) {
+            this.previewLink.setEnabled(true);
+            this.downloadLink.setEnabled(true);
+        } else {
+            this.previewLink.setEnabled(false);
+            this.downloadLink.setEnabled(false);
+        }
+        if (selected instanceof SubTaskDef) {
+            this.addLink.setEnabled(false);
+        } else {
+            this.addLink.setEnabled(true);
+        }
         this.deleteLink.setEnabled(enabled);
-        this.addLink.setEnabled(true);
         // no admin user should be able to delete himself....
         if (selected instanceof BasicUser) {
             this.deleteLink.setEnabled(false == ((BasicUser) selected).getUsername().equals(TaskEditorSession.get().getUser().getUsername()));
