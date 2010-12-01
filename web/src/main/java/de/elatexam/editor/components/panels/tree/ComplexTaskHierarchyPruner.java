@@ -24,14 +24,14 @@ import de.elatexam.model.TaskBlock;
  *
  */
 public class ComplexTaskHierarchyPruner {
-    private ITreeProvider<Object> treeProvider;
+  private ITreeProvider<Object> treeProvider;
 
     /**
      * Default constructor.
      *
      * @param treeProvider
      */
-    public ComplexTaskHierarchyPruner(ITreeProvider<Object> treeProvider) {
+  public ComplexTaskHierarchyPruner(ITreeProvider<Object> treeProvider) {
         this.treeProvider = treeProvider;
     }
 

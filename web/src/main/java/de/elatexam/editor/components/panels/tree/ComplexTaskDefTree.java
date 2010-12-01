@@ -34,54 +34,131 @@ import wicketdnd.Reject;
 import wicketdnd.Transfer;
 import wickettree.ITreeProvider;
 import wickettree.NestedTree;
+
+import com.google.common.collect.ImmutableMap;
+
+import de.elatexam.model.ClozeSubTaskDef;
+import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.MappingTaskBlock;
+import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.McTaskBlock;
+import de.elatexam.model.PaintSubTaskDef;
+import de.elatexam.model.PaintTaskBlock;
+import de.elatexam.model.TextSubTaskDef;
+import de.elatexam.model.TextTaskBlock;
 
 /**
  * @author Steffen Dienst
  *
  */
 public class ComplexTaskDefTree extends NestedTree {
+  final static ImmutableMap<Class<?>, String> tranferTypes = new ImmutableMap.Builder<Class<?>, String>()
+      .put(MappingTaskBlock.class, "mapping")
+      .put(MappingSubTaskDef.class, "mapping")
+
+      .put(McTaskBlock.class, "mc")
+      .put(McSubTaskDef.class, "mc")
+
+      .put(ClozeTaskBlock.class, "cloze")
+      .put(ClozeSubTaskDef.class, "cloze")
+
+      .put(PaintTaskBlock.class, "paint")
+      .put(PaintSubTaskDef.class, "paint")
+
+      .put(TextTaskBlock.class, "text")
+      .put(TextSubTaskDef.class, "text")
+      .build();
+  final static ImmutableMap<Class<?>, String> dragStarts = new ImmutableMap.Builder<Class<?>, String>()
+      .put(MappingSubTaskDef.class, "a.tree-mapping.subtaskdef")
+      .put(McSubTaskDef.class, "a.tree-mc.subtaskdef")
+      .put(ClozeSubTaskDef.class, "a.tree-cloze.subtaskdef")
+      .put(PaintSubTaskDef.class, "a.tree-paint.subtaskdef")
+      .put(TextSubTaskDef.class, "a.tree-text.subtaskdef")
+      .build();
+  final static ImmutableMap<Class<?>, String> dropTaskblocks = new ImmutableMap.Builder<Class<?>, String>()
+      .put(MappingSubTaskDef.class, "a.tree-mapping.taskblock")
+      .put(McSubTaskDef.class, "a.tree-mc.taskblock")
+      .put(ClozeSubTaskDef.class, "a.tree-cloze.taskblock")
+      .put(PaintSubTaskDef.class, "a.tree-paint.taskblock")
+      .put(TextSubTaskDef.class, "a.tree-text.taskblock")
+      .build();
+
+  /**
+   * Preconfigured {@link DragSource} that starts for one subtaskdef type only.
+   *
+   * @author Steffen Dienst
+   *
+   */
+  static class TypedDragSource extends DragSource {
+
+    private final String[] types;
+
+    public TypedDragSource(Class<?> type, Operation... operations) {
+      super(operations);
+      this.types = new String[] { tranferTypes.get(type) };
+      drag(dragStarts.get(type));
+    }
+
+    @Override
+    public String[] getTypes() {
+      return types;
+    }
+  }
+
+  static class TypedDropTarget extends DropTarget {
+    private final String[] types;
+    private final ComplexTaskDefTree tree;
+
+    public TypedDropTarget(Class<?> type, ComplexTaskDefTree tree, Operation... operations) {
+      super(operations);
+      this.tree = tree;
+      this.types = new String[] { tranferTypes.get(type) };
+      this.dropTopAndBottom(dragStarts.get(type));
+      this.dropCenter(dropTaskblocks.get(type));
+    }
+
+    @Override
+    public String[] getTypes() {
+      return types;
+    }
+
+    @Override
+    public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject {
+      if (transfer == null || location == null)
+        return;
+
+      Object droppedObject = transfer.getData();
+      Object droppedOn = location.getModelObject();
+      // System.out.println("DropTarget#onDrop: dropping " + droppedObject + " on " + droppedOn);
+
+      if (new ComplexTaskHierarchyPruner(tree.getProvider()).moveElement(droppedObject, droppedOn, location.getAnchor())) {
+        target.addComponent(tree);
+      } else {
+        transfer.reject();
+      }
+    }
+
+  }
 
   private IModel<ComplexTaskDef> currentTaskdef;
   private IModel<?> selectedModel;
 
-    /**
-     * @param id
-     * @param provider
-     */
-    public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
-        super(id, provider);
+  /**
+   * @param id
+   * @param provider
+   */
+  public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
+    super(id, provider);
 
-        add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
-        add(new DragSource(Operation.MOVE).drag("a.tree-mc.subtaskdef"));
+    add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
 
-        add(new DropTarget(Operation.MOVE) {
-            @Override
-            public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject {
-                if (transfer == null || location == null)
-                    return;
-
-                Object droppedObject = transfer.getData();
-                Object droppedOn = location.getModelObject();
-                System.out.println("DropTarget#onDrop: dropping " + droppedObject + " on " + droppedOn);
-
-                if (droppedObject == droppedOn) {
-                    System.out.println("rejecting...");
-                    transfer.reject();
-                } else if (droppedOn instanceof McTaskBlock) {
-                    if (((McTaskBlock) droppedOn).getMcSubTaskDef().contains(droppedObject)) {
-                        System.out.println("rejecting...");
-                        transfer.reject();
-                    }
-                } else {
-                    new ComplexTaskHierarchyPruner(provider).moveElement(droppedObject, droppedOn, location.getAnchor());
-                    target.addComponent(ComplexTaskDefTree.this);
-                }
-                // super.onDrop(target, transfer, location);
-            }
-        }.dropCenter("a.tree-mc.taskblock").dropTopAndBottom("a.tree-mc.subtaskdef"));
-    }
+    // add(new TypedDragSource(McSubTaskDef.class, Operation.MOVE));
+    // add(new TypedDropTarget(McSubTaskDef.class, provider, Operation.MOVE));
+    // add(new TypedDragSource(ClozeSubTaskDef.class, Operation.MOVE));
+    // add(new TypedDragSource(TextSubTaskDef.class, Operation.MOVE));
+  }
 
   /*
    * (non-Javadoc)
@@ -107,7 +184,6 @@ public class ComplexTaskDefTree extends NestedTree {
   protected Component newContentComponent(final String id, final IModel model) {
     return new TaskTreeElement(id, this, model);
   }
-
 
   /**
    * Inform the tree about the selection. This is needed to be able to call {@link #onSelect(IModel, AjaxRequestTarget)}
@@ -145,7 +221,7 @@ public class ComplexTaskDefTree extends NestedTree {
    */
   private IModel<?> findCurrentTaskDef(final IModel<?> selected) {
     if (isComplextask(selected))
-        return selected;
+      return selected;
 
     final ComplexTaskdefTreeProvider prov = (ComplexTaskdefTreeProvider) getProvider();
     final Iterator<?> it = prov.getRoots();
@@ -169,7 +245,7 @@ public class ComplexTaskDefTree extends NestedTree {
   private IModel<?> findTaskDefThatContains(final IModel<?> selected, final IModel<?> currentNode) {
     final ITreeProvider provider = getProvider();
     if (currentNode.equals(selected))
-        return currentNode;
+      return currentNode;
     else if (provider.hasChildren(currentNode.getObject())) {
       final Iterator childrenIterator = provider.getChildren(currentNode.getObject());
       while (childrenIterator.hasNext()) {
@@ -177,7 +253,7 @@ public class ComplexTaskDefTree extends NestedTree {
         if (inSubtree != null) {
           if (inSubtree.getObject().getClass().equals(ComplexTaskDef.class))
             return inSubtree;
-        else
+          else
             return currentNode;
         }
       }

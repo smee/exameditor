@@ -23,6 +23,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import wicketdnd.Operation;
 import wickettree.AbstractTree;
 import wickettree.AbstractTree.State;
 import wickettree.ITreeProvider;
@@ -31,7 +32,8 @@ import wickettree.content.StyledLinkLabel;
 import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.components.panels.tasks.SortableIdModel;
-import de.elatexam.editor.user.BasicUser;
+import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree.TypedDragSource;
+import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree.TypedDropTarget;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
@@ -54,7 +56,6 @@ import de.elatexam.model.TextTaskBlock;
 public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   final static ImmutableMap<Class<?>, String> expressions = new ImmutableMap.Builder<Class<?>, String>()
 
-  .put(BasicUser.class, "username")
   .put(ComplexTaskDef.class, "title")
   .put(Category.class, "title")
             .put(McTaskBlock.class, "class.simpleName")
@@ -80,7 +81,6 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .put(ClozeSubTaskDef.class, "tree-cloze subtaskdef")
   .put(TextSubTaskDef.class, "tree-text subtaskdef")
   .put(PaintSubTaskDef.class, "tree-paint subtaskdef")
-
   .build();
 
   private final ComplexTaskDefTree tree;
@@ -89,6 +89,9 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
     super(id, model);
 
     this.tree = tree;
+
+    add(new TypedDragSource(model.getObject().getClass(), Operation.MOVE));
+    add(new TypedDropTarget(model.getObject().getClass(), tree, Operation.MOVE));
   }
 
   protected String getClosedStyleClass() {
