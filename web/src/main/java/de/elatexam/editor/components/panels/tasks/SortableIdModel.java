@@ -42,7 +42,7 @@ public class SortableIdModel extends Model<String> {
     }
 
     private static String getRealId(String id) {
-        if (id.contains(STUPID_SEPARATOR))
+        if (id != null && id.contains(STUPID_SEPARATOR))
             return id.substring(id.indexOf(STUPID_SEPARATOR) + STUPID_SEPARATOR.length());
         else
             return id;

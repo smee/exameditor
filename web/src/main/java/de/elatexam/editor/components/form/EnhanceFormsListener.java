@@ -1,6 +1,6 @@
 /*
 
-Copyright (C) 2009 Steffen Dienst
+Copyright (C) 2010 Steffen Dienst
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,27 +15,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-package de.elatexam.editor.preview;
+*/
+package de.elatexam.editor.components.form;
 
-
-
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
-
-import de.elatexam.model.ComplexTaskDef;
+import org.apache.wicket.Component;
+import org.apache.wicket.application.IComponentInstantiationListener;
+import org.apache.wicket.markup.html.form.FormComponent;
 
 /**
  * @author Steffen Dienst
  *
  */
-public class PreviewPanel extends Panel {
-  public PreviewPanel(final String id, final IModel<ComplexTaskDef> hibernateObjectModel) {
-    super(id, hibernateObjectModel);
-    setOutputMarkupId(true);
+public class EnhanceFormsListener implements IComponentInstantiationListener {
 
-    add(new PreviewLink("previewLink", hibernateObjectModel));
-  }
-
+    /* (non-Javadoc)
+     * @see org.apache.wicket.application.IComponentInstantiationListener#onInstantiation(org.apache.wicket.Component)
+     */
+    @Override
+    public void onInstantiation(Component component) {
+        if (component instanceof FormComponent) {
+            ((FormComponent) component).add(new ErrorHighlightBehavior());
+        }
+    }
 
 }

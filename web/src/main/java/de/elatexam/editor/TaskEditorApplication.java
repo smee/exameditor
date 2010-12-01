@@ -19,6 +19,7 @@ import net.databinder.hib.SessionUnit;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,6 +29,8 @@ import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.jquery.JQueryResourceReference;
 
 import de.elatexam.editor.components.form.EnhanceFormsListener;
 import de.elatexam.editor.pages.OverviewPage;
@@ -121,7 +124,8 @@ public class TaskEditorApplication extends AuthDataApplication {
     @Override
     protected void init() {
         super.init();
-        // addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
+        // enable JQuery
+        addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
         // enable request logger, needed to show live session count
         getRequestLoggerSettings().setRequestLoggerEnabled(true);
 

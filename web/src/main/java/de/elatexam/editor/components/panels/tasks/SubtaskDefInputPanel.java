@@ -40,6 +40,9 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
+
+import com.visural.wicket.behavior.inputhint.InputHintBehavior;
+
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
@@ -106,7 +109,9 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     private void init() {
       add(new FeedbackPanel("feedback"));
       // add common SubTaskDef input fields
-            add(new TextField<String>("xmlid", new SortableIdModel(new PropertyModel(getDefaultModel(), "xmlid"))).setRequired(true));// .add(new
+      TextField<String> idTf=new TextField<String>("xmlid", new SortableIdModel(new PropertyModel(getDefaultModel(), "xmlid")));
+      idTf.add(new InputHintBehavior(this, "eindeutiger Bezeichner", "color: #aaa;"));
+      add(idTf.setRequired(true));// .add(new
       // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
       final TextArea<String> problemText = new TextArea<String>("problem") {
         @Override
@@ -131,7 +136,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       add(getTaskSpecificFormPanel("specificelements"));
 
       // add correction and hints
-      add(new TextField<String>("hint"));
+      add(new TextField<String>("hint").add(new InputHintBehavior(this, "Hinweis für Studenten", "color: #aaa;")));
       add(new TextArea<String>("correctionHint"));
       add(new org.apache.wicket.markup.html.form.Button("saveButton"));
       add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
