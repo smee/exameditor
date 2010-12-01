@@ -27,12 +27,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.wicket.RequestCycle;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.request.target.basic.RedirectRequestTarget;
 import org.apache.wicket.request.target.component.PageRequestTarget;
+
+import com.visural.wicket.component.submitters.IndicateModalLink;
 
 import de.elatexam.model.ComplexTaskDef;
 import de.thorstenberger.taskmodel.TaskModelViewDelegate;
@@ -54,10 +55,11 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
  * @author Steffen Dienst
  *
  */
-public class PreviewLink extends Link<ComplexTaskDef> {
+public class PreviewLink extends IndicateModalLink {
 
   public PreviewLink(final String id, final IModel<ComplexTaskDef> model) {
-    super(id, model);
+    super(id);
+    setModel(model);
   }
 
   /**
@@ -119,7 +121,7 @@ public class PreviewLink extends Link<ComplexTaskDef> {
 
     /**
      * Create return link to this very page instance. Clear TaskModelViewDelegate on return.
-     * 
+     *
      * @return
      */
     private String getReturnLink() {
