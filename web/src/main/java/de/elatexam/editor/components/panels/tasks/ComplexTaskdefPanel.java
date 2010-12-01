@@ -1,5 +1,6 @@
 package de.elatexam.editor.components.panels.tasks;
 
+import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.form.Button;
@@ -12,7 +13,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
-import de.elatexam.editor.components.form.ShinyForm;
 import de.elatexam.editor.components.panels.tasks.correctionmode.CorrectionModePanel;
 import de.elatexam.model.ComplexTaskDef;
 
@@ -20,7 +20,7 @@ import de.elatexam.model.ComplexTaskDef;
  * @author sdienst
  */
 public class ComplexTaskdefPanel extends Panel {
-    private class ComplexTaskDefForm extends ShinyForm<ComplexTaskDef> {
+    private class ComplexTaskDefForm extends DataForm<ComplexTaskDef> {
 
         private FeedbackPanel feedback;
 

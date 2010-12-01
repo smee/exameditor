@@ -12,7 +12,6 @@ import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.Indexed;
 import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 
@@ -76,40 +75,46 @@ public class ComplexTaskHierarchyPruner {
      * @param element
      * @param to
      * @param anchor
+     * @return true if a move occured, false if not
      */
-    public void moveElement(Object element, Object to, Anchor anchor) {
-        if (to instanceof McTaskBlock) {
-            McTaskBlock toTaskblock = (McTaskBlock) to;
+    public boolean moveElement(Object element, Object to, Anchor anchor) {
+        if (element == to)
+            return false;
+        if (to instanceof TaskBlock) {
+            TaskBlock toTaskblock = (TaskBlock) to;
             Object parent = findParentOf(element);
             if (parent != toTaskblock) {
                 // remove from current taskblock
-                ((McTaskBlock) parent).getMcSubTaskDef().remove(element);
-                toTaskblock.getMcSubTaskDef().add((McSubTaskDef) element);
+                removeFromParent(element);
+                Stuff.getSubtaskDefs(toTaskblock).add((McSubTaskDef) element);
 
                 Stuff.saveAll(parent, toTaskblock);
+                return true;
             }
-        } else if (to instanceof McSubTaskDef) {
+        } else if (to instanceof SubTaskDef) {
             // change order
-            McTaskBlock toTaskblock = (McTaskBlock) findParentOf(to);
+            TaskBlock toTaskblock = (TaskBlock) findParentOf(to);
 
-            McTaskBlock fromTaskblock = (McTaskBlock) findParentOf(element);
-            fromTaskblock.getMcSubTaskDef().remove(element);
+            TaskBlock fromTaskblock = (TaskBlock) findParentOf(element);
+            Stuff.getSubtaskDefs(fromTaskblock).remove(element);
 
-            List<McSubTaskDef> subtaskdefs = toTaskblock.getMcSubTaskDef();
+            List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
             int indexOfTo = subtaskdefs.indexOf(to);
             if (anchor == Anchor.BOTTOM) {
                 indexOfTo++;
             }
-            subtaskdefs.add(indexOfTo, (McSubTaskDef) element);
+            subtaskdefs.add(indexOfTo, (SubTaskDef) element);
 
             // manifest order by using a hack:
             int idx = 0;
-            for (McSubTaskDef std : subtaskdefs) {
+            for (SubTaskDef std : subtaskdefs) {
                 std.setXmlid(SortableIdModel.getTaggedId(std.getXmlid(), idx));
                 idx++;
             }
             Stuff.saveAll(fromTaskblock, toTaskblock);
+            return true;
         }
+        return false;
     }
 
     private Object clearPhysicalParent(final Object child, final Object logicalParent) {

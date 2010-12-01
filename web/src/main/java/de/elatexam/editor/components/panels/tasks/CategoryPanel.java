@@ -1,5 +1,6 @@
 package de.elatexam.editor.components.panels.tasks;
 
+import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.form.Button;
@@ -8,14 +9,13 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
-import de.elatexam.editor.components.form.ShinyForm;
 import de.elatexam.model.Category;
 
 /**
  * @author sdienst
  */
 public class CategoryPanel extends Panel {
-  private class CategoryForm extends ShinyForm<Category> {
+    private class CategoryForm extends DataForm<Category> {
 
     private FeedbackPanel feedback;
 

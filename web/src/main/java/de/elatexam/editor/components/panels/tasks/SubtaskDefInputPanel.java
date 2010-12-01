@@ -20,6 +20,7 @@ package de.elatexam.editor.components.panels.tasks;
 
 import java.util.Locale;
 
+import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.Component;
@@ -39,7 +40,6 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-import de.elatexam.editor.components.form.ShinyForm;
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
@@ -62,7 +62,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
    *
    * @param <T>
    */
-    public class SubtaskDefForm<T> extends ShinyForm<T> {
+    public class SubtaskDefForm<T> extends DataForm<T> {
 
     private final Class<T> modelClass;
 

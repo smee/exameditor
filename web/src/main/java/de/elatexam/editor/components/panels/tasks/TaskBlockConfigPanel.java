@@ -1,5 +1,6 @@
 package de.elatexam.editor.components.panels.tasks;
 
+import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.markup.html.form.Button;
@@ -9,14 +10,13 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.validator.NumberValidator.MinimumValidator;
 
-import de.elatexam.editor.components.form.ShinyForm;
 import de.elatexam.model.TaskblockConfig;
 
 /**
  * @author sdienst
  */
 public class TaskBlockConfigPanel extends Panel {
-  private class TaskBlockConfigForm extends ShinyForm<TaskblockConfig> {
+    private class TaskBlockConfigForm extends DataForm<TaskblockConfig> {
 
     private FeedbackPanel feedback;
 

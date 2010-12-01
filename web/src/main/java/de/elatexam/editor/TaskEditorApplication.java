@@ -29,6 +29,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.elatexam.editor.components.form.EnhanceFormsListener;
 import de.elatexam.editor.pages.OverviewPage;
 import de.elatexam.editor.pages.ShowSubtaskDefsPage;
 import de.elatexam.editor.pages.StatisticPage;
@@ -147,6 +148,8 @@ public class TaskEditorApplication extends AuthDataApplication {
                 return null;
             }
         });
+        // add error highlighting behaviour to any form components
+        addComponentInstantiationListener(new EnhanceFormsListener());
     }
 
     /**

@@ -1,19 +1,15 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <!--
-    to run with embedded server logging to console, do mvn exec:java
-  -->
+  <!-- to run with embedded server logging to console, do mvn exec:java -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.elatexam</groupId>
   <artifactId>exameditor-web</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Basic editor web frontend</name>
   <description>Online editor draft</description>
-  <!--
-    JAR packaging for embedded server. For WAR deployment, change
-    package and remove Jetty.
-  -->
+  <!-- JAR packaging for embedded server. For WAR deployment, change package 
+    and remove Jetty. -->
   <packaging>war</packaging>
   <parent>
     <groupId>de.elatexam</groupId>
@@ -64,10 +60,8 @@
         </configuration>
       </plugin>
       <plugin>
-        <!--
-          copy core-view to target/preview .this allows us to use jetty
-          for previewing taskdefs
-        -->
+        <!-- copy core-view to target/preview .this allows us to use jetty 
+          for previewing taskdefs -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
@@ -106,7 +100,7 @@
       </plugin>
     </plugins>
     <resources>
-      <!-- make sure to copy all resources but java files  -->
+      <!-- make sure to copy all resources but java files -->
       <resource>
         <directory>src/main/java</directory>
         <includes>
@@ -142,28 +136,25 @@
           <groupId>org.apache.wicket</groupId>
         </exclusion>
         <exclusion>
-        	<artifactId>hibernate-c3p0</artifactId>
-        	<groupId>org.hibernate</groupId>
+          <artifactId>hibernate-c3p0</artifactId>
+          <groupId>org.hibernate</groupId>
         </exclusion>
         <exclusion>
-        	<artifactId>hibernate-core</artifactId>
-        	<groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <groupId>org.hibernate</groupId>
         </exclusion>
         <exclusion>
-        	<artifactId>hibernate-annotations</artifactId>
-        	<groupId>org.hibernate</groupId>
+          <artifactId>hibernate-annotations</artifactId>
+          <groupId>org.hibernate</groupId>
         </exclusion>
         <exclusion>
-        	<artifactId>ejb3-persistence</artifactId>
-        	<groupId>org.hibernate</groupId>
+          <artifactId>ejb3-persistence</artifactId>
+          <groupId>org.hibernate</groupId>
         </exclusion>
       </exclusions>
     </dependency>
-    <!--
-      uncomment for MySQL <dependency> <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.6</version> </dependency>
-    -->
+    <!-- uncomment for MySQL <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+      <version>5.1.6</version> </dependency> -->
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
@@ -216,7 +207,7 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>1.6.1</version>
-    </dependency>  
+    </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
@@ -238,6 +229,12 @@
       <artifactId>wicket-dnd</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.visural</groupId>
+      <artifactId>visural-wicket</artifactId>
+      <version>0.6.5</version>
+    </dependency>
+
     <dependency>
       <groupId>com.google.collections</groupId>
       <artifactId>google-collections</artifactId>
@@ -275,19 +272,14 @@
       <artifactId>json-lib</artifactId>
       <version>2.3</version>
       <classifier>jdk15</classifier>
-    </dependency><!--
-        <dependency>
-            <groupId>com.visural</groupId>
-            <artifactId>visural-wicket</artifactId>
-            <version>0.6</version>
-        </dependency>
-  -->
+    </dependency><!-- <dependency> <groupId>com.visural</groupId> <artifactId>visural-wicket</artifactId> 
+      <version>0.6</version> </dependency> -->
     <dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-entitymanager</artifactId>
-    	<version>3.5.6-Final</version>
-    	<type>pom</type>
-    	<scope>compile</scope>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>3.5.6-Final</version>
+      <type>pom</type>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <repositories>
@@ -309,14 +301,19 @@
     <repository>
       <id>wicket-dnd-repo</id>
       <url>http://wicket-dnd.googlecode.com/svn/repo</url>
-    </repository><!--
+    </repository>
+    <repository>
+      <id>visural-common</id>
+      <name>visural-common</name>
+      <url>http://visural-common.googlecode.com/svn/trunk/visural-common/maven/</url>
+    </repository>
     <repository>
       <id>visural-wicket</id>
       <name>visural-wicket</name>
-      <url>http://visural-wicket.googlecode.com/svn/trunk/visural-wicket/maven</url>
+      <url>http://visural-wicket.googlecode.com/svn/trunk/visural-wicket/maven/</url>
     </repository>
-  --></repositories>
+  </repositories>
   <properties>
-    <wicket.version>1.4.12</wicket.version>
+    <wicket.version>1.4.14</wicket.version>
   </properties>
 </project>
