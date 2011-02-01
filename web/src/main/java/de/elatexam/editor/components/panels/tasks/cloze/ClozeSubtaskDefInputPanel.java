@@ -49,7 +49,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 
 			while (st.hasMoreTokens()) {
 				String token = st.nextToken();
-        System.out.println(token);
+        // System.out.println(token);
 				if ("[".equals(token)) {
 					inGap = true;
 				} else if ("]".equals(token)) {
@@ -84,14 +84,14 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 
 		private ClozeTextOrGapItem createGapItem(String token) {
       int gapSize = -1;
-      System.out.println(token);
+      // System.out.println(token);
 			List<GapCorrectItem> correctValues = new ArrayList<GapCorrectItem>();
 			for (String correctValue : token.split(";")) {
         correctValue = correctValue.trim();
-        System.out.println(correctValue);
+        // System.out.println(correctValue);
         if (correctValue.startsWith("{") && correctValue.endsWith("}")) {
           String gapLen = correctValue.substring(1, correctValue.length() - 1);
-          System.out.println(gapLen);
+          // System.out.println(gapLen);
           try {
             gapSize = Integer.parseInt(gapLen);
           } catch (NumberFormatException e) {

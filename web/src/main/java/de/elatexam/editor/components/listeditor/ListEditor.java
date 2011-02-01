@@ -33,7 +33,7 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 	/**
 	 * Indicates whether or not the item can be removed, usually by the use of
 	 * {@link RemoveButton}
-	 * 
+	 *
 	 * @param items
 	 * @param item
 	 * @return
@@ -51,7 +51,7 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 
 	/**
 	 * Gets model
-	 * 
+	 *
 	 * @return model
 	 */
 	@SuppressWarnings("unchecked")
@@ -61,7 +61,7 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 
 	/**
 	 * Gets model object
-	 * 
+	 *
 	 * @return model object
 	 */
 	@SuppressWarnings("unchecked")
@@ -69,24 +69,22 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 		return (List<T>) getDefaultModelObject();
 	}
 
-	@Override
-	protected void onBeforeRender() {
-		if (!hasBeenRendered()) {
-			items = new ArrayList<T>(getModelObject());
-			for (int i = 0; i < items.size(); i++) {
-				final ListItem<T> li = new ListItem<T>(newChildId(), i);
-				add(li);
-				onPopulateItem(li);
-			}
-		}
-		super.onBeforeRender();
-	}
+  @Override
+  protected void onInitialize() {
+    super.onInitialize();
+    items = new ArrayList<T>(getModelObject());
+    for (int i = 0; i < items.size(); i++) {
+      final ListItem<T> li = new ListItem<T>(newChildId(), i);
+      add(li);
+      onPopulateItem(li);
+    }
+  }
 
 	protected abstract void onPopulateItem(ListItem<T> item);
 
 	/**
 	 * Sets model
-	 * 
+	 *
 	 * @param model
 	 */
 	public final void setModel(final IModel<List<T>> model) {
@@ -95,7 +93,7 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 
 	/**
 	 * Sets model object
-	 * 
+	 *
 	 * @param object
 	 */
 	public final void setModelObject(final List<T> object) {
@@ -104,7 +102,7 @@ public abstract class ListEditor<T> extends RepeatingView implements IFormModelU
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.apache.wicket.markup.html.form.IFormModelUpdateListener#updateModel()
 	 */

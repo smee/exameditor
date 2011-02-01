@@ -48,7 +48,7 @@ import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
-import de.thorstenberger.taskmodel.complex.jaxb.ComplexTaskDefType.CategoryType.AddonTaskBlock;
+import de.thorstenberger.taskmodel.complex.jaxb.ComplexTaskDef.Category.AddonTaskBlock;
 import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
 /**
@@ -149,7 +149,7 @@ public class Stuff {
 
     /**
      * TODO create DAO layer!
-     * 
+     *
      * @param objects
      */
     public static void saveAll(Object... objects) {
