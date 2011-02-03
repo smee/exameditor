@@ -22,10 +22,22 @@ body{
   margin: 0;
   heigth: 100%;
 }
+div.header {
+  background-image: url("elatexam-logo.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  height: 3em;
+  margin: 1em auto;
+  width: 67.25em;
+}
+
+div.header div.userStatus {
+  text-align: right;
+}
 
 .mainContent{
   width: 67.25em;
-  margin: 1.5em auto;
+  margin: 0em auto;
   background: #FEFEFE;
   /* border: 0.063em solid #ccc; */
   text-align: left;
