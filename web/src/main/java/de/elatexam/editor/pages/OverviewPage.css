@@ -20,7 +20,6 @@ body{
   background: #e6e6e6;
   padding: 0;
   margin: 0;
-  heigth: 100%;
 }
 div.header {
   background-image: url("elatexam-logo.png");
@@ -42,7 +41,6 @@ div.header div.userStatus {
   /* border: 0.063em solid #ccc; */
   text-align: left;
   min-height:20em;
-  height: 100%;
 }
 .mainContent div.toolbar {
  background: #F2E2CB;
