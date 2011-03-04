@@ -8,7 +8,6 @@ import net.databinder.auth.components.DataSignInPanel;
 import net.databinder.components.NullPlug;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Page;
 import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -77,36 +76,35 @@ public class OverviewPage extends WebPage {
    * @return
    */
   private List<List<LinkVO>> getMenuList() {
-    final Class<? extends Page> pageClass = getPage().getClass();
     final List<List<LinkVO>> res = new LinkedList<List<LinkVO>>();
     // must not create the link result page now,
     // leads to StackoverflowError in case of resultpage extends OverviewPage
-
+    // TODO make the menu behave like a tabbed panel
     res.add(Arrays.asList(new LinkVO(TaskDefPage.class, "Prüfungen")));
         res.add(Arrays.asList(new LinkVO(ShowSubtaskDefsPage.class, "Alle Aufgaben"),
                 new LinkVO(new Create() {
           public WebPage createPage() {
-            return new ShowSubtaskDefsPage(McSubTaskDef.class);
+            return new ShowSubtaskDefsPage<McSubTaskDef>(McSubTaskDef.class);
           }
         }, "Alle MC-Aufgaben"), new LinkVO(new Create() {
 
           public WebPage createPage() {
-            return new ShowSubtaskDefsPage(ClozeSubTaskDef.class);
+            return new ShowSubtaskDefsPage<ClozeSubTaskDef>(ClozeSubTaskDef.class);
           }
         }, "Alle Lückentext-Aufgaben"), new LinkVO(new Create() {
 
           public WebPage createPage() {
-            return new ShowSubtaskDefsPage(TextSubTaskDef.class);
+            return new ShowSubtaskDefsPage<TextSubTaskDef>(TextSubTaskDef.class);
           }
         }, "Alle Text-Aufgaben"), new LinkVO(new Create() {
 
           public WebPage createPage() {
-            return new ShowSubtaskDefsPage(PaintSubTaskDef.class);
+            return new ShowSubtaskDefsPage<PaintSubTaskDef>(PaintSubTaskDef.class);
           }
         }, "Alle Zeichen-Aufgaben"), new LinkVO(new Create() {
 
           public WebPage createPage() {
-            return new ShowSubtaskDefsPage(MappingSubTaskDef.class);
+            return new ShowSubtaskDefsPage<MappingSubTaskDef>(MappingSubTaskDef.class);
           }
         }, "Alle Zuordnungs-Aufgaben")));
     res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken")));

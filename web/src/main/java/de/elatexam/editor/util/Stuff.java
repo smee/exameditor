@@ -156,7 +156,9 @@ public class Stuff {
         final Session session = Databinder.getHibernateSession();
         final Transaction trans = session.beginTransaction();
         for (Object obj : objects) {
+          if (obj != null && !session.contains(obj)) {
             session.saveOrUpdate(obj);
+          }
         }
         trans.commit();
     }

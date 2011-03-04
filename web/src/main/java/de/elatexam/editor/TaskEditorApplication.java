@@ -1,14 +1,11 @@
 package de.elatexam.editor;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import net.databinder.auth.data.hib.BasicPassword;
@@ -20,15 +17,12 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.authorization.strategies.role.Roles;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
-import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import com.jquery.JQueryResourceReference;
 
@@ -66,7 +60,7 @@ public class TaskEditorApplication extends AuthDataApplication {
         // add all model classes from persistence.xml
         addPersistentModelClasses(config, getClass().getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
 
-        // config.setProperty("hibernate.show_sql", "true");
+		// config.setProperty("hibernate.show_sql", "true");
 
     }
 
@@ -90,19 +84,7 @@ public class TaskEditorApplication extends AuthDataApplication {
                 config.addAnnotatedClass(Class.forName(nodes.item(i).getNodeValue()));
             }
             return;
-        } catch (final ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (final SAXException e) {
-            e.printStackTrace();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        } catch (final XPathExpressionException e) {
-            e.printStackTrace();
-        } catch (final MappingException e) {
-            e.printStackTrace();
-        } catch (final DOMException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
+		} catch (final Exception e) {
             e.printStackTrace();
         }
         System.exit(1);

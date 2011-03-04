@@ -34,10 +34,10 @@ import de.thorstenberger.taskmodel.TaskDef;
 import de.thorstenberger.taskmodel.TaskFactory;
 import de.thorstenberger.taskmodel.TaskFilter;
 import de.thorstenberger.taskmodel.TaskFilterException;
+import de.thorstenberger.taskmodel.TaskManager.UserAttribute;
 import de.thorstenberger.taskmodel.Tasklet;
 import de.thorstenberger.taskmodel.TaskletCorrection;
 import de.thorstenberger.taskmodel.UserInfo;
-import de.thorstenberger.taskmodel.TaskManager.UserAttribute;
 import de.thorstenberger.taskmodel.complex.ComplexTaskBuilder;
 import de.thorstenberger.taskmodel.complex.ComplexTasklet;
 import de.thorstenberger.taskmodel.complex.ComplexTaskletImpl;
@@ -50,7 +50,7 @@ import de.thorstenberger.taskmodel.impl.TaskletCorrectionImpl;
 /**
  * @author Thorsten Berger
  * @author Steffen Dienst
- * 
+ *
  */
 public class DummyTaskFactoryImpl implements TaskFactory {
 
@@ -77,7 +77,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#availableTypes()
 	 */
 	public List<String> availableTypes() {
@@ -88,7 +88,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#availableUserAttributes()
 	 */
 	public List<UserAttribute> availableUserAttributes() {
@@ -97,7 +97,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#createTasklet(java.lang.String,
 	 * long)
@@ -119,7 +119,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#deleteTaskCategory(long)
 	 */
 	public void deleteTaskCategory(final long id) throws MethodNotSupportedException {
@@ -127,7 +127,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#deleteTaskDef(long)
 	 */
 	public void deleteTaskDef(final long id) throws MethodNotSupportedException {
@@ -135,7 +135,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getCategories()
 	 */
 	public List<TaskCategory> getCategories() {
@@ -144,7 +144,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#getCategories(de.thorstenberger
 	 * .taskmodel.CategoryFilter)
@@ -155,7 +155,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getCategory(long)
 	 */
 	public TaskCategory getCategory(final long id) {
@@ -164,7 +164,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getCorrectors()
 	 */
 	public List<UserInfo> getCorrectors() {
@@ -173,7 +173,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getTaskDef(long)
 	 */
 	public TaskDef getTaskDef(final long taskId) {
@@ -200,7 +200,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getTaskDefs()
 	 */
 	public List<TaskDef> getTaskDefs() {
@@ -209,7 +209,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#getTaskDefs(de.thorstenberger.taskmodel
 	 * .TaskFilter)
@@ -221,7 +221,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getTasklet(java.lang.String,
 	 * long)
 	 */
@@ -236,7 +236,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getTasklets(long)
 	 */
 	public List<Tasklet> getTasklets(final long taskId) {
@@ -245,7 +245,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#getUserIdsOfAvailableTasklets(long)
 	 */
@@ -255,7 +255,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#getUserIdsOfTaskletsAssignedToCorrector
 	 * (long, java.lang.String)
@@ -267,7 +267,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#getUserInfo(java.lang.String)
 	 */
 	public UserInfo getUserInfo(final String login) {
@@ -276,7 +276,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#logPostData(java.lang.String,
 	 * de.thorstenberger.taskmodel.Tasklet, java.lang.String)
 	 */
@@ -285,7 +285,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see de.thorstenberger.taskmodel.TaskFactory#logPostData(java.lang.String,
 	 * java.lang.Throwable, de.thorstenberger.taskmodel.Tasklet, java.lang.String)
 	 */
@@ -295,7 +295,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#removeTasklet(java.lang.String,
 	 * long)
@@ -314,7 +314,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#storeTaskCategory(de.thorstenberger
 	 * .taskmodel.TaskCategory)
@@ -324,7 +324,7 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#storeTaskDef(de.thorstenberger.
 	 * taskmodel.TaskDef, long)
@@ -335,12 +335,23 @@ public class DummyTaskFactoryImpl implements TaskFactory {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * de.thorstenberger.taskmodel.TaskFactory#storeTasklet(de.thorstenberger.
 	 * taskmodel.Tasklet)
 	 */
 	public void storeTasklet(final Tasklet tasklet) throws TaskApiException {
 	}
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.thorstenberger.taskmodel.TaskFactory#reset()
+   */
+  @Override
+  public void reset() {
+    // TODO Auto-generated method stub
+
+  }
 
 }
