@@ -136,8 +136,6 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
      */
     @Override
     public void updateModel() {
-        System.out.println("About to update " + getDefaultModelObject());
-        System.out.println("using " + selectedMode + " and " + additionalValue);
         final Session session = Databinder.getHibernateSession();
 
         CorrectionMode cm = (CorrectionMode) getDefaultModelObject();

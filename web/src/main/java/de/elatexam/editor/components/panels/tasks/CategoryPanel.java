@@ -32,7 +32,6 @@ public class CategoryPanel extends Panel {
     private void init() {
       add(feedback = new FeedbackPanel("feedback"));
       feedback.setOutputMarkupId(true);
-      add(new TextField<String>("id").setRequired(true));
       add(new TextField<String>("title").setRequired(true));
       add(new TextField<Integer>("tasksPerPage").add(new MinimumValidator<Integer>(0)));
 

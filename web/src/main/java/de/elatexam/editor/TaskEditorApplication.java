@@ -91,7 +91,7 @@ public class TaskEditorApplication extends AuthDataApplication {
     }
 
     @Override
-    public Class getHomePage() {
+    public Class<OverviewPage> getHomePage() {
         return OverviewPage.class;
     }
 
@@ -99,7 +99,7 @@ public class TaskEditorApplication extends AuthDataApplication {
         return "secrect hash salt".getBytes();
     }
 
-    public Class getUserClass() {
+    public Class<BasicUser> getUserClass() {
         return BasicUser.class;
     }
 
@@ -110,7 +110,8 @@ public class TaskEditorApplication extends AuthDataApplication {
         addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
         // enable request logger, needed to show live session count
         getRequestLoggerSettings().setRequestLoggerEnabled(true);
-
+        getApplicationSettings().setPageExpiredErrorPage(OverviewPage.class);
+        
         mountBookmarkablePage("taskdefs", TaskDefPage.class);
         mountBookmarkablePage("statistics", StatisticPage.class);
         mountBookmarkablePage("subtaskdefs", ShowSubtaskDefsPage.class);

@@ -154,10 +154,6 @@ public class ComplexTaskDefTree extends NestedTree {
 
     add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
 
-    // add(new TypedDragSource(McSubTaskDef.class, Operation.MOVE));
-    // add(new TypedDropTarget(McSubTaskDef.class, provider, Operation.MOVE));
-    // add(new TypedDragSource(ClozeSubTaskDef.class, Operation.MOVE));
-    // add(new TypedDragSource(TextSubTaskDef.class, Operation.MOVE));
   }
 
   /*

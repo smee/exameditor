@@ -17,6 +17,8 @@ import org.apache.wicket.util.lang.Bytes;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
+import com.visural.wicket.component.submitters.IndicateModalSubmitLink;
+
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
@@ -42,6 +44,7 @@ public class UploadComplexTaskdefPage extends SecurePage {
 
       setMaxSize(Bytes.kilobytes(1000));
       add(new FeedbackPanel("feedback"));
+      add(new IndicateModalSubmitLink("submit"));
     }
 
     /**

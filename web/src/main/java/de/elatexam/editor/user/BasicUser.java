@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,6 @@ import net.databinder.auth.data.DataUser;
 import net.databinder.auth.data.hib.BasicPassword;
 
 import org.apache.wicket.authorization.strategies.role.Roles;
-import org.hibernate.annotations.CollectionOfElements;
 
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.Indexed;
@@ -56,13 +56,13 @@ public class BasicUser implements DataUser, Indexed {
   @GeneratedValue(strategy = GenerationType.AUTO)
     private Long hjid;
 
-  @CollectionOfElements(targetElement = String.class)
+  @ElementCollection
   private final Set<String> roles;
 
-  @CollectionOfElements(targetElement = ComplexTaskDef.class)
+  @ElementCollection
   private final List<ComplexTaskDef> taskdefs;
 
-  @CollectionOfElements(targetElement = SubTaskDef.class)
+  @ElementCollection
   private final List<SubTaskDef> subtaskdefs;
 
   public BasicUser() {

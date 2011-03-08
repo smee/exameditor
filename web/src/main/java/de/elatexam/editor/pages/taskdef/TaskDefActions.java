@@ -12,7 +12,6 @@ import javax.xml.bind.Marshaller;
 
 import net.databinder.hib.Databinder;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.link.DownloadLink;
@@ -20,8 +19,9 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.hibernate.Transaction;
+
+import com.visural.wicket.component.confirmer.ConfirmerLink;
 
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyPruner;
@@ -42,7 +42,8 @@ import de.elatexam.model.SubTaskDef;
 public class TaskDefActions extends Panel {
 
 	private final TaskDefPage taskDefPage;
-	private final Link deleteLink, downloadLink, previewLink;
+	private final Link downloadLink, previewLink;
+	private final ConfirmerLink deleteLink;
 	private final AddElementLink addLink;
 
 	public TaskDefActions(final TaskDefPage taskDefPage, final String id) {
@@ -72,7 +73,7 @@ public class TaskDefActions extends Panel {
 		this.addLink = new AddElementLink("add", taskblockselectormodal,
 				taskselectormodal, taskDefPage);
 
-		deleteLink = new Link("delete") {
+		deleteLink = new ConfirmerLink("delete") {
 
 			@Override
 			public void onClick() {
@@ -89,16 +90,13 @@ public class TaskDefActions extends Panel {
 				} else {
 					Stuff.saveAll(taskDefPage.getTreeSelection().getObject());
 				}
-
 			}
-
 		};
-		deleteLink
-				.add(new AttributeModifier(
-						"onclick",
-						true,
-						Model.of("return confirm('Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?');")));
+		deleteLink.setOKButtonLabel("Ja");
+		deleteLink.setCancelButtonLabel("Abbrechen");
+		deleteLink.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");
 		deleteLink.setEnabled(false);
+
 		previewLink = new PreviewLink("preview",
 				new AbstractReadOnlyModel<ComplexTaskDef>() {
 					@Override

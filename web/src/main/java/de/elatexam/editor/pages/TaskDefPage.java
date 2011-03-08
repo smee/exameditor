@@ -100,21 +100,22 @@ public class TaskDefPage extends SecurePage {
      * @param target
      */
     public void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
-        final Object t = selectedModel.getObject();
-        if (t instanceof ComplexTaskDef) {
-            replaceEditPanelWith(target, new ComplexTaskdefPanel("editpanel", (HibernateObjectModel<ComplexTaskDef>) selectedModel));
-        } else if (t instanceof Category) {
-            replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
-        } else if (t instanceof TaskBlock) {
-            // TODO render panels for taskblock subtypes, not just generic block config
-            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlock) selectedModel.getObject()).getConfig().getHjid())));
-        } else if (t instanceof SubTaskDef) {
-            final SubTaskDef st = (SubTaskDef) t;
-            replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
-        } else {
-            replaceEditPanelWith(target, new EmptyPanel("editpanel"));
+        if(selectedModel !=null){
+	    	final Object t = selectedModel.getObject();
+	        if (t instanceof ComplexTaskDef) {
+	            replaceEditPanelWith(target, new ComplexTaskdefPanel("editpanel", (HibernateObjectModel<ComplexTaskDef>) selectedModel));
+	        } else if (t instanceof Category) {
+	            replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
+	        } else if (t instanceof TaskBlock) {
+	            // TODO render panels for taskblock subtypes, not just generic block config
+	            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlock) selectedModel.getObject()).getConfig().getHjid())));
+	        } else if (t instanceof SubTaskDef) {
+	            final SubTaskDef st = (SubTaskDef) t;
+	            replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
+	        }
+        }else{
+			replaceEditPanelWith(target, new EmptyPanel("editpanel"));
         }
-
     }
 
     private void replaceEditPanelWith(final AjaxRequestTarget target, final Panel edit) {
