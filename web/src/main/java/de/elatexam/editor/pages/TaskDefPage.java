@@ -36,12 +36,15 @@ import org.hibernate.Session;
 import wicketdnd.theme.WebTheme;
 import de.elatexam.editor.TaskEditorApplication;
 import de.elatexam.editor.TaskEditorSession;
+import de.elatexam.editor.components.event.AjaxUpdateEvent;
+import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tasks.CategoryPanel;
 import de.elatexam.editor.components.panels.tasks.ComplexTaskdefPanel;
 import de.elatexam.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.TaskBlockConfigPanel;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskdefTreeProvider;
+import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
 import de.elatexam.editor.pages.taskdef.TaskDefActions;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.RemoveNullResultTransformer;
@@ -55,11 +58,10 @@ import de.elatexam.model.TaskblockConfig;
  * @author Steffen Dienst
  *
  */
-public class TaskDefPage extends SecurePage {
+public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 
     private Panel editPanel;
     ComplexTaskDefTree tree;
-    final ComplexTaskdefTreeProvider treeProvider;
     TaskDefActions taskdefactions;
 
     public TaskDefPage() {
@@ -67,7 +69,8 @@ public class TaskDefPage extends SecurePage {
         // add drag-n-drop theme
         add(CSSPackageResource.getHeaderContribution(new WebTheme()));
 
-        IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
+        @SuppressWarnings("unchecked")
+		IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
             public Query build(final Session sess) {
                 final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
                         TaskEditorSession.get().getUser().getUsername()));
@@ -79,27 +82,54 @@ public class TaskDefPage extends SecurePage {
         if (TaskEditorApplication.isAdmin()) {
             tasklistmodel = new HibernateListModel(BasicUser.class);
         }
-        treeProvider = new ComplexTaskdefTreeProvider(tasklistmodel);
-        tree = new ComplexTaskDefTree("tree", treeProvider) {
-            @Override
-            protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
-                renderPanelFor(selectedModel, target);
-                taskdefactions.onSelect(selectedModel, target);
-            }
-        };
+        tree = new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(tasklistmodel));
         add(tree);
 
         editPanel = new EmptyPanel("editpanel");
         add(editPanel.setOutputMarkupId(true));
     }
 
+
+    private void replaceEditPanelWith(final AjaxRequestTarget target, final Panel edit) {
+        edit.setOutputMarkupId(true);
+        editPanel.replaceWith(edit);
+        editPanel = edit;
+        target.addComponent(editPanel);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see de.elatexam.editor.pages.OverviewPage#createToolbar(java.lang.String)
+     */
+    @Override
+    protected Component createToolbar(final String id) {
+        if (this.taskdefactions == null) {
+            this.taskdefactions = new TaskDefActions(id, tree);
+            taskdefactions.setOutputMarkupId(true);
+        }
+        return this.taskdefactions;
+    }
+
+
+	/* (non-Javadoc)
+	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
+	 */
+	@Override
+	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
+		if(event instanceof TreeSelectionEvent){
+			IModel<?> selectedModel = ((TreeSelectionEvent) event).getSelectedModel();
+			AjaxRequestTarget target = event.getTarget();
+			renderPanelFor(selectedModel, target);
+		}
+	}
     /**
      * Replace right hand form panel with an edit panel for the given model object.
      *
      * @param t
      * @param target
      */
-    public void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+    private void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
         if(selectedModel !=null){
 	    	final Object t = selectedModel.getObject();
 	        if (t instanceof ComplexTaskDef) {
@@ -117,37 +147,4 @@ public class TaskDefPage extends SecurePage {
 			replaceEditPanelWith(target, new EmptyPanel("editpanel"));
         }
     }
-
-    private void replaceEditPanelWith(final AjaxRequestTarget target, final Panel edit) {
-        edit.setOutputMarkupId(true);
-        editPanel.replaceWith(edit);
-        editPanel = edit;
-        target.addComponent(editPanel);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.elatexam.editor.pages.OverviewPage#createToolbar(java.lang.String)
-     */
-    @Override
-    protected Component createToolbar(final String id) {
-        if (this.taskdefactions == null) {
-            this.taskdefactions = new TaskDefActions(this, id);
-            taskdefactions.setOutputMarkupId(true);
-        }
-        return this.taskdefactions;
-    }
-
-    /**
-     * @return
-     */
-    public IModel<?> getTreeSelection() {
-        return tree.getSelected();
-    }
-
-    public ComplexTaskDefTree getTree() {
-        return tree;
-    }
-
 }

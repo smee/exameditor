@@ -6,8 +6,8 @@ div.mcanswer {
 }
 
 div.stack {
-  float: left;
-}
+  /*float: left;
+*/}
 
 div.stack input {
   /*padding: 2px 0;*/

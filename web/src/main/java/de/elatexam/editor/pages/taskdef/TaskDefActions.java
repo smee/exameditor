@@ -24,7 +24,11 @@ import org.hibernate.Transaction;
 import com.visural.wicket.component.confirmer.ConfirmerLink;
 
 import de.elatexam.editor.TaskEditorSession;
+import de.elatexam.editor.components.event.AjaxUpdateEvent;
+import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
+import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyPruner;
+import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
 import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.preview.PreviewLink;
 import de.elatexam.editor.user.BasicUser;
@@ -39,17 +43,17 @@ import de.elatexam.model.SubTaskDef;
  *
  *
  */
-public class TaskDefActions extends Panel {
+public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 
-	private final TaskDefPage taskDefPage;
 	private final Link downloadLink, previewLink;
 	private final ConfirmerLink deleteLink;
 	private final AddElementLink addLink;
-
-	public TaskDefActions(final TaskDefPage taskDefPage, final String id) {
+	private final ComplexTaskDefTree tree;
+	
+	public TaskDefActions(String id, ComplexTaskDefTree t) {
 		super(id);
-		this.taskDefPage = taskDefPage;
-
+		
+		this.tree = t;
 		this.downloadLink = createDownloadLink();
 
 		ModalWindow taskblockselectormodal = new TaskBlockSelectorModalWindow(
@@ -65,20 +69,19 @@ public class TaskDefActions extends Panel {
 			@Override
 			void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				addLink.addTasks(subtaskdefs);
-				target.addComponent(taskDefPage.getTree());
+				target.addComponent(tree);
 			}
 		};
 		add(taskselectormodal);
 
-		this.addLink = new AddElementLink("add", taskblockselectormodal,
-				taskselectormodal, taskDefPage);
+		this.addLink = new AddElementLink("add", taskblockselectormodal,taskselectormodal, tree);
 
 		deleteLink = new ConfirmerLink("delete") {
 
 			@Override
 			public void onClick() {
 				// which domain object do we need to delete?
-				final Object toDelete = new ComplexTaskHierarchyPruner(taskDefPage.getTree().getProvider()).removeFromParent(taskDefPage.getTreeSelection().getObject());
+				final Object toDelete = new ComplexTaskHierarchyPruner(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
 				// do not delete subtaskdefs, only remove them from the current
 				// complextaskdef
 				if (!(toDelete instanceof SubTaskDef)) {
@@ -88,7 +91,7 @@ public class TaskDefActions extends Panel {
 					session.delete(toDelete);
 					transaction.commit();
 				} else {
-					Stuff.saveAll(taskDefPage.getTreeSelection().getObject());
+					Stuff.saveAll(tree.getSelected().getObject());
 				}
 			}
 		};
@@ -101,8 +104,7 @@ public class TaskDefActions extends Panel {
 				new AbstractReadOnlyModel<ComplexTaskDef>() {
 					@Override
 					public ComplexTaskDef getObject() {
-						return taskDefPage.getTree().getCurrentTaskdef()
-								.getObject();
+						return tree.getCurrentTaskdef().getObject();
 					}
 				});
 		previewLink.setEnabled(false);
@@ -129,14 +131,10 @@ public class TaskDefActions extends Panel {
 						try {
 							tempFile = File.createTempFile("taskdef", "export");
 							// marshal to xml
-							final JAXBContext context = JAXBContext
-									.newInstance(ComplexTaskDef.class);
-							final Marshaller marshaller = context
-									.createMarshaller();
-							final BufferedWriter bw = new BufferedWriter(
-									new FileWriter(tempFile));
-							final ComplexTaskDef ctd = taskDefPage.getTree()
-									.getCurrentTaskdef().getObject();
+							final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+							final Marshaller marshaller = context.createMarshaller();
+							final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+							final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();
 							addRevisionTo(ctd);
 							marshaller.marshal(ctd, bw);
 							bw.close();
@@ -156,13 +154,10 @@ public class TaskDefActions extends Panel {
 					 * @param ctd
 					 */
 					private void addRevisionTo(final ComplexTaskDef ctd) {
-						final Revision rev = new ObjectFactory()
-								.createComplexTaskDefRevisionsRevision();
-						rev.setAuthor(TaskEditorSession.get().getUser()
-								.getUsername());
+						final Revision rev = new ObjectFactory().createComplexTaskDefRevisionsRevision();
+						rev.setAuthor(TaskEditorSession.get().getUser().getUsername());
 						rev.setDate(System.currentTimeMillis());
-						final List<Revision> revisions = ctd.getRevisions()
-								.getRevision();
+						final List<Revision> revisions = ctd.getRevisions().getRevision();
 						rev.setSerialNumber(revisions.size() + 1);
 						revisions.add(rev);
 					}
@@ -174,31 +169,38 @@ public class TaskDefActions extends Panel {
 		return downloadLink;
 	}
 
-	public void onSelect(final IModel<?> selectedModel,
-			final AjaxRequestTarget target) {
-		Object selected = selectedModel.getObject();
-		boolean enabled = !(selected instanceof BasicUser);
 
-		if (selected instanceof ComplexTaskDef) {
-			this.previewLink.setEnabled(true);
-			this.downloadLink.setEnabled(true);
-		} else {
-			this.previewLink.setEnabled(false);
-			this.downloadLink.setEnabled(false);
+	/* (non-Javadoc)
+	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
+	 */
+	@Override
+	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
+		if (event instanceof TreeSelectionEvent) {
+			Object selected = ((TreeSelectionEvent) event).getSelectedModel()
+					.getObject();
+			boolean enabled = !(selected instanceof BasicUser);
+
+			if (selected instanceof ComplexTaskDef) {
+				this.previewLink.setEnabled(true);
+				this.downloadLink.setEnabled(true);
+			} else {
+				this.previewLink.setEnabled(false);
+				this.downloadLink.setEnabled(false);
+			}
+			if (selected instanceof SubTaskDef) {
+				this.addLink.setEnabled(false);
+			} else {
+				this.addLink.setEnabled(true);
+			}
+			this.deleteLink.setEnabled(enabled);
+			// no admin user should be able to delete himself....
+			if (selected instanceof BasicUser) {
+				this.deleteLink.setEnabled(
+					false == ((BasicUser) selected).getUsername()
+							.equals( TaskEditorSession.get().getUser().getUsername()) );
+			}
+			event.getTarget().addComponent(this);
 		}
-		if (selected instanceof SubTaskDef) {
-			this.addLink.setEnabled(false);
-		} else {
-			this.addLink.setEnabled(true);
-		}
-		this.deleteLink.setEnabled(enabled);
-		// no admin user should be able to delete himself....
-		if (selected instanceof BasicUser) {
-			this.deleteLink.setEnabled(false == ((BasicUser) selected)
-					.getUsername().equals(
-							TaskEditorSession.get().getUser().getUsername()));
-		}
-		target.addComponent(this);
 	}
 
 }

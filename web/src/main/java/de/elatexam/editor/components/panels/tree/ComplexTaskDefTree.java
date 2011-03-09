@@ -37,6 +37,8 @@ import wickettree.NestedTree;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.editor.components.event.AjaxUpdateEvent;
+import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
@@ -53,7 +55,7 @@ import de.elatexam.model.TextTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskDefTree extends NestedTree {
+public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListener{
   final static ImmutableMap<Class<?>, String> tranferTypes = new ImmutableMap.Builder<Class<?>, String>()
       .put(MappingTaskBlock.class, "mapping")
       .put(MappingSubTaskDef.class, "mapping")
@@ -182,7 +184,7 @@ public class ComplexTaskDefTree extends NestedTree {
   }
 
   /**
-   * Inform the tree about the selection. This is needed to be able to call {@link #onSelect(IModel, AjaxRequestTarget)}
+   * Inform the tree about the selection. This is needed to be able to fire a {@link TreeSelectionEvent}.
    *
    * @param model
    * @param tree2
@@ -198,17 +200,9 @@ public class ComplexTaskDefTree extends NestedTree {
     selectedModel = model;
     updateNode(model.getObject(), target);
     this.currentTaskdef = (IModel<ComplexTaskDef>) findCurrentTaskDef(model);
-    onSelect(selectedModel, target);
+    new TreeSelectionEvent(this, target, selectedModel).fire();
   }
 
-  /**
-   * Gets called whenever the tree selection changes.
-   *
-   * @param selectedModel
-   * @param target
-   */
-  protected void onSelect(final IModel<?> selectedModel, final AjaxRequestTarget target) {
-  }
 
   /**
    * traverse parents to find taskdef predecessor for every object!
@@ -265,5 +259,16 @@ public class ComplexTaskDefTree extends NestedTree {
   public IModel<?> getSelected() {
     return selectedModel;
   }
+
+	/* (non-Javadoc)
+	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
+	 */
+	@Override
+	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
+		if(!(event instanceof TreeSelectionEvent)){
+			event.getTarget().addComponent(this);
+		}
+		
+	}
 
 }

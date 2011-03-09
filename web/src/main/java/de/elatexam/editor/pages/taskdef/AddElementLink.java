@@ -24,6 +24,8 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.editor.components.event.AjaxUpdateEvent;
+import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
@@ -53,7 +55,7 @@ import de.elatexam.model.TextTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class AddElementLink<T> extends AjaxLink<T> {
+public class AddElementLink extends AjaxLink<Object> {
 	final static ImmutableMap<Class<?>, Integer> childMap = new ImmutableMap.Builder<Class<?>, Integer>()
 
 	.put(BasicUser.class, 0)
@@ -66,15 +68,15 @@ public class AddElementLink<T> extends AjaxLink<T> {
 	.put(PaintTaskBlock.class, 7)
 	.build();
 
-	private TaskDefPage taskDefPage;
+	private ComplexTaskDefTree tree;
 
 	private ModalWindow selectTaskBlockModal;
 	private TaskSelectorModalWindow selectTaskModal;
 
 	public AddElementLink(String id, ModalWindow selectTaskBlockModal,
-			TaskSelectorModalWindow selectTaskModal, TaskDefPage taskDefPage) {
+			TaskSelectorModalWindow selectTaskModal, ComplexTaskDefTree tree) {
 		super(id);
-		this.taskDefPage = taskDefPage;
+		this.tree = tree;
 		this.selectTaskBlockModal = selectTaskBlockModal;
 		this.selectTaskModal = selectTaskModal;
 	}
@@ -82,7 +84,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 	@Override
 	public void onClick(AjaxRequestTarget target) {
 
-		Object selectedObject = taskDefPage.getTreeSelection().getObject();
+		Object selectedObject = tree.getSelected().getObject();
 		Object newObj = null;
 		switch (childMap.get(selectedObject.getClass())) {
 			case 0 : // create a new complextaskdef
@@ -94,7 +96,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 				newtaskdef.setConfig(config);
 				((BasicUser) selectedObject).getTaskdefs().add(newtaskdef);
 				newObj = newtaskdef;
-				target.addComponent(taskDefPage.getTree());
+				new AjaxUpdateEvent(this,target).fire();
 				break;
 			case 1 : // create a new category
 				Category cat = new Category();
@@ -102,7 +104,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 				cat.setId(Long.toString(System.nanoTime()));
 				((ComplexTaskDef) selectedObject).getCategory().add(cat);
 				newObj = cat;
-				target.addComponent(taskDefPage.getTree());
+				new AjaxUpdateEvent(this,target).fire();
 				break;
 			case 2 : // show taskblock selection modal window
 				selectTaskBlockModal.show(target);
@@ -127,7 +129,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 	 * @param taskblockclass
 	 */
 	public void createTaskblock(Class<? extends TaskBlock> taskblockclass) {
-		Object selectedObject = taskDefPage.getTreeSelection().getObject();
+		Object selectedObject = tree.getSelected().getObject();
 		if (selectedObject instanceof Category) {
 			try {
 				TaskBlock taskblock = taskblockclass.newInstance();
@@ -167,7 +169,7 @@ public class AddElementLink<T> extends AjaxLink<T> {
 	 * @param subtaskdef
 	 */
 	public void addTasks(SubTaskDef... subtaskdefs) {
-		Object o = taskDefPage.getTreeSelection().getObject();
+		Object o = tree.getSelected().getObject();
 		if (o instanceof TaskBlock) {
 			for (SubTaskDef std : subtaskdefs) {
 				switch (childMap.get(o.getClass())) {
