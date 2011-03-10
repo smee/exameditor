@@ -26,7 +26,7 @@ import org.apache.wicket.model.Model;
  * @author Steffen Dienst
  *
  */
-public class SortableIdModel extends Model<String> {
+public class SortableIdModel implements IModel<String> {
 
     private static final String STUPID_SEPARATOR = "_%sort%_";
 
@@ -52,14 +52,14 @@ public class SortableIdModel extends Model<String> {
         String id = nestedModel.getObject();
         String sortTag = getSortTag(id);
         if (StringUtils.isEmpty(sortTag)) {
-            super.setObject(object);
+            nestedModel.setObject(object);
         } else {
-            super.setObject(sortTag + STUPID_SEPARATOR + object);
+        	nestedModel.setObject(sortTag + STUPID_SEPARATOR + object);
         }
     }
 
     private static String getSortTag(String id) {
-        if (id.contains(STUPID_SEPARATOR))
+        if (id!=null && id.contains(STUPID_SEPARATOR))
             return id.substring(0, id.indexOf(STUPID_SEPARATOR));
         else
             return "";
@@ -74,4 +74,11 @@ public class SortableIdModel extends Model<String> {
         String value = getRealId(currentId);
         return orderIdx + STUPID_SEPARATOR + value;
     }
+	/* (non-Javadoc)
+	 * @see org.apache.wicket.model.IDetachable#detach()
+	 */
+	@Override
+	public void detach() {
+		nestedModel.detach();
+	}
 }
