@@ -20,12 +20,15 @@ package de.elatexam.editor.components.panels.tasks;
 
 import java.util.Locale;
 
+import javax.swing.text.html.FormView;
+
 import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -81,7 +84,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
      * @param modelClass2
      * @return
      */
-    private Component getTaskSpecificFormPanel(final String id) {
+    private SubtaskSpecificsInputPanel getTaskSpecificFormPanel(final String id) {
       if (modelClass.equals(McSubTaskDef.class))
         return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getModel());
     else if (modelClass.equals(TextSubTaskDef.class))
@@ -93,7 +96,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     else if (modelClass.equals(PaintSubTaskDef.class))
         return new PaintSubtaskDefInputPanel(id, (IModel<PaintSubTaskDef>) getModel());
     else
-        return new EmptyPanel(id);
+        return new SubtaskSpecificsInputPanel(id){};
     }
 
     /**
@@ -127,8 +130,12 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
 
       // add subtask input elements
-      add(getTaskSpecificFormPanel("specificelements"));
-
+      SubtaskSpecificsInputPanel specificPanel = getTaskSpecificFormPanel("specificelements");
+	  add(specificPanel);
+	  IFormValidator fv = specificPanel.getFormValidator();
+	  if(fv !=null)
+		  add(fv);
+	  
       // add correction and hints
       add(new TextField<String>("hint").add(new InputHintBehavior(this, "Hinweis für Studenten", "color: #aaa;")));
       add(new TextArea<String>("correctionHint"));

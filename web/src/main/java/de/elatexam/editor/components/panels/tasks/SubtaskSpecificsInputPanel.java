@@ -20,6 +20,7 @@ package de.elatexam.editor.components.panels.tasks;
 
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
@@ -32,7 +33,7 @@ import de.elatexam.model.SubTaskDef;
  * @author Steffen Dienst
  *
  */
-public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitorParticipant {
+public abstract class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitorParticipant {
 
 	/**
 	 * @param id
@@ -55,5 +56,12 @@ public class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitor
 	public boolean processChildren() {
 	  return true;
   }
+
+	/**
+	 * @return
+	 */
+	public IFormValidator getFormValidator() {
+		return null;
+	}
 
 }
