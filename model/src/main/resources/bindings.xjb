@@ -64,6 +64,9 @@
     <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType//xs:sequence/xs:choice">
       <jxb:property name="AnswerDefinitions"/>
     </jxb:bindings>
+    <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType//xs:attribute[@name='category']/xs:simpleType">
+      <jxb:typesafeEnumClass name="type"/>
+    </jxb:bindings>
     
     <jxb:bindings
       node="//xs:complexType[@name='McTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='mcSubTaskDef']">
