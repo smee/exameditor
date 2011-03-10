@@ -91,8 +91,8 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
     this.tree = tree;
 
-    add(new TypedDragSource(model.getObject().getClass(), Operation.MOVE));
-    add(new TypedDropTarget(model.getObject().getClass(), tree, Operation.MOVE));
+    add(new TypedDragSource(model.getObject().getClass(), Operation.MOVE, Operation.COPY));
+    add(new TypedDropTarget(model.getObject().getClass(), tree, Operation.MOVE, Operation.COPY));
   }
 
   protected String getClosedStyleClass() {

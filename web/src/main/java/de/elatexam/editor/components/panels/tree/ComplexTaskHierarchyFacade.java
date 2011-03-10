@@ -11,7 +11,6 @@ import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.Indexed;
-import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 
@@ -23,7 +22,7 @@ import de.elatexam.model.TaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskHierarchyPruner {
+public class ComplexTaskHierarchyFacade {
   private ITreeProvider<Object> treeProvider;
 
     /**
@@ -31,7 +30,7 @@ public class ComplexTaskHierarchyPruner {
      *
      * @param treeProvider
      */
-  public ComplexTaskHierarchyPruner(ITreeProvider<Object> treeProvider) {
+  public ComplexTaskHierarchyFacade(ITreeProvider<Object> treeProvider) {
         this.treeProvider = treeProvider;
     }
 
@@ -72,6 +71,7 @@ public class ComplexTaskHierarchyPruner {
     }
 
     /**
+     * Move element from original parent to the new one depending on the types of domain objects involved.
      * @param element
      * @param to
      * @param anchor
@@ -82,33 +82,53 @@ public class ComplexTaskHierarchyPruner {
             return false;
         if (to instanceof TaskBlock) {
         	if(element instanceof SubTaskDef)
-        		return move((SubTaskDef)element, (TaskBlock)to,anchor);
+        		return move((SubTaskDef)element, (TaskBlock)to,anchor,true);
         	else if(element instanceof TaskBlock){
-        		return move((TaskBlock)element,(TaskBlock)to,anchor);
+        		return move((TaskBlock)element,(TaskBlock)to,anchor,true);
         	}
         } else if (to instanceof SubTaskDef) {
             return move((SubTaskDef)element,(SubTaskDef)to,anchor);
         }else if (to instanceof Category){
-        	return move((TaskBlock)element,(Category)to,anchor);
+        	return move((TaskBlock)element,(Category)to,anchor,true);
         }
         return false;
     }
+	/**
+	 * Copy element from original parent to the new one depending on the types of domain objects involved.
+	 * @param droppedObject
+	 * @param droppedOn
+	 * @param anchor
+	 * @return
+	 */
+	public boolean copyElement(Object droppedObject, Object droppedOn,
+			Anchor anchor) {
+		if( droppedObject instanceof TaskBlock && droppedOn instanceof Category){
+			// FIXME create a copy of the taskblock, doesn't work this way
+			return move((TaskBlock)droppedObject,(Category)droppedOn,anchor,false);
+		}else if(droppedObject instanceof SubTaskDef){
+			if(droppedOn instanceof TaskBlock){
+				return move((SubTaskDef)droppedObject, (TaskBlock)droppedOn, anchor,false);
+			}
+		}
+		return false;
+	}
 
-	private boolean move(TaskBlock tb, TaskBlock to, Anchor anchor) {
+	private boolean move(TaskBlock tb, TaskBlock to, Anchor anchor, boolean isMove) {
 		Category fromC = (Category) findParentOf(tb);
 		Category toC = (Category) findParentOf(to);
 		if(fromC!=toC){
-			return move(tb,toC,anchor);
+			return move(tb,toC,anchor,isMove);
 		}else{
 			//TODO how can the order of taskblocks be changed? JPA does not keep list semantics (uses persistent bag....)
 		}
 		return false;
 	}
 
-	private boolean move(TaskBlock element, Category to, Anchor anchor) {
+	private boolean move(TaskBlock element, Category to, Anchor anchor, boolean isMove) {
     	Category fromC = (Category) findParentOf(element);
     	TaskBlock b = (TaskBlock) element;
-    	fromC.getTaskBlocks().remove(b);
+    	if(isMove && fromC!=null)
+    		fromC.getTaskBlocks().remove(b);
     	to.getTaskBlocks().add(b);
     	Stuff.saveAll(fromC,to);
     	return true;
@@ -119,7 +139,8 @@ public class ComplexTaskHierarchyPruner {
         TaskBlock toTaskblock = (TaskBlock) findParentOf(to);
 
         TaskBlock fromTaskblock = (TaskBlock) findParentOf(element);
-        Stuff.getSubtaskDefs(fromTaskblock).remove(element);
+        if(fromTaskblock!=null)
+        	Stuff.getSubtaskDefs(fromTaskblock).remove(element);
 
         List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
         int indexOfTo = subtaskdefs.indexOf(to);
@@ -138,11 +159,12 @@ public class ComplexTaskHierarchyPruner {
         return true;
 	}
 
-	private boolean move(SubTaskDef element, TaskBlock to, Anchor anchor) {
+	private boolean move(SubTaskDef element, TaskBlock to, Anchor anchor, boolean isMove) {
         Object parent = findParentOf(element);
         if (parent != to) {
             // remove from current taskblock
-            removeFromParent(element);
+        	if(isMove && parent != null)
+        		removeFromParent(element);
             Stuff.getSubtaskDefs(to).add((SubTaskDef) element);
 
             Stuff.saveAll(parent, to);
@@ -157,9 +179,6 @@ public class ComplexTaskHierarchyPruner {
             for (final TaskBlock tbi : cat.getTaskBlocks()) {
                 if (tbi == child) {
                     cat.getTaskBlocks().remove(tbi);
-                    // tbi.setItem(null);
-                    // TODO unlink subtaskdefs or better: do not propagate delete to subtaskdefs.... needs HJ3 fix, see
-                    // http://jira.highsource.org/browse/HJIII-26
                     return tbi;
                 }
             }
@@ -215,4 +234,5 @@ public class ComplexTaskHierarchyPruner {
             return false;
         }
     }
+
 }

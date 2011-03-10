@@ -23,7 +23,6 @@ public class EditSubtaskPage<T extends SubTaskDef> extends SecurePage {
     }
 
     private Component createInputPanelFor(final String id, final Class<T> clazz, final HibernateObjectModel<T> model) {
-
         return new SubtaskDefInputPanel(id, model);
 	}
 }

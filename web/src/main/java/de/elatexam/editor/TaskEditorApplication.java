@@ -60,7 +60,7 @@ public class TaskEditorApplication extends AuthDataApplication {
         // add all model classes from persistence.xml
         addPersistentModelClasses(config, getClass().getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
 
-		// config.setProperty("hibernate.show_sql", "true");
+//		 config.setProperty("hibernate.show_sql", "true");
 
     }
 

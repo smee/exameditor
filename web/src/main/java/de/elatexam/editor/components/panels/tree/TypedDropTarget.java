@@ -77,10 +77,13 @@ class TypedDropTarget extends DropTarget {
       Object droppedObject = transfer.getData();
       Object droppedOn = location.getModelObject();
       // System.out.println("DropTarget#onDrop: dropping " + droppedObject + " on " + droppedOn);
-
-      if (new ComplexTaskHierarchyPruner(tree.getProvider()).moveElement(droppedObject, droppedOn, location.getAnchor())) {
+      Operation op = transfer.getOperation();
+      ComplexTaskHierarchyFacade mover = new ComplexTaskHierarchyFacade(tree.getProvider());
+      if (op==Operation.MOVE && mover.moveElement(droppedObject, droppedOn, location.getAnchor())) {
         target.addComponent(tree);
-      } else {
+      } else if(op == Operation.COPY && mover.copyElement(droppedObject, droppedOn, location.getAnchor())){
+    	  target.addComponent(tree);
+      }else {
         transfer.reject();
       }
     }

@@ -24,12 +24,12 @@ import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
  * 
  */
 public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<MappingSubTaskDef> {
-  private final WebMarkupContainer assignementContainer, conceptContainer;
+  private final WebMarkupContainer assignmentContainer, conceptContainer;
 
   public MappingSubtaskDefInputPanel(final String id, final IModel<MappingSubTaskDef> model) {
     super(id, model);
     // assignments
-    assignementContainer = new WebMarkupContainer("assignementContainer");
+    assignmentContainer = new WebMarkupContainer("assignementContainer");
     final ListEditor<Assignment> assignmentsList = new ListEditor<Assignment>("assignments", new PropertyModel<List<Assignment>>(
         model, "assignment")) {
 
@@ -46,15 +46,15 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
       public void onClick(final AjaxRequestTarget target) {
         assignmentsList.addItem(new Assignment());
         if (target != null) {
-          target.addComponent(assignementContainer);
+          target.addComponent(assignmentContainer);
         }
       }
     };
     add(addAssignement);
 
-    assignementContainer.setOutputMarkupId(true);
-    assignementContainer.add(assignmentsList);
-    add(assignementContainer);
+    assignmentContainer.setOutputMarkupId(true);
+    assignmentContainer.add(assignmentsList);
+    add(assignmentContainer);
 
     conceptContainer = new WebMarkupContainer("conceptContainer");
     final ListEditor<Concept> conceptList = new ListEditor<Concept>("concepts",

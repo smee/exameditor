@@ -56,6 +56,15 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
  *
  */
 public class PreviewLink extends IndicateModalLink {
+	static JAXBContext context;
+	static{
+		try {
+			context=JAXBContext.newInstance(ComplexTaskDef.class);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			context = null;
+		}
+	}
 
   public PreviewLink(final String id, final IModel<ComplexTaskDef> model) {
     super(id);
@@ -87,13 +96,10 @@ public class PreviewLink extends IndicateModalLink {
 
     final ComplexTaskFactory ctf = new ComplexTaskFactoryImpl(new ComplexTaskletCorrectorImpl());
     final DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
-        new ComplexTaskHandlingDAOImpl(
-            ctf),
-            new ComplexTaskBuilderImpl(ctf));
+        new ComplexTaskHandlingDAOImpl(ctf),new ComplexTaskBuilderImpl(ctf));
     // use currently selected taskmodel (in the tree)
     try {
       // marshal to xml
-      final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
       final Marshaller marshaller = context.createMarshaller();
       final StringWriter sw = new StringWriter();
       // TODO enable preview for one category, taskblock, subtaskdef
@@ -105,10 +111,11 @@ public class PreviewLink extends IndicateModalLink {
       taskletContainer.reset();
       final TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
 
-      final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(0,
-          tm,
-          "sampleUser", "Max Mustermann",
-                    RequestUtils.toAbsolutePath(getReturnLink()));
+      final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(
+    		  0,
+    		  tm,
+    		  "sampleUser", "Max Mustermann",
+              RequestUtils.toAbsolutePath(getReturnLink()));
       TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
 
       getRequestCycle().setRequestTarget(

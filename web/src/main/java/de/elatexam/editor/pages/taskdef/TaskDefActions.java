@@ -27,7 +27,7 @@ import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
-import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyPruner;
+import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyFacade;
 import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
 import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.preview.PreviewLink;
@@ -79,7 +79,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 			@Override
 			public void onClick() {
 				// which domain object do we need to delete?
-				final Object toDelete = new ComplexTaskHierarchyPruner(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
+				final Object toDelete = new ComplexTaskHierarchyFacade(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
 				// do not delete subtaskdefs, only remove them from the current
 				// complextaskdef
 				if (!(toDelete instanceof SubTaskDef)) {

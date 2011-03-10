@@ -15,7 +15,6 @@ html{
 body{
   font-size: 1em;
   font-family: georgia, serif;
-  text-align: center;
   color: #444;
   background: #e6e6e6;
   padding: 0;
@@ -70,6 +69,7 @@ div.clear {
 .footer {
   clear:both;
   margin: 1.5em auto;
+  text-align: center;  
 }
 h1{
   font-size: 1.125em;
