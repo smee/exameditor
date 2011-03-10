@@ -26,12 +26,6 @@ import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.IModel;
 
-import wicketdnd.DragSource;
-import wicketdnd.DropTarget;
-import wicketdnd.Location;
-import wicketdnd.Operation;
-import wicketdnd.Reject;
-import wicketdnd.Transfer;
 import wickettree.ITreeProvider;
 import wickettree.NestedTree;
 
@@ -39,6 +33,8 @@ import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
+import de.elatexam.editor.user.BasicUser;
+import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
@@ -56,21 +52,24 @@ import de.elatexam.model.TextTaskBlock;
  *
  */
 public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListener{
-  final static ImmutableMap<Class<?>, String> tranferTypes = new ImmutableMap.Builder<Class<?>, String>()
-      .put(MappingTaskBlock.class, "mapping")
-      .put(MappingSubTaskDef.class, "mapping")
+  final static ImmutableMap<Class<?>, String[]> tranferTypes = new ImmutableMap.Builder<Class<?>, String[]>()
+      .put(MappingTaskBlock.class, new String[]{"mapping", "category"})
+      .put(MappingSubTaskDef.class, new String[]{"mapping"})
 
-      .put(McTaskBlock.class, "mc")
-      .put(McSubTaskDef.class, "mc")
+      .put(McTaskBlock.class, new String[]{"mc", "category"})
+      .put(McSubTaskDef.class, new String[]{"mc"})
 
-      .put(ClozeTaskBlock.class, "cloze")
-      .put(ClozeSubTaskDef.class, "cloze")
+      .put(ClozeTaskBlock.class, new String[]{"cloze", "category"})
+      .put(ClozeSubTaskDef.class, new String[]{"cloze"})
 
-      .put(PaintTaskBlock.class, "paint")
-      .put(PaintSubTaskDef.class, "paint")
+      .put(PaintTaskBlock.class, new String[]{"paint", "category"})
+      .put(PaintSubTaskDef.class, new String[]{"paint"})
 
-      .put(TextTaskBlock.class, "text")
-      .put(TextSubTaskDef.class, "text")
+      .put(TextTaskBlock.class, new String[]{"text", "category"})
+      .put(TextSubTaskDef.class, new String[]{"text"})
+      .put(Category.class, new String[]{"category"})
+  	  .put(BasicUser.class,new String[]{"user"})
+  	  .put(ComplexTaskDef.class,new String[]{"complextask"})
       .build();
   final static ImmutableMap<Class<?>, String> dragStarts = new ImmutableMap.Builder<Class<?>, String>()
       .put(MappingSubTaskDef.class, "a.tree-mapping.subtaskdef")
@@ -78,71 +77,14 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
       .put(ClozeSubTaskDef.class, "a.tree-cloze.subtaskdef")
       .put(PaintSubTaskDef.class, "a.tree-paint.subtaskdef")
       .put(TextSubTaskDef.class, "a.tree-text.subtaskdef")
-      .build();
-  final static ImmutableMap<Class<?>, String> dropTaskblocks = new ImmutableMap.Builder<Class<?>, String>()
-      .put(MappingSubTaskDef.class, "a.tree-mapping.taskblock")
-      .put(McSubTaskDef.class, "a.tree-mc.taskblock")
-      .put(ClozeSubTaskDef.class, "a.tree-cloze.taskblock")
-      .put(PaintSubTaskDef.class, "a.tree-paint.taskblock")
-      .put(TextSubTaskDef.class, "a.tree-text.taskblock")
+      .put(MappingTaskBlock.class, "a.tree-mapping.taskblock")
+      .put(McTaskBlock.class, "a.tree-mc.taskblock")
+      .put(ClozeTaskBlock.class, "a.tree-cloze.taskblock")
+      .put(PaintTaskBlock.class, "a.tree-paint.taskblock")
+      .put(TextTaskBlock.class, "a.tree-text.taskblock")
       .build();
 
-  /**
-   * Preconfigured {@link DragSource} that starts for one subtaskdef type only.
-   *
-   * @author Steffen Dienst
-   *
-   */
-  static class TypedDragSource extends DragSource {
 
-    private final String[] types;
-
-    public TypedDragSource(Class<?> type, Operation... operations) {
-      super(operations);
-      this.types = new String[] { tranferTypes.get(type) };
-      drag(dragStarts.get(type));
-    }
-
-    @Override
-    public String[] getTypes() {
-      return types;
-    }
-  }
-
-  static class TypedDropTarget extends DropTarget {
-    private final String[] types;
-    private final ComplexTaskDefTree tree;
-
-    public TypedDropTarget(Class<?> type, ComplexTaskDefTree tree, Operation... operations) {
-      super(operations);
-      this.tree = tree;
-      this.types = new String[] { tranferTypes.get(type) };
-      this.dropTopAndBottom(dragStarts.get(type));
-      this.dropCenter(dropTaskblocks.get(type));
-    }
-
-    @Override
-    public String[] getTypes() {
-      return types;
-    }
-
-    @Override
-    public void onDrop(AjaxRequestTarget target, Transfer transfer, Location location) throws Reject {
-      if (transfer == null || location == null)
-        return;
-
-      Object droppedObject = transfer.getData();
-      Object droppedOn = location.getModelObject();
-      // System.out.println("DropTarget#onDrop: dropping " + droppedObject + " on " + droppedOn);
-
-      if (new ComplexTaskHierarchyPruner(tree.getProvider()).moveElement(droppedObject, droppedOn, location.getAnchor())) {
-        target.addComponent(tree);
-      } else {
-        transfer.reject();
-      }
-    }
-
-  }
 
   private IModel<ComplexTaskDef> currentTaskdef;
   private IModel<?> selectedModel;
@@ -178,6 +120,9 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
     return currentTaskdef;
   }
 
+  /* (non-Javadoc)
+   * @see wickettree.AbstractTree#newContentComponent(java.lang.String, org.apache.wicket.model.IModel)
+   */
   @Override
   protected Component newContentComponent(final String id, final IModel model) {
     return new TaskTreeElement(id, this, model);

@@ -23,6 +23,8 @@ import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import de.elatexam.model.SubTaskDef;
+
 /**
  * Panel that delegates {@link org.apache.wicket.markup.html.form.FormComponent.IVisitor} instances to
  * {@link FormComponent}s within this panel. We need this to allow adding behaviours to formemelements,

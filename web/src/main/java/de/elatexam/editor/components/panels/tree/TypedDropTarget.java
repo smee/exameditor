@@ -22,11 +22,17 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
+import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.McSubTaskDef;
+import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintSubTaskDef;
+import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.TextSubTaskDef;
+import de.elatexam.model.TextTaskBlock;
 
 import wicketdnd.DropTarget;
 import wicketdnd.Location;
@@ -41,6 +47,7 @@ class TypedDropTarget extends DropTarget {
       .put(ClozeSubTaskDef.class, "a.tree-cloze.taskblock")
       .put(PaintSubTaskDef.class, "a.tree-paint.taskblock")
       .put(TextSubTaskDef.class, "a.tree-text.taskblock")
+      .put(Category.class, "a.category")
       .build();
 	  
     private final String[] types;
@@ -49,11 +56,14 @@ class TypedDropTarget extends DropTarget {
     public TypedDropTarget(Class<?> type, ComplexTaskDefTree tree, Operation... operations) {
       super(operations);
       this.tree = tree;
-      this.types = new String[] { ComplexTaskDefTree.tranferTypes.get(type) };
+      this.types = ComplexTaskDefTree.tranferTypes.get(type);
       this.dropTopAndBottom(ComplexTaskDefTree.dragStarts.get(type));
       this.dropCenter(dropTaskblocks.get(type));
     }
 
+    /* (non-Javadoc)
+     * @see wicketdnd.DropTarget#getTypes()
+     */
     @Override
     public String[] getTypes() {
       return types;

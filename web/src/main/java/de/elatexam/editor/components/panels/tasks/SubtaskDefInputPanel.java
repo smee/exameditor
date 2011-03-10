@@ -70,16 +70,10 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     private final Class<T> modelClass;
 
 
-        public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
-            super(id, model);
-            this.modelClass = (Class<T>) model.getObject().getClass();
-            init();
-        }
-
-    /**
-     * @param submittingButton
-     */
-    protected void delegateSubmit(final org.apache.wicket.markup.html.form.Button submittingButton) {
+    public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
+        super(id, model);
+        this.modelClass = (Class<T>) model.getObject().getClass();
+        init();
     }
 
     /**
@@ -162,17 +156,6 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     }
 
   }
-
-  /**
-   * @param id
-   * @param returnPage
-   * @param clazz
-   */
-    public SubtaskDefInputPanel(final String id, final Class<T> clazz,
-            final HibernateObjectModel<T> model) {
-        super(id);
-        add(new SubtaskDefForm<T>("taskform", model));
-    }
 
     public SubtaskDefInputPanel(final String id, final HibernateObjectModel<T> model) {
     super(id);

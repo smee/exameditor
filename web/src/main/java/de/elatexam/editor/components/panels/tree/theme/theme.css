@@ -154,3 +154,9 @@ span.tree-content .selected span.tree-label {
   background-position: 0px 50%;
   background-repeat: no-repeat;
 }
+.tree-user {
+  background-image: url(user_suit.png);
+  padding-left: 18px;
+  background-position: 0px 50%;
+  background-repeat: no-repeat;
+}

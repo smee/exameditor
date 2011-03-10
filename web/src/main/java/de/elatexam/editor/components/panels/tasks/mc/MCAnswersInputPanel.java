@@ -22,6 +22,7 @@ import de.elatexam.editor.components.listeditor.MoveUpButton;
 import de.elatexam.editor.components.listeditor.RemoveButton;
 import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
 import de.elatexam.model.McSubTaskDef.McSubTaskDefAnswerDefinitionsItem;
+import de.elatexam.model.McSubTaskDef.Type;
 import de.elatexam.model.NamedString;
 /**
  * @author sdienst
@@ -35,18 +36,19 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 	 * @param id
 	 * @param modelElementClass
 	 * @param model
+	 * @param type 
 	 * @param moveable
 	 */
 	@SuppressWarnings("unchecked")
     public MCAnswersInputPanel(final String id, final IModel<List<McSubTaskDefAnswerDefinitionsItem>> model,
-            final boolean moveable) {
+            final Type type, final boolean moveable) {
 		super(id, model);
 
         add(new Label("title", "Anworten"));
 
 		container = new WebMarkupContainer("answerrepeater");
         container.setOutputMarkupId(true);
-
+// TODO distinguish between single and multiple choice (radio vs. checkbox)
         final ListEditor<McSubTaskDefAnswerDefinitionsItem> answers = new ListEditor<McSubTaskDefAnswerDefinitionsItem>("mcanswer", model) {
 
 			@Override

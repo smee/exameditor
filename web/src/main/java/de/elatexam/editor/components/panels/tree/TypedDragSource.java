@@ -15,7 +15,7 @@ import wicketdnd.Operation;
 
     public TypedDragSource(Class<?> type, Operation... operations) {
       super(operations);
-      this.types = new String[] { ComplexTaskDefTree.tranferTypes.get(type) };
+      this.types = ComplexTaskDefTree.tranferTypes.get(type);
       drag(ComplexTaskDefTree.dragStarts.get(type));
     }
 

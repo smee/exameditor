@@ -52,20 +52,18 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 	
 	public TaskDefActions(String id, ComplexTaskDefTree t) {
 		super(id);
-		
 		this.tree = t;
 		this.downloadLink = createDownloadLink();
 
-		ModalWindow taskblockselectormodal = new TaskBlockSelectorModalWindow(
-				"taskblockmodal") {
+		setOutputMarkupId(true);
+		ModalWindow taskblockselectormodal = new TaskBlockSelectorModalWindow("taskblockmodal") {
 			@Override
 			void onSelect(Class taskblockclass) {
 				addLink.createTaskblock(taskblockclass);
 			}
 		};
 		add(taskblockselectormodal);
-		TaskSelectorModalWindow taskselectormodal = new TaskSelectorModalWindow(
-				"taskmodal") {
+		TaskSelectorModalWindow taskselectormodal = new TaskSelectorModalWindow("taskmodal") {
 			@Override
 			void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				addLink.addTasks(subtaskdefs);

@@ -61,33 +61,42 @@ import de.elatexam.model.TaskblockConfig;
 public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 
     private Panel editPanel;
-    ComplexTaskDefTree tree;
+    private ComplexTaskDefTree tree;
     TaskDefActions taskdefactions;
 
     public TaskDefPage() {
         super();
         // add drag-n-drop theme
         add(CSSPackageResource.getHeaderContribution(new WebTheme()));
-
-        @SuppressWarnings("unchecked")
-		IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
-            public Query build(final Session sess) {
-                final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
-                        TaskEditorSession.get().getUser().getUsername()));
-                q.setResultTransformer(RemoveNullResultTransformer.INSTANCE);
-                return q;
-            }
-        });
-        // the admin sees all taskdefs
-        if (TaskEditorApplication.isAdmin()) {
-            tasklistmodel = new HibernateListModel(BasicUser.class);
-        }
-        tree = new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(tasklistmodel));
-        add(tree);
-
+        add(tree = getTree());
         editPanel = new EmptyPanel("editpanel");
         add(editPanel.setOutputMarkupId(true));
     }
+
+
+	/**
+	 * @param tasklistmodel
+	 * @return
+	 */
+	ComplexTaskDefTree getTree() {
+		if(tree == null){
+	        @SuppressWarnings("unchecked")
+			IModel<List<?>> tasklistmodel = new HibernateListModel(new QueryBuilder() {
+	            public Query build(final Session sess) {
+	                final Query q = sess.createQuery(String.format("select tasks from BasicUser u left join u.taskdefs tasks where u.username='%s'",
+	                        TaskEditorSession.get().getUser().getUsername()));
+	                q.setResultTransformer(RemoveNullResultTransformer.INSTANCE);
+	                return q;
+	            }
+	        });
+	        // the admin sees all taskdefs
+	        if (TaskEditorApplication.isAdmin()) {
+	            tasklistmodel = new HibernateListModel(BasicUser.class);
+	        }
+	        tree = new ComplexTaskDefTree("tree", new ComplexTaskdefTreeProvider(tasklistmodel));
+		}
+		return tree;
+	}
 
 
     private void replaceEditPanelWith(final AjaxRequestTarget target, final Panel edit) {
@@ -104,11 +113,7 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
      */
     @Override
     protected Component createToolbar(final String id) {
-        if (this.taskdefactions == null) {
-            this.taskdefactions = new TaskDefActions(id, tree);
-            taskdefactions.setOutputMarkupId(true);
-        }
-        return this.taskdefactions;
+        return new TaskDefActions(id, getTree());
     }
 
 

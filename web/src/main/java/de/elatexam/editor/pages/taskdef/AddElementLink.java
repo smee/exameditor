@@ -89,7 +89,7 @@ public class AddElementLink extends AjaxLink<Object> {
 		switch (childMap.get(selectedObject.getClass())) {
 			case 0 : // create a new complextaskdef
 				ComplexTaskDef newtaskdef = new ComplexTaskDef();
-				newtaskdef.setTitle("?????");
+				newtaskdef.setTitle("<Neue Prüfung>");
 				Config config = new Config();
 				config.setCorrectionMode(new CorrectionMode());
 				config.getCorrectionMode().setRegular(new Regular());
@@ -100,7 +100,7 @@ public class AddElementLink extends AjaxLink<Object> {
 				break;
 			case 1 : // create a new category
 				Category cat = new Category();
-				cat.setTitle("????");
+				cat.setTitle("<Neue Kategorie>");
 				cat.setId(Long.toString(System.nanoTime()));
 				((ComplexTaskDef) selectedObject).getCategory().add(cat);
 				newObj = cat;

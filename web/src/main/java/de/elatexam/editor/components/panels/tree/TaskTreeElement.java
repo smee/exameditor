@@ -32,8 +32,7 @@ import wickettree.content.StyledLinkLabel;
 import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.components.panels.tasks.SortableIdModel;
-import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree.TypedDragSource;
-import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree.TypedDropTarget;
+import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
@@ -58,7 +57,8 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
 
   .put(ComplexTaskDef.class, "title")
   .put(Category.class, "title")
-            .put(McTaskBlock.class, "class.simpleName")
+  .put(BasicUser.class, "username")
+  .put(McTaskBlock.class, "class.simpleName")
   .put(MappingTaskBlock.class, "class.simpleName")
   .put(ClozeTaskBlock.class, "class.simpleName")
   .put(TextTaskBlock.class, "class.simpleName")
@@ -70,6 +70,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   .put(PaintSubTaskDef.class, "xmlid")
   .build();
   final static ImmutableMap<Class<?>, String> styleClasses = new ImmutableMap.Builder<Class<?>, String>()
+  .put(BasicUser.class, "tree-user")
   .put(ComplexTaskDef.class, "tree-exam")
   .put(McTaskBlock.class, "tree-mc taskblock")
   .put(MappingTaskBlock.class, "tree-mapping taskblock")
@@ -95,11 +96,11 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
   }
 
   protected String getClosedStyleClass() {
-    return "tree-folder-closed";
+    return "tree-folder-closed category";
   }
 
   protected String getOpenStyleClass() {
-    return "tree-folder-open";
+    return "tree-folder-open category";
   }
 
   /**
@@ -136,7 +137,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
     final T t = getModelObject();
 
     String styleClass;
-    if (tree.getProvider().hasChildren(t)) {
+    if (t instanceof Category) {
       if (tree.getState(t) == State.EXPANDED) {
         styleClass = getOpenStyleClass();
       } else {

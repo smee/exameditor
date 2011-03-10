@@ -81,43 +81,77 @@ public class ComplexTaskHierarchyPruner {
         if (element == to)
             return false;
         if (to instanceof TaskBlock) {
-            TaskBlock toTaskblock = (TaskBlock) to;
-            Object parent = findParentOf(element);
-            if (parent != toTaskblock) {
-                // remove from current taskblock
-                removeFromParent(element);
-                Stuff.getSubtaskDefs(toTaskblock).add((McSubTaskDef) element);
-
-                Stuff.saveAll(parent, toTaskblock);
-                return true;
-            }
+        	if(element instanceof SubTaskDef)
+        		return move((SubTaskDef)element, (TaskBlock)to,anchor);
+        	else if(element instanceof TaskBlock){
+        		return move((TaskBlock)element,(TaskBlock)to,anchor);
+        	}
         } else if (to instanceof SubTaskDef) {
-            // change order
-            TaskBlock toTaskblock = (TaskBlock) findParentOf(to);
-
-            TaskBlock fromTaskblock = (TaskBlock) findParentOf(element);
-            Stuff.getSubtaskDefs(fromTaskblock).remove(element);
-
-            List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
-            int indexOfTo = subtaskdefs.indexOf(to);
-            if (anchor == Anchor.BOTTOM) {
-                indexOfTo++;
-            }
-            subtaskdefs.add(indexOfTo, (SubTaskDef) element);
-
-            // manifest order by using a hack:
-            int idx = 0;
-            for (SubTaskDef std : subtaskdefs) {
-                std.setXmlid(SortableIdModel.getTaggedId(std.getXmlid(), idx));
-                idx++;
-            }
-            Stuff.saveAll(fromTaskblock, toTaskblock);
-            return true;
+            return move((SubTaskDef)element,(SubTaskDef)to,anchor);
+        }else if (to instanceof Category){
+        	return move((TaskBlock)element,(Category)to,anchor);
         }
         return false;
     }
 
-    private Object clearPhysicalParent(final Object child, final Object logicalParent) {
+	private boolean move(TaskBlock tb, TaskBlock to, Anchor anchor) {
+		Category fromC = (Category) findParentOf(tb);
+		Category toC = (Category) findParentOf(to);
+		if(fromC!=toC){
+			return move(tb,toC,anchor);
+		}else{
+			//TODO how can the order of taskblocks be changed? JPA does not keep list semantics (uses persistent bag....)
+		}
+		return false;
+	}
+
+	private boolean move(TaskBlock element, Category to, Anchor anchor) {
+    	Category fromC = (Category) findParentOf(element);
+    	TaskBlock b = (TaskBlock) element;
+    	fromC.getTaskBlocks().remove(b);
+    	to.getTaskBlocks().add(b);
+    	Stuff.saveAll(fromC,to);
+    	return true;
+	}
+
+	private boolean move(SubTaskDef element, SubTaskDef to, Anchor anchor) {
+		// change order
+        TaskBlock toTaskblock = (TaskBlock) findParentOf(to);
+
+        TaskBlock fromTaskblock = (TaskBlock) findParentOf(element);
+        Stuff.getSubtaskDefs(fromTaskblock).remove(element);
+
+        List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
+        int indexOfTo = subtaskdefs.indexOf(to);
+        if (anchor == Anchor.BOTTOM) {
+            indexOfTo++;
+        }
+        subtaskdefs.add(indexOfTo, (SubTaskDef) element);
+
+        // manifest order by using a hack:
+        int idx = 0;
+        for (SubTaskDef std : subtaskdefs) {
+            std.setXmlid(SortableIdModel.getTaggedId(std.getXmlid(), idx));
+            idx++;
+        }
+        Stuff.saveAll(fromTaskblock, toTaskblock);
+        return true;
+	}
+
+	private boolean move(SubTaskDef element, TaskBlock to, Anchor anchor) {
+        Object parent = findParentOf(element);
+        if (parent != to) {
+            // remove from current taskblock
+            removeFromParent(element);
+            Stuff.getSubtaskDefs(to).add((SubTaskDef) element);
+
+            Stuff.saveAll(parent, to);
+            return true;
+        }
+        return false;
+	}
+
+	private Object clearPhysicalParent(final Object child, final Object logicalParent) {
         if (child instanceof TaskBlock) {
             final Category cat = (Category) logicalParent;
             for (final TaskBlock tbi : cat.getTaskBlocks()) {
