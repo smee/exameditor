@@ -20,6 +20,7 @@ import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextTaskBlock;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
 
 /**
  * @author Steffen Dienst
@@ -34,7 +35,7 @@ public abstract class TaskBlockSelectionPanel<T extends Class<? extends TaskBloc
             TextTaskBlock.class,
             PaintTaskBlock.class);
 
-    static final Map<Class<? extends TaskBlock>, String> labels = ImmutableMap.of(
+    static final ImmutableMap<Class<? extends HomogeneousTaskBlock>, String> labels = ImmutableMap.of(
             McTaskBlock.class, "Multiple Choice",
             MappingTaskBlock.class, "Zuordnung",
             ClozeTaskBlock.class, "Lückentext",

@@ -135,5 +135,8 @@
 <!--      <inheritance:extends>foo.Bar</inheritance:extends> -->
    </jxb:bindings>
     
+    <jxb:bindings node="//xs:complexType[@name='TaskBlock']">
+        <jxb:class implClass="de.elatexam.model.manual.HomogeneousTaskBlock"/>
+    </jxb:bindings>
   </jxb:bindings>
 </jxb:bindings>

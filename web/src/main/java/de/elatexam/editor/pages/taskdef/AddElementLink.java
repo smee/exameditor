@@ -50,6 +50,7 @@ import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TaskblockConfig;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
 
 /**
  * @author Steffen Dienst
@@ -135,7 +136,7 @@ public class AddElementLink extends AjaxLink<Object> {
 				TaskBlock taskblock = taskblockclass.newInstance();
 				taskblock.setConfig(new TaskblockConfig());
 
-				((Category) selectedObject).getTaskBlocks().add(taskblock);
+				((Category) selectedObject).getTaskBlocks().add((HomogeneousTaskBlock) taskblock);
 
 				// set subclass specific config
 				switch (childMap.get(taskblockclass)) {

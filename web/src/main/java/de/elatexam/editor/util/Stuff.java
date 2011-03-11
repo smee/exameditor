@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elatexam.editor.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +30,6 @@ import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 import de.elatexam.model.AddonSubTaskDef;
 import de.elatexam.model.Category;
@@ -48,6 +46,7 @@ import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
 import de.elatexam.model.TextSubTaskDef;
 import de.elatexam.model.TextTaskBlock;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
 import de.thorstenberger.taskmodel.complex.jaxb.ComplexTaskDef.Category.AddonTaskBlock;
 import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
@@ -58,56 +57,6 @@ import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
  *
  */
 public class Stuff {
-    public static Map<Class<?>, String> subtaskNames = new ImmutableMap.Builder<Class<?>, String>()
-            .put(McSubTaskDef.class, "Mc")
-            .put(McTaskBlock.class, "Mc")
-
-            .put(AddonSubTaskDef.class, "Addon")
-            .put(AddonTaskBlock.class, "Addon")
-
-            .put(ClozeSubTaskDef.class, "Cloze")
-            .put(ClozeTaskBlock.class, "Cloze")
-
-            .put(TextSubTaskDef.class, "Text")
-            .put(TextTaskBlock.class, "Text")
-
-            .put(MappingSubTaskDef.class, "Mapping")
-            .put(MappingTaskBlock.class, "Mapping")
-
-            .put(PaintSubTaskDef.class, "Paint")
-            .put(PaintTaskBlock.class, "Paint")
-            .build();
-
-  /**
-   * Call a no-parameter method, return it's value. Rethrow whatever
-   * {@link Class#getMethod(String, Class...)} or
-   * {@link Method#invoke(Object, Object...)} throws.
-   *
-   * @param o
-   * @param methodName
-   * @return
-   * @throws Exception
-   */
-  public static Object call(final Object o, final String methodName) throws Exception {
-    final Method method = o.getClass().getMethod(methodName);
-    return method.invoke(o);
-  }
-
-  /**
-   * Invoke similary named methods involving {@link SubTaskDef}s.
-   *
-   * @param o
-   *          the object the method should be invoked on
-   * @param methodNameTemplate
-   *          string including %s for the subtaskdef specific name
-   * @param clazz
-   * @return
-   * @throws Exception
-   */
-    public static Object call(final Object o, final String methodNameTemplate, final Class<?> clazz, Object... args) throws Exception {
-    final Method method = o.getClass().getMethod(String.format(methodNameTemplate, subtaskNames.get(clazz)));
-    return method.invoke(o,args);
-  }
 
   /**
    * Get the items (subtaskdef|choice(subtaskdef)+)* of a taskblock. Needs to be done via reflection, because the items
@@ -118,22 +67,8 @@ public class Stuff {
    *          taskblock
    * @return list of items or empty list.
    */
-    public static <T extends SubTaskDef> List<T> getSubtaskDefs(final TaskBlock tb) {
-    for (final Method m : tb.getClass().getMethods()) {
-      final String name = m.getName();
-      if (name.startsWith("get") && name.endsWith("SubTaskDef")) {
-        try {
-                    return (List<T>) m.invoke(tb);
-        } catch (final IllegalArgumentException e) {
-          e.printStackTrace();
-        } catch (final IllegalAccessException e) {
-          e.printStackTrace();
-        } catch (final InvocationTargetException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-    return Lists.newArrayList();
+    public static <T extends SubTaskDef> List<T> getSubtaskDefs(final HomogeneousTaskBlock tb) {
+    	return (List<T>) tb.getSubtaskDefs();
   }
 
     public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef)
@@ -141,7 +76,7 @@ public class Stuff {
     final Collection<T> stds = new ArrayList<T>();
     for (final Category cat : taskdef.getCategory()) {
             for (final TaskBlock block : cat.getTaskBlocks()) {
-                stds.addAll((Collection<? extends T>) getSubtaskDefs(block));
+                stds.addAll((Collection<? extends T>) getSubtaskDefs((HomogeneousTaskBlock) block));
       }
     }
     return stds;

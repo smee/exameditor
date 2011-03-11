@@ -12,7 +12,7 @@ import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.Indexed;
 import de.elatexam.model.SubTaskDef;
-import de.elatexam.model.TaskBlock;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
 
 /**
  * This class knows about the concrete class hierarchy of the generated complextaskdef domain model. It allows to find
@@ -80,16 +80,16 @@ public class ComplexTaskHierarchyFacade {
     public boolean moveElement(Object element, Object to, Anchor anchor) {
         if (element == to)
             return false;
-        if (to instanceof TaskBlock) {
+        if (to instanceof HomogeneousTaskBlock) {
         	if(element instanceof SubTaskDef)
-        		return move((SubTaskDef)element, (TaskBlock)to,anchor,true);
-        	else if(element instanceof TaskBlock){
-        		return move((TaskBlock)element,(TaskBlock)to,anchor,true);
+        		return move((SubTaskDef)element, (HomogeneousTaskBlock)to,anchor,true);
+        	else if(element instanceof HomogeneousTaskBlock){
+        		return move((HomogeneousTaskBlock)element,(HomogeneousTaskBlock)to,anchor,true);
         	}
         } else if (to instanceof SubTaskDef) {
             return move((SubTaskDef)element,(SubTaskDef)to,anchor);
         }else if (to instanceof Category){
-        	return move((TaskBlock)element,(Category)to,anchor,true);
+        	return move((HomogeneousTaskBlock)element,(Category)to,anchor,true);
         }
         return false;
     }
@@ -102,18 +102,18 @@ public class ComplexTaskHierarchyFacade {
 	 */
 	public boolean copyElement(Object droppedObject, Object droppedOn,
 			Anchor anchor) {
-		if( droppedObject instanceof TaskBlock && droppedOn instanceof Category){
+		if( droppedObject instanceof HomogeneousTaskBlock && droppedOn instanceof Category){
 			// FIXME create a copy of the taskblock, doesn't work this way
-			return move((TaskBlock)droppedObject,(Category)droppedOn,anchor,false);
+			return move((HomogeneousTaskBlock)droppedObject,(Category)droppedOn,anchor,false);
 		}else if(droppedObject instanceof SubTaskDef){
-			if(droppedOn instanceof TaskBlock){
-				return move((SubTaskDef)droppedObject, (TaskBlock)droppedOn, anchor,false);
+			if(droppedOn instanceof HomogeneousTaskBlock){
+				return move((SubTaskDef)droppedObject, (HomogeneousTaskBlock)droppedOn, anchor,false);
 			}
 		}
 		return false;
 	}
 
-	private boolean move(TaskBlock tb, TaskBlock to, Anchor anchor, boolean isMove) {
+	private boolean move(HomogeneousTaskBlock tb, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
 		Category fromC = (Category) findParentOf(tb);
 		Category toC = (Category) findParentOf(to);
 		if(fromC!=toC){
@@ -124,9 +124,9 @@ public class ComplexTaskHierarchyFacade {
 		return false;
 	}
 
-	private boolean move(TaskBlock element, Category to, Anchor anchor, boolean isMove) {
+	private boolean move(HomogeneousTaskBlock element, Category to, Anchor anchor, boolean isMove) {
     	Category fromC = (Category) findParentOf(element);
-    	TaskBlock b = (TaskBlock) element;
+    	HomogeneousTaskBlock b = (HomogeneousTaskBlock) element;
     	if(isMove && fromC!=null)
     		fromC.getTaskBlocks().remove(b);
     	to.getTaskBlocks().add(b);
@@ -136,18 +136,18 @@ public class ComplexTaskHierarchyFacade {
 
 	private boolean move(SubTaskDef element, SubTaskDef to, Anchor anchor) {
 		// change order
-        TaskBlock toTaskblock = (TaskBlock) findParentOf(to);
+        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf(to);
 
-        TaskBlock fromTaskblock = (TaskBlock) findParentOf(element);
+        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf(element);
         if(fromTaskblock!=null)
         	Stuff.getSubtaskDefs(fromTaskblock).remove(element);
 
-        List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
+        List<? extends SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
         int indexOfTo = subtaskdefs.indexOf(to);
         if (anchor == Anchor.BOTTOM) {
             indexOfTo++;
         }
-        subtaskdefs.add(indexOfTo, (SubTaskDef) element);
+        Stuff.getSubtaskDefs(toTaskblock).add(indexOfTo,  element);
 
         // manifest order by using a hack:
         int idx = 0;
@@ -159,7 +159,7 @@ public class ComplexTaskHierarchyFacade {
         return true;
 	}
 
-	private boolean move(SubTaskDef element, TaskBlock to, Anchor anchor, boolean isMove) {
+	private boolean move(SubTaskDef element, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
         Object parent = findParentOf(element);
         if (parent != to) {
             // remove from current taskblock
@@ -174,18 +174,18 @@ public class ComplexTaskHierarchyFacade {
 	}
 
 	private Object clearPhysicalParent(final Object child, final Object logicalParent) {
-        if (child instanceof TaskBlock) {
+        if (child instanceof HomogeneousTaskBlock) {
             final Category cat = (Category) logicalParent;
-            for (final TaskBlock tbi : cat.getTaskBlocks()) {
+            for (final HomogeneousTaskBlock tbi : cat.getTaskBlocks()) {
                 if (tbi == child) {
                     cat.getTaskBlocks().remove(tbi);
                     return tbi;
                 }
             }
         } else if (child instanceof SubTaskDef) {
-            final TaskBlock tb = (TaskBlock) logicalParent;
+            final HomogeneousTaskBlock tb = (HomogeneousTaskBlock) logicalParent;
             try {
-                final List<SubTaskDef> itemsList = (List) Stuff.call(tb, "get%sSubTaskDef", child.getClass());
+                final List<? extends SubTaskDef> itemsList = tb.getSubtaskDefs();
                 for (final SubTaskDef subtaskdef : itemsList) {
                     if (subtaskdef == child) {
                         itemsList.remove(subtaskdef);
