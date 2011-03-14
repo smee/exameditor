@@ -22,15 +22,15 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskHierarchyFacade {
-  private ITreeProvider<Object> treeProvider;
+public class ComplexTaskHierarchyFacade<T extends Indexed> {
+  private ITreeProvider<T> treeProvider;
 
     /**
      * Default constructor.
      *
      * @param treeProvider
      */
-  public ComplexTaskHierarchyFacade(ITreeProvider<Object> treeProvider) {
+  public ComplexTaskHierarchyFacade(ITreeProvider<T> treeProvider) {
         this.treeProvider = treeProvider;
     }
 
@@ -40,8 +40,8 @@ public class ComplexTaskHierarchyFacade {
      * @param child
      * @return the object to delete
      */
-    public Object removeFromParent(final Object child) {
-        final Object parent = findParentOf(child);
+    public T removeFromParent(final T child) {
+        final T parent = findParentOf(child);
         if (parent != null) {
             if (parent instanceof BasicUser) {
                 ((BasicUser) parent).getTaskdefs().remove(child);
@@ -59,11 +59,11 @@ public class ComplexTaskHierarchyFacade {
      * @param child
      * @return
      */
-    public Object findParentOf(final Object child) {
-        final Iterator<?> it = treeProvider.getRoots();
+    public T findParentOf(final T child) {
+        final Iterator<? extends T> it = treeProvider.getRoots();
         while (it.hasNext()) {
-            final Object root = it.next();
-            final Object parent = findParentOf(root, child);
+            final T root = it.next();
+            final T parent = findParentOf(root, child);
             if (parent != null)
                 return parent;
         }
@@ -114,8 +114,8 @@ public class ComplexTaskHierarchyFacade {
 	}
 
 	private boolean move(HomogeneousTaskBlock tb, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
-		Category fromC = (Category) findParentOf(tb);
-		Category toC = (Category) findParentOf(to);
+		Category fromC = (Category) findParentOf((T) tb);
+		Category toC = (Category) findParentOf((T) to);
 		if(fromC!=toC){
 			return move(tb,toC,anchor,isMove);
 		}else{
@@ -125,7 +125,7 @@ public class ComplexTaskHierarchyFacade {
 	}
 
 	private boolean move(HomogeneousTaskBlock element, Category to, Anchor anchor, boolean isMove) {
-    	Category fromC = (Category) findParentOf(element);
+    	Category fromC = (Category) findParentOf((T) element);
     	HomogeneousTaskBlock b = (HomogeneousTaskBlock) element;
     	if(isMove && fromC!=null)
     		fromC.getTaskBlocks().remove(b);
@@ -136,9 +136,9 @@ public class ComplexTaskHierarchyFacade {
 
 	private boolean move(SubTaskDef element, SubTaskDef to, Anchor anchor) {
 		// change order
-        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf(to);
+        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf((T) to);
 
-        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf(element);
+        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf((T) element);
         if(fromTaskblock!=null)
         	Stuff.getSubtaskDefs(fromTaskblock).remove(element);
 
@@ -160,11 +160,11 @@ public class ComplexTaskHierarchyFacade {
 	}
 
 	private boolean move(SubTaskDef element, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
-        Object parent = findParentOf(element);
+        T parent = findParentOf((T) element);
         if (parent != to) {
             // remove from current taskblock
         	if(isMove && parent != null)
-        		removeFromParent(element);
+        		removeFromParent((T) element);
             Stuff.getSubtaskDefs(to).add((SubTaskDef) element);
 
             Stuff.saveAll(parent, to);
@@ -173,13 +173,13 @@ public class ComplexTaskHierarchyFacade {
         return false;
 	}
 
-	private Object clearPhysicalParent(final Object child, final Object logicalParent) {
+	private T clearPhysicalParent(final T child, final T logicalParent) {
         if (child instanceof HomogeneousTaskBlock) {
             final Category cat = (Category) logicalParent;
             for (final HomogeneousTaskBlock tbi : cat.getTaskBlocks()) {
                 if (tbi == child) {
                     cat.getTaskBlocks().remove(tbi);
-                    return tbi;
+                    return (T) tbi;
                 }
             }
         } else if (child instanceof SubTaskDef) {
@@ -189,7 +189,7 @@ public class ComplexTaskHierarchyFacade {
                 for (final SubTaskDef subtaskdef : itemsList) {
                     if (subtaskdef == child) {
                         itemsList.remove(subtaskdef);
-                        return subtaskdef;
+                        return (T) subtaskdef;
                     }
                 }
             } catch (final Exception e) {
@@ -200,13 +200,13 @@ public class ComplexTaskHierarchyFacade {
         return logicalParent;
     }
 
-    private Object findParentOf(final Object current, final Object child) {
-        final Iterator<?> it = treeProvider.getChildren(current);
+    private T findParentOf(final T current, final T child) {
+        final Iterator<? extends T> it = treeProvider.getChildren(current);
         while (it.hasNext()) {
-            final Object potentialParent = it.next();
+            final T potentialParent = it.next();
             if (isSamePersistedObject(potentialParent, child))
                 return current;
-            final Object parent = findParentOf(potentialParent, child);
+            final T parent = findParentOf(potentialParent, child);
             if (parent != null)
                 return parent;
         }
@@ -220,14 +220,14 @@ public class ComplexTaskHierarchyFacade {
      * @param child
      * @return
      */
-    private boolean isSamePersistedObject(Object potentialParent, Object child) {
+    private boolean isSamePersistedObject(T potentialParent, T child) {
         try {
             return
             // same class?
             potentialParent.getClass().equals(child.getClass())
                     &&
                     // same primary key?
-                    ((Indexed) potentialParent).getHjid().equals(((Indexed) child).getHjid());
+                    potentialParent.getHjid().equals(child.getHjid());
 
         } catch (Exception e) {
             e.printStackTrace();

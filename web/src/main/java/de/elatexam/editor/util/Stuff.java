@@ -24,6 +24,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+
 import net.databinder.hib.Databinder;
 
 import org.hibernate.Transaction;
@@ -57,7 +60,18 @@ import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
  *
  */
 public class Stuff {
-
+	static JAXBContext context;
+	static{
+		try {
+			context=JAXBContext.newInstance(ComplexTaskDef.class);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			context = null;
+		}
+	}
+	public static JAXBContext getContext(){
+		return context;
+	}
   /**
    * Get the items (subtaskdef|choice(subtaskdef)+)* of a taskblock. Needs to be done via reflection, because the items
    * have no common interface but similar method names. This method assumes that each subclass of {@link TaskBlockType}

@@ -35,6 +35,7 @@ import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
+import de.elatexam.model.Indexed;
 import de.elatexam.model.ObjectFactory;
 import de.elatexam.model.SubTaskDef;
 
@@ -44,13 +45,22 @@ import de.elatexam.model.SubTaskDef;
  *
  */
 public class TaskDefActions extends Panel implements IAjaxUpdateListener{
-
-	private final Link downloadLink, previewLink;
+	private static JAXBContext context = null;
+	static{
+		try {
+			context = JAXBContext.newInstance(ComplexTaskDef.class);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+	private final Link<File> downloadLink;
+	private final Link<ComplexTaskDef> previewLink;
 	private final ConfirmerLink deleteLink;
 	private final AddElementLink addLink;
-	private final ComplexTaskDefTree tree;
+	private final ComplexTaskDefTree<Indexed> tree;
 	
-	public TaskDefActions(String id, ComplexTaskDefTree t) {
+	@SuppressWarnings("unchecked")
+	public TaskDefActions(String id, ComplexTaskDefTree<Indexed> t) {
 		super(id);
 		this.tree = t;
 		this.downloadLink = createDownloadLink();
@@ -63,7 +73,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 			}
 		};
 		add(taskblockselectormodal);
-		TaskSelectorModalWindow taskselectormodal = new TaskSelectorModalWindow("taskmodal") {
+		TaskSelectorModalWindow<?> taskselectormodal = new TaskSelectorModalWindow("taskmodal") {
 			@Override
 			void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				addLink.addTasks(subtaskdefs);
@@ -79,7 +89,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 			@Override
 			public void onClick() {
 				// which domain object do we need to delete?
-				final Object toDelete = new ComplexTaskHierarchyFacade(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
+				final Object toDelete = new ComplexTaskHierarchyFacade<Indexed>(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
 				// do not delete subtaskdefs, only remove them from the current
 				// complextaskdef
 				if (!(toDelete instanceof SubTaskDef)) {
@@ -129,7 +139,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 						try {
 							tempFile = File.createTempFile("taskdef", "export");
 							// marshal to xml
-							final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
+							
 							final Marshaller marshaller = context.createMarshaller();
 							final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
 							final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();

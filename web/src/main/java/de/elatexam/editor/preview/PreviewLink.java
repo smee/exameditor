@@ -35,6 +35,7 @@ import org.apache.wicket.request.target.component.PageRequestTarget;
 
 import com.visural.wicket.component.submitters.IndicateModalLink;
 
+import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.ComplexTaskDef;
 import de.thorstenberger.taskmodel.TaskModelViewDelegate;
 import de.thorstenberger.taskmodel.TaskModelViewDelegateObject;
@@ -47,6 +48,7 @@ import de.thorstenberger.taskmodel.complex.impl.ComplexTaskFactoryImpl;
 import de.thorstenberger.taskmodel.impl.TaskManagerImpl;
 import de.thorstenberger.taskmodel.impl.TaskModelViewDelegateObjectImpl;
 import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
+import de.thorstenberger.taskmodel.util.JAXBUtils;
 
 /**
  * Link that calls the locally running taskcore-view webapp to show live preview of a complextaskdef. Will return to the
@@ -56,15 +58,7 @@ import de.thorstenberger.taskmodel.impl.TaskletContainerImpl;
  *
  */
 public class PreviewLink extends IndicateModalLink {
-	static JAXBContext context;
-	static{
-		try {
-			context=JAXBContext.newInstance(ComplexTaskDef.class);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-			context = null;
-		}
-	}
+
 
   public PreviewLink(final String id, final IModel<ComplexTaskDef> model) {
     super(id);
@@ -98,9 +92,11 @@ public class PreviewLink extends IndicateModalLink {
     final DummyTaskFactoryImpl taskfactory = new DummyTaskFactoryImpl(new ComplexTaskDefDAOImpl(ctf),
         new ComplexTaskHandlingDAOImpl(ctf),new ComplexTaskBuilderImpl(ctf));
     // use currently selected taskmodel (in the tree)
+    Marshaller marshaller = null;
+    JAXBContext context = Stuff.getContext();
     try {
       // marshal to xml
-      final Marshaller marshaller = context.createMarshaller();
+      marshaller = JAXBUtils.getJAXBMarshaller(context);
       final StringWriter sw = new StringWriter();
       // TODO enable preview for one category, taskblock, subtaskdef
       marshaller.marshal(getModelObject(), sw);
@@ -123,6 +119,9 @@ public class PreviewLink extends IndicateModalLink {
               getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
     } catch (final JAXBException e) {
       e.printStackTrace();
+    }finally{
+    	if(marshaller!=null)
+    		JAXBUtils.releaseJAXBMarshaller(context, marshaller);
     }
   }
 

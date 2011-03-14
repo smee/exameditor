@@ -38,6 +38,7 @@ import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.Indexed;
 import de.elatexam.model.MappingSubTaskDef;
 import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.McSubTaskDef;
@@ -51,7 +52,7 @@ import de.elatexam.model.TextTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListener{
+public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> implements IAjaxUpdateListener{
   final static ImmutableMap<Class<?>, String[]> tranferTypes = new ImmutableMap.Builder<Class<?>, String[]>()
       .put(MappingTaskBlock.class, new String[]{"mapping", "category"})
       .put(MappingSubTaskDef.class, new String[]{"mapping"})
@@ -87,7 +88,7 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
 
 
   private IModel<ComplexTaskDef> currentTaskdef;
-  private IModel<?> selectedModel;
+  private IModel<T> selectedModel;
 
   /**
    * @param id
@@ -135,7 +136,7 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
    * @param tree2
    * @param target
    */
-  void select(final IModel<?> model, final AjaxRequestTarget target) {
+  void select(final IModel<T> model, final AjaxRequestTarget target) {
     if (selectedModel != null && selectedModel.getObject() != null) {
       // redraw the now deselected node
       updateNode(selectedModel.getObject(), target);
@@ -154,15 +155,15 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
    *
    * @param selected
    */
-  private IModel<?> findCurrentTaskDef(final IModel<?> selected) {
+  private IModel<T> findCurrentTaskDef(final IModel<T> selected) {
     if (isComplextask(selected))
       return selected;
 
-    final ComplexTaskdefTreeProvider prov = (ComplexTaskdefTreeProvider) getProvider();
-    final Iterator<?> it = prov.getRoots();
+    final ITreeProvider<T> prov = getProvider();
+    final Iterator<? extends T> it = prov.getRoots();
     while (it.hasNext()) {
-      final IModel<?> root = prov.model(it.next());
-      final IModel<?> ctdModel = findTaskDefThatContains(selected, root);
+      final IModel<T> root = prov.model(it.next());
+      final IModel<T> ctdModel = findTaskDefThatContains(selected, root);
       if (ctdModel != null)
         return ctdModel;
     }
@@ -173,18 +174,18 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
    * @param selected
    * @return
    */
-  private boolean isComplextask(final IModel<?> selected) {
+  private boolean isComplextask(final IModel<T> selected) {
     return selected.getObject().getClass().equals(ComplexTaskDef.class);
   }
 
-  private IModel<?> findTaskDefThatContains(final IModel<?> selected, final IModel<?> currentNode) {
-    final ITreeProvider provider = getProvider();
+  private IModel<T> findTaskDefThatContains(final IModel<T> selected, final IModel<T> currentNode) {
+    final ITreeProvider<T> provider = getProvider();
     if (currentNode.equals(selected))
       return currentNode;
     else if (provider.hasChildren(currentNode.getObject())) {
-      final Iterator childrenIterator = provider.getChildren(currentNode.getObject());
+      final Iterator<? extends T> childrenIterator = provider.getChildren(currentNode.getObject());
       while (childrenIterator.hasNext()) {
-        final IModel<?> inSubtree = findTaskDefThatContains(selected, provider.model(childrenIterator.next()));
+        final IModel<T> inSubtree = findTaskDefThatContains(selected, provider.model(childrenIterator.next()));
         if (inSubtree != null) {
           if (inSubtree.getObject().getClass().equals(ComplexTaskDef.class))
             return inSubtree;
@@ -201,7 +202,7 @@ public class ComplexTaskDefTree extends NestedTree implements IAjaxUpdateListene
    *
    * @return
    */
-  public IModel<?> getSelected() {
+  public IModel<T> getSelected() {
     return selectedModel;
   }
 

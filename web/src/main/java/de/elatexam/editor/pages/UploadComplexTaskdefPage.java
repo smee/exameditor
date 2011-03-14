@@ -24,6 +24,7 @@ import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.SubTaskDef;
+import de.thorstenberger.taskmodel.util.JAXBUtils;
 
 /**
  * @author sdienst
@@ -78,9 +79,10 @@ public class UploadComplexTaskdefPage extends SecurePage {
    * @return
    */
   public ComplexTaskDef loadTaskDef(final FileUpload upload) {
-    try {
-      final JAXBContext context = JAXBContext.newInstance(ComplexTaskDef.class);
-      final Unmarshaller unmarshaller = context.createUnmarshaller();
+	final JAXBContext context = Stuff.getContext(); 
+	Unmarshaller unmarshaller = null;
+	try {
+      unmarshaller = JAXBUtils.getJAXBUnmarshaller(context);
 
       final Object result = unmarshaller.unmarshal(upload.getInputStream());
       return (ComplexTaskDef) result;
@@ -89,6 +91,9 @@ public class UploadComplexTaskdefPage extends SecurePage {
       e.printStackTrace();
     } catch (final IOException e) {
       e.printStackTrace();
+    }finally{
+      if(unmarshaller!=null)
+    	JAXBUtils.releaseJAXBUnmarshaller(context, unmarshaller);
     }
     return null;
   }
