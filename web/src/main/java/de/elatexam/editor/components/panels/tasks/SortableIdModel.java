@@ -43,7 +43,7 @@ public class SortableIdModel implements IModel<String> {
 
     private static String getRealId(String id) {
         if (id != null && id.contains(STUPID_SEPARATOR))
-            return id.substring(id.indexOf(STUPID_SEPARATOR) + STUPID_SEPARATOR.length());
+            return id.substring(0,id.indexOf(STUPID_SEPARATOR));
         else
             return id;
     }
@@ -54,13 +54,13 @@ public class SortableIdModel implements IModel<String> {
         if (StringUtils.isEmpty(sortTag)) {
             nestedModel.setObject(object);
         } else {
-        	nestedModel.setObject(sortTag + STUPID_SEPARATOR + object);
+        	nestedModel.setObject(object + STUPID_SEPARATOR + sortTag);
         }
     }
 
     private static String getSortTag(String id) {
         if (id!=null && id.contains(STUPID_SEPARATOR))
-            return id.substring(0, id.indexOf(STUPID_SEPARATOR));
+            return id.substring(id.indexOf(STUPID_SEPARATOR)+STUPID_SEPARATOR.length());
         else
             return "";
     }
@@ -72,7 +72,7 @@ public class SortableIdModel implements IModel<String> {
      */
     public static String getTaggedId(String currentId, int orderIdx) {
         String value = getRealId(currentId);
-        return orderIdx + STUPID_SEPARATOR + value;
+        return value + STUPID_SEPARATOR + orderIdx ;
     }
 	/* (non-Javadoc)
 	 * @see org.apache.wicket.model.IDetachable#detach()
