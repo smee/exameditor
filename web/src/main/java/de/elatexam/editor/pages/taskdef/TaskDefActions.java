@@ -14,11 +14,13 @@ import net.databinder.hib.Databinder;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebResource;
 import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.resource.IResourceStream;
 import org.hibernate.Transaction;
 
 import com.visural.wicket.component.confirmer.ConfirmerLink;
@@ -38,6 +40,7 @@ import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
 import de.elatexam.model.Indexed;
 import de.elatexam.model.ObjectFactory;
 import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
 
 /**
  * Actions operating on ComplexTaskDefs
@@ -54,12 +57,11 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 		}
 	}
 	private final Link<File> downloadLink;
-	private final Link<ComplexTaskDef> previewLink;
+	private final Link<?> previewLink;
 	private final ConfirmerLink deleteLink;
 	private final AddElementLink addLink;
 	private final ComplexTaskDefTree<Indexed> tree;
 	
-	@SuppressWarnings("unchecked")
 	public TaskDefActions(String id, ComplexTaskDefTree<Indexed> t) {
 		super(id);
 		this.tree = t;
@@ -68,12 +70,12 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 		setOutputMarkupId(true);
 		ModalWindow taskblockselectormodal = new TaskBlockSelectorModalWindow("taskblockmodal") {
 			@Override
-			void onSelect(Class taskblockclass) {
+			void onSelect(Class<? extends HomogeneousTaskBlock> taskblockclass) {
 				addLink.createTaskblock(taskblockclass);
 			}
 		};
 		add(taskblockselectormodal);
-		TaskSelectorModalWindow<?> taskselectormodal = new TaskSelectorModalWindow("taskmodal") {
+		TaskSelectorModalWindow taskselectormodal = new TaskSelectorModalWindow("taskmodal") {
 			@Override
 			void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				addLink.addTasks(subtaskdefs);
@@ -89,7 +91,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 			@Override
 			public void onClick() {
 				// which domain object do we need to delete?
-				final Object toDelete = new ComplexTaskHierarchyFacade<Indexed>(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
+				final Object toDelete = new ComplexTaskHierarchyFacade(tree.getProvider()).removeFromParent(tree.getSelected().getObject());
 				// do not delete subtaskdefs, only remove them from the current
 				// complextaskdef
 				if (!(toDelete instanceof SubTaskDef)) {
@@ -122,6 +124,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 		add(addLink);
 		add(deleteLink);
 	}
+
 
 	/**
 	 * Create a link that allows to download a serialized xml file for the

@@ -27,6 +27,7 @@ import net.databinder.models.hib.CriteriaFilterAndSort;
 import net.databinder.models.hib.OrderingCriteriaBuilder;
 import net.databinder.models.hib.SortableHibernateProvider;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,18 +46,18 @@ import de.elatexam.editor.util.RemoveNullResultTransformer;
  * 
  * @param <T>
  */
-final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> {
-  private final CriteriaFilterAndSort builder;
-  private final Class<T> clazz;
+final class PrivateSubtasksDataProvider extends SortableHibernateProvider<SubTaskDef> {
+  private final IFilterStateLocator<SubTaskDef> builder;
+  private final Class<? extends SubTaskDef> clazz;
   final String query = "select task from BasicUser user left join user.subtaskdefs task where user.username='%s'";
   final String adminQuery = "from de.elatexam.model.SubTaskDef task where 1=1";
   final String classQuery = " and task.class in (%s)";
 
-  PrivateSubtasksDataProvider(final Class<T> objectClass, final OrderingCriteriaBuilder criteriaBuilder,
-      final CriteriaFilterAndSort builder, final Class<T> clazz) {
+  PrivateSubtasksDataProvider(final Class<SubTaskDef> objectClass, final OrderingCriteriaBuilder criteriaBuilder,
+      final IFilterStateLocator<SubTaskDef> builder) {
     super(objectClass, criteriaBuilder);
     this.builder = builder;
-    this.clazz = clazz;
+    this.clazz = objectClass;
   }
 
   private String createQueryString() {
@@ -85,7 +86,7 @@ final class PrivateSubtasksDataProvider<T> extends SortableHibernateProvider<T> 
   }
 
   @Override
-  public Iterator<T> iterator(final int first, final int count) {
+  public Iterator<SubTaskDef> iterator(final int first, final int count) {
     final Session sess = Databinder.getHibernateSession(getFactoryKey());
 
     final Query q = sess.createQuery(createQueryString());

@@ -27,6 +27,7 @@ import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFal
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.HeaderlessColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar;
@@ -60,13 +61,13 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
    * @param clazz
    * @param doSubtaskdefSelection
    */
-  public SubtaskdefTable(String id, Class<T> clazz, final TaskSelectionPanel<T> taskSelectionPanel) {
+  public SubtaskdefTable(String id, Class<T> clazz, final TaskSelectionPanel taskSelectionPanel) {
     super(id);
 
 
     CriteriaFilterAndSort builder = new CriteriaFilterAndSort(new SubTaskDef() {}, "xmlid", true, false);
 
-    final FilterForm form = new FilterForm("form", builder);
+    final FilterForm<T> form = new FilterForm<T>("form", builder);
     form.setOutputMarkupId(true);
 
     add(form);
@@ -106,10 +107,10 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
       });
     }
     // XXX ugly hack, need to create own data access layer
-    final PrivateSubtasksDataProvider<T> provider = new PrivateSubtasksDataProvider<T>(clazz, builder, builder, clazz);
+    final PrivateSubtasksDataProvider provider = new PrivateSubtasksDataProvider((Class<SubTaskDef>) clazz, builder, builder);
     provider.setWrapWithPropertyModel(false);
 
-    final AjaxFallbackDefaultDataTable<T> table = new AjaxFallbackDefaultDataTable<T>("datatable", columns, provider, 10);
+    final AjaxFallbackDefaultDataTable<T> table = new AjaxFallbackDefaultDataTable<T>("datatable", columns, (ISortableDataProvider<T>) provider, 10);
 
     table.addTopToolbar(new FilterToolbar(table, form, builder));
     form.add(table);

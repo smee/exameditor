@@ -11,7 +11,7 @@ import de.elatexam.model.SubTaskDef;
  * @author Steffen Dienst
  *
  */
-public abstract class TaskSelectorModalWindow<T extends SubTaskDef> extends ModalWindow {
+public abstract class TaskSelectorModalWindow extends ModalWindow {
 
   public TaskSelectorModalWindow(String id) {
     super(id);
@@ -27,10 +27,10 @@ public abstract class TaskSelectorModalWindow<T extends SubTaskDef> extends Moda
   /**
    * @param clazz
    */
-  public void showFor(Class<T> clazz, final AjaxRequestTarget target) {
-    setContent(new TaskSelectionPanel<T>(getContentId(), clazz) {
+  public void showFor(Class<? extends SubTaskDef> clazz, final AjaxRequestTarget target) {
+    setContent(new TaskSelectionPanel(getContentId(), clazz) {
       @Override
-      public void onSelect(AjaxRequestTarget target,T... subtaskdefs) {
+      public void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				TaskSelectorModalWindow.this.onSelect(target, subtaskdefs);
         TaskSelectorModalWindow.this.close(target);
 
@@ -46,6 +46,6 @@ public abstract class TaskSelectorModalWindow<T extends SubTaskDef> extends Moda
    */
   @Override
   public void show(AjaxRequestTarget target) {
-    showFor((Class<T>) SubTaskDef.class, target);
+    showFor( SubTaskDef.class, target);
   }
 }

@@ -39,16 +39,14 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 	 * @param type 
 	 * @param moveable
 	 */
-	@SuppressWarnings("unchecked")
-    public MCAnswersInputPanel(final String id, final IModel<List<McSubTaskDefAnswerDefinitionsItem>> model,
-            final Type type, final boolean moveable) {
+    public MCAnswersInputPanel(final String id, final IModel<List<McSubTaskDefAnswerDefinitionsItem>> model, final Type type, final boolean moveable) {
 		super(id, model);
 
         add(new Label("title", "Anworten"));
 
 		container = new WebMarkupContainer("answerrepeater");
         container.setOutputMarkupId(true);
-// TODO distinguish between single and multiple choice (radio vs. checkbox)
+
         final ListEditor<McSubTaskDefAnswerDefinitionsItem> answers = new ListEditor<McSubTaskDefAnswerDefinitionsItem>("mcanswer", model) {
 
 			@Override
@@ -116,7 +114,7 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
 		container.add(answers);
 		add(container);
 
-        final AjaxFallbackLink addAnswer = new AjaxFallbackLink("addanswer") {
+        final AjaxFallbackLink<?> addAnswer = new AjaxFallbackLink("addanswer") {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 NamedString answer = new NamedString();

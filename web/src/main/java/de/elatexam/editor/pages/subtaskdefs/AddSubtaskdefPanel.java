@@ -33,14 +33,14 @@ import de.elatexam.model.SubTaskDef;
 public class AddSubtaskdefPanel<T extends SubTaskDef> extends Panel {
 
 
-  private TaskSelectionPanel<T> std;
+  private TaskSelectionPanel std;
 
   /**
    * @param componentId
    * @param rowModel
    * @param taskSelectionPanel
    */
-  public AddSubtaskdefPanel(String componentId, IModel<T> rowModel, TaskSelectionPanel<T> taskSelectionPanel) {
+  public AddSubtaskdefPanel(String componentId, IModel<T> rowModel, TaskSelectionPanel taskSelectionPanel) {
     super(componentId, rowModel);
     this.std = taskSelectionPanel;
 		add(new AjaxLink<T>("link", rowModel) {

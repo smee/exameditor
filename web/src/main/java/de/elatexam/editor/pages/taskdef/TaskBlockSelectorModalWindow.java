@@ -2,6 +2,10 @@ package de.elatexam.editor.pages.taskdef;
 
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 
+import de.elatexam.model.SubTaskDef;
+import de.elatexam.model.TaskBlock;
+import de.elatexam.model.manual.HomogeneousTaskBlock;
+
 /**
  * @author Steffen Dienst
  *
@@ -16,7 +20,7 @@ public abstract class TaskBlockSelectorModalWindow extends ModalWindow {
         setContent(new TaskBlockSelectionPanel(getContentId(), this) {
 
             @Override
-            protected void onSelect(Class taskblockclass) {
+            protected void onSelect(Class<? extends HomogeneousTaskBlock> taskblockclass) {
                 TaskBlockSelectorModalWindow.this.onSelect(taskblockclass);
             }
 
@@ -24,5 +28,5 @@ public abstract class TaskBlockSelectorModalWindow extends ModalWindow {
 
     }
 
-    abstract void onSelect(Class taskblockclass);
+    abstract void onSelect(Class<? extends HomogeneousTaskBlock> taskblockclass);
 }

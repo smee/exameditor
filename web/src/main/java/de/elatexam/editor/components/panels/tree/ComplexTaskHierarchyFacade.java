@@ -22,15 +22,15 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskHierarchyFacade<T extends Indexed> {
-  private ITreeProvider<T> treeProvider;
+public class ComplexTaskHierarchyFacade {
+  private ITreeProvider<Indexed> treeProvider;
 
     /**
      * Default constructor.
      *
      * @param treeProvider
      */
-  public ComplexTaskHierarchyFacade(ITreeProvider<T> treeProvider) {
+  public ComplexTaskHierarchyFacade(ITreeProvider<Indexed> treeProvider) {
         this.treeProvider = treeProvider;
     }
 
@@ -40,8 +40,8 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
      * @param child
      * @return the object to delete
      */
-    public T removeFromParent(final T child) {
-        final T parent = findParentOf(child);
+    public Indexed removeFromParent(final Indexed child) {
+        final Indexed parent = findParentOf(child);
         if (parent != null) {
             if (parent instanceof BasicUser) {
                 ((BasicUser) parent).getTaskdefs().remove(child);
@@ -59,11 +59,11 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
      * @param child
      * @return
      */
-    public T findParentOf(final T child) {
-        final Iterator<? extends T> it = treeProvider.getRoots();
+    public Indexed findParentOf(final Indexed child) {
+        final Iterator<? extends Indexed> it = treeProvider.getRoots();
         while (it.hasNext()) {
-            final T root = it.next();
-            final T parent = findParentOf(root, child);
+            final Indexed root = it.next();
+            final Indexed parent = findParentOf(root, child);
             if (parent != null)
                 return parent;
         }
@@ -114,8 +114,8 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
 	}
 
 	private boolean move(HomogeneousTaskBlock tb, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
-		Category fromC = (Category) findParentOf((T) tb);
-		Category toC = (Category) findParentOf((T) to);
+		Category fromC = (Category) findParentOf(tb);
+		Category toC = (Category) findParentOf(to);
 		if(fromC!=toC){
 			return move(tb,toC,anchor,isMove);
 		}else{
@@ -125,7 +125,7 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
 	}
 
 	private boolean move(HomogeneousTaskBlock element, Category to, Anchor anchor, boolean isMove) {
-    	Category fromC = (Category) findParentOf((T) element);
+    	Category fromC = (Category) findParentOf(element);
     	HomogeneousTaskBlock b = (HomogeneousTaskBlock) element;
     	if(isMove && fromC!=null)
     		fromC.getTaskBlocks().remove(b);
@@ -136,9 +136,9 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
 
 	private boolean move(SubTaskDef element, SubTaskDef to, Anchor anchor) {
 		// change order
-        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf((T) to);
+        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf(to);
 
-        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf((T) element);
+        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf(element);
         if(fromTaskblock!=null)
         	Stuff.getSubtaskDefs(fromTaskblock).remove(element);
 
@@ -160,11 +160,11 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
 	}
 
 	private boolean move(SubTaskDef element, HomogeneousTaskBlock to, Anchor anchor, boolean isMove) {
-        T parent = findParentOf((T) element);
+        Indexed parent = findParentOf(element);
         if (parent != to) {
             // remove from current taskblock
         	if(isMove && parent != null)
-        		removeFromParent((T) element);
+        		removeFromParent(element);
             Stuff.getSubtaskDefs(to).add((SubTaskDef) element);
 
             Stuff.saveAll(parent, to);
@@ -173,13 +173,13 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
         return false;
 	}
 
-	private T clearPhysicalParent(final T child, final T logicalParent) {
+	private Indexed clearPhysicalParent(final Indexed child, final Indexed logicalParent) {
         if (child instanceof HomogeneousTaskBlock) {
             final Category cat = (Category) logicalParent;
             for (final HomogeneousTaskBlock tbi : cat.getTaskBlocks()) {
                 if (tbi == child) {
                     cat.getTaskBlocks().remove(tbi);
-                    return (T) tbi;
+                    return tbi;
                 }
             }
         } else if (child instanceof SubTaskDef) {
@@ -189,7 +189,7 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
                 for (final SubTaskDef subtaskdef : itemsList) {
                     if (subtaskdef == child) {
                         itemsList.remove(subtaskdef);
-                        return (T) subtaskdef;
+                        return subtaskdef;
                     }
                 }
             } catch (final Exception e) {
@@ -200,13 +200,13 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
         return logicalParent;
     }
 
-    private T findParentOf(final T current, final T child) {
-        final Iterator<? extends T> it = treeProvider.getChildren(current);
+    private Indexed findParentOf(final Indexed current, final Indexed child) {
+        final Iterator<? extends Indexed> it = treeProvider.getChildren(current);
         while (it.hasNext()) {
-            final T potentialParent = it.next();
+            final Indexed potentialParent = it.next();
             if (isSamePersistedObject(potentialParent, child))
                 return current;
-            final T parent = findParentOf(potentialParent, child);
+            final Indexed parent = findParentOf(potentialParent, child);
             if (parent != null)
                 return parent;
         }
@@ -220,7 +220,7 @@ public class ComplexTaskHierarchyFacade<T extends Indexed> {
      * @param child
      * @return
      */
-    private boolean isSamePersistedObject(T potentialParent, T child) {
+    private boolean isSamePersistedObject(Indexed potentialParent, Indexed child) {
         try {
             return
             // same class?

@@ -26,7 +26,6 @@ import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
-import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
@@ -37,6 +36,7 @@ import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.ComplexTaskDef.Config;
 import de.elatexam.model.ComplexTaskDef.Config.CorrectionMode;
 import de.elatexam.model.ComplexTaskDef.Config.CorrectionMode.Regular;
+import de.elatexam.model.Indexed;
 import de.elatexam.model.MappingSubTaskDef;
 import de.elatexam.model.MappingTaskBlock;
 import de.elatexam.model.MappingTaskBlock.MappingConfig;
@@ -56,7 +56,7 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class AddElementLink extends AjaxLink<Object> {
+public class AddElementLink extends AjaxLink<Indexed> {
 	final static ImmutableMap<Class<?>, Integer> childMap = new ImmutableMap.Builder<Class<?>, Integer>()
 
 	.put(BasicUser.class, 0)
@@ -69,13 +69,13 @@ public class AddElementLink extends AjaxLink<Object> {
 	.put(PaintTaskBlock.class, 7)
 	.build();
 
-	private ComplexTaskDefTree tree;
+	private ComplexTaskDefTree<Indexed> tree;
 
 	private ModalWindow selectTaskBlockModal;
 	private TaskSelectorModalWindow selectTaskModal;
 
 	public AddElementLink(String id, ModalWindow selectTaskBlockModal,
-			TaskSelectorModalWindow selectTaskModal, ComplexTaskDefTree tree) {
+			TaskSelectorModalWindow selectTaskModal, ComplexTaskDefTree<Indexed> tree) {
 		super(id);
 		this.tree = tree;
 		this.selectTaskBlockModal = selectTaskBlockModal;
@@ -85,7 +85,7 @@ public class AddElementLink extends AjaxLink<Object> {
 	@Override
 	public void onClick(AjaxRequestTarget target) {
 
-		Object selectedObject = tree.getSelected().getObject();
+		Indexed selectedObject = tree.getSelected().getObject();
 		Object newObj = null;
 		switch (childMap.get(selectedObject.getClass())) {
 			case 0 : // create a new complextaskdef
@@ -115,7 +115,7 @@ public class AddElementLink extends AjaxLink<Object> {
 			case 5 :
 			case 6 :
 			case 7 :
-				selectTaskModal.showFor(selectedObject.getClass(), target);
+				selectTaskModal.showFor((Class<? extends SubTaskDef>) selectedObject.getClass(), target);
 				break;
 			default :
 				break;

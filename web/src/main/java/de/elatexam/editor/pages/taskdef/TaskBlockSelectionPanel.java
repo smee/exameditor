@@ -26,9 +26,9 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  * @author Steffen Dienst
  *
  */
-public abstract class TaskBlockSelectionPanel<T extends Class<? extends TaskBlock>> extends Panel {
+public abstract class TaskBlockSelectionPanel extends Panel {
     @SuppressWarnings("unchecked")
-    final List<T> taskblocktypes = (List<T>) Arrays.asList(
+    final List<Class<? extends HomogeneousTaskBlock>> taskblocktypes = Arrays.asList(
             McTaskBlock.class,
             MappingTaskBlock.class,
             ClozeTaskBlock.class,
@@ -46,20 +46,20 @@ public abstract class TaskBlockSelectionPanel<T extends Class<? extends TaskBloc
     public TaskBlockSelectionPanel(String id, final ModalWindow modalwindow) {
         super(id);
 
-        Form<T> form = new Form<T>("form");
+        Form<Class<? extends HomogeneousTaskBlock>> form = new Form<Class<? extends HomogeneousTaskBlock>>("form");
         add(form);
-        final RadioChoice<T> choice = new RadioChoice<T>("blockselection",
-                new Model<T>(),
+        final RadioChoice<Class<? extends HomogeneousTaskBlock>> choice = new RadioChoice<Class<? extends HomogeneousTaskBlock>>("blockselection",
+                new Model<Class<? extends HomogeneousTaskBlock>>(),
                 taskblocktypes,
-                new IChoiceRenderer<T>() {
+                new IChoiceRenderer<Class<? extends HomogeneousTaskBlock>>() {
 
                     @Override
-                    public Object getDisplayValue(T taskblockClass) {
+                    public Object getDisplayValue(Class<? extends HomogeneousTaskBlock> taskblockClass) {
                         return labels.get(taskblockClass);
                     }
 
                     @Override
-                    public String getIdValue(T taskblockClass, int index) {
+                    public String getIdValue(Class<? extends HomogeneousTaskBlock> taskblockClass, int index) {
                         return Integer.toString(index);
                     }
 
@@ -76,6 +76,6 @@ public abstract class TaskBlockSelectionPanel<T extends Class<? extends TaskBloc
         });
     }
 
-    abstract protected void onSelect(T taskblockclass);
+    abstract protected void onSelect(Class<? extends HomogeneousTaskBlock> taskblockclass);
 
 }
