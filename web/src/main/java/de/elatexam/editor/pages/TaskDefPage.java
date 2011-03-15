@@ -40,6 +40,7 @@ import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tasks.CategoryPanel;
 import de.elatexam.editor.components.panels.tasks.ComplexTaskdefPanel;
+import de.elatexam.editor.components.panels.tasks.PreviewSubtaskDefPanel;
 import de.elatexam.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.TaskBlockConfigPanel;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
@@ -145,8 +146,8 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 	            // TODO render panels for taskblock subtypes, not just generic block config
 	            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlock) selectedModel.getObject()).getConfig().getHjid())));
 	        } else if (t instanceof SubTaskDef) {
-	            final SubTaskDef st = (SubTaskDef) t;
-	            replaceEditPanelWith(target, new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
+	            replaceEditPanelWith(target, new PreviewSubtaskDefPanel<SubTaskDef>("editpanel", (IModel<SubTaskDef>) selectedModel)); 
+	            		//new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
 	        }
         }else{
 			replaceEditPanelWith(target, new EmptyPanel("editpanel"));

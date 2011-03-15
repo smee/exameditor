@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.validation.validator.NumberValidator.MinimumValidator;
+import org.apache.wicket.validation.validator.MinimumValidator;
 
 import de.elatexam.model.TaskblockConfig;
 
@@ -34,7 +34,7 @@ public class TaskBlockConfigPanel extends Panel {
       add(feedback = new FeedbackPanel("feedback"));
       feedback.setOutputMarkupId(true);
       add(new TextField<Float>("pointsPerTask"));
-      add(new TextField<Integer>("noOfSelectedTasks").add(MinimumValidator.minimum(0)));
+      add(new TextField<Integer>("noOfSelectedTasks").add(new MinimumValidator<Integer>(0)));
       add(new CheckBox("preserveOrder"));
 
       add(new Button("saveButton") {
