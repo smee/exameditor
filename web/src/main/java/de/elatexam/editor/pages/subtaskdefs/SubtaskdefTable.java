@@ -80,7 +80,12 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
         return new SortableIdModel(new PropertyModel<String>(rowModel, "xmlid"));
       }
     });
-    columns.add(new LabeledTextFilteredPropertyColumn<T>(Model.of("Aufgabenstellung"), Model.of("enthält:"), "problem", "problem"));
+    columns.add(new LabeledTextFilteredPropertyColumn<T>(Model.of("Aufgabenstellung"), Model.of("enthält:"), "problem", "problem"){
+    	@Override
+    	protected IModel<?> createLabelModel(IModel<T> rowModel) {
+    		return new EllipsisModel((IModel<String>)super.createLabelModel(rowModel), 90);
+    	}
+    });
 
     if (taskSelectionPanel == null) {
       columns.add(new PropertyColumn<T>(new Model<String>("Typ"), "class.simpleName") {
