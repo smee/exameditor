@@ -26,6 +26,7 @@ import org.hibernate.Transaction;
 import com.visural.wicket.component.confirmer.ConfirmerLink;
 
 import de.elatexam.editor.TaskEditorSession;
+import de.elatexam.editor.components.GermanConfirmerLink;
 import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
@@ -86,7 +87,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 
 		this.addLink = new AddElementLink("add", taskblockselectormodal,taskselectormodal, tree);
 
-		deleteLink = new ConfirmerLink("delete") {
+		deleteLink = new GermanConfirmerLink("delete") {
 
 			@Override
 			public void onClick() {
@@ -105,11 +106,9 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 				}
 			}
 		};
-		deleteLink.setOKButtonLabel("Ja");
-		deleteLink.setCancelButtonLabel("Abbrechen");
-		deleteLink.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");
 		deleteLink.setEnabled(false);
-
+		deleteLink.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");
+		
 		previewLink = new PreviewLink("preview",
 				new AbstractReadOnlyModel<ComplexTaskDef>() {
 					@Override

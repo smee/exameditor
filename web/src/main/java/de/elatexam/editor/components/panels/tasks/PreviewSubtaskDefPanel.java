@@ -66,14 +66,14 @@ public class PreviewSubtaskDefPanel<T extends SubTaskDef> extends Panel {
 		Label question = new Label("problem");
 		question.setEscapeModelStrings(false);
 		add(question);
-		add(getTypeSpecificPanel("typespecific"));
+		add(getTypeSpecificPanel("typespecific",(IModel<? extends SubTaskDef>) getDefaultModel()));
 	}
 
 	/**
 	 * @return
 	 */
-	private Component getTypeSpecificPanel(String id) {
-		IModel<?> model = new CompoundPropertyModel(getDefaultModel());
+	public static Component getTypeSpecificPanel(String id,IModel<? extends SubTaskDef> m) {
+		IModel<?> model = new CompoundPropertyModel(m);
 		Object obj = model.getObject();
 		
 		if(McSubTaskDef.class.isInstance(obj)){
