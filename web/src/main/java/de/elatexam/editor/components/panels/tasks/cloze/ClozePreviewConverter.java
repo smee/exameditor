@@ -12,21 +12,16 @@ public class ClozePreviewConverter extends ClozeConverter {
 	protected String createGapText(Gap gap) {
 		StringBuilder sb = new StringBuilder("");
 		sb.append("<input type=\"text\" value=\"");
+		sb.append(gap.getInitialValue()).append('"');
 		int maxLen = 0;
-        boolean valueAdded = false;
 		for (GapCorrectItem ci : gap.getCorrectItems()) {
-            if (!valueAdded) {
-                // add the first correct value into the input field, suffices for previews
-                sb.append(ci.getItem());
-                valueAdded = true;
-            }
 			maxLen = Math.max(maxLen, ci.getItem().length());
 		}
-		removeTrailingSemicolon(sb);
+		removeTrailingSplitchar(sb);
 
-  if (gap.getInputLength() != null && gap.getInputLength() > maxLen) {
-    maxLen = gap.getInputLength();
-  }
+		if (gap.getInputLength() != null && gap.getInputLength() > maxLen) {
+			maxLen = gap.getInputLength();
+		}
 
 		sb.append("\" size=\"" + maxLen + "\"");
 		sb.append(" disabled=\"disabled\"/>");

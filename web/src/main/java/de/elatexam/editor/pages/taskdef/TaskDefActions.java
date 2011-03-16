@@ -49,14 +49,6 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  *
  */
 public class TaskDefActions extends Panel implements IAjaxUpdateListener{
-	private static JAXBContext context = null;
-	static{
-		try {
-			context = JAXBContext.newInstance(ComplexTaskDef.class);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-	}
 	private final Link<File> downloadLink;
 	private final Link<?> previewLink;
 	private final ConfirmerLink deleteLink;
@@ -142,7 +134,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 							tempFile = File.createTempFile("taskdef", "export");
 							// marshal to xml
 							
-							final Marshaller marshaller = context.createMarshaller();
+							final Marshaller marshaller = Stuff.getContext().createMarshaller();
 							final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
 							final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();
 							addRevisionTo(ctd);
