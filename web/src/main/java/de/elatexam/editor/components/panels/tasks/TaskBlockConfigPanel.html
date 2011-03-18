@@ -7,15 +7,19 @@
     <ol>
       <li>
         <label for="pointsPerTask">Punkte pro Aufgabe</label> 
-        <input type="text" id="pointsPerTask" wicket:id="pointsPerTask" class="longinput"></input> 
+        <input type="text" id="pointsPerTask" wicket:id="config.pointsPerTask" class="longinput"></input> 
       </li>
       <li>
         <label for="noOfSelectedTasks">Anzahl zu wählender Aufgaben</label> 
-        <input type="text" id="noOfSelectedTasks" wicket:id="noOfSelectedTasks"></input> 
+        <input type="text" id="noOfSelectedTasks" wicket:id="config.noOfSelectedTasks"></input> 
       </li>      
       <li>
         <label for="preserveOrder">Reihenfolge beibehalten</label> 
-        <input type="checkbox" id="preserveOrder" wicket:id="preserveOrder"></input> 
+        <input type="checkbox" id="preserveOrder" wicket:id="config.preserveOrder"></input> 
+      </li>      
+      <li>
+        <label for="specific"></label> 
+        <span wicket:id="specific" id="specific"></span> 
       </li>      
     </ol>
   </fieldset>

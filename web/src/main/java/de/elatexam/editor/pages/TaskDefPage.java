@@ -124,7 +124,7 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 	@Override
 	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
 		if(event instanceof TreeSelectionEvent){
-			IModel<?> selectedModel = ((TreeSelectionEvent) event).getSelectedModel();
+			HibernateObjectModel<?> selectedModel = (HibernateObjectModel<?>) ((TreeSelectionEvent) event).getSelectedModel();
 			AjaxRequestTarget target = event.getTarget();
 			renderPanelFor(selectedModel, target);
 		}
@@ -135,7 +135,7 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
      * @param t
      * @param target
      */
-    private void renderPanelFor(final IModel<?> selectedModel, final AjaxRequestTarget target) {
+    private void renderPanelFor(final HibernateObjectModel<?> selectedModel, final AjaxRequestTarget target) {
         if(selectedModel !=null){
 	    	final Object t = selectedModel.getObject();
 	        if (t instanceof ComplexTaskDef) {
@@ -143,8 +143,7 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 	        } else if (t instanceof Category) {
 	            replaceEditPanelWith(target, new CategoryPanel("editpanel", (HibernateObjectModel<Category>) selectedModel));
 	        } else if (t instanceof TaskBlock) {
-	            // TODO render panels for taskblock subtypes, not just generic block config
-	            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", new HibernateObjectModel<TaskblockConfig>(TaskblockConfig.class, ((TaskBlock) selectedModel.getObject()).getConfig().getHjid())));
+	            replaceEditPanelWith(target, new TaskBlockConfigPanel("editpanel", (HibernateObjectModel<TaskBlock>) selectedModel));
 	        } else if (t instanceof SubTaskDef) {
 	            replaceEditPanelWith(target, new PreviewSubtaskDefPanel<SubTaskDef>("editpanel", (IModel<SubTaskDef>) selectedModel)); 
 	            		//new SubtaskDefInputPanel("editpanel", (HibernateObjectModel<SubTaskDef>) selectedModel));
