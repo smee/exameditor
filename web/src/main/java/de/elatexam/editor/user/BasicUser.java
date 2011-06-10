@@ -112,6 +112,8 @@ public class BasicUser implements DataUser, Indexed {
    * @see net.databinder.auth.data.DataUser#getPassword()
    */
   public DataPassword getPassword() {
+	  if(password == null)
+		  this.password=new BasicPassword();
     return password;
   }
 
