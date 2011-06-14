@@ -13,9 +13,12 @@ import org.apache.wicket.model.IModel;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
+import com.visural.wicket.component.confirmer.ConfirmerLink;
+
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.GermanConfirmerLink;
 import de.elatexam.editor.components.panels.tasks.PreviewSubtaskDefPanel;
+import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.pages.EditSubtaskPage;
 import de.elatexam.model.SubTaskDef;
 
@@ -31,31 +34,33 @@ public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
      * @param model
      */
     public TaskActionsPanel(final String id, final IModel<T> model) {
-        super(id, model);
-        add(new Link<T>("edit") {
+        super(id);
+        add(new Link<T>("edit", model) {
 
             @Override
             public void onClick() {
-                final T modelObject = (T) getParent().getDefaultModelObject();
-                setResponsePage(new EditSubtaskPage(modelObject.getClass(), (HibernateObjectModel) getParent().getDefaultModel()));
+                final T modelObject = getModelObject();
+                setResponsePage(new EditSubtaskPage(modelObject.getClass(), (HibernateObjectModel) getModel()));
             }
 
         });
-        add(new GermanConfirmerLink("remove") {
+        ConfirmerLink removeLink = new GermanConfirmerLink("remove") {
 
             @Override
             public void onClick() {
-                final Object modelObject =  getParent().getDefaultModelObject();
+                final Object modelObject =  getModelObject();
                 // remove subtaskdef from current user object
                 TaskEditorSession.get().getUser().getSubtaskdefs().remove(modelObject);
-
+                // TODO remove from taskblock iff this subtaskdef is used in a complextaskdef
                 final Session session = Databinder.getHibernateSession();
                 final Transaction trans = session.beginTransaction();
                 session.delete(modelObject);
                 trans.commit();
             }
 
-        }.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?"));
+        }.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");
+        removeLink.setModel(model);
+        add(removeLink);
         
         final ModalWindow previewWindow = new ModalWindow("previewModal");
         previewWindow.setTitle("Aufgabenvorschau");
@@ -65,15 +70,16 @@ public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
         previewWindow.setContent(new NullPlug(previewWindow.getContentId()));
         add(previewWindow);
         
-        add(new AjaxLink("preview") {
+        AjaxLink<T> previewLink = new AjaxLink<T>("preview") {
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				IModel m = getParent().getDefaultModel();
-				System.out.println(m.getObject());
-				previewWindow.setContent(new PreviewSubtaskDefPanel<T>(previewWindow.getContentId(), model));
+				IModel<T> m = getModel();
+				previewWindow.setContent(new PreviewSubtaskDefPanel<T>(previewWindow.getContentId(), m));
 				previewWindow.show(target);
 			}
-		});
+		};
+		previewLink.setModel(model);
+		add(previewLink);
     }
 
 }
