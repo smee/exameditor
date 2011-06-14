@@ -18,12 +18,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elatexam.editor.pages.taskdef;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.model.IModel;
 
 import com.google.common.collect.ImmutableMap;
 
+import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.user.BasicUser;
@@ -58,7 +61,7 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  */
 public class AddElementLink extends AjaxLink<Indexed> {
 	final static ImmutableMap<Class<?>, Integer> childMap = new ImmutableMap.Builder<Class<?>, Integer>()
-
+	
 	.put(BasicUser.class, 0)
 	.put(ComplexTaskDef.class, 1)
 	.put(Category.class, 2)
@@ -84,9 +87,17 @@ public class AddElementLink extends AjaxLink<Indexed> {
 
 	@Override
 	public void onClick(AjaxRequestTarget target) {
+		IModel<Indexed> selectedModel = tree.getSelected();
+		Indexed selectedObject = null;
 
-		Indexed selectedObject = tree.getSelected().getObject();
+		// nothing selected --> use root element
+		if(selectedModel == null){
+			selectedObject = TaskEditorSession.get().getUser();
+		}else{
+			selectedObject = selectedModel.getObject();
+		}
 		Object newObj = null;
+		
 		switch (childMap.get(selectedObject.getClass())) {
 			case 0 : // create a new complextaskdef
 				ComplexTaskDef newtaskdef = new ComplexTaskDef();
