@@ -99,7 +99,9 @@ public class PreviewLink extends IndicateModalLink {
       marshaller = JAXBUtils.getJAXBMarshaller(context);
       final StringWriter sw = new StringWriter();
       // TODO enable preview for one category, taskblock, subtaskdef
-      marshaller.marshal(getModelObject(), sw);
+      ComplexTaskDef ctd = (ComplexTaskDef) getModelObject();
+      Stuff.makeIDsUnique(ctd);
+      marshaller.marshal(ctd, sw);
       // set xml to use
       taskfactory.setTaskDefXml(sw.toString());
       final TaskletContainerImpl taskletContainer = new TaskletContainerImpl(taskfactory);

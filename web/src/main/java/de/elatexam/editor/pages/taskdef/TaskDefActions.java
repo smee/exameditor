@@ -138,6 +138,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 							final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
 							final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();
 							addRevisionTo(ctd);
+							Stuff.makeIDsUnique(ctd);
 							marshaller.marshal(ctd, bw);
 							bw.close();
 						} catch (final IOException e) {

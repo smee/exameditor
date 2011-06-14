@@ -85,8 +85,7 @@ public class Stuff {
     	return (List<T>) tb.getSubtaskDefs();
   }
 
-    public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef)
-  throws Exception {
+    public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef) {
     final Collection<T> stds = new ArrayList<T>();
     for (final Category cat : taskdef.getCategory()) {
             for (final TaskBlock block : cat.getTaskBlocks()) {
@@ -95,6 +94,16 @@ public class Stuff {
     }
     return stds;
   }
+    /**
+     * Make all xmlids of every subtaskdef unique by prepending an increasing number to it.
+     * @param taskdef
+     */
+    public static void makeIDsUnique(ComplexTaskDef taskdef){
+    	int i=0;
+    	for(SubTaskDef std: getAllSubtaskdefs(taskdef)){
+    		std.setXmlid(i++ + std.getXmlid());
+    	}
+    }
 
     /**
      * TODO create DAO layer!
