@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.elatexam</groupId>
   <artifactId>exameditor-web</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>Basic editor web frontend</name>
   <description>Online editor draft</description>
   <!-- JAR packaging for embedded server. For WAR deployment, change package 
@@ -14,7 +14,7 @@
   <parent>
     <groupId>de.elatexam</groupId>
     <artifactId>exameditor</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>
