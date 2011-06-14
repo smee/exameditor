@@ -12,7 +12,9 @@ public class ClozePreviewConverter extends ClozeConverter {
 	protected String createGapText(Gap gap) {
 		StringBuilder sb = new StringBuilder("");
 		sb.append("<input type=\"text\" value=\"");
-		sb.append(gap.getInitialValue()).append('"');
+		if(gap.getInitialValue() != null)
+			sb.append(gap.getInitialValue());
+		sb.append('"');
 		int maxLen = 0;
 		for (GapCorrectItem ci : gap.getCorrectItems()) {
 			maxLen = Math.max(maxLen, ci.getItem().length());
