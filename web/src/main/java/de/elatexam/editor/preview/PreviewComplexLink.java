@@ -57,10 +57,10 @@ import de.thorstenberger.taskmodel.util.JAXBUtils;
  * @author Steffen Dienst
  *
  */
-public class PreviewLink extends IndicateModalLink {
+public class PreviewComplexLink extends IndicateModalLink {
 
 
-  public PreviewLink(final String id, final IModel<ComplexTaskDef> model) {
+  public PreviewComplexLink(final String id, final IModel<ComplexTaskDef> model) {
     super(id);
     setModel(model);
   }

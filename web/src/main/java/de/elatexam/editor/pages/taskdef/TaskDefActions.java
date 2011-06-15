@@ -33,7 +33,7 @@ import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyFacade;
 import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
 import de.elatexam.editor.pages.TaskDefPage;
-import de.elatexam.editor.preview.PreviewLink;
+import de.elatexam.editor.preview.PreviewComplexLink;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.ComplexTaskDef;
@@ -101,7 +101,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 		deleteLink.setEnabled(false);
 		deleteLink.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");
 		
-		previewLink = new PreviewLink("preview",
+		previewLink = new PreviewComplexLink("preview",
 				new AbstractReadOnlyModel<ComplexTaskDef>() {
 					@Override
 					public ComplexTaskDef getObject() {

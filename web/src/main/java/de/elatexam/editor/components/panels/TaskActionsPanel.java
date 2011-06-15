@@ -17,7 +17,7 @@ import com.visural.wicket.component.confirmer.ConfirmerLink;
 
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.GermanConfirmerLink;
-import de.elatexam.editor.components.panels.tasks.PreviewSubtaskDefPanel;
+import de.elatexam.editor.components.panels.tasks.preview.PreviewSubtaskDefPanel;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.pages.EditSubtaskPage;
 import de.elatexam.model.SubTaskDef;
