@@ -17,6 +17,7 @@ import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.authorization.strategies.role.Roles;
 import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.markup.html.WebPage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -103,6 +104,13 @@ public class TaskEditorApplication extends AuthDataApplication {
         return BasicUser.class;
     }
 
+    /* (non-Javadoc)
+    * @see net.databinder.auth.hib.AuthDataApplication#getSignInPageClass()
+    */
+    @Override
+    public Class<? extends WebPage> getSignInPageClass() {
+      return OverviewPage.class;
+    }
     @Override
     protected void init() {
         super.init();
