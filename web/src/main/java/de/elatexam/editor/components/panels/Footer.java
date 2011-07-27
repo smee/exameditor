@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.RequestLogger.SessionData;
 
 import de.elatexam.editor.TaskEditorApplication;
 
@@ -21,7 +22,12 @@ public class Footer extends Panel {
     add(new Label("usercount", new AbstractReadOnlyModel<Integer>() {
       @Override
       public Integer getObject() {
-                return TaskEditorApplication.getInstance().getRequestLogger().getLiveSessions().length;
+        int c = 0;
+        long thirtyMinsAgo = System.currentTimeMillis() - 15*60*1000;
+        for(SessionData session: TaskEditorApplication.getInstance().getRequestLogger().getLiveSessions())
+          if(session.getLastActive().getTime() > thirtyMinsAgo)
+            c++;
+        return c;
       }
     }).setRenderBodyOnly(true));
   }
