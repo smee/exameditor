@@ -3,9 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <!-- to run with embedded server logging to console, do mvn exec:java -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.elatexam</groupId>
   <artifactId>exameditor-web</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <name>Basic editor web frontend</name>
   <description>Online editor draft</description>
   <!-- JAR packaging for embedded server. For WAR deployment, change package 
@@ -112,12 +110,44 @@
         </excludes>
       </resource>
     </resources>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings 
+          only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <versionRange>[2.1,)</versionRange>
+                    <goals>
+                      <goal>copy</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute>
+                      <runOnIncremental>false</runOnIncremental>
+                    </execute>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <dependencies>
     <dependency>
       <groupId>de.elatexam</groupId>
       <artifactId>exameditor-model</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>net.databinder</groupId>
@@ -169,7 +199,7 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jetty</artifactId>
-      <version>[6.1,6.1.99]</version>
+      <version>6.1.14</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -179,7 +209,7 @@
     <dependency>
       <groupId>org.mortbay.jetty</groupId>
       <artifactId>jsp-2.1</artifactId>
-      <version>[6.1,6.1.99]</version>
+      <version>6.1.14</version>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
@@ -218,17 +248,17 @@
       <!-- rich text input textarea -->
       <groupId>org.wicketstuff</groupId>
       <artifactId>tinymce</artifactId>
-      <version>${wicket.version}</version>
+      <version>1.4.20.1</version>
     </dependency>
     <dependency>
       <groupId>wicket-tree</groupId>
       <artifactId>wicket-tree</artifactId>
-      <version>0.4-SNAPSHOT</version>
+      <version>0.4.4</version>
     </dependency>
     <dependency>
       <groupId>wicket-dnd</groupId>
       <artifactId>wicket-dnd</artifactId>
-      <version>0.4-SNAPSHOT</version>
+      <version>0.4.1</version>
     </dependency>
     <dependency>
       <groupId>com.visural</groupId>
@@ -287,11 +317,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-    	<groupId>commons-lang</groupId>
-    	<artifactId>commons-lang</artifactId>
-    	<version>2.6</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wicketstuff</groupId>
+      <artifactId>prototype</artifactId>
+      <version>1.4.19</version>
     </dependency>
   </dependencies>
   <repositories>
@@ -326,6 +361,6 @@
     </repository>
   </repositories>
   <properties>
-    <wicket.version>1.4.15</wicket.version>
+    <wicket.version>1.4.20</wicket.version>
   </properties>
 </project>

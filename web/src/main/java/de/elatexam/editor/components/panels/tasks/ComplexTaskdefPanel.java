@@ -12,7 +12,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
 
-import wicket.contrib.tinymce.TinyMceBehavior;
+import de.elatexam.editor.behaviours.TinyMceBehavior;
 import de.elatexam.editor.components.panels.tasks.correctionmode.CorrectionModePanel;
 import de.elatexam.model.ComplexTaskDef;
 

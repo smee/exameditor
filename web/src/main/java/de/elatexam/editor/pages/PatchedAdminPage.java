@@ -48,7 +48,6 @@ public class PatchedAdminPage extends UserAdminPage<BasicUser> {
 
   @Override
   protected IModel<Collection<String>> rolesModel() {
-	  new RuntimeException().printStackTrace();
 	  return Model.ofList(new ArrayList(getUser().getRoles()));
 //    return new AbstractReadOnlyModel<Collection<String>>() {
 //

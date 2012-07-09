@@ -14,8 +14,6 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 
-import wicket.contrib.tinymce.settings.TinyMCESettings;
-
 import com.mrhaki.wicket.components.DeployJava;
 
 import de.elatexam.editor.TaskEditorSession;
@@ -43,11 +41,8 @@ public class OverviewPage extends WebPage {
       add(new EmptyPanel("toolbar"));
     }
 
-    // make sure tinymce works, even when adding it via ajax
-    // see http://wicketbyexample.com/wicket-tinymce-some-advanced-tips/
     add(new HeaderContributor(new IHeaderContributor() {
       public void renderHead(final IHeaderResponse response) {
-        response.renderJavascriptReference(TinyMCESettings.javaScriptReference());
         response.renderJavascriptReference(DeployJava.LOCAL_REFERENCE);
       }
     }));

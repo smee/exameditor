@@ -20,23 +20,18 @@ package de.elatexam.editor.components.panels.tasks;
 
 import java.util.Locale;
 
-import javax.swing.text.html.FormView;
-
 import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.IFormValidator;
-import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
-import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.FullScreenPlugin;
 import wicket.contrib.tinymce.settings.PastePlugin;
@@ -46,6 +41,7 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 
 import com.visural.wicket.behavior.inputhint.InputHintBehavior;
 
+import de.elatexam.editor.behaviours.TinyMceBehavior;
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;

@@ -43,6 +43,9 @@ public class LabeledTextFilteredPropertyColumn<T> extends TextFilteredPropertyCo
     item.add(new Label(componentId, createLabelModel(rowModel)).setEscapeModelStrings(false));
   }
 
+  /* (non-Javadoc)
+   * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredPropertyColumn#getFilter(java.lang.String, org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm)
+   */
   @Override
   public Component getFilter(String componentId, final FilterForm form) {
     LabeledTextFilter filter = new LabeledTextFilter<String>(componentId, label, getFilterModel(form), form);

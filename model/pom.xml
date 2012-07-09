@@ -1,9 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.elatexam</groupId>
   <artifactId>exameditor-model</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Backend model for the online editor</name>
 
@@ -117,9 +115,10 @@
       <plugin>
         <groupId>org.jvnet.hyperjaxb3</groupId>
         <artifactId>maven-hyperjaxb3-plugin</artifactId>
-        <version>${hyperjaxb3.version}</version>
+        <version>0.5.5</version>
         <executions>
           <execution>
+            <phase>generate-sources</phase>
             <goals>
               <goal>generate</goal>
             </goals>
@@ -142,8 +141,8 @@
             </plugin>
             <plugin>
               <groupId>org.jvnet.jaxb2_commons</groupId>
-              <artifactId>default-value</artifactId>
-              <version>0.1-20071022</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined after last change in CVS... -->
+              <artifactId>jaxb2-default-value</artifactId>
+			  <version>1.1</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined after last change in CVS... -->
             </plugin> 
             <plugin>
               <groupId>net.java.dev.jaxb2-commons</groupId>
@@ -152,8 +151,8 @@
             </plugin> 
             <plugin>
               <groupId>org.jvnet.jaxb2_commons</groupId>
-              <artifactId>value-constructor</artifactId>
-              <version>20071126-1834</version>
+              <artifactId>jaxb2-value-constructor</artifactId>
+              <version>3.0</version>
             </plugin> 
           </plugins>
         </configuration>
@@ -180,6 +179,35 @@
           </executions>
         </plugin>
     </plugins>
+<pluginManagement>
+  <plugins>
+    <plugin>
+      <groupId>org.eclipse.m2e</groupId>
+      <artifactId>lifecycle-mapping</artifactId>
+      <version>1.0.0</version>
+      <configuration>
+        <lifecycleMappingMetadata>
+          <pluginExecutions>
+            <pluginExecution>
+              <pluginExecutionFilter>
+                <groupId>org.jvnet.hyperjaxb3</groupId>
+                <artifactId>maven-hyperjaxb3-plugin</artifactId>
+                <versionRange>[0.5.5,)</versionRange>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </pluginExecutionFilter>
+              <action>
+                <execute/>
+              </action>
+            </pluginExecution>
+          </pluginExecutions>
+        </lifecycleMappingMetadata>
+      </configuration>
+    </plugin>
+  </plugins>
+</pluginManagement>
+
   </build>
   <properties>
     <hyperjaxb3.version>0.5.5</hyperjaxb3.version>
