@@ -30,7 +30,7 @@ import javax.xml.bind.JAXBException;
 import net.databinder.hib.Databinder;
 
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -112,13 +112,12 @@ public class Stuff {
      */
     public static void saveAll(Object... objects) {
         final Session session = Databinder.getHibernateSession();
-        final Transaction trans = session.beginTransaction();
         for (Object obj : objects) {
           if (obj != null && !session.contains(obj)) {
             session.saveOrUpdate(obj);
           }
         }
-        trans.commit();
+        session.getTransaction().commit();
     }
 
 

@@ -8,8 +8,6 @@ import net.databinder.auth.components.DataSignInPanel;
 import net.databinder.components.NullPlug;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.HeaderContributor;
-import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -41,12 +39,6 @@ public class OverviewPage extends WebPage {
       add(new EmptyPanel("toolbar"));
     }
 
-    add(new HeaderContributor(new IHeaderContributor() {
-      public void renderHead(final IHeaderResponse response) {
-        response.renderJavascriptReference(DeployJava.LOCAL_REFERENCE);
-      }
-    }));
-
     // sign in/out links
     add(new UserStatusPanel("userStatus"));
     add(new DataSignInPanel<BasicUser>("loginpanel", null) {
@@ -58,6 +50,14 @@ public class OverviewPage extends WebPage {
     add(new Footer("footer"));
   }
 
+  /* (non-Javadoc)
+   * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+   */
+  @Override
+  public void renderHead(IHeaderResponse response) {
+       super.renderHead(response);
+       response.renderJavaScriptReference(DeployJava.LOCAL_REFERENCE);
+  }
   /**
    * Create a panel with links etc. that act as toolbar. This panel gets rendered right below the menu.
    *

@@ -26,12 +26,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Session;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.RequestUtils;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.request.target.basic.RedirectRequestTarget;
-import org.apache.wicket.request.target.component.PageRequestTarget;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.handler.PageProvider;
+import org.apache.wicket.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 
 import com.visural.wicket.component.submitters.IndicateModalLink;
 
@@ -71,7 +73,7 @@ public class PreviewComplexLink extends IndicateModalLink {
    * @return
    */
   private String getContextUrl() {
-    final HttpServletRequest req = ((WebRequest) getRequest()).getHttpServletRequest();
+    final HttpServletRequest req = ((ServletWebRequest) getRequest()).getContainerRequest();
     final String protocol = req.isSecure() ? "https://" : "http://";
     final String hostname = req.getServerName();
     final int port = req.getServerPort();
@@ -108,17 +110,15 @@ public class PreviewComplexLink extends IndicateModalLink {
       // clear internal static caches
       taskletContainer.reset();
       final TaskManagerImpl tm = new TaskManagerImpl(taskfactory, taskletContainer);
-
       final TaskModelViewDelegateObject delegateObject = new TaskModelViewDelegateObjectImpl(
     		  0,
     		  tm,
     		  "sampleUser", "Max Mustermann",
-              RequestUtils.toAbsolutePath(getReturnLink()));
+          getReturnLink());
       TaskModelViewDelegate.storeDelegateObject(getSession().getId(), 0, delegateObject);
-
-      getRequestCycle().setRequestTarget(
-          new RedirectRequestTarget(
-              getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
+      System.out.println(getContextUrl()+" | "+getReturnLink());
+      getRequestCycle().scheduleRequestHandlerAfterCurrent(
+          new RedirectRequestHandler(getContextUrl() + "/taskmodel-core-view/execute.do?id=0&todo=new&try=" + tryId.incrementAndGet()));
     } catch (final JAXBException e) {
       e.printStackTrace();
     }finally{
@@ -133,14 +133,17 @@ public class PreviewComplexLink extends IndicateModalLink {
      * @return
      */
     private String getReturnLink() {
-        return urlFor(new PageRequestTarget(getPage()) {
-            @Override
-            public void respond(RequestCycle requestCycle) {
-                // remove preview task
-                TaskModelViewDelegate.removeSession(requestCycle.getSession().getId());
-                super.respond(requestCycle);
-            }
-        }).toString();
+      String rel= (String) urlFor(new RenderPageRequestHandler(new PageProvider(getPage())){
+        @Override
+        public void respond(IRequestCycle requestCycle) {
+          // remove preview task
+          TaskModelViewDelegate.removeSession(Session.get().getId());
+          super.respond(requestCycle);
+        }
+        
+      });
+      final HttpServletRequest req = ((ServletWebRequest) getRequest()).getContainerRequest();
+      return RequestUtils.toAbsolutePath(req.getRequestURL().toString(), rel);
     }
 
     private static AtomicLong tryId = new AtomicLong(0);

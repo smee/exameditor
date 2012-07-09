@@ -3,7 +3,6 @@ package de.elatexam.editor.components.menu;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -15,8 +14,10 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 /**
  * Simple menu bar based on http://www.dynamicdrive.com/dynamicindex1/chrome/index.htm.
@@ -30,7 +31,7 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
          * @return
          */
         public ResourceReference getResourceReference() {
-            return new CompressedResourceReference(ChromeMenu.class, String.format("css/%s.css", this.name().toLowerCase()));
+            return new PackageResourceReference(ChromeMenu.class, String.format("css/%s.css", this.name().toLowerCase()));
         }
     }
 
@@ -134,7 +135,7 @@ public class ChromeMenu extends Panel implements IHeaderContributor {
      * @see org.apache.wicket.markup.html.IHeaderContributor#renderHead(org.apache .wicket.markup.html.IHeaderResponse)
      */
     public void renderHead(final IHeaderResponse response) {
-        response.renderJavascriptReference(new CompressedResourceReference(ChromeMenu.class, "js/chrome.js"));
+        response.renderJavaScriptReference(new JavaScriptResourceReference(ChromeMenu.class, "js/chrome.js"));
         response.renderCSSReference(CSS_REFERENCE);
     }
 

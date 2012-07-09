@@ -49,7 +49,7 @@ public class ClozePreviewPanel extends Panel {
 		super.onInitialize();
 		final Label previewLabel = new Label("cloze") {
 			@Override
-			public IConverter getConverter(Class<?> type) {
+			public IConverter getConverter(Class type) {
 				return previewConverter;
 			}
 		};

@@ -35,7 +35,7 @@ import net.databinder.auth.data.DataPassword;
 import net.databinder.auth.data.DataUser;
 import net.databinder.auth.data.hib.BasicPassword;
 
-import org.apache.wicket.authorization.strategies.role.Roles;
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.Indexed;

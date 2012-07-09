@@ -13,19 +13,15 @@ import net.databinder.auth.hib.AuthDataApplication;
 import net.databinder.hib.Databinder;
 import net.databinder.hib.SessionUnit;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
-import org.apache.wicket.authorization.strategies.role.Roles;
-import org.apache.wicket.markup.html.JavascriptPackageResource;
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-
-import com.jquery.JQueryResourceReference;
 
 import de.elatexam.editor.components.form.EnhanceFormsListener;
 import de.elatexam.editor.pages.OverviewPage;
@@ -114,23 +110,22 @@ public class TaskEditorApplication extends AuthDataApplication {
     @Override
     protected void init() {
         super.init();
-        // enable JQuery
-        addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
+        // TODO enable JQuery
+        //addRenderHeadListener(JavascriptPackageResource.getHeaderContribution(new JQueryResourceReference()));
         // enable request logger, needed to show live session count
         getRequestLoggerSettings().setRequestLoggerEnabled(true);
         getApplicationSettings().setPageExpiredErrorPage(OverviewPage.class);
-        
-        mountBookmarkablePage("taskdefs", TaskDefPage.class);
-        mountBookmarkablePage("statistics", StatisticPage.class);
-        mountBookmarkablePage("subtaskdefs", ShowSubtaskDefsPage.class);
-        mountBookmarkablePage("import", UploadComplexTaskdefPage.class);
+        getMarkupSettings().setDefaultMarkupEncoding("UTF8");
+        mountPage("taskdefs", TaskDefPage.class);
+        mountPage("statistics", StatisticPage.class);
+        mountPage("subtaskdefs", ShowSubtaskDefsPage.class);
+        mountPage("import", UploadComplexTaskdefPage.class);
 
         getMarkupSettings().setStripWicketTags(true);
 
         // make sure there is at least one user with role admin
         Databinder.ensureSession(new SessionUnit() {
             public Object run(final Session sess) {
-                final Transaction transaction = sess.beginTransaction();
                 final Number count = (Number) sess.createCriteria(BasicUser.class).setProjection(Projections.rowCount()).uniqueResult();
                 if (count.intValue() == 0) {
                     final BasicUser adminUser = new BasicUser();
@@ -138,13 +133,13 @@ public class TaskEditorApplication extends AuthDataApplication {
                     adminUser.setPassword(new BasicPassword("admin"));
                     adminUser.addRole(Roles.ADMIN);
                     sess.save(adminUser);
-                    transaction.commit();
+                    sess.getTransaction().commit();
                 }
                 return null;
             }
         });
         // add error highlighting behaviour to any form components
-        addComponentInstantiationListener(new EnhanceFormsListener());
+        getComponentInstantiationListeners().add(new EnhanceFormsListener());
     }
 
     /**

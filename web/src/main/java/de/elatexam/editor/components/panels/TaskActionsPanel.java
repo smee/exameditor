@@ -11,7 +11,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import com.visural.wicket.component.confirmer.ConfirmerLink;
 
@@ -53,9 +53,8 @@ public class TaskActionsPanel<T extends SubTaskDef> extends Panel {
                 TaskEditorSession.get().getUser().getSubtaskdefs().remove(modelObject);
                 // TODO remove from taskblock iff this subtaskdef is used in a complextaskdef
                 final Session session = Databinder.getHibernateSession();
-                final Transaction trans = session.beginTransaction();
                 session.delete(modelObject);
-                trans.commit();
+                session.getTransaction().commit();
             }
 
         }.setMessageContentHTML("Sind Sie sicher, dass das selektierte Element gel&ouml;scht werden soll?");

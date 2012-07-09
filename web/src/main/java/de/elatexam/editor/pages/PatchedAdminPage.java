@@ -25,11 +25,9 @@ import java.util.List;
 
 import net.databinder.auth.components.hib.UserAdminPage;
 
-import org.apache.wicket.authorization.strategies.role.Roles;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
 import de.elatexam.editor.user.BasicUser;
 
@@ -44,17 +42,9 @@ public class PatchedAdminPage extends UserAdminPage<BasicUser> {
    * ListMultipleChoice needs the same instance of collection for every call to getObject within one request. That
    * means, we can't rely on CompoundPropertyModel....
    */
-  private final List<String> roles = new ArrayList<String>(Arrays.asList(Roles.USER, Roles.ADMIN));
 
   @Override
   protected IModel<Collection<String>> rolesModel() {
 	  return Model.ofList(new ArrayList(getUser().getRoles()));
-//    return new AbstractReadOnlyModel<Collection<String>>() {
-//
-//      @Override
-//      public Collection<String> getObject() {
-//        return roles;
-//      }
-//    };
   }
 }

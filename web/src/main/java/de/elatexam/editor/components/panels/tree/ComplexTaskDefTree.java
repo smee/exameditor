@@ -22,17 +22,17 @@ import java.util.Iterator;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.CSSPackageResource;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.CssResourceReference;
 
 import wickettree.ITreeProvider;
 import wickettree.NestedTree;
 
 import com.google.common.collect.ImmutableMap;
 
-import de.elatexam.editor.components.event.AjaxUpdateEvent;
-import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
@@ -52,7 +52,7 @@ import de.elatexam.model.TextTaskBlock;
  * @author Steffen Dienst
  *
  */
-public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> implements IAjaxUpdateListener{
+public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> {
   final static ImmutableMap<Class<?>, String[]> tranferTypes = new ImmutableMap.Builder<Class<?>, String[]>()
       .put(MappingTaskBlock.class, new String[]{"mapping", "category"})
       .put(MappingSubTaskDef.class, new String[]{"mapping"})
@@ -97,10 +97,16 @@ public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> impleme
   public ComplexTaskDefTree(final String id, final ComplexTaskdefTreeProvider provider) {
     super(id, provider);
 
-    add(CSSPackageResource.getHeaderContribution(new CompressedResourceReference(ComplexTaskDefTree.class, "theme/theme.css")));
-
   }
 
+  /* (non-Javadoc)
+   * @see org.apache.wicket.Component#renderHead(org.apache.wicket.markup.html.IHeaderResponse)
+   */
+  @Override
+  public void renderHead(IHeaderResponse response) {
+    super.renderHead(response);
+    response.renderCSSReference(new CssResourceReference(ComplexTaskDefTree.class, "theme/theme.css"));
+  }
   /*
    * (non-Javadoc)
    *
@@ -146,7 +152,8 @@ public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> impleme
     selectedModel = model;
     updateNode(model.getObject(), target);
     this.currentTaskdef = (IModel<ComplexTaskDef>) findCurrentTaskDef(model);
-    new TreeSelectionEvent(this, target, selectedModel).fire();
+    
+    send(getPage(),Broadcast.BREADTH,target);
   }
 
 
@@ -206,15 +213,14 @@ public class ComplexTaskDefTree<T extends Indexed> extends NestedTree<T> impleme
     return selectedModel;
   }
 
-	/* (non-Javadoc)
-	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
-	 */
-	@Override
-	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
-		if(!(event instanceof TreeSelectionEvent)){
-			event.getTarget().addComponent(this);
-		}
-		
-	}
+  /* (non-Javadoc)
+   * @see org.apache.wicket.Component#onEvent(org.apache.wicket.event.IEvent)
+   */
+  @Override
+  public void onEvent(IEvent<?> event) {
+    super.onEvent(event);
+    if(event.getPayload() instanceof AjaxRequestTarget)
+      ((AjaxRequestTarget) event.getPayload()).add(this);
+  }
 
 }

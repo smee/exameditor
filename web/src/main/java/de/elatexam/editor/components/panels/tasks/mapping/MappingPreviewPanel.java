@@ -63,7 +63,7 @@ public class MappingPreviewPanel extends Panel {
 				item.add(new Label("name",item.getModelObject().getName()).setEscapeModelStrings(false));	
 				item.add(new DropDownChoice<Assignment>("assignment", ass){
 					@Override
-					public IConverter getConverter(Class<?> type) {
+					public IConverter getConverter(Class type) {
 						return new IConverter() {
 							
 							@Override

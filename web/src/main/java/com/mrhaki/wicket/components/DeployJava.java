@@ -7,7 +7,8 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebComponent;
-import org.apache.wicket.markup.html.resources.CompressedResourceReference;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.value.IValueMap;
 import org.apache.wicket.util.value.ValueMap;
 
@@ -57,7 +58,7 @@ import org.apache.wicket.util.value.ValueMap;
  */
 public class DeployJava extends WebComponent implements IHeaderContributor {
 
-  public static final CompressedResourceReference LOCAL_REFERENCE = new CompressedResourceReference(DeployJava.class, "deployJava.js");
+  public static final ResourceReference LOCAL_REFERENCE = new JavaScriptResourceReference(DeployJava.class, "deployJava.js");
 
     private static final long serialVersionUID = 1L;
 
@@ -222,7 +223,7 @@ public class DeployJava extends WebComponent implements IHeaderContributor {
      * @param openTag Tag we are replacing.
      */
     @Override
-    protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
+    public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
         final StringBuilder script = new StringBuilder();
         if (appletAttributes.size() > 0) {
             final JSONObject jsonAttributes = JSONObject.fromObject(appletAttributes);
@@ -252,9 +253,9 @@ public class DeployJava extends WebComponent implements IHeaderContributor {
      */
     public void renderHead(final IHeaderResponse response) {
         if (useJavascriptResource) {
-      response.renderJavascriptReference(LOCAL_REFERENCE);
+      response.renderJavaScriptReference(LOCAL_REFERENCE);
         } else {
-            response.renderJavascriptReference(JAVASCRIPT_URL);
+            response.renderJavaScriptReference(JAVASCRIPT_URL);
         }
     }
 }

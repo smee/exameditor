@@ -35,7 +35,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import de.elatexam.model.ClozeTaskBlock.ClozeConfig;
 import de.elatexam.model.ComplexTaskDef.Config;

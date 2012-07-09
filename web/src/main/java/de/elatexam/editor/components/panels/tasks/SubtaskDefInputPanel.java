@@ -32,6 +32,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
+import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
 import wicket.contrib.tinymce.settings.FullScreenPlugin;
 import wicket.contrib.tinymce.settings.PastePlugin;
@@ -41,7 +42,6 @@ import wicket.contrib.tinymce.settings.TinyMCESettings;
 
 import com.visural.wicket.behavior.inputhint.InputHintBehavior;
 
-import de.elatexam.editor.behaviours.TinyMceBehavior;
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
@@ -108,14 +108,14 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
       final TextArea<String> problemText = new TextArea<String>("problem") {
         @Override
-        public IConverter getConverter(final Class<?> type) {
-          return new IConverter() {
+        public IConverter<String> getConverter(Class type) {
+          return new IConverter<String>() {
 
-            public Object convertToObject(final String text, final Locale locale) {
+            public String convertToObject(final String text, final Locale locale) {
               return text.replaceAll("<p>", "").replaceAll("</p>", "<br/>");
             }
 
-            public String convertToString(final Object value, final Locale locale) {
+            public String convertToString(final String value, final Locale locale) {
               return value == null ? "" : value.toString();
             }
           };

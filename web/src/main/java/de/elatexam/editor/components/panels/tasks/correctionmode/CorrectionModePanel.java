@@ -35,7 +35,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.MinimumValidator;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import de.elatexam.model.ComplexTaskDef.Config;
 import de.elatexam.model.ComplexTaskDef.Config.CorrectionMode;
@@ -106,8 +106,8 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         correctionModeDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                target.addComponent(valueTextfield);
-                target.addComponent(label);
+                target.add(valueTextfield);
+                target.add(label);
             }
         });
         add(correctionModeDropDown);
@@ -165,7 +165,7 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
             cm.getMultipleCorrectors().setNumberOfCorrectors(additionalValue);
             break;
         default:
-            break;
+           throw new IllegalStateException("CorrectionMode must be one of REGULAR, PROCESSEDONLY or MULTIPLE!");
         }
     }
 

@@ -21,9 +21,9 @@ package de.elatexam.editor;
 import net.databinder.auth.AuthDataSessionBase;
 import net.databinder.models.hib.HibernateObjectModel;
 
-import org.apache.wicket.Request;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.request.Request;
 
 import de.elatexam.editor.user.BasicUser;
 

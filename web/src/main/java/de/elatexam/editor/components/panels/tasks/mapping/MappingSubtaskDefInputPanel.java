@@ -11,14 +11,13 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
-import de.elatexam.model.MappingSubTaskDef;
-import de.elatexam.model.MappingSubTaskDef.Assignment;
-import de.elatexam.model.MappingSubTaskDef.Concept;
-import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.listeditor.ListEditor;
 import de.elatexam.editor.components.listeditor.ListItem;
 import de.elatexam.editor.components.listeditor.RemoveButton;
 import de.elatexam.editor.components.panels.tasks.SubtaskSpecificsInputPanel;
+import de.elatexam.model.MappingSubTaskDef;
+import de.elatexam.model.MappingSubTaskDef.Assignment;
+import de.elatexam.model.MappingSubTaskDef.Concept;
 
 /**
  * @author Steffen Dienst
@@ -47,8 +46,7 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
       public void onClick(final AjaxRequestTarget target) {
         assignmentsList.addItem(new Assignment());
         if (target != null) {
-          target.addComponent(assignmentContainer);
-          new AjaxUpdateEvent(this, target).fire();
+          target.add(assignmentContainer);
         }
       }
     };
@@ -70,7 +68,7 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
         // #$%##%!!
         item.add(new TextField<String>("correctAssignmentID", new PropertyModel<String>(item.getModel(), "correctAssignmentIDItems")) {
           @Override
-          public IConverter getConverter(final Class<?> type) {
+          public IConverter getConverter(final Class type) {
             if (List.class.isAssignableFrom(type)) {
               return new CorrectAssignementConverter();
             } else {
@@ -88,8 +86,7 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
       public void onClick(final AjaxRequestTarget target) {
         conceptList.addItem(new Concept());
         if (target != null) {
-          target.addComponent(conceptContainer);
-          new AjaxUpdateEvent(this, target).fire();
+          target.add(conceptContainer);
         }
       }
     };

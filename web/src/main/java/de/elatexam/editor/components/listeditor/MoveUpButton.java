@@ -2,12 +2,12 @@ package de.elatexam.editor.components.listeditor;
 
 import java.util.Collections;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class MoveUpButton extends EditorButton {
 
     public MoveUpButton(final String id) {
-        super(id, new ResourceReference(MoveUpButton.class, "images/up.png"));
+        super(id, new PackageResourceReference(MoveUpButton.class, "images/up.png"));
         setDefaultFormProcessing(false);
     }
 

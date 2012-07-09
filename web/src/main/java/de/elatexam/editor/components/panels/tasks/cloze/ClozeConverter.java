@@ -22,7 +22,7 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
  * @author Steffen Dienst
  *
  */
-public class ClozeConverter implements IConverter {
+public class ClozeConverter implements IConverter<Cloze> {
 	/*
 	 * (non-Javadoc)
 	 *
@@ -30,7 +30,7 @@ public class ClozeConverter implements IConverter {
 	 * org.apache.wicket.util.convert.IConverter#convertToObject(java.lang.String
 	 * , java.util.Locale)
 	 */
-	public Object convertToObject(String value, Locale locale) {
+	public Cloze convertToObject(String value, Locale locale) {
 		List<ClozeTextOrGapItem> items = new ArrayList<ClozeTextOrGapItem>();
 		StringTokenizer st = new StringTokenizer(value, "[]", true);
 		boolean inGap = false;
@@ -55,7 +55,7 @@ public class ClozeConverter implements IConverter {
 	/* (non-Javadoc)
 	 * @see org.apache.wicket.util.convert.IConverter#convertToString(java.lang.Object, java.util.Locale)
 	 */
-	public String convertToString(Object value, Locale locale) {
+	public String convertToString(Cloze value, Locale locale) {
 		Cloze cloze = (Cloze) value;
 		StringBuilder sb = new StringBuilder();
 		for (ClozeTextOrGapItem togi : cloze.getTextOrGapItems()) {

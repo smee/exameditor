@@ -15,7 +15,7 @@ import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.lang.Bytes;
 import org.hibernate.Transaction;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import com.visural.wicket.component.submitters.IndicateModalSubmitLink;
 
@@ -100,7 +100,6 @@ public class UploadComplexTaskdefPage extends SecurePage {
 
   public void persistIntoDB(final ComplexTaskDef taskdef) throws Exception {
     final Session session = Databinder.getHibernateSession();
-    final Transaction trans = session.beginTransaction();
 
         Collection<SubTaskDef> newSubtaskdefs = Stuff.getAllSubtaskdefs(taskdef);
         for (SubTaskDef std : newSubtaskdefs) {
@@ -114,7 +113,7 @@ public class UploadComplexTaskdefPage extends SecurePage {
     user.getSubtaskdefs().addAll(newSubtaskdefs);
 
     session.saveOrUpdate(user);
-    trans.commit();
+    session.getTransaction().commit();
 
   }
 }

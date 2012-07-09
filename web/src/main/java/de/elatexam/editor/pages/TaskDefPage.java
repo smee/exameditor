@@ -26,7 +26,8 @@ import net.databinder.models.hib.QueryBuilder;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.event.IEventSource;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -36,16 +37,12 @@ import org.hibernate.Session;
 import wicketdnd.theme.WebTheme;
 import de.elatexam.editor.TaskEditorApplication;
 import de.elatexam.editor.TaskEditorSession;
-import de.elatexam.editor.components.event.AjaxUpdateEvent;
-import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tasks.CategoryPanel;
 import de.elatexam.editor.components.panels.tasks.ComplexTaskdefPanel;
-import de.elatexam.editor.components.panels.tasks.SubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.TaskBlockConfigPanel;
 import de.elatexam.editor.components.panels.tasks.preview.PreviewSubtaskDefPanel;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskdefTreeProvider;
-import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
 import de.elatexam.editor.pages.taskdef.TaskDefActions;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.RemoveNullResultTransformer;
@@ -53,13 +50,12 @@ import de.elatexam.model.Category;
 import de.elatexam.model.ComplexTaskDef;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
-import de.elatexam.model.TaskblockConfig;
 
 /**
  * @author Steffen Dienst
  *
  */
-public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
+public class TaskDefPage extends SecurePage{
 
     private Panel editPanel;
     private ComplexTaskDefTree tree;
@@ -68,13 +64,14 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
     public TaskDefPage() {
         super();
         // add drag-n-drop theme
-        add(CSSPackageResource.getHeaderContribution(new WebTheme()));
         add(tree = getTree());
         editPanel = new EmptyPanel("editpanel");
         add(editPanel.setOutputMarkupId(true));
     }
 
-
+    public void renderHead(org.apache.wicket.markup.html.IHeaderResponse response) {
+      response.renderCSSReference(new WebTheme());  
+    };
 	/**
 	 * @param tasklistmodel
 	 * @return
@@ -122,13 +119,14 @@ public class TaskDefPage extends SecurePage implements IAjaxUpdateListener{
 	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
 	 */
 	@Override
-	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
-		if(event instanceof TreeSelectionEvent){
-			HibernateObjectModel<?> selectedModel = (HibernateObjectModel<?>) ((TreeSelectionEvent) event).getSelectedModel();
-			AjaxRequestTarget target = event.getTarget();
-			renderPanelFor(selectedModel, target);
+	public void onEvent(IEvent<?> event) {
+	  IEventSource source = event.getSource();
+		if(source instanceof ComplexTaskDefTree){
+			HibernateObjectModel<?> selectedModel = (HibernateObjectModel<?>) ((ComplexTaskDefTree)source).getSelected();
+			renderPanelFor(selectedModel, (AjaxRequestTarget) event.getPayload());
 		}
 	}
+	
     /**
      * Replace right hand form panel with an edit panel for the given model object.
      *

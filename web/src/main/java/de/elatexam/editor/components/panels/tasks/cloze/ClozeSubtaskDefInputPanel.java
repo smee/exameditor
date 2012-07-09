@@ -19,20 +19,20 @@ import de.elatexam.model.ClozeSubTaskDef.Cloze;
  *
  */
 public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeSubTaskDef> {
-	private static final IConverter clozeconverter = new ClozeConverter();
-	private static final IConverter previewConverter = new ClozePreviewConverter();
+	private static final IConverter<Cloze> clozeconverter = new ClozeConverter();
+	private static final IConverter<Cloze> previewConverter = new ClozePreviewConverter();
 
 	public ClozeSubtaskDefInputPanel(final String id, final IModel<ClozeSubTaskDef> model) {
 		super(id, model);
 		TextArea<Cloze> clozeText = new TextArea<Cloze>("cloze") {
 			@Override
-			public IConverter getConverter(Class<?> type) {
+			public IConverter getConverter(Class type) {
 				return clozeconverter;
 			}
 		};
 		final Label previewLabel = new Label("preview", new PropertyModel<Cloze>(model, "cloze")) {
 			@Override
-			public IConverter getConverter(Class<?> type) {
+			public IConverter getConverter(Class type) {
 				return previewConverter;
 			}
 		};
@@ -40,7 +40,7 @@ public class ClozeSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<ClozeS
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
-				target.addComponent(previewLabel);
+				target.add(previewLabel);
 			}
 		});
 		add(clozeText);

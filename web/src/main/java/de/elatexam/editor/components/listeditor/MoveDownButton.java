@@ -2,12 +2,12 @@ package de.elatexam.editor.components.listeditor;
 
 import java.util.Collections;
 
-import org.apache.wicket.ResourceReference;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class MoveDownButton extends EditorButton {
 
     public MoveDownButton(final String id) {
-        super(id, new ResourceReference(MoveDownButton.class, "images/down.png"));
+        super(id, new PackageResourceReference(MoveDownButton.class, "images/down.png"));
     }
 
     @Override

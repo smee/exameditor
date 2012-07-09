@@ -63,7 +63,7 @@ public abstract class AlternatingListView<T> extends ListView<T> {
 	 * @see org.apache.wicket.markup.html.list.ListView#newItem(int)
 	 */
 	@Override
-	protected ListItem<T> newItem(final int index) {
+	protected ListItem<T> newItem(final int index,IModel<T> model) {
 		return new OddEvenListItem<T>(index, getListItemModel(getModel(), index));
 	}
 

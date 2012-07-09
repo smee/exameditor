@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elatexam.editor.pages.taskdef;
 
-import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -27,7 +26,6 @@ import org.apache.wicket.model.IModel;
 import com.google.common.collect.ImmutableMap;
 
 import de.elatexam.editor.TaskEditorSession;
-import de.elatexam.editor.components.event.AjaxUpdateEvent;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
@@ -108,7 +106,6 @@ public class AddElementLink extends AjaxLink<Indexed> {
 				newtaskdef.setConfig(config);
 				((BasicUser) selectedObject).getTaskdefs().add(newtaskdef);
 				newObj = newtaskdef;
-				new AjaxUpdateEvent(this,target).fire();
 				break;
 			case 1 : // create a new category
 				Category cat = new Category();
@@ -116,7 +113,6 @@ public class AddElementLink extends AjaxLink<Indexed> {
 				cat.setId(Long.toString(System.nanoTime()));
 				((ComplexTaskDef) selectedObject).getCategory().add(cat);
 				newObj = cat;
-				new AjaxUpdateEvent(this,target).fire();
 				break;
 			case 2 : // show taskblock selection modal window
 				selectTaskBlockModal.show(target);

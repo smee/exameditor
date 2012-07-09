@@ -1,38 +1,34 @@
 package de.elatexam.editor.pages.taskdef;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import net.databinder.hib.Databinder;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.IEvent;
+import org.apache.wicket.event.IEventSource;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.WebResource;
 import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.resource.IResourceStream;
 import org.hibernate.Transaction;
 
 import com.visural.wicket.component.confirmer.ConfirmerLink;
 
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.GermanConfirmerLink;
-import de.elatexam.editor.components.event.AjaxUpdateEvent;
-import de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener;
 import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.components.panels.tree.ComplexTaskHierarchyFacade;
-import de.elatexam.editor.components.panels.tree.TreeSelectionEvent;
-import de.elatexam.editor.pages.TaskDefPage;
 import de.elatexam.editor.preview.PreviewComplexLink;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
@@ -48,7 +44,7 @@ import de.elatexam.model.manual.HomogeneousTaskBlock;
  *
  *
  */
-public class TaskDefActions extends Panel implements IAjaxUpdateListener{
+public class TaskDefActions extends Panel{
 	private final Link<File> downloadLink;
 	private final Link<?> previewLink;
 	private final ConfirmerLink deleteLink;
@@ -88,7 +84,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 				// do not delete subtaskdefs, only remove them from the current
 				// complextaskdef
 				if (!(toDelete instanceof SubTaskDef)) {
-					final org.hibernate.classic.Session session = Databinder
+					final org.hibernate.Session session = Databinder
 							.getHibernateSession();
 					final Transaction transaction = session.beginTransaction();
 					session.delete(toDelete);
@@ -135,12 +131,12 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 							// marshal to xml
 							
 							final Marshaller marshaller = Stuff.getContext().createMarshaller();
-							final BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+							Writer w = new OutputStreamWriter(new FileOutputStream(tempFile),Charset.forName("UTF8"));
 							final ComplexTaskDef ctd = tree.getCurrentTaskdef().getObject();
 							addRevisionTo(ctd);
 							Stuff.makeIDsUnique(ctd);
-							marshaller.marshal(ctd, bw);
-							bw.close();
+							marshaller.marshal(ctd, w);
+							w.close();
 						} catch (final IOException e) {
 							error("Konnte leider keine Datei schreiben, Infos siehe Logfile.");
 							e.printStackTrace();
@@ -174,13 +170,14 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 
 
 	/* (non-Javadoc)
-	 * @see de.elatexam.editor.components.event.AjaxUpdateEvent.IAjaxUpdateListener#notifyAjaxUpdate(de.elatexam.editor.components.event.AjaxUpdateEvent)
+	 * @see org.apache.wicket.Component#onEvent(org.apache.wicket.event.IEvent)
 	 */
 	@Override
-	public void notifyAjaxUpdate(AjaxUpdateEvent event) {
-		if (event instanceof TreeSelectionEvent) {
-			Object selected = ((TreeSelectionEvent) event).getSelectedModel()
-					.getObject();
+	public void onEvent(IEvent<?> event) {
+	  super.onEvent(event);
+	  IEventSource source = event.getSource();
+		if (source instanceof ComplexTaskDefTree) {
+			Object selected = ((ComplexTaskDefTree) source).getSelected().getObject();
 			boolean enabled = !(selected instanceof BasicUser);
 
 			if (selected instanceof ComplexTaskDef) {
@@ -202,7 +199,7 @@ public class TaskDefActions extends Panel implements IAjaxUpdateListener{
 					false == ((BasicUser) selected).getUsername()
 							.equals( TaskEditorSession.get().getUser().getUsername()) );
 			}
-			event.getTarget().addComponent(this);
+			((AjaxRequestTarget)event.getPayload()).add(this);
 		}
 	}
 

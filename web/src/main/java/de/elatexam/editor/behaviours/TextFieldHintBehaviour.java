@@ -1,7 +1,7 @@
 package de.elatexam.editor.behaviours;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
 /**
  * �* Adds hint-text to texfield, that will be erased onFocus �* @author igor vaynberg �
  */
-public class TextFieldHintBehaviour extends AbstractBehavior {
+public class TextFieldHintBehaviour extends Behavior {
     private final String pseudoUniqueJavascriptVariableName = this.getClass().getSimpleName()
             + String.valueOf(System.nanoTime());
 
@@ -45,10 +45,10 @@ public class TextFieldHintBehaviour extends AbstractBehavior {
         tag.put("onfocus", "if (this.value=='" + this.hint.getObject() + "') {this.value=''; this.style['color']='"
                 + this.textColor + ";'}");
     }
-
     @Override
-    public void renderHead(final IHeaderResponse response) {
-        response.renderOnDomReadyJavascript("var " + this.pseudoUniqueJavascriptVariableName
+    public void renderHead(Component component, IHeaderResponse response) {
+      super.renderHead(component, response);
+        response.renderOnDomReadyJavaScript("var " + this.pseudoUniqueJavascriptVariableName
                 + "=document.getElementById('" + this.c.getMarkupId() + "');" + this.pseudoUniqueJavascriptVariableName
                 + ".value='" + this.hint.getObject() + "';" + this.pseudoUniqueJavascriptVariableName
                 + ".style['color']='" + this.hintColor + "';");

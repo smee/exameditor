@@ -5,16 +5,17 @@ import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.ImageButton;
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 public abstract class EditorButton extends ImageButton {
     private transient ListItem<?> parent;
 
     public EditorButton(final String id) {
-        this(id, new ResourceReference(EditorButton.class, "images/delete.png"));
+        this(id, new PackageResourceReference(EditorButton.class, "images/delete.png"));
     }
 
     public EditorButton(final String id, final ResourceReference imgRef) {
