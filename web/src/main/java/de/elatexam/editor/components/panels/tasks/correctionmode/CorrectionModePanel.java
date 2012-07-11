@@ -96,13 +96,12 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         selectedMode = CMode.getCorrectionMode(modelObject);
         additionalValue = CMode.getValue(modelObject);
 
-
+        PropertyModel<CMode> cmodeModel=new PropertyModel<CMode>(this, "selectedMode");
         // add correction mode via custom model, ichoicerenderer?
-        final DropDownChoice correctionModeDropDown = new DropDownChoice("correctionMode",
-                new PropertyModel(this, "selectedMode"),
-                Model.ofList(Arrays.asList(CMode.values())),
-                new EnumChoiceRenderer(this));
-
+        final DropDownChoice<CMode> correctionModeDropDown = new DropDownChoice<CMode>("correctionMode",
+                cmodeModel,
+                Arrays.asList(CMode.values()),
+                new EnumChoiceRenderer<CMode>(this));
         correctionModeDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
@@ -112,7 +111,7 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         });
         add(correctionModeDropDown);
 
-        valueTextfield = new TextField<Integer>("additionalValue", new PropertyModel(this, "additionalValue")) {
+        valueTextfield = new TextField<Integer>("additionalValue", new PropertyModel<Integer>(this, "additionalValue")) {
             @Override
             public boolean isVisible() {
                 return selectedMode != CMode.REGULAR;
@@ -125,7 +124,7 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
         add(valueTextfield);
 
         // use dynamic string key for i18n: ${} means this.toString().
-        add(label = new Label("selectedMode", new StringResourceModel("label.${}", this, new PropertyModel(this, "selectedMode"))));
+        add(label = new Label("selectedMode", new StringResourceModel("label.${}", this, cmodeModel)));
         label.setOutputMarkupId(true);
     }
 
@@ -135,38 +134,43 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
      * @see org.apache.wicket.markup.html.form.IFormModelUpdateListener#updateModel()
      */
     @Override
-    public void updateModel() {
-        final Session session = Databinder.getHibernateSession();
+  public void updateModel() {
+    final Session session = Databinder.getHibernateSession();
+    try {
+      CorrectionMode cm = (CorrectionMode) getDefaultModelObject();
+      // remove current correction modes
+      if (cm.getRegular() != null) {
+        session.delete(cm.getRegular());
+        cm.setRegular(null);
+      }
+      if (cm.getCorrectOnlyProcessedTasks() != null) {
+        session.delete(cm.getCorrectOnlyProcessedTasks());
+        cm.setCorrectOnlyProcessedTasks(null);
+      }
+      if (cm.getMultipleCorrectors() != null) {
+        session.delete(cm.getMultipleCorrectors());
+        cm.setMultipleCorrectors(null);
+      }
+      switch (selectedMode) {
+      case REGULAR:
+        cm.setRegular(new Regular());
+        break;
+      case PROCESSEDONLY:
+        cm.setCorrectOnlyProcessedTasks(new CorrectOnlyProcessedTasks());
+        cm.getCorrectOnlyProcessedTasks().setNumberOfTasks(additionalValue);
+        break;
+      case MULTIPLE:
+        cm.setMultipleCorrectors(new MultipleCorrectors());
+        cm.getMultipleCorrectors().setNumberOfCorrectors(additionalValue);
+        break;
+      default:
+        throw new IllegalStateException("CorrectionMode must be one of REGULAR, PROCESSEDONLY or MULTIPLE!");
+      }
 
-        CorrectionMode cm = (CorrectionMode) getDefaultModelObject();
-        // remove current correction modes
-        if(cm.getRegular()!=null){
-            session.delete(cm.getRegular());
-            cm.setRegular(null);
-        }
-        if(cm.getCorrectOnlyProcessedTasks()!=null){
-            session.delete(cm.getCorrectOnlyProcessedTasks());
-            cm.setCorrectOnlyProcessedTasks(null);
-        }
-        if(cm.getMultipleCorrectors()!=null){
-            session.delete(cm.getMultipleCorrectors());
-            cm.setMultipleCorrectors(null);
-        }
-        switch (selectedMode) {
-        case REGULAR:
-            cm.setRegular(new Regular());
-            break;
-        case PROCESSEDONLY:
-            cm.setCorrectOnlyProcessedTasks(new CorrectOnlyProcessedTasks());
-            cm.getCorrectOnlyProcessedTasks().setNumberOfTasks(additionalValue);
-            break;
-        case MULTIPLE:
-            cm.setMultipleCorrectors(new MultipleCorrectors());
-            cm.getMultipleCorrectors().setNumberOfCorrectors(additionalValue);
-            break;
-        default:
-           throw new IllegalStateException("CorrectionMode must be one of REGULAR, PROCESSEDONLY or MULTIPLE!");
-        }
+    } finally {
+      if (session != null)
+        session.getTransaction().commit();
     }
+  }
 
 }
