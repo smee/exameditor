@@ -22,19 +22,16 @@
       <artifactId>hyperjaxb3-ejb-runtime</artifactId>
       <version>${hyperjaxb3.version}</version>
       <exclusions>
-      	<exclusion>
-      		<artifactId>persistence-api</artifactId>
-      		<groupId>javax.persistence</groupId>
-      	</exclusion>
+        <exclusion>
+          <artifactId>persistence-api</artifactId>
+          <groupId>javax.persistence</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
 
     <!-- Test dependencies -->
-    <!--
-      dependency> <groupId>junit</groupId>
-      <artifactId>junit</artifactId> <version>3.8.1</version>
-      </dependency
-    -->
+    <!-- dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+      <version>3.8.1</version> </dependency -->
 
     <!-- Roundtrip -->
     <dependency>
@@ -43,10 +40,10 @@
       <version>${hyperjaxb3.version}</version>
       <scope>test</scope>
       <exclusions>
-      	<exclusion>
-      		<artifactId>persistence-api</artifactId>
-      		<groupId>javax.persistence</groupId>
-      	</exclusion>
+        <exclusion>
+          <artifactId>persistence-api</artifactId>
+          <groupId>javax.persistence</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
 
@@ -60,32 +57,32 @@
     </dependency>
 
     <dependency>
-    	<groupId>org.slf4j</groupId>
-    	<artifactId>slf4j-api</artifactId>
-    	<version>1.6.1</version>
-    	<type>jar</type>
-    	<scope>test</scope>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.1</version>
+      <type>jar</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.slf4j</groupId>
-    	<artifactId>slf4j-log4j12</artifactId>
-    	<version>1.6.1</version>
-    	<type>jar</type>
-    	<scope>test</scope>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.6.1</version>
+      <type>jar</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-entitymanager</artifactId>
-    	<version>3.5.6-Final</version>
-    	<type>jar</type>
-    	<scope>test</scope>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.1.4.Final</version>
+      <type>jar</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>javax.persistence</groupId>
-    	<artifactId>persistence-api</artifactId>
-    	<version>1.0</version>
-    	<type>jar</type>
-    	<scope>provided</scope>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <repositories>
@@ -115,7 +112,7 @@
       <plugin>
         <groupId>org.jvnet.hyperjaxb3</groupId>
         <artifactId>maven-hyperjaxb3-plugin</artifactId>
-        <version>0.5.5</version>
+        <version>${hyperjaxb3.version}</version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -126,7 +123,7 @@
         </executions>
         <configuration>
           <extension>true</extension>
-          <!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName>-->
+          <!--<roundtripTestClassName>RoundtripTest</roundtripTestClassName> -->
           <args>
             <arg>-Xinheritance</arg>
             <arg>-Xdefault-value</arg>
@@ -142,18 +139,19 @@
             <plugin>
               <groupId>org.jvnet.jaxb2_commons</groupId>
               <artifactId>jaxb2-default-value</artifactId>
-			  <version>1.1</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined after last change in CVS... -->
-            </plugin> 
+              <version>1.1</version> <!-- Downloaded from https://jaxb2-commons.dev.java.net/ Version number defined 
+                after last change in CVS... -->
+            </plugin>
             <plugin>
               <groupId>net.java.dev.jaxb2-commons</groupId>
               <artifactId>jaxb-fluent-api</artifactId>
               <version>2.1.8</version>
-            </plugin> 
+            </plugin>
             <plugin>
               <groupId>org.jvnet.jaxb2_commons</groupId>
               <artifactId>jaxb2-value-constructor</artifactId>
               <version>3.0</version>
-            </plugin> 
+            </plugin>
           </plugins>
         </configuration>
       </plugin>
@@ -166,50 +164,50 @@
           <encoding>UTF8</encoding>
         </configuration>
       </plugin>
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <phase>verify</phase>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-<pluginManagement>
-  <plugins>
-    <plugin>
-      <groupId>org.eclipse.m2e</groupId>
-      <artifactId>lifecycle-mapping</artifactId>
-      <version>1.0.0</version>
-      <configuration>
-        <lifecycleMappingMetadata>
-          <pluginExecutions>
-            <pluginExecution>
-              <pluginExecutionFilter>
-                <groupId>org.jvnet.hyperjaxb3</groupId>
-                <artifactId>maven-hyperjaxb3-plugin</artifactId>
-                <versionRange>[0.5.5,)</versionRange>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-              </pluginExecutionFilter>
-              <action>
-                <execute/>
-              </action>
-            </pluginExecution>
-          </pluginExecutions>
-        </lifecycleMappingMetadata>
-      </configuration>
-    </plugin>
-  </plugins>
-</pluginManagement>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.jvnet.hyperjaxb3</groupId>
+                    <artifactId>maven-hyperjaxb3-plugin</artifactId>
+                    <versionRange>[0.5.5,)</versionRange>
+                    <goals>
+                      <goal>generate</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
   </build>
   <properties>
-    <hyperjaxb3.version>0.5.5</hyperjaxb3.version>
+    <hyperjaxb3.version>0.5.6</hyperjaxb3.version>
   </properties>
 </project>
