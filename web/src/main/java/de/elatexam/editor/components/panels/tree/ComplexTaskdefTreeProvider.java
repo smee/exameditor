@@ -77,7 +77,8 @@ public class ComplexTaskdefTreeProvider<T extends Indexed> implements ITreeProvi
 		}
 
 		private boolean equalId(final T o1, final T o2) {
-			return o1.getClass().equals(o2.getClass())
+			return o2!=null 
+			    && o1.getClass().equals(o2.getClass())
 					&& o1.getHjid().equals(o2.getHjid());
 		}
 

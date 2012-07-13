@@ -23,13 +23,13 @@ import java.util.Locale;
 import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
 
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.util.convert.IConverter;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
@@ -39,8 +39,6 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-
-import com.visural.wicket.behavior.inputhint.InputHintBehavior;
 
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
@@ -102,10 +100,9 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     private void init() {
       add(new FeedbackPanel("feedback"));
       // add common SubTaskDef input fields
-      TextField<String> idTf = new TextField<String>("xmlid", new PropertyModel<String>(getDefaultModel(), "xmlid"));
-      idTf.add(new InputHintBehavior(this, "eindeutiger Bezeichner", "color: #aaa;"));
-      add(idTf.setRequired(true));// .add(new
-      // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
+      TextField<String> idTf = new TextField<String>("xmlid");
+      idTf.add(new AttributeAppender("placeholder", "eindeutiger Bezeichner"));
+      add(idTf.setRequired(true));
       final TextArea<String> problemText = new TextArea<String>("problem") {
         @Override
         public IConverter<String> getConverter(Class type) {
@@ -133,7 +130,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
         add(fv);
 
       // add correction and hints
-      add(new TextField<String>("hint").add(new InputHintBehavior(this, "Hinweis für Studenten", "color: #aaa;")));
+      add(new TextField<String>("hint").add(new AttributeAppender("placeholder", "Hinweis für Studenten")));
       add(new TextArea<String>("correctionHint"));
       add(new org.apache.wicket.markup.html.form.Button("saveButton"));
       add(new org.apache.wicket.markup.html.form.Button("cancelButton") {

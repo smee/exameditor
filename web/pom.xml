@@ -245,16 +245,16 @@
         </exclusion>
       </exclusions>
     </dependency>
-        <dependency>
-            <groupId>com.visural</groupId>
-            <artifactId>visural-common</artifactId>
-            <version>0.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.visural</groupId>
-            <artifactId>visural-wicket-w15</artifactId>
-            <version>0.7.0</version>
-        </dependency>
+    <dependency>
+      <groupId>com.visural</groupId>
+      <artifactId>visural-common</artifactId>
+      <version>0.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.visural</groupId>
+      <artifactId>visural-wicket-w15</artifactId>
+      <version>0.7.0</version>
+    </dependency>
     <dependency>
       <groupId>com.google.collections</groupId>
       <artifactId>google-collections</artifactId>

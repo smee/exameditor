@@ -61,7 +61,6 @@ public class OverviewPage extends WebPage {
   public void renderHead(IHeaderResponse response) {
        super.renderHead(response);
        response.renderJavaScriptReference(DeployJava.LOCAL_REFERENCE);
-       JSLib.getHeaderContribution(VersionDescriptor.exactVersion(Library.JQUERY, 1,4,2), true, CDN.GOOGLE).renderHead(response);
   }
   /**
    * Create a panel with links etc. that act as toolbar. This panel gets rendered right below the menu.

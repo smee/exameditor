@@ -71,9 +71,10 @@ public class Startup extends DataServer {
     // use empty session path to make sure, all webapps share the session id
     // this is needed for data exchange via TaskModelViewDelegate
     sm.setSessionPath("/");
-    File sessionsDir = new File("jetty-sessions");
-    sessionsDir.mkdir();
+    File sessionsDir = new File("target/jetty-sessions");
+    sessionsDir.mkdirs();
     sm.setStoreDirectory(sessionsDir);
+    sm.setSavePeriod(120);
     context.setSessionHandler(new SessionHandler(sm));
     
   }

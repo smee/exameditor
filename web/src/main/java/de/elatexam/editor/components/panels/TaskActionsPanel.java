@@ -10,7 +10,6 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
 
 import com.visural.wicket.component.confirmer.ConfirmerLink;
@@ -18,7 +17,6 @@ import com.visural.wicket.component.confirmer.ConfirmerLink;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.GermanConfirmerLink;
 import de.elatexam.editor.components.panels.tasks.preview.PreviewSubtaskDefPanel;
-import de.elatexam.editor.components.panels.tree.ComplexTaskDefTree;
 import de.elatexam.editor.pages.EditSubtaskPage;
 import de.elatexam.model.SubTaskDef;
 
