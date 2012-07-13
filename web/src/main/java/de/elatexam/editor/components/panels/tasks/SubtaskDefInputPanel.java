@@ -56,23 +56,22 @@ import de.elatexam.model.TextSubTaskDef;
 
 /**
  * @author Steffen Dienst
- *
+ * 
  */
 public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
   /**
    * @author Steffen Dienst
-   *
+   * 
    * @param <T>
    */
-    public class SubtaskDefForm<T> extends DataForm<T> {
+  public class SubtaskDefForm extends DataForm<T> {
 
     private final Class<T> modelClass;
 
-
     public SubtaskDefForm(final String id, final HibernateObjectModel<T> model) {
-        super(id, model);
-        this.modelClass = (Class<T>) model.getObject().getClass();
-        init();
+      super(id, model);
+      this.modelClass = (Class<T>) model.getObject().getClass();
+      init();
     }
 
     /**
@@ -83,26 +82,27 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
     private SubtaskSpecificsInputPanel getTaskSpecificFormPanel(final String id) {
       if (modelClass.equals(McSubTaskDef.class))
         return new McSubtaskDefInputPanel(id, (IModel<McSubTaskDef>) getModel());
-    else if (modelClass.equals(TextSubTaskDef.class))
+      else if (modelClass.equals(TextSubTaskDef.class))
         return new TextSubtaskDefInputPanel(id);
-    else if (modelClass.equals(MappingSubTaskDef.class))
+      else if (modelClass.equals(MappingSubTaskDef.class))
         return new MappingSubtaskDefInputPanel(id, (IModel<MappingSubTaskDef>) getModel());
-    else if (modelClass.equals(ClozeSubTaskDef.class))
+      else if (modelClass.equals(ClozeSubTaskDef.class))
         return new ClozeSubtaskDefInputPanel(id, (IModel<ClozeSubTaskDef>) getModel());
-    else if (modelClass.equals(PaintSubTaskDef.class))
+      else if (modelClass.equals(PaintSubTaskDef.class))
         return new PaintSubtaskDefInputPanel(id, (IModel<PaintSubTaskDef>) getModel());
-    else
-        return new SubtaskSpecificsInputPanel(id){};
+      else
+        return new SubtaskSpecificsInputPanel<T>(id) {
+        };
     }
 
     /**
      * @param returnPage
-     *
+     * 
      */
     private void init() {
       add(new FeedbackPanel("feedback"));
       // add common SubTaskDef input fields
-      TextField<String> idTf=new TextField<String>("xmlid", new SortableIdModel(new PropertyModel(getDefaultModel(), "xmlid")));
+      TextField<String> idTf = new TextField<String>("xmlid", new PropertyModel<String>(getDefaultModel(), "xmlid"));
       idTf.add(new InputHintBehavior(this, "eindeutiger Bezeichner", "color: #aaa;"));
       add(idTf.setRequired(true));// .add(new
       // TextFieldHintBehaviour(Model.of("Eindeutiger Bezeichner"))));
@@ -126,12 +126,12 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       add(problemText.setRequired(true).add(new TinyMceBehavior(createFullFeatureset())));
 
       // add subtask input elements
-      SubtaskSpecificsInputPanel specificPanel = getTaskSpecificFormPanel("specificelements");
-	  add(specificPanel);
-	  IFormValidator fv = specificPanel.getFormValidator();
-	  if(fv !=null)
-		  add(fv);
-	  
+      SubtaskSpecificsInputPanel<T> specificPanel = getTaskSpecificFormPanel("specificelements");
+      add(specificPanel);
+      IFormValidator fv = specificPanel.getFormValidator();
+      if (fv != null)
+        add(fv);
+
       // add correction and hints
       add(new TextField<String>("hint").add(new InputHintBehavior(this, "Hinweis für Studenten", "color: #aaa;")));
       add(new TextArea<String>("correctionHint"));
@@ -147,7 +147,7 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see net.databinder.components.hib.DataForm#onSubmit()
      */
     @Override
@@ -160,14 +160,14 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
 
   }
 
-    public SubtaskDefInputPanel(final String id, final HibernateObjectModel<T> model) {
+  public SubtaskDefInputPanel(final String id, final HibernateObjectModel<T> model) {
     super(id);
-        add(new SubtaskDefForm<T>("taskform", model));
+    add(new SubtaskDefForm("taskform", model));
   }
 
   /**
    * Add all tinymce features to the rich text editor.
-   *
+   * 
    * @return
    */
   public static TinyMCESettings createFullFeatureset() {

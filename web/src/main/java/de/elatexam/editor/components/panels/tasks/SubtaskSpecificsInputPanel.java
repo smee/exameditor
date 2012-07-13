@@ -33,7 +33,7 @@ import de.elatexam.model.SubTaskDef;
  * @author Steffen Dienst
  *
  */
-public abstract class SubtaskSpecificsInputPanel<T> extends Panel implements IFormVisitorParticipant {
+public abstract class SubtaskSpecificsInputPanel<T extends SubTaskDef> extends Panel implements IFormVisitorParticipant {
 
 	/**
 	 * @param id

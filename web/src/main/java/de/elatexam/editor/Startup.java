@@ -26,6 +26,8 @@ import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.deployer.WebAppDeployer;
 import org.mortbay.jetty.handler.MovedContextHandler;
+import org.mortbay.jetty.servlet.HashSessionManager;
+import org.mortbay.jetty.servlet.SessionHandler;
 import org.mortbay.jetty.webapp.WebAppContext;
 
 /**
@@ -64,8 +66,15 @@ public class Startup extends DataServer {
     wad.setWebAppDir("target/preview");
     // wad.setExtract(true);
     wad.start();
+    
+    HashSessionManager sm = new HashSessionManager();
     // use empty session path to make sure, all webapps share the session id
     // this is needed for data exchange via TaskModelViewDelegate
-    context.getSessionHandler().getSessionManager().setSessionPath("/");
+    sm.setSessionPath("/");
+    File sessionsDir = new File("jetty-sessions");
+    sessionsDir.mkdir();
+    sm.setStoreDirectory(sessionsDir);
+    context.setSessionHandler(new SessionHandler(sm));
+    
   }
 }

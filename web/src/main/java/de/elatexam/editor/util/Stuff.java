@@ -81,8 +81,8 @@ public class Stuff {
    *          taskblock
    * @return list of items or empty list.
    */
-    public static <T extends SubTaskDef> List<T> getSubtaskDefs(final HomogeneousTaskBlock tb) {
-    	return (List<T>) tb.getSubtaskDefs();
+    public static List<SubTaskDef> getSubtaskDefs(final HomogeneousTaskBlock tb) {
+    	return (List<SubTaskDef>) tb.getSubtaskDefs();
   }
 
     public static <T extends SubTaskDef> Collection<T> getAllSubtaskdefs(final ComplexTaskDef taskdef) {
@@ -120,5 +120,15 @@ public class Stuff {
         session.getTransaction().commit();
     }
 
-
+    public static <T> T newInstance(Class<T> clazz){
+      try {
+        return clazz.newInstance();
+      } catch (InstantiationException e) {
+        e.printStackTrace();
+        return null;
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+        return null;
+      }
+    }
 }

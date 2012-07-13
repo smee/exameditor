@@ -27,7 +27,7 @@ import de.elatexam.model.NamedString;
 /**
  * @author sdienst
  */
-public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTaskDefAnswerDefinitionsItem>> {
+public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel {
 
 	private final WebMarkupContainer container;
 	Collection<EditorButton> moveButtons = new ArrayList<EditorButton>();
@@ -124,7 +124,7 @@ public class MCAnswersInputPanel extends SubtaskSpecificsInputPanel<List<McSubTa
                 answers.addItem(answerDef);
 
                 if (target != null) {
-                    target.addComponent(container);
+                    target.add(container);
                 }
             }
 		};

@@ -80,9 +80,9 @@ class TypedDropTarget extends DropTarget {
       Operation op = transfer.getOperation();
       ComplexTaskHierarchyFacade mover = new ComplexTaskHierarchyFacade(tree.getProvider());
       if (op==Operation.MOVE && mover.moveElement(droppedObject, droppedOn, location.getAnchor())) {
-        target.addComponent(tree);
+        target.add(tree);
       } else if(op == Operation.COPY && mover.copyElement(droppedObject, droppedOn, location.getAnchor())){
-    	  target.addComponent(tree);
+    	  target.add(tree);
       }else {
         transfer.reject();
       }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import wicketdnd.Anchor;
 import wickettree.ITreeProvider;
-import de.elatexam.editor.components.panels.tasks.SortableIdModel;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.Category;
@@ -134,28 +133,22 @@ public class ComplexTaskHierarchyFacade {
     	return true;
 	}
 
-	private boolean move(SubTaskDef element, SubTaskDef to, Anchor anchor) {
+	private boolean move(SubTaskDef element, SubTaskDef target, Anchor anchor) {
 		// change order
-        HomogeneousTaskBlock toTaskblock = (HomogeneousTaskBlock) findParentOf(to);
+        HomogeneousTaskBlock targetTaskblock = (HomogeneousTaskBlock) findParentOf(target);
 
-        HomogeneousTaskBlock fromTaskblock = (HomogeneousTaskBlock) findParentOf(element);
-        if(fromTaskblock!=null)
-        	Stuff.getSubtaskDefs(fromTaskblock).remove(element);
+        HomogeneousTaskBlock sourceTaskblock = (HomogeneousTaskBlock) findParentOf(element);
+        if(sourceTaskblock!=null)
+        	Stuff.getSubtaskDefs(sourceTaskblock).remove(element);
 
-        List<? extends SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(toTaskblock);
-        int indexOfTo = subtaskdefs.indexOf(to);
+        List<SubTaskDef> subtaskdefs = Stuff.getSubtaskDefs(targetTaskblock);
+        int indexOfTo = subtaskdefs.indexOf(target);
         if (anchor == Anchor.BOTTOM) {
             indexOfTo++;
         }
-        Stuff.getSubtaskDefs(toTaskblock).add(indexOfTo,  element);
+        subtaskdefs.add(indexOfTo,  element);
 
-        // manifest order by using a hack:
-        int idx = 0;
-        for (SubTaskDef std : subtaskdefs) {
-            std.setXmlid(SortableIdModel.getTaggedId(std.getXmlid(), idx));
-            idx++;
-        }
-        Stuff.saveAll(fromTaskblock, toTaskblock);
+        Stuff.saveAll(sourceTaskblock, targetTaskblock);
         return true;
 	}
 

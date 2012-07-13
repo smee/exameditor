@@ -70,6 +70,7 @@ public class TaskDefPage extends SecurePage{
     }
 
     public void renderHead(org.apache.wicket.markup.html.IHeaderResponse response) {
+      super.renderHead(response);
       response.renderCSSReference(new WebTheme());  
     };
 	/**
@@ -101,7 +102,7 @@ public class TaskDefPage extends SecurePage{
         edit.setOutputMarkupId(true);
         editPanel.replaceWith(edit);
         editPanel = edit;
-        target.addComponent(editPanel);
+        target.add(editPanel);
     }
 
     /*

@@ -19,8 +19,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elatexam.editor.components.panels.tree;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -132,13 +130,6 @@ public class ComplexTaskdefTreeProvider<T extends Indexed> implements ITreeProvi
 
 	private Iterator<T> getChildren(final HomogeneousTaskBlock tb) {
 		List<? extends SubTaskDef> subtasks = tb.getSubtaskDefs();
-		Collections.sort(subtasks, new Comparator<Object>() {
-
-			@Override
-			public int compare(Object o1, Object o2) {
-				return ((SubTaskDef) o1).getXmlid().compareTo(((SubTaskDef) o2).getXmlid());
-			}
-		});
 		return (Iterator<T>) subtasks.iterator();
 	}
 

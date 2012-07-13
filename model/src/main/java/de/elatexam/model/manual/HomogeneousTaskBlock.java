@@ -23,9 +23,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import de.elatexam.model.AddonTaskBlock;
 import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.MappingTaskBlock;
-import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.McTaskBlock;
 import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.SubTaskDef;
@@ -69,6 +69,8 @@ public abstract class HomogeneousTaskBlock extends TaskBlock {
       return ((TextTaskBlock)(Object)this).getTextSubTaskDef();
     if(PaintTaskBlock.class.isInstance(this))
       return ((PaintTaskBlock)(Object)this).getPaintSubTaskDef();
+    if(AddonTaskBlock.class.isInstance(this))
+      return ((AddonTaskBlock)(Object)this).getAddonSubTaskDef();
           
     return Collections.emptyList();
   }

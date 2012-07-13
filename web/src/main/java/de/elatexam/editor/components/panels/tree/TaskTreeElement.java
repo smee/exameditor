@@ -31,7 +31,6 @@ import wickettree.content.StyledLinkLabel;
 
 import com.google.common.collect.ImmutableMap;
 
-import de.elatexam.editor.components.panels.tasks.SortableIdModel;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
 import de.elatexam.model.ClozeSubTaskDef;
@@ -182,7 +181,7 @@ public class TaskTreeElement<T> extends StyledLinkLabel<T> {
         if (o instanceof TaskBlock)
             return Model.of("Aufgaben");
         else if (o instanceof SubTaskDef)
-            return new SortableIdModel(new PropertyModel<String>(model, "xmlid"));
+            return new PropertyModel<String>(model, "xmlid");
         return defaultModel;
     }
 

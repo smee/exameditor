@@ -14,7 +14,6 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.lang.Bytes;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
 
 import com.visural.wicket.component.submitters.IndicateModalSubmitLink;
@@ -73,6 +72,7 @@ public class UploadComplexTaskdefPage extends SecurePage {
   public UploadComplexTaskdefPage() {
     add(new FileUploadForm("uploadform"));
   }
+
 
   /**
    * @param upload

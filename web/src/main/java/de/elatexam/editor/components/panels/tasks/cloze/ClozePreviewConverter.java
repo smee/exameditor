@@ -1,7 +1,6 @@
 package de.elatexam.editor.components.panels.tasks.cloze;
 
 import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap;
-import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap.GapCorrectItem;
 
 /**
  * @author Steffen Dienst
@@ -16,8 +15,8 @@ public class ClozePreviewConverter extends ClozeConverter {
 			sb.append(gap.getInitialValue());
 		sb.append('"');
 		int maxLen = 0;
-		for (GapCorrectItem ci : gap.getCorrectItems()) {
-			maxLen = Math.max(maxLen, ci.getItem().length());
+		for (String ci : gap.getCorrect()) {
+			maxLen = Math.max(maxLen, ci.length());
 		}
 		removeTrailingSplitchar(sb);
 

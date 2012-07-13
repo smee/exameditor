@@ -46,6 +46,9 @@
             <orm:column length="100000"/>
           </hj:basic>
       </jxb:bindings>
+      <jxb:bindings node="//xs:complexType[@name='SubTaskDef']">
+        <!--  <hj:mapped-superclass/> -->
+      </jxb:bindings>
       <jxb:bindings node="//xs:complexType[@name='SubTaskDef']/xs:attribute[@name='id']">
           <hj:basic>
             <orm:column name="xmlid"/>
@@ -68,23 +71,20 @@
     <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType//xs:attribute[@name='category']/xs:simpleType">
       <jxb:typesafeEnumClass name="type"/>
     </jxb:bindings>
-    
-
     <jxb:bindings
       node="//xs:complexType[@name='McTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='mcSubTaskDef']">
-      <!--<jxb:property name="foo"/>-->
         <hj:many-to-many merge="false">
           <orm:join-column />
           <orm:cascade>
             <orm:cascade-persist />
             <orm:cascade-merge />
             <orm:cascade-refresh />
-          </orm:cascade>
+          </orm:cascade>   
+          <orm:order-column/>       
         </hj:many-to-many>
    </jxb:bindings> 
     <jxb:bindings
       node="//xs:complexType[@name='MappingTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='mappingSubTaskDef']">
-      <!--<jxb:property name="foo"/>-->
         <hj:many-to-many merge="false">
           <orm:join-column />
           <orm:cascade>
@@ -92,11 +92,11 @@
             <orm:cascade-merge />
             <orm:cascade-refresh />
           </orm:cascade>
+          <orm:order-column/>
         </hj:many-to-many>
    </jxb:bindings> 
     <jxb:bindings
       node="//xs:complexType[@name='ClozeTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:sequence/xs:element[@ref='clozeSubTaskDef']">
-      <!--<jxb:property name="foo"/>-->
         <hj:many-to-many merge="false">
           <orm:join-column />
           <orm:cascade>
@@ -104,11 +104,11 @@
             <orm:cascade-merge />
             <orm:cascade-refresh />
           </orm:cascade>
+          <orm:order-column/>
         </hj:many-to-many>
    </jxb:bindings> 
     <jxb:bindings
       node="//xs:complexType[@name='TextTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:element[@ref='textSubTaskDef']">
-      <!--<jxb:property name="foo"/>-->
         <hj:many-to-many merge="false">
           <orm:join-column />
           <orm:cascade>
@@ -116,11 +116,11 @@
             <orm:cascade-merge />
             <orm:cascade-refresh />
           </orm:cascade>
+          <orm:order-column/>
         </hj:many-to-many>
    </jxb:bindings> 
     <jxb:bindings
       node="//xs:complexType[@name='PaintTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:element[@ref='paintSubTaskDef']">
-      <!--<jxb:property name="foo"/>-->
         <hj:many-to-many merge="false">
           <orm:join-column />
           <orm:cascade>
@@ -128,8 +128,22 @@
             <orm:cascade-merge />
             <orm:cascade-refresh />
           </orm:cascade>
+          <orm:order-column/>
         </hj:many-to-many>
    </jxb:bindings> 
+   <jxb:bindings
+      node="//xs:complexType[@name='AddonTaskBlock']/xs:complexContent/xs:extension/xs:sequence/xs:element[@ref='addonSubTaskDef']">
+        <hj:many-to-many merge="false">
+          <orm:join-column />
+          <orm:order-column/>
+          <orm:cascade>
+            <orm:cascade-persist />
+            <orm:cascade-merge />
+            <orm:cascade-refresh />
+          </orm:cascade>
+        </hj:many-to-many>
+   </jxb:bindings> 
+   
    <jxb:bindings node="//xs:element[@name='mcSubTaskDef']/xs:complexType">
       <inheritance:implements>java.lang.Cloneable</inheritance:implements>
 <!--      <inheritance:extends>foo.Bar</inheritance:extends> -->

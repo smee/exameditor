@@ -35,8 +35,8 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
 
       @Override
       protected void onPopulateItem(final ListItem<Assignment> item) {
-        item.add(new TextField("id", new PropertyModel(item.getModel().getObject(), "id")));
-        item.add(new TextField("name", new PropertyModel(item.getModel().getObject(), "name")));
+        item.add(new TextField("id", new PropertyModel(item.getModel(), "id")));
+        item.add(new TextField("name", new PropertyModel(item.getModel(), "name")));
         item.add(new RemoveButton("delete"));
       }
 
@@ -63,10 +63,7 @@ public class MappingSubtaskDefInputPanel extends SubtaskSpecificsInputPanel<Mapp
       @Override
       protected void onPopulateItem(final ListItem<Concept> item) {
         item.add(new TextField<String>("name", new PropertyModel<String>(item.getModel().getObject(), "name")).setEscapeModelStrings(false));
-        // use getCorrectAssignmentIDItems instead of correctAssignmentID,
-        // the former is jpa specific, the later jaxb.... they don't get synchronized
-        // #$%##%!!
-        item.add(new TextField<String>("correctAssignmentID", new PropertyModel<String>(item.getModel(), "correctAssignmentIDItems")) {
+        item.add(new TextField<String>("correctAssignmentID", new PropertyModel<String>(item.getModel(), "correctAssignmentID")) {
           @Override
           public IConverter getConverter(final Class type) {
             if (List.class.isAssignableFrom(type)) {

@@ -24,12 +24,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import net.databinder.auth.data.DataPassword;
 import net.databinder.auth.data.DataUser;
@@ -43,7 +45,7 @@ import de.elatexam.model.SubTaskDef;
 
 /**
  * @author Steffen Dienst
- *
+ * 
  */
 @Entity
 public class BasicUser implements DataUser, Indexed {
@@ -54,15 +56,23 @@ public class BasicUser implements DataUser, Indexed {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long hjid;
+  private Long hjid;
 
   @ElementCollection
   private final Set<String> roles;
 
-  @ElementCollection
+  @ManyToMany(targetEntity = ComplexTaskDef.class, cascade = {
+      CascadeType.MERGE,
+      CascadeType.REFRESH,
+      CascadeType.PERSIST
+  })
   private final List<ComplexTaskDef> taskdefs;
 
-  @ElementCollection
+  @ManyToMany(targetEntity = SubTaskDef.class, cascade = {
+      CascadeType.MERGE,
+      CascadeType.REFRESH,
+      CascadeType.PERSIST
+  })
   private final List<SubTaskDef> subtaskdefs;
 
   public BasicUser() {
@@ -83,7 +93,7 @@ public class BasicUser implements DataUser, Indexed {
   /**
    * Filter {@link #getSubtaskdefs()} to instances of a specific {@link SubTaskDef}. CAUTION: You must not add new
    * instances to this list, they won't get persisted. Use {@link #getSubtaskdefs()}.add(...) instead.
-   *
+   * 
    * @param <T>
    * @param clazz
    * @return
@@ -102,18 +112,18 @@ public class BasicUser implements DataUser, Indexed {
     this.roles.add(role);
   }
 
-    public Long getHjid() {
+  public Long getHjid() {
     return hjid;
   }
 
   /*
    * (non-Javadoc)
-   *
+   * 
    * @see net.databinder.auth.data.DataUser#getPassword()
    */
   public DataPassword getPassword() {
-	  if(password == null)
-		  this.password=new BasicPassword();
+    if (password == null)
+      this.password = new BasicPassword();
     return password;
   }
 
@@ -127,7 +137,7 @@ public class BasicUser implements DataUser, Indexed {
 
   /*
    * (non-Javadoc)
-   *
+   * 
    * @see net.databinder.auth.data.DataUser#getUsername()
    */
   public String getUsername() {
@@ -136,7 +146,7 @@ public class BasicUser implements DataUser, Indexed {
 
   /*
    * (non-Javadoc)
-   *
+   * 
    * @see net.databinder.auth.data.DataUser#hasRole(java.lang.String)
    */
   public boolean hasRole(final String role) {
@@ -156,13 +166,13 @@ public class BasicUser implements DataUser, Indexed {
     return String.format("[user '%s']", getUsername());
   }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.elatexam.model.Indexed#setHjid(java.lang.Long)
-     */
-    @Override
-    public void setHjid(Long id) {
-        this.hjid = id;
-    }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see de.elatexam.model.Indexed#setHjid(java.lang.Long)
+   */
+  @Override
+  public void setHjid(Long id) {
+    this.hjid = id;
+  }
 }

@@ -2,7 +2,6 @@ package de.elatexam.editor.pages;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
 
 import de.elatexam.editor.pages.subtaskdefs.SubtaskdefTable;
 import de.elatexam.model.SubTaskDef;

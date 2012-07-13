@@ -168,8 +168,8 @@ public class CorrectionModePanel extends Panel implements IFormModelUpdateListen
       }
 
     } finally {
-      if (session != null)
-        session.getTransaction().commit();
+//      if (session != null)
+//        session.getTransaction().commit();
     }
   }
 

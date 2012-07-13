@@ -33,6 +33,7 @@ import de.elatexam.editor.preview.PreviewComplexLink;
 import de.elatexam.editor.user.BasicUser;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.ComplexTaskDef;
+import de.elatexam.model.ComplexTaskDef.Revisions;
 import de.elatexam.model.ComplexTaskDef.Revisions.Revision;
 import de.elatexam.model.Indexed;
 import de.elatexam.model.ObjectFactory;
@@ -86,9 +87,8 @@ public class TaskDefActions extends Panel{
 				if (!(toDelete instanceof SubTaskDef)) {
 					final org.hibernate.Session session = Databinder
 							.getHibernateSession();
-					final Transaction transaction = session.beginTransaction();
 					session.delete(toDelete);
-					transaction.commit();
+					session.getTransaction().commit();
 				} else {
 					Stuff.saveAll(tree.getSelected().getObject());
 				}
@@ -156,9 +156,14 @@ public class TaskDefActions extends Panel{
 						final Revision rev = new ObjectFactory().createComplexTaskDefRevisionsRevision();
 						rev.setAuthor(TaskEditorSession.get().getUser().getUsername());
 						rev.setDate(System.currentTimeMillis());
-						final List<Revision> revisions = ctd.getRevisions().getRevision();
-						rev.setSerialNumber(revisions.size() + 1);
-						revisions.add(rev);
+						Revisions revisions = ctd.getRevisions();
+						if(revisions==null){
+						  revisions=new ObjectFactory().createComplexTaskDefRevisions();
+						  ctd.setRevisions(revisions);
+						}
+						final List<Revision> revList = ctd.getRevisions().getRevision();
+						rev.setSerialNumber(revList.size() + 1);
+						revList.add(rev);
 					}
 				}, "pruefung.xml");
 

@@ -12,7 +12,6 @@ import org.apache.wicket.util.convert.IConverter;
 import de.elatexam.model.ClozeSubTaskDef.Cloze;
 import de.elatexam.model.ClozeSubTaskDef.Cloze.ClozeTextOrGapItem;
 import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap;
-import de.elatexam.model.ClozeSubTaskDef.Cloze.Gap.GapCorrectItem;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 /**
  * Converter for cloze/text to string representation.
@@ -74,7 +73,7 @@ public class ClozeConverter implements IConverter<Cloze> {
 	private ClozeTextOrGapItem createGapItem(String s) {
 		int gapSize = -1;
 		String initialValue="";
-		List<GapCorrectItem> correctValues = new ArrayList<GapCorrectItem>();
+		List<String> correctValues = new ArrayList<String>();
 		
 		for (String token : s.split("\\|")) {
 			token = token.trim();
@@ -87,9 +86,7 @@ public class ClozeConverter implements IConverter<Cloze> {
 			}else if (token.startsWith("\"") && token.endsWith("\"")) {
 				initialValue = token.substring(1,token.length() - 1);
 			} else {
-				GapCorrectItem item = new GapCorrectItem();
-				item.setItem(token);
-				correctValues.add(item);
+				correctValues.add(token);
 			}
 		}
 		Gap gap = new Gap();
@@ -97,7 +94,7 @@ public class ClozeConverter implements IConverter<Cloze> {
 			gap.setInputLength(gapSize);
 		}
 		gap.setInitialValue(initialValue);
-		gap.setCorrectItems(correctValues);
+		gap.setCorrect(correctValues);
 		ClozeTextOrGapItem textOrGapItem = new ClozeTextOrGapItem();
 		textOrGapItem.setItemGap(gap);
 		return textOrGapItem;
@@ -116,8 +113,8 @@ public class ClozeConverter implements IConverter<Cloze> {
 			  .append('|');
 		}
 		
-		for(GapCorrectItem gci: gap.getCorrectItems())
-			sb.append(gci.getItem()).append('|');
+		for(String gci: gap.getCorrect())
+			sb.append(gci).append('|');
 		if(gap.getInputLength()!=null)
 			sb.append('{')
 			  .append(gap.getInputLength())

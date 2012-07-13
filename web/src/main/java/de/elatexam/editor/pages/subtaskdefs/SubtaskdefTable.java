@@ -39,8 +39,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 import de.elatexam.editor.components.panels.TaskActionsPanel;
-import de.elatexam.editor.components.panels.tasks.SortableIdModel;
 import de.elatexam.editor.pages.taskdef.TaskSelectionPanel;
+import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.SubTaskDef;
 
 /**
@@ -77,7 +77,7 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
     columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid") {
       @Override
       protected IModel<?> createLabelModel(IModel<T> rowModel) {
-        return new SortableIdModel(new PropertyModel<String>(rowModel, "xmlid"));
+        return new PropertyModel<String>(rowModel, "xmlid");
       }
     });
     columns.add(new LabeledTextFilteredPropertyColumn<T>(Model.of("Aufgabenstellung"), Model.of("enthält:"), "problem", "problem"){

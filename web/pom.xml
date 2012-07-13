@@ -336,17 +336,6 @@
   </dependencies>
   <repositories>
     <repository>
-      <id>databinder</id>
-      <name>Databinder repository</name>
-      <url>http://databinder.net/repo/</url>
-    </repository>
-    <!-- for snapshot releases -->
-    <repository>
-      <id>databinder-snapshots</id>
-      <name>Databinder snapshot repository</name>
-      <url>http://databinder.net/snapshot/</url>
-    </repository>
-    <repository>
       <id>wicket-tree-repo</id>
       <url>http://wicket-tree.googlecode.com/svn/repo</url>
     </repository>

@@ -19,16 +19,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package de.elatexam.editor.components.panels.tasks.mapping;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.util.convert.IConverter;
 
-import de.elatexam.model.MappingSubTaskDef.Concept.ConceptCorrectAssignmentIDItem;
 
 /**
  * @author Steffen Dienst
@@ -44,11 +40,9 @@ public class CorrectAssignementConverter implements IConverter {
 	 * java.util.Locale)
 	 */
 	public Object convertToObject(final String value, final Locale locale) {
-		final List<ConceptCorrectAssignmentIDItem> result = new ArrayList<ConceptCorrectAssignmentIDItem>();
+		final List<String> result = new ArrayList<String>();
 		for (final String s : StringUtils.split(value, ',')) {
-			final ConceptCorrectAssignmentIDItem ca = new ConceptCorrectAssignmentIDItem();
-			ca.setItem(s);
-			result.add(ca);
+			result.add(s);
 		}
 		return result;
 	}
@@ -61,12 +55,7 @@ public class CorrectAssignementConverter implements IConverter {
 	 * java.util.Locale)
 	 */
 	public String convertToString(final Object value, final Locale locale) {
-		final List<ConceptCorrectAssignmentIDItem> list = (List<ConceptCorrectAssignmentIDItem>) value;
-		final Iterator stringIterator = IteratorUtils.transformedIterator(list.iterator(), new Transformer() {
-			public Object transform(final Object input) {
-				return ((ConceptCorrectAssignmentIDItem) input).getItem();
-			}
-		});
-		return StringUtils.join(stringIterator, ",");
+		final List<String> list = (List<String>) value;
+		return StringUtils.join(list.iterator(), ",");
 	}
 }
