@@ -230,6 +230,11 @@
       <version>1.5.7</version>
     </dependency>
     <dependency>
+        <groupId>org.wicketstuff</groupId>
+        <artifactId>wicketstuff-googlecharts</artifactId>
+        <version>1.5.7</version>
+    </dependency>    
+    <dependency>
       <groupId>wicket-tree</groupId>
       <artifactId>wicket-tree</artifactId>
       <version>0.5.0</version>
