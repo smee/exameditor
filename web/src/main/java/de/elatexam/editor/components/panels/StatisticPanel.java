@@ -19,7 +19,6 @@ import org.wicketstuff.googlecharts.Chart;
 import org.wicketstuff.googlecharts.ChartDataEncoding;
 import org.wicketstuff.googlecharts.ChartProvider;
 import org.wicketstuff.googlecharts.ChartType;
-import org.wicketstuff.googlecharts.IChartData;
 import org.wicketstuff.googlecharts.IChartProvider;
 
 import de.elatexam.editor.TaskEditorSession;

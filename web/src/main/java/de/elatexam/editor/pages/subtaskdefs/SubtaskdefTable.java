@@ -15,11 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 package de.elatexam.editor.pages.subtaskdefs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.databinder.models.hib.CriteriaFilterAndSort;
 
@@ -37,26 +39,31 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.util.convert.IConverter;
+import org.codesmell.wicket.tagcloud.TagData;
+import org.wicketstuff.tagit.TagItTextField;
 
+import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.components.panels.TaskActionsPanel;
+import de.elatexam.editor.components.panels.tasks.TagSetConverter;
 import de.elatexam.editor.pages.taskdef.TaskSelectionPanel;
 import de.elatexam.editor.util.Stuff;
 import de.elatexam.model.SubTaskDef;
 
 /**
  * @author Steffen Dienst
- *
+ * 
  */
 public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
-
-
+  private Set<String> selectedTags=new HashSet<String>();
+  
   public SubtaskdefTable(String id, Class<T> clazz) {
     this(id, clazz, null);
   }
 
   /**
    * Render subtaskdef selection table, without links to edit and delete but with selection checkboxes.
-   *
+   * 
    * @param id
    * @param clazz
    * @param doSubtaskdefSelection
@@ -73,13 +80,8 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
     add(form);
 
     final List<IColumn<T>> columns = new ArrayList<IColumn<T>>();
-
-    columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid") {
-      @Override
-      protected IModel<?> createLabelModel(IModel<T> rowModel) {
-        return new PropertyModel<String>(rowModel, "xmlid");
-      }
-    });
+    columns.add(new TagFilterPropertyColumn<T>(Model.of("Tags"),"tags"));
+    columns.add(new PropertyColumn<T>(new Model<String>("ID"), "xmlid", "xmlid"));
     columns.add(new LabeledTextFilteredPropertyColumn<T>(Model.of("Aufgabenstellung"), Model.of("enthält:"), "problem", "problem"){
     	@Override
     	protected IModel<?> createLabelModel(IModel<T> rowModel) {
@@ -119,6 +121,32 @@ public class SubtaskdefTable<T extends SubTaskDef> extends Panel {
 
     table.addTopToolbar(new FilterToolbar(table, form, builder));
     form.add(table);
+    
+//    SubtaskdefTagModel tagModel = new SubtaskdefTagModel();
+//    form.add(new TagCloudPanel("tags", tagModel));
+    form.add(new TagItTextField("selectedtags", new PropertyModel(SubtaskdefTable.this, "selectedTags")) {
+      @Override
+      public IConverter getConverter(Class type) { return new TagSetConverter(); }
+      @Override
+      protected Iterable<String> getChoices(String input) {
+        List<String> result = new ArrayList<String>();
+        System.out.println(selectedTags);
+        System.out.println("-------------");
+        for(TagData td: Stuff.getTagData(TaskEditorSession.get().getUser(), selectedTags)){
+//          System.out.println(td.getName());
+          if(td.getName().startsWith(input)) 
+            result.add(td.getName());
+        }
+        return result;
+      }
+//      /* (non-Javadoc)
+//       * @see org.apache.wicket.Component#onEvent(org.apache.wicket.event.IEvent)
+//       */
+//      @Override
+//      public void onEvent(IEvent<?> event) {
+//        if(event instanceof TagSelectedEvent)
+//          ((TagSelectedEvent) event).getTarget().add(form);
+//      }
+    });
   }
-
 }

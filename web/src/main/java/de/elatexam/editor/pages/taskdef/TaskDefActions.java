@@ -69,7 +69,7 @@ public class TaskDefActions extends Panel{
 			@Override
 			void onSelect(AjaxRequestTarget target, SubTaskDef... subtaskdefs) {
 				addLink.addTasks(subtaskdefs);
-				target.addComponent(tree);
+				target.add(tree);
 			}
 		};
 		add(taskselectormodal);

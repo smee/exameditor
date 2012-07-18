@@ -14,7 +14,7 @@ fieldset {
   margin: 1.5em 0 0 0;
   padding: 0;
 }
-fieldset li {
+fieldset ol li {
   padding-bottom: 1em;
 }
 fieldset.submit {
@@ -39,13 +39,13 @@ fieldset {
   border-style: none;
   border-top: 1px solid #BFBAB0;
 }
-fieldset li {
+fieldset ol li {
   float: left;
   clear: left;
   width: 100%;
   padding-bottom: 1em;
 }
-fieldset li .value {
+fieldset ol li .value {
   padding-left: 10em;
 }
 
@@ -71,3 +71,15 @@ fieldset.submit {
 }
 
  /* labels left aligned */
+
+/* fix enourmous width set by "width: 100%" above*/
+ ul.tagit li.tagit-choice {
+   width: auto;
+   display: inline;
+   clear: none;
+ }
+ ul.tagit li.tagit-new {
+   width: auto;
+   clear: none;
+   display: inline;
+ }

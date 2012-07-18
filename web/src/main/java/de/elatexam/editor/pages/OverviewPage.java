@@ -108,6 +108,7 @@ public class OverviewPage extends WebPage {
         }, "Alle Zuordnungs-Aufgaben")));
     res.add(Arrays.asList(new LinkVO(StatisticPage.class, "Statistiken")));
     res.add(Arrays.asList(new LinkVO(UploadComplexTaskdefPage.class, "Importieren")));
+    res.add(Arrays.asList(new LinkVO(TaggingTest.class, "Tags")));
     return res;
   }
 }

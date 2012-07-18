@@ -18,7 +18,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elatexam.editor.components.panels.tasks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import net.databinder.components.hib.DataForm;
 import net.databinder.models.hib.HibernateObjectModel;
@@ -31,6 +34,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
+import org.wicketstuff.tagit.TagItTextField;
 
 import wicket.contrib.tinymce.TinyMceBehavior;
 import wicket.contrib.tinymce.settings.Button;
@@ -39,7 +43,6 @@ import wicket.contrib.tinymce.settings.PastePlugin;
 import wicket.contrib.tinymce.settings.SearchReplacePlugin;
 import wicket.contrib.tinymce.settings.TablePlugin;
 import wicket.contrib.tinymce.settings.TinyMCESettings;
-
 import de.elatexam.editor.components.panels.tasks.cloze.ClozeSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mapping.MappingSubtaskDefInputPanel;
 import de.elatexam.editor.components.panels.tasks.mc.McSubtaskDefInputPanel;
@@ -51,6 +54,7 @@ import de.elatexam.model.McSubTaskDef;
 import de.elatexam.model.PaintSubTaskDef;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TextSubTaskDef;
+import de.elatexam.model.manual.TaggedSubtaskdef;
 
 /**
  * @author Steffen Dienst
@@ -132,6 +136,22 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       // add correction and hints
       add(new TextField<String>("hint").add(new AttributeAppender("placeholder", "Hinweis für Studenten")));
       add(new TextArea<String>("correctionHint"));
+      add(new TagItTextField<String>("tags") {
+          private List<String> allTags = de.elatexam.editor.util.Stuff.getAllUniqueTags();
+            @Override
+            protected Iterable<String> getChoices(final String prefix) {
+                List<String> result = new ArrayList<String>();
+                for (String tag : allTags) {
+                  if(tag.startsWith(prefix))
+                    result.add(tag);
+                }
+                return result; 
+            }
+            @Override
+            public IConverter<Set<String>> getConverter(Class type) {
+              return new TagSetConverter();
+            }
+          });
       add(new org.apache.wicket.markup.html.form.Button("saveButton"));
       add(new org.apache.wicket.markup.html.form.Button("cancelButton") {
         @Override
@@ -142,6 +162,14 @@ public class SubtaskDefInputPanel<T extends SubTaskDef> extends Panel {
       }.setDefaultFormProcessing(false));
     }
 
+//    /* (non-Javadoc)
+//     * @see net.databinder.components.hib.DataForm#savePersistentObjectIfNew()
+//     */
+//    @Override
+//    protected boolean savePersistentObjectIfNew() {
+//      // TODO Auto-generated method stub
+//      return super.savePersistentObjectIfNew();
+//    }
     /*
      * (non-Javadoc)
      * 

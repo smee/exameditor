@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.databinder.hib.Databinder;
-import net.databinder.models.hib.CriteriaFilterAndSort;
 import net.databinder.models.hib.OrderingCriteriaBuilder;
 import net.databinder.models.hib.SortableHibernateProvider;
 
@@ -32,10 +31,10 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import de.elatexam.model.SubTaskDef;
 import de.elatexam.editor.TaskEditorApplication;
 import de.elatexam.editor.TaskEditorSession;
 import de.elatexam.editor.util.RemoveNullResultTransformer;
+import de.elatexam.model.SubTaskDef;
 
 /**
  * XXX ugly hack, clean up this mess as soon as possible. Assumes just one sort,

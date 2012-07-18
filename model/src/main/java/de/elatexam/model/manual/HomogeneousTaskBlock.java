@@ -60,7 +60,7 @@ public abstract class HomogeneousTaskBlock extends TaskBlock {
    */
   public List<? extends SubTaskDef> getSubtaskDefs(){
     if(McTaskBlock.class.isInstance(this))
-      return ((McTaskBlock)(Object)this).getMcSubTaskDef();
+      return ((McTaskBlock)this).getMcSubTaskDef();
     if(MappingTaskBlock.class.isInstance(this))
       return ((MappingTaskBlock)(Object)this).getMappingSubTaskDef();
     if(ClozeTaskBlock.class.isInstance(this))

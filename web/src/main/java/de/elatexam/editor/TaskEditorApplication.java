@@ -14,8 +14,6 @@ import net.databinder.hib.Databinder;
 import net.databinder.hib.SessionUnit;
 
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -24,10 +22,6 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Projections;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.wicketstuff.jslibraries.CDN;
-import org.wicketstuff.jslibraries.JSLib;
-import org.wicketstuff.jslibraries.Library;
-import org.wicketstuff.jslibraries.VersionDescriptor;
 
 import de.elatexam.editor.components.form.EnhanceFormsListener;
 import de.elatexam.editor.pages.OverviewPage;
@@ -62,7 +56,7 @@ public class TaskEditorApplication extends AuthDataApplication {
 
         // add all model classes from persistence.xml
         addPersistentModelClasses(config, getClass().getClassLoader().getResourceAsStream("META-INF/persistence.xml"));
-
+        config.addAnnotatedClass(de.elatexam.model.manual.TaggedSubtaskdef.class);
 //		 config.setProperty("hibernate.show_sql", "true");
 
     }
@@ -116,7 +110,6 @@ public class TaskEditorApplication extends AuthDataApplication {
     @Override
     protected void init() {
         super.init();
-        getHeaderContributorListenerCollection().add(JSLib.getHeaderContribution(VersionDescriptor.exactVersion(Library.JQUERY, 1,4,2), true, CDN.GOOGLE));
         // enable request logger, needed to show live session count
         getRequestLoggerSettings().setRequestLoggerEnabled(true);
         getApplicationSettings().setPageExpiredErrorPage(OverviewPage.class);

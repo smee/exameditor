@@ -18,9 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package de.elatexam.editor.util;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,28 +29,17 @@ import javax.xml.bind.JAXBException;
 
 import net.databinder.hib.Databinder;
 
-import org.hibernate.Transaction;
+import org.codesmell.wicket.tagcloud.TagData;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.google.common.collect.ImmutableMap;
-
-import de.elatexam.model.AddonSubTaskDef;
+import de.elatexam.editor.TaskEditorSession;
+import de.elatexam.editor.user.BasicUser;
 import de.elatexam.model.Category;
-import de.elatexam.model.ClozeSubTaskDef;
-import de.elatexam.model.ClozeTaskBlock;
 import de.elatexam.model.ComplexTaskDef;
-import de.elatexam.model.MappingSubTaskDef;
-import de.elatexam.model.MappingTaskBlock;
-import de.elatexam.model.McSubTaskDef;
-import de.elatexam.model.McTaskBlock;
-import de.elatexam.model.PaintSubTaskDef;
-import de.elatexam.model.PaintTaskBlock;
 import de.elatexam.model.SubTaskDef;
 import de.elatexam.model.TaskBlock;
-import de.elatexam.model.TextSubTaskDef;
-import de.elatexam.model.TextTaskBlock;
 import de.elatexam.model.manual.HomogeneousTaskBlock;
-import de.thorstenberger.taskmodel.complex.jaxb.ComplexTaskDef.Category.AddonTaskBlock;
 import de.thorstenberger.taskmodel.complex.jaxb.TaskBlockType;
 
 /**
@@ -130,5 +119,39 @@ public class Stuff {
         e.printStackTrace();
         return null;
       }
+    }
+    /**
+     * @return
+     */
+    public static List<String> getAllUniqueTags() {
+      return Databinder.getHibernateSession().createQuery("select distinct elements(s.tags) from de.elatexam.model.manual.TaggedSubtaskdef s").list();
+    }
+    
+    /**
+     * Return data for a tag cloud for the given user.
+     * @param user
+     * @return
+     */
+    public static List<TagData> getTagData(BasicUser user, Collection<String> includedTags){
+      StringBuilder queryString = new StringBuilder();
+      queryString.append(String.format("select elements(s.tags) from de.elatexam.model.manual.TaggedSubtaskdef s, de.elatexam.editor.user.BasicUser u where u.username='%s'", TaskEditorSession.get().getUser().getUsername()));
+      for(String inclTag: includedTags)
+        queryString.append(" and '").append(inclTag).append("' in elements(s.tags)");
+        
+      Query query = Databinder.getHibernateSession().createQuery(queryString.toString());
+      Map<String, Integer> tagCounts = new HashMap<String,Integer>();
+      List<String> queryResult = query.list();
+      for(String tag: queryResult){
+        if(!tagCounts.containsKey(tag)){
+          tagCounts.put(tag, 0);
+        }else{
+          tagCounts.put(tag, tagCounts.get(tag) + 1);
+        }
+      }        
+      List<TagData> res = new ArrayList<TagData>();
+      for(String tag: tagCounts.keySet())
+        res.add(new TagData(tag, tagCounts.get(tag)));
+      
+      return res;
     }
 }
